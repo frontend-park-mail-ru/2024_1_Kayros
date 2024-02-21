@@ -1,5 +1,5 @@
 import template from './MainPage.hbs';
-import './styles.css';
+import './styles.scss';
 
 /**
  * Главная страница (например)

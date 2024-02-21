@@ -29,6 +29,7 @@
 		"webpack-dev-server": "^5.0.2"
 	},
 	"dependencies": {
+		"@fontsource/roboto": "^5.0.8",
 		"handlebars": "^4.7.8"
 	},
 	"browserslist": [
