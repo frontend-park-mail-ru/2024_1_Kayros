@@ -1,9 +1,9 @@
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import Dotenv from 'dotenv';
+import ESLintWebpackPlugin from 'eslint-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import ESLintWebpackPlugin from 'eslint-webpack-plugin';
-import Dotenv from 'dotenv';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const buildPath = path.resolve(__dirname, 'dist');
