@@ -36,6 +36,11 @@ export default {
 				test: /\.hbs$/,
 				loader: 'handlebars-loader',
 			},
+			{
+				test: /\.js$/,
+				exclude: /(node_modules|dist)/,
+				use: 'babel-loader',
+			},
 		],
 	},
 
