@@ -30,13 +30,6 @@ module.exports = {
 		'unused-imports/no-unused-imports': 'error',
 		'unused-imports/no-unused-vars': 'error',
 		'import/no-cycle': 'error',
-		'prefer-arrow/prefer-arrow-functions': [
-			'error',
-			{
-				singleReturnOnly: false,
-				classPropertiesAllowed: false,
-			},
-		],
 		'@stylistic/js/padding-line-between-statements': [
 			'error',
 			{
