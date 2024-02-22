@@ -9,5 +9,8 @@
 /dist
 /build
 
+# jsDoc generated documentation
+/generated/jsDocs
+
 # logs
 *.log
