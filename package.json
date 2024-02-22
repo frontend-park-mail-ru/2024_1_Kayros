@@ -1,9 +1,9 @@
 {
+	"type": "module",
 	"name": "2024_1_kayros",
 	"version": "1.0.0",
 	"description": "Фронтенд проекта \"Delivery Club\" команды \"Кайрос\"",
 	"main": "index.js",
-	"type": "module",
 	"scripts": {
 		"dev": "NODE_ENV=development npx webpack serve --mode=development",
 		"build": "NODE_ENV=production npx webpack --mode=production",
@@ -11,12 +11,21 @@
 		"lint:fix": "eslint \"./src/**/*.{js,jsx}\" --fix",
 		"generate-docs": "npx jsdoc -c jsdoc.json"
 	},
+	"dependencies": {
+		"@fontsource/roboto": "^5.0.8",
+		"handlebars": "^4.7.8"
+	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.23.9",
+		"@stylistic/eslint-plugin-js": "^1.6.2",
 		"babel-loader": "^9.1.3",
 		"css-loader": "^6.10.0",
+		"dotenv": "^16.4.5",
 		"eslint": "^8.56.0",
 		"eslint-plugin-import": "^2.29.1",
+		"eslint-plugin-prefer-arrow": "^1.2.3",
+		"eslint-plugin-prefer-arrow-functions": "^3.2.4",
+		"eslint-plugin-unused-imports": "^3.1.0",
 		"eslint-webpack-plugin": "^4.0.1",
 		"handlebars-loader": "^1.7.3",
 		"html-webpack-plugin": "^5.6.0",
@@ -29,10 +38,6 @@
 		"webpack": "^5.90.3",
 		"webpack-cli": "^5.1.4",
 		"webpack-dev-server": "^5.0.2"
-	},
-	"dependencies": {
-		"@fontsource/roboto": "^5.0.8",
-		"handlebars": "^4.7.8"
 	},
 	"browserslist": [
 		"IE 11"

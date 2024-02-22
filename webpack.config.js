@@ -3,15 +3,18 @@ import { fileURLToPath } from 'url';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ESLintWebpackPlugin from 'eslint-webpack-plugin';
+import Dotenv from 'dotenv';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const buildPath = path.resolve(__dirname, 'dist');
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
+
+Dotenv.config({ path: './.env.development' });
 
 export default {
 	entry: path.resolve(__dirname, './src/index.js'),
-	target: !isProd ? 'web' : 'browserslist',
+	target: !isProduction ? 'web' : 'browserslist',
 	output: {
 		path: buildPath,
 		filename: 'bundle.js',
@@ -45,8 +48,8 @@ export default {
 	},
 
 	devServer: {
-		host: 'localhost',
-		port: 3000,
+		host: process.env.HOST,
+		port: process.env.PORT,
 		hot: true,
 		historyApiFallback: true,
 	},

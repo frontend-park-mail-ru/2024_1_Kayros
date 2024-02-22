@@ -9,6 +9,9 @@
 /dist
 /build
 
+# enviroment variables
+.env.development
+
 # jsDoc generated documentation
 /generated/jsDocs
 
