@@ -12,7 +12,7 @@ class MainPage {
 	constructor(parent) {
 		this.parent = parent;
 	}
-  
+
 	/**
 	 * Получение html страницы
 	 */
