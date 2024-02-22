@@ -7,9 +7,18 @@
 	"scripts": {
 		"dev": "NODE_ENV=development npx webpack serve --mode=development",
 		"build": "NODE_ENV=production npx webpack --mode=production",
-		"lint": "eslint \"./src/**/*.{js,jsx}\"",
-		"lint:fix": "eslint \"./src/**/*.{js,jsx}\" --fix",
-		"generate-docs": "npx jsdoc -c jsdoc.json"
+		"lint": "eslint \"./src/**/*.js\"",
+		"lint:fix": "eslint \"./src/**/*.js\" --fix",
+		"prettier:fix": "npx prettier \"./src/**/*.{js,css,scss}\" --write",
+		"generate-docs": "npx jsdoc -c jsdoc.json",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"./src/**/*.{scss,css,js}": "npm run prettier:fix",
+		"./src/**/*.js": [
+			"npm run lint:fix",
+			"npm run generate-docs"
+		]
 	},
 	"dependencies": {
 		"@fontsource/roboto": "^5.0.8",
@@ -29,7 +38,9 @@
 		"eslint-webpack-plugin": "^4.0.1",
 		"handlebars-loader": "^1.7.3",
 		"html-webpack-plugin": "^5.6.0",
+		"husky": "^9.0.11",
 		"jsdoc": "^4.0.2",
+		"lint-staged": "^15.2.2",
 		"mini-css-extract-plugin": "^2.8.0",
 		"postcss-loader": "^8.1.0",
 		"sass": "^1.71.1",
