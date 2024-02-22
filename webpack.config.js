@@ -8,13 +8,13 @@ import Dotenv from 'dotenv';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const buildPath = path.resolve(__dirname, 'dist');
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 Dotenv.config({ path: './.env.development' });
 
 export default {
 	entry: path.resolve(__dirname, './src/index.js'),
-	target: !isProduction ? 'web' : 'browserslist',
+	target: isDevelopment ? 'web' : 'browserslist',
 	output: {
 		path: buildPath,
 		filename: 'bundle.js',
