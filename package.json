@@ -2,13 +2,13 @@
 	"type": "module",
 	"name": "2024_1_kayros",
 	"version": "1.0.0",
-	"description": "Фронтенд проекта \"Delivery Club\" команды \"Кайрос\"",
+	"description": "Фронтенд проекта \"Resto\" команды \"Кайрос\"",
 	"main": "index.js",
 	"scripts": {
 		"dev": "NODE_ENV=development npx webpack serve --mode=development",
 		"build": "NODE_ENV=production npx webpack --mode=production",
-		"lint": "eslint .",
-		"lint:fix": "eslint . --fix ",
+		"lint": "eslint . \".*\"",
+		"lint:fix": "eslint . \".*\" --fix ",
 		"prettier:fix": "npx prettier \"./src/**/*.{js,css,scss}\" --write",
 		"generate-docs": "npx jsdoc -c jsdoc.json",
 		"prepare": "husky"

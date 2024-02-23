@@ -6,7 +6,17 @@ module.exports = {
 	},
 	plugins: ['unused-imports', 'prefer-arrow', '@stylistic/js'],
 	extends: ['eslint:recommended', 'plugin:import/recommended'],
+	ignorePatterns: ['!.*'],
 	overrides: [
+		{
+			files: ['.*'],
+			rules: {
+				'eol-last': ['error', 'always'],
+				semi: 'off',
+				'no-undef': 'off',
+				indent: 'off',
+			},
+		},
 		{
 			env: {
 				node: true,
