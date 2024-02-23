@@ -6,7 +6,6 @@ module.exports = {
 	},
 	plugins: ['unused-imports', 'prefer-arrow', '@stylistic/js'],
 	extends: ['eslint:recommended', 'plugin:import/recommended'],
-	ignorePatterns: ['!.*'],
 	overrides: [
 		{
 			files: ['.*'],
