@@ -1,0 +1,61 @@
+{
+	"type": "module",
+	"name": "2024_1_kayros",
+	"version": "1.0.0",
+	"description": "Фронтенд проекта \"Resto\" команды \"Кайрос\"",
+	"main": "index.js",
+	"scripts": {
+		"dev": "NODE_ENV=development npx webpack serve --mode=development",
+		"build": "NODE_ENV=production npx webpack --mode=production",
+		"lint": "eslint . \".env*\"",
+		"lint:fix": "eslint . \".env*\" --fix ",
+		"prettier:fix": "npx prettier \"./src/**/*.{js,css,scss}\" --write",
+		"generate-docs": "npx jsdoc -c jsdoc.json",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"./src/**/*.{scss,css,js}": "npm run prettier:fix",
+		"./src/**/*.js": [
+			"npm run lint:fix",
+			"npm run generate-docs"
+		]
+	},
+	"dependencies": {
+		"@fontsource/roboto": "^5.0.8",
+		"handlebars": "^4.7.8"
+	},
+	"devDependencies": {
+		"@babel/preset-env": "^7.23.9",
+		"@stylistic/eslint-plugin-js": "^1.6.2",
+		"babel-loader": "^9.1.3",
+		"css-loader": "^6.10.0",
+		"dotenv": "^16.4.5",
+		"eslint": "^8.56.0",
+		"eslint-plugin-import": "^2.29.1",
+		"eslint-plugin-prefer-arrow": "^1.2.3",
+		"eslint-plugin-prefer-arrow-functions": "^3.2.4",
+		"eslint-plugin-unused-imports": "^3.1.0",
+		"eslint-webpack-plugin": "^4.0.1",
+		"handlebars-loader": "^1.7.3",
+		"html-webpack-plugin": "^5.6.0",
+		"husky": "^9.0.11",
+		"jsdoc": "^4.0.2",
+		"lint-staged": "^15.2.2",
+		"mini-css-extract-plugin": "^2.8.0",
+		"postcss-loader": "^8.1.0",
+		"sass": "^1.71.1",
+		"sass-loader": "^14.1.1",
+		"style-loader": "^3.3.4",
+		"webpack": "^5.90.3",
+		"webpack-cli": "^5.1.4",
+		"webpack-dev-server": "^5.0.2"
+	},
+	"browserslist": [
+		"IE 11"
+	],
+	"babel": {
+		"presets": [
+			"@babel/preset-env"
+		]
+	}
+}
