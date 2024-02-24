@@ -9,6 +9,7 @@
 		"build": "NODE_ENV=production npx webpack --mode=production",
 		"lint": "eslint . \".env*\"",
 		"lint:fix": "eslint . \".env*\" --fix ",
+		"hbs-lint:fix": "ember-template-lint . --fix",
 		"prettier:fix": "npx prettier \"./src/**/*.{js,css,scss}\" --write",
 		"generate-docs": "npx jsdoc -c jsdoc.json",
 		"prepare": "husky"
@@ -18,7 +19,8 @@
 		"./src/**/*.js": [
 			"npm run lint:fix",
 			"npm run generate-docs"
-		]
+		],
+		"*.hbs": "npm run hbs-lint:fix"
 	},
 	"dependencies": {
 		"@fontsource/roboto": "^5.0.8",
@@ -31,6 +33,7 @@
 		"copy-webpack-plugin": "^12.0.2",
 		"css-loader": "^6.10.0",
 		"dotenv": "^16.4.5",
+		"ember-template-lint": "^5.13.0",
 		"eslint": "^8.56.0",
 		"eslint-plugin-import": "^2.29.1",
 		"eslint-plugin-unused-imports": "^3.1.0",
