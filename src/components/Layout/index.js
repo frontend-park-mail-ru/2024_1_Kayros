@@ -1,6 +1,5 @@
 import Content from '../Content';
 import Header from '../Header';
-import NavBar from '../NavBar';
 import template from './Layout.hbs';
 import './styles.scss';
 
@@ -26,9 +25,6 @@ class Layout {
 
 		const header = new Header(layout);
 		header.render();
-
-		const navBar = new NavBar(layout);
-		navBar.render();
 
 		const content = new Content(layout);
 		content.render();

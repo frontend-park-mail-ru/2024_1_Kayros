@@ -1,4 +1,5 @@
 import Layout from '../../components/Layout';
+import Restaurants from '../../components/Restaurants';
 import template from './MainPage.hbs';
 import './styles.scss';
 
@@ -24,6 +25,9 @@ class MainPage {
 
 		const layout = new Layout(main);
 		layout.render();
+
+		const restaurants = new Restaurants();
+		restaurants.render();
 	}
 }
 
