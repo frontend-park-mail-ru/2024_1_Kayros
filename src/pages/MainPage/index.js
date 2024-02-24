@@ -1,8 +1,9 @@
+import Layout from '../../components/Layout';
 import template from './MainPage.hbs';
 import './styles.scss';
 
 /**
- * Главная страница (например)
+ * Главная страница
  */
 class MainPage {
 	/**
@@ -14,19 +15,15 @@ class MainPage {
 	}
 
 	/**
-	 * Получение html страницы
-	 */
-	getHTML() {
-		return template({ content: 'MainPageExample' });
-	}
-
-	/**
 	 * Рендеринг страницы
 	 */
 	render() {
-		this.parent.innerHTML = '';
-		const html = this.getHTML();
-		this.parent.insertAdjacentHTML('beforeend', html);
+		this.parent.insertAdjacentHTML('beforeend', template());
+
+		const main = document.getElementById('main');
+
+		const layout = new Layout(main);
+		layout.render();
 	}
 }
 

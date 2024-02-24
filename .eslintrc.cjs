@@ -4,7 +4,7 @@ module.exports = {
 		browser: true,
 		es2021: true,
 	},
-	plugins: ['unused-imports', 'prefer-arrow', '@stylistic/js'],
+	plugins: ['unused-imports', '@stylistic/js'],
 	extends: ['eslint:recommended', 'plugin:import/recommended'],
 	overrides: [
 		{

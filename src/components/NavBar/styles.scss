@@ -1,0 +1,36 @@
+@import "../../constants.scss";
+
+#navbar {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	border-radius: var(--layout-border-radius);
+	background: var(--layout-bg-color);
+	width: 130px;
+	padding: 24px 30px;
+	height: fit-content;
+	min-height: 350px;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+#items {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	min-width: 200px;
+}
+
+#link {
+	color: var(--link-color);
+}
+
+#link-active {
+	color: var(--link-color-active);
+}
+
+#orders {
+	color: var(--link-color);
+	border-top: 2px solid #000;
+	padding-top: 16px;
+}

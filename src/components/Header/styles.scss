@@ -1,0 +1,42 @@
+@import "../../constants.scss";
+
+#header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 36px;
+	gap: 100px;
+	width: 100%;
+
+	img {
+		cursor: pointer;
+		margin-left: 32px;
+	}
+}
+
+#headerContent {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 15px;
+	width: 100%;
+	height: 38px;
+	border-radius: var(--layout-border-radius);
+	background: var(--layout-bg-color);
+}
+
+#left {
+	display: flex;
+	align-items: center;
+	gap: 27px;
+	height: 100%;
+}
+
+#address {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	background: #fff;
+	border-radius: var(--layout-border-radius);
+	padding: 0 15px;
+	font-size: 16px;
+}

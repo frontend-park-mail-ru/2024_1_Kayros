@@ -1,0 +1,13 @@
+<div id="navbar">
+	<div id="items">
+		{{#each links}}
+			{{#if this.active}}
+				<div id="link-active">{{this.name}}</div>
+			{{else}}
+				<div id="link">{{this.name}}</div>
+			{{/if}}
+		{{/each}}
+	</div>
+
+	<div id="orders">Заказы</div>
+</div>
