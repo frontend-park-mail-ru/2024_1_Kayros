@@ -1,5 +1,6 @@
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
+import Loader from '../../components/Loader/Loader';
 import template from './RestaurantsPage.hbs';
 import './RestaurantsPage.scss';
 
@@ -45,6 +46,18 @@ class RestaurantsPage {
 		});
 
 		button2.render();
+
+		const loaderS = new Loader(example, { size: 's' });
+		loaderS.render();
+
+		const loaderM = new Loader(example, { size: 'm' });
+		loaderM.render();
+
+		const loaderL = new Loader(example, { size: 'l' });
+		loaderL.render();
+
+		const loaderXL = new Loader(example, { size: 'xl' });
+		loaderXL.render();
 	}
 }
 
