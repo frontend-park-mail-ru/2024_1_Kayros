@@ -1,18 +1,23 @@
 <div id="header">
 
-  <img id="logo" src="/assets/logo.png" alt="logotype" />
+	<img id="logo" src="/assets/logo.png" alt="logotype" />
 
-  <div id="headerContent">
+	<div id="headerContent">
 
-    <div id="address">
-      <span>{{this.address}}</span>
-    </div>
+		<div id="address">
+			<span>{{this.address}}</span>
+		</div>
 
-    <div id="profile">
-      <span>{{this.userName}}</span>
-      <div id="avatarContainer">
-        <img src="{{this.avatarUrl}}" alt="" />
-      </div>
-    </div>
-  </div>
+		<div id="profile">
+
+			{{#if this.user.name}}
+				<span>{{this.user.name}}</span>
+				<div id="avatarContainer">
+					<img alt="" src={{this.user.avatarUrl}} />
+				</div>
+			{{/if}}
+
+		</div>
+
+	</div>
 </div>
