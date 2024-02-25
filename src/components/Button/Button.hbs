@@ -1,7 +1,9 @@
-<button class="btn {{this.type}}" id={{this.id}} type="button">
+<button class="btn {{this.class}}" id={{this.id}} type={{this.type}}>
 	{{#if this.icon}}
 		<img src={{this.icon}} type="icon" alt="cart" />
 	{{/if}}
 
-	<span>{{this.content}}</span>
+	{{#if this.content}}
+		<span>{{this.content}}</span>
+	{{/if}}
 </button>

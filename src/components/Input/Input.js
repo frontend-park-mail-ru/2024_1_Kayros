@@ -1,4 +1,3 @@
-import { getUID } from '../../utils';
 import Button from '../Button';
 import template from './Input.hbs';
 import './Input.scss';
@@ -10,17 +9,18 @@ class Input {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
+	 * @param {Object} id - идентификатор элемента
 	 * @param {Object} params - параметры инпута
 	 * @param {string} placeholder - текстовая подсказка внутри поля
 	 * @param {string} type - тип инпута
 	 * @param {string | undefined} button - название кнопки
 	 */
-	constructor(parent, { placeholder, type = 'text', button }) {
+	constructor(parent, { id, placeholder, type = 'text', button }) {
 		this.parent = parent;
 		this.placeholder = placeholder;
 		this.button = button;
 		this.type = type;
-		this.id = getUID(this.parent, 'input');
+		this.id = id;
 		this.isVisible = false;
 	}
 
@@ -45,9 +45,9 @@ class Input {
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
 		if (this.button) {
-			const buttonBlock = document.getElementById('searchBtn');
-			const searchBtn = new Button(buttonBlock, { content: 'Найти' });
-			searchBtn.render();
+			const buttonBlock = document.getElementById('searchButton');
+			const searchButton = new Button(buttonBlock, { id: 'header-search-button', content: 'Найти' });
+			searchButton.render();
 		}
 
 		if (this.type !== 'password') return;
