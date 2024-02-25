@@ -1,7 +1,7 @@
 import '@fontsource/roboto';
 import '@fontsource/montserrat';
 import Layout from './components/Layout/Layout';
-import RestaurantsPage from './pages/RestaurantsPage';
+import RestaurantsPage from './pages/Restaurants';
 import './global.scss';
 
 const root = document.getElementById('root');

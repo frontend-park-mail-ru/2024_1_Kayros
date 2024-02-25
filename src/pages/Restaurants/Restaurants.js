@@ -1,13 +1,13 @@
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import Loader from '../../components/Loader/Loader';
-import template from './RestaurantsPage.hbs';
-import './RestaurantsPage.scss';
+import template from './Restaurants.hbs';
+import './Restaurants.scss';
 
 /**
  * Страница со списком ресторанов
  */
-class RestaurantsPage {
+class Restaurants {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
@@ -61,4 +61,4 @@ class RestaurantsPage {
 	}
 }
 
-export default RestaurantsPage;
+export default Restaurants;
