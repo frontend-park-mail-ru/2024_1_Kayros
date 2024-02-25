@@ -62,7 +62,7 @@ class Header {
 			cartButton.render();
 		}
 
-		const profileBlock = document.getElementById('profileBlock');
+		const profileBlock = document.getElementById('profile-block');
 
 		if (user) {
 			const profile = new Profile(profileBlock);

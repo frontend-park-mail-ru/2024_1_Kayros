@@ -1,5 +1,5 @@
 :root {
-	--brand: #555555;
+	--brand: #555;
 
 	--layout-border-radius: 30px;
 	--layout-bg-color: #f6f6f6;
@@ -26,10 +26,15 @@
 
 	--button-bg-hover: #545454;
 	--button-bg-active: #3a3a3a;
-	--button-bg-disabled: #dddddd;
+	--button-bg-disabled: #ddd;
 	--button-bg-disabled-hover: #cbcbcb;
 	--button-color-disabled: #1b1b1b;
 
 	--address-bg: #fff;
 	--address-ouline-hover: #757575;
+
+	--avatar-bg-linear-color-first: #faff00;
+	--avatar-bg-linear-color-second: #42ff13;
+
+	--header-profile-name-color-hover: #6f6f6f;
 }

@@ -1,4 +1,4 @@
-#inputContainer {
+#input-container {
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -24,7 +24,7 @@
 		}
 	}
 
-	#searchButton {
+	#search-button {
 		position: absolute;
 		right: 4px;
 		border-radius: var(--button-border-radius);

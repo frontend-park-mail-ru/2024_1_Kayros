@@ -3,9 +3,10 @@
 	display: flex;
 	align-items: center;
 	gap: 25px;
-	font-family: Montserrat;
+	font-family: Montserrat, sans-serif;
 	font-weight: 600;
 	height: 100%;
+	color: var(--layout-border-color);
 
 	button {
 		height: 100%;
@@ -19,19 +20,23 @@
 		transition: all 0.3s;
 
 		&:hover {
-			color: #6f6f6f;
+			color: var(--header-profile-name-color-hover);
 		}
 	}
 }
 
-#avatarContainer {
+#avatar-container {
 	display: flex;
 	align-items: center;
 	border-radius: 19px;
 	height: 38px;
 	width: 38px;
 	overflow: hidden;
-	background: linear-gradient(120deg, #faff00 10%, #42ff13 140%);
+	background: linear-gradient(
+		120deg,
+		var(--avatar-bg-linear-color-first) 10%,
+		var(--avatar-bg-linear-color-first) 140%
+	);
 	cursor: pointer;
 
 	img {

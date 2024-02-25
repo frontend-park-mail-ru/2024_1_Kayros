@@ -10,6 +10,7 @@
 		"lint": "eslint . \".env*\"",
 		"lint:fix": "eslint . \".env*\" --fix ",
 		"hbs-lint:fix": "ember-template-lint . --fix",
+		"scss-lint:fix": "stylelint --allow-empty-input \"**/*.{scss}\" --fix",
 		"prettier:fix": "npx prettier \"./src/**/*.{js,css,scss}\" --write",
 		"generate-docs": "npx jsdoc -c jsdoc.json",
 		"prepare": "husky"
@@ -20,7 +21,8 @@
 			"npm run lint:fix",
 			"npm run generate-docs"
 		],
-		"*.hbs": "npm run hbs-lint:fix"
+		"*.hbs": "npm run hbs-lint:fix",
+		"*.scss": "npm run scss-lint:fix"
 	},
 	"dependencies": {
 		"@fontsource/montserrat": "^5.0.16",
@@ -49,6 +51,8 @@
 		"sass": "^1.71.1",
 		"sass-loader": "^14.1.1",
 		"style-loader": "^3.3.4",
+		"stylelint": "^16.2.1",
+		"stylelint-config-standard-scss": "^13.0.0",
 		"url-loader": "^4.1.1",
 		"webpack": "^5.90.3",
 		"webpack-cli": "^5.1.4",
