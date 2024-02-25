@@ -2,11 +2,14 @@
 	margin-left: auto;
 	display: flex;
 	align-items: center;
+	position: relative;
 	gap: 25px;
 	font-family: Montserrat, sans-serif;
 	font-weight: 600;
 	height: 100%;
 	color: var(--layout-border-color);
+	justify-content: space-between;
+	transition: all 0.3s;
 
 	button {
 		height: 100%;
@@ -14,10 +17,11 @@
 		border-radius: var(--layout-border-radius);
 	}
 
-	span {
+	#name {
 		font-size: 18px;
 		cursor: pointer;
 		transition: all 0.3s;
+		z-index: 11;
 
 		&:hover {
 			color: var(--header-profile-name-color-hover);
@@ -35,8 +39,9 @@
 	background: linear-gradient(
 		120deg,
 		var(--avatar-bg-linear-color-first) 10%,
-		var(--avatar-bg-linear-color-first) 140%
+		var(--avatar-bg-linear-color-second) 140%
 	);
+	z-index: 11;
 	cursor: pointer;
 
 	img {
