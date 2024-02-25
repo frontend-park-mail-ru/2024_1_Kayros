@@ -38,6 +38,7 @@ class Button {
 			class: 'btn-' + this.style,
 			icon: this.icon,
 			type: this.type,
+			attribute: this.disabled ? 'disabled' : '',
 		});
 	}
 
@@ -48,10 +49,6 @@ class Button {
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
 		const currentButton = document.getElementById(this.id);
-
-		if (this.disabled) {
-			currentButton.disabled = true;
-		}
 
 		currentButton.onclick = this.onClick;
 	}
