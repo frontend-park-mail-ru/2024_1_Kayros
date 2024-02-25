@@ -1,13 +1,23 @@
-import Button from '../Button';
-import Input from '../Input';
-import template from './Restaurants.hbs';
-import './Restaurants.scss';
+import Button from '../../components/Button/Button';
+import Input from '../../components/Input/Input';
+import template from './RestaurantsPage.hbs';
+import './RestaurantsPage.scss';
 
-class Restaurants {
-	constructor() {
-		this.parent = document.getElementById('content');
+/**
+ * Страница со списком ресторанов
+ */
+class RestaurantsPage {
+	/**
+	 * Конструктор класса
+	 * @param {Element} parent - родительский элемент
+	 */
+	constructor(parent) {
+		this.parent = parent;
 	}
 
+	/**
+	 * Рендеринг страницы
+	 */
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', template());
 
@@ -27,4 +37,4 @@ class Restaurants {
 	}
 }
 
-export default Restaurants;
+export default RestaurantsPage;
