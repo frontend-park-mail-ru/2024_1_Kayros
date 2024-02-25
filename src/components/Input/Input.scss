@@ -35,6 +35,10 @@
 			background: var(--button-bg-active);
 			transform: scale(0.9);
 		}
+
+		& ~ input {
+			padding: var(--input-search-padding);
+		}
 	}
 
 	#btn-eye {

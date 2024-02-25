@@ -1,7 +1,5 @@
 <div id="inputContainer">
 
-	<input id={{this.id}} type={{this.type}} placeholder={{this.placeholder}} />
-
 	{{#if this.button}}
 		<div id="searchBtn"></div>
 	{{else if this.isPassword}}
@@ -10,5 +8,7 @@
 			<img id="eye-close" src="assets/eye-close.svg" alt="eye-close" />
 		</button>
 	{{/if}}
+
+	<input id={{this.id}} type={{this.type}} placeholder={{this.placeholder}} />
 
 </div>
