@@ -20,6 +20,22 @@ class Dropdown {
 		this.id = id;
 	}
 
+	open(element) {
+		if (this.isOpen) return;
+
+		element.className = 'dropdown dropdown-open';
+		this.isOpen = true;
+		this.parent.animate(...openProfileSlideOptions);
+	}
+
+	close(element) {
+		if (!this.isOpen) return;
+
+		element.className = 'dropdown';
+		this.isOpen = false;
+		this.parent.animate(...closeProfileSlideOptions);
+	}
+
 	/**
 	 * Получение html компонента
 	 */
@@ -46,20 +62,20 @@ class Dropdown {
 		this.parent.addEventListener('click', (event) => {
 			event.stopPropagation();
 
-			if (!this.isOpen) {
-				dropdown.className = 'dropdown dropdown-open';
-				this.isOpen = true;
-				this.parent.animate(...openProfileSlideOptions);
-			}
+			this.open(dropdown);
 		});
 
 		window.addEventListener('click', () => {
-			if (this.isOpen) {
-				dropdown.className = 'dropdown';
-				this.isOpen = false;
-				this.parent.animate(...closeProfileSlideOptions);
-			}
+			this.close(dropdown);
 		});
+
+		window.addEventListener('keydown', closeOnEsc);
+
+		const closeOnEsc = (event) => {
+			if (event.key === 'Escape') {
+				this.close(dropdown);
+			}
+		};
 	}
 }
 
