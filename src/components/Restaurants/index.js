@@ -1,3 +1,4 @@
+import Button from '../Button';
 import Input from '../Input';
 import template from './Restaurants.hbs';
 import './styles.scss';
@@ -10,13 +11,19 @@ class Restaurants {
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', template());
 
-		const rest = document.getElementById('restaurants');
+		const example = document.getElementById('restaurants');
 
-		const login = new Input(rest, 'beforeend', 'Логин');
+		const login = new Input(example, 'beforeend', 'Логин');
 		login.render();
 
-		const pass = new Input(rest, 'beforeend', 'Пароль', true);
+		const pass = new Input(example, 'beforeend', 'Пароль', true);
 		pass.render();
+
+		const button1 = new Button(example, 'primary', 'Нажми на меня 1', () => alert('1'));
+		button1.render();
+
+		const button2 = new Button(example, 'primary', 'Нажми на меня 2', () => alert('2'));
+		button2.render();
 	}
 }
 
