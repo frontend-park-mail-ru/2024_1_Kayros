@@ -1,3 +1,5 @@
+import '@fontsource/roboto';
+import '@fontsource/montserrat';
 import MainPage from './pages/MainPage';
 import './global.scss';
 

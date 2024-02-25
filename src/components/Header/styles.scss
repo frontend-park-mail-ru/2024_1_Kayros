@@ -7,7 +7,7 @@
 	gap: 100px;
 	width: 100%;
 
-	img {
+	#logo {
 		cursor: pointer;
 		margin-left: 32px;
 	}
@@ -16,19 +16,12 @@
 #headerContent {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	gap: 27px;
 	padding: 14px 15px;
 	width: 100%;
 	height: 38px;
 	border-radius: var(--layout-border-radius);
 	background: var(--layout-bg-color);
-}
-
-#left {
-	display: flex;
-	align-items: center;
-	gap: 27px;
-	height: 100%;
 }
 
 #address {
@@ -39,4 +32,46 @@
 	border-radius: var(--layout-border-radius);
 	padding: 0 15px;
 	font-size: 16px;
+	outline: 1px solid transparent;
+	transition: all 0.3s;
+	cursor: pointer;
+
+	&:hover {
+		outline: 1px solid #757575;
+	}
+}
+
+#profile {
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: 25px;
+	font-family: Montserrat;
+	font-weight: 600;
+
+	span {
+		font-size: 18px;
+		cursor: pointer;
+		transition: all 0.3s;
+
+		&:hover {
+			color: #6f6f6f;
+		}
+	}
+}
+
+#avatarContainer {
+	display: flex;
+	align-items: center;
+	border-radius: 19px;
+	height: 38px;
+	width: 38px;
+	overflow: hidden;
+	background: linear-gradient(120deg, #faff00 10%, #42ff13 140%);
+	cursor: pointer;
+
+	img {
+		width: 100%;
+		margin: 0;
+	}
 }

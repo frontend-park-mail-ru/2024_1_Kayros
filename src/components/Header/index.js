@@ -1,3 +1,4 @@
+import CartButton from '../CartButton';
 import Input from '../Input';
 import template from './Header.hbs';
 import './styles.scss';
@@ -18,7 +19,7 @@ class Header {
 	 * Получение html компонента
 	 */
 	getHTML() {
-		return template({ address: 'ул.Тверская, д.2' });
+		return template({ address: 'ул.Тверская, д.2', userName: 'Роман' });
 	}
 
 	/**
@@ -31,6 +32,11 @@ class Header {
 
 		const searchInput = new Input(headerContent, 'afterbegin', 'Рестораны, еда', false, 'Найти');
 		searchInput.render();
+
+		const addressBlock = document.getElementById('address');
+
+		const cartButton = new CartButton(addressBlock, 300);
+		cartButton.render();
 	}
 }
 
