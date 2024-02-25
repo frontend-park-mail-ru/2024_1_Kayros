@@ -13,6 +13,7 @@ module.exports = {
 			files: ['**.*.scss', '*.scss', '**.*.css', '*.css', '*.hbs'],
 			options: {
 				singleQuote: false,
+        endOfLine: 'auto',
 			},
 		},
 	],

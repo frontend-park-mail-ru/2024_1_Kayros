@@ -1,3 +1,4 @@
+import Input from '../Input';
 import template from './Header.hbs';
 import './styles.scss';
 
@@ -25,6 +26,11 @@ class Header {
 	 */
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
+
+		const headerContent = document.getElementById('headerContent');
+
+		const searchInput = new Input(headerContent, 'afterbegin', 'Рестораны, еда', false, 'Найти');
+		searchInput.render();
 	}
 }
 

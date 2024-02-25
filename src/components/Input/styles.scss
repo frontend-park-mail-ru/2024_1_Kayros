@@ -1,0 +1,78 @@
+@import "../../constants.scss";
+
+#inputContainer {
+	position: relative;
+	display: flex;
+	align-items: center;
+
+	#input,
+	#password {
+		height: 16px;
+		font-size: 16px;
+		padding: 10px 90px 10px 14px;
+		border-radius: var(--input-border-radius);
+		border: 1px solid var(--input-border-color);
+		color: var(--input-border-color);
+		outline: none;
+		transition: all 0.3s;
+		width: 100%;
+
+		&:hover {
+			border-color: #b6b6b6;
+		}
+
+		&:focus {
+			border-color: #525252;
+			box-shadow: 0 0 0 1px #9c9c9c;
+		}
+	}
+
+	#btn {
+		font-size: 16px;
+		position: absolute;
+		border: none;
+		border-radius: var(--button-border-radius);
+		background: var(--button-bg-color);
+		padding: 6px 18px;
+		color: var(--button-text-color);
+		height: 30px;
+		right: 4px;
+		transition:
+			background 0.3s,
+			transform 0.1s;
+		cursor: pointer;
+		overflow: visible;
+
+		text-decoration: none;
+
+		&:hover {
+			background: var(--button-bg-hover);
+		}
+
+		&:active {
+			background: var(--button-bg-active);
+			transform: scale(0.9);
+		}
+	}
+
+	#btn-eye {
+		display: flex;
+		position: absolute;
+		border: none;
+		background: none;
+		right: 15px;
+		cursor: pointer;
+		transition: all 0.3s;
+
+		img:nth-child(1) {
+			transition: all 0.3s;
+			opacity: 0;
+		}
+
+		img:nth-child(2) {
+			transition: all 0.3s;
+			position: absolute;
+			opacity: 1;
+		}
+	}
+}
