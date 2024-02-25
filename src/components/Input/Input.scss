@@ -5,8 +5,7 @@
 	display: flex;
 	align-items: center;
 
-	#input,
-	#password {
+	input {
 		height: 16px;
 		font-size: 16px;
 		padding: 10px 90px 10px 14px;
@@ -27,27 +26,10 @@
 		}
 	}
 
-	#btn {
-		font-size: 16px;
+	#searchBtn {
 		position: absolute;
-		border: none;
-		border-radius: var(--button-border-radius);
-		background: var(--button-bg-color);
-		padding: 6px 18px;
-		color: var(--button-text-color);
-		height: 30px;
 		right: 4px;
-		transition:
-			background 0.3s,
-			transform 0.1s;
-		cursor: pointer;
-		overflow: visible;
-
-		text-decoration: none;
-
-		&:hover {
-			background: var(--button-bg-hover);
-		}
+		border-radius: var(--button-border-radius);
 
 		&:active {
 			background: var(--button-bg-active);
@@ -63,16 +45,39 @@
 		right: 15px;
 		cursor: pointer;
 		transition: all 0.3s;
+	}
+}
 
-		img:nth-child(1) {
-			transition: all 0.3s;
-			opacity: 0;
-		}
+#eye-open {
+	transition:
+		opacity 0.2s,
+		transform 0.3s;
 
-		img:nth-child(2) {
-			transition: all 0.3s;
-			position: absolute;
-			opacity: 1;
-		}
+	.visible & {
+		transform: scale(1);
+		opacity: 1;
+	}
+
+	.hidden & {
+		transform: scale(0);
+		opacity: 0;
+	}
+}
+
+#eye-close {
+	transition:
+		opacity 0.2s,
+		transform 0.3s;
+
+	.visible & {
+		position: absolute;
+		transform: scale(0);
+		opacity: 0;
+	}
+
+	.hidden & {
+		position: absolute;
+		transform: scale(1);
+		opacity: 1;
 	}
 }

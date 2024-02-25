@@ -38,8 +38,8 @@ class Header {
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const headerContent = document.getElementById('headerContent');
-		const searchInput = new Input(headerContent, 'afterbegin', 'Рестораны, еда', false, 'Найти');
+		const searchBlock = document.getElementById('searchInput');
+		const searchInput = new Input(searchBlock, { placeholder: 'Рестораны, еда', button: 'Найти' });
 		searchInput.render();
 
 		if (user.cart.total > 0) {

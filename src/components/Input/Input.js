@@ -1,3 +1,5 @@
+import { getUID } from '../../utils';
+import Button from '../Button';
 import template from './Input.hbs';
 import './Input.scss';
 
@@ -8,26 +10,31 @@ class Input {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
-	 * @param {string} position - место в элементе
+	 * @param {Object} params - параметры инпута
 	 * @param {string} placeholder - текстовая подсказка внутри поля
-	 * @param {boolean} isPassword - является ли инпут паролем
+	 * @param {string} type - тип инпута
 	 * @param {string | undefined} button - название кнопки
 	 */
-	constructor(parent, position, placeholder, isPassword, button) {
+	constructor(parent, { placeholder, type = 'text', button }) {
 		this.parent = parent;
-		this.position = position;
 		this.placeholder = placeholder;
 		this.button = button;
-		this.isPassword = isPassword;
+		this.type = type;
+		this.id = getUID(this.parent, 'input');
+		this.isVisible = false;
 	}
+
+	/**
+	 * Получение html компонента
+	 */
 
 	getHTML() {
 		return template({
 			placeholder: this.placeholder,
 			button: this.button,
-			isPassword: this.isPassword,
-			id: this.isPassword ? 'password' : 'input',
-			type: this.isPassword ? 'password' : 'text',
+			type: this.type,
+			isPassword: this.type === 'password',
+			id: this.id,
 		});
 	}
 
@@ -35,28 +42,28 @@ class Input {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.parent.insertAdjacentHTML(this.position, this.getHTML());
+		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		if (!this.isPassword) return;
+		if (this.button) {
+			const buttonBlock = document.getElementById('searchBtn');
+			const searchBtn = new Button(buttonBlock, { content: 'Найти' });
+			searchBtn.render();
+		}
 
-		const eyeIcons = document.getElementById('btn-eye');
-		const password = document.getElementById('password');
+		if (this.type !== 'password') return;
 
-		const [openEye, closeEye] = eyeIcons.children;
+		const eyeButton = document.getElementById('btn-eye');
+		const password = document.getElementById(this.id);
 
-		eyeIcons.addEventListener('click', () => {
-			if (openEye.style.opacity === '1') {
-				openEye.style.transform = 'scale(0)';
-				openEye.style.opacity = 0;
-				closeEye.style.transform = 'scale(1)';
-				closeEye.style.opacity = 1;
-				password.type = 'password';
-			} else {
-				openEye.style.opacity = 1;
-				openEye.style.transform = 'scale(1)';
-				closeEye.style.opacity = 0;
-				closeEye.style.transform = 'scale(0)';
+		eyeButton.addEventListener('click', () => {
+			this.isVisible = !this.isVisible;
+
+			if (this.isVisible) {
+				eyeButton.className = 'visible';
 				password.type = 'text';
+			} else {
+				eyeButton.className = 'hidden';
+				password.type = 'password';
 			}
 		});
 	}

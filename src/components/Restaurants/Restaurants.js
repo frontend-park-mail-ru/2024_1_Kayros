@@ -13,10 +13,10 @@ class Restaurants {
 
 		const example = document.getElementById('restaurants');
 
-		const login = new Input(example, 'beforeend', 'Логин');
+		const login = new Input(example, { placeholder: 'Логин' });
 		login.render();
 
-		const pass = new Input(example, 'beforeend', 'Пароль', true);
+		const pass = new Input(example, { placeholder: 'Пароль', type: 'password' });
 		pass.render();
 
 		const button1 = new Button(example, { content: 'Нажми на меня 1', onClick: () => alert('1'), disabled: true });

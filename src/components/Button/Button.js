@@ -1,3 +1,4 @@
+import { getUID } from '../../utils';
 import template from './Button.hbs';
 import './Button.scss';
 
@@ -22,24 +23,7 @@ class Button {
 		this.onClick = onClick;
 		this.disabled = disabled;
 		this.icon = icon;
-		this.id = this.getUID();
-	}
-
-	/**
-	 * Создание уникального идентификатора по родительскому id
-	 * @returns уникальный идентификатор для кнопки
-	 */
-	getUID() {
-		const currentButtons = this.parent.getElementsByClassName('btn');
-		let maxID = 0;
-
-		[...currentButtons].forEach((btn) => {
-			const btnId = Number(btn.id.split('_')[1]);
-
-			if (btnId > maxID) maxID = btnId;
-		});
-
-		return this.parent.id + '-btn_' + (maxID + 1);
+		this.id = getUID(this.parent, 'button');
 	}
 
 	/**
