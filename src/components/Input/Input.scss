@@ -6,9 +6,9 @@
 	align-items: center;
 
 	input {
-		height: 16px;
-		font-size: 16px;
-		padding: 10px 90px 10px 14px;
+		height: var(--input-height);
+		font-size: var(--input-font-size);
+		padding: var(--input-padding);
 		border-radius: var(--input-border-radius);
 		border: 1px solid var(--input-border-color);
 		color: var(--input-border-color);
@@ -17,12 +17,12 @@
 		width: 100%;
 
 		&:hover {
-			border-color: #b6b6b6;
+			border-color: var(--input-border-color-hover);
 		}
 
 		&:focus {
-			border-color: #525252;
-			box-shadow: 0 0 0 1px #9c9c9c;
+			border-color: var(--input-border-color-focus);
+			box-shadow: var(--input-box-shadow-focus);
 		}
 	}
 
