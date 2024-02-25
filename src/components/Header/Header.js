@@ -1,11 +1,14 @@
+import cartIcon from '../../assets/cart.svg';
 import Button from '../Button';
-import CartButton from '../CartButton';
 import Input from '../Input';
 import template from './Header.hbs';
 import './Header.scss';
 
 const user = {
 	name: 'Роман',
+	cart: {
+		total: 300,
+	},
 };
 
 //const user = undefined;
@@ -39,14 +42,16 @@ class Header {
 		const searchInput = new Input(headerContent, 'afterbegin', 'Рестораны, еда', false, 'Найти');
 		searchInput.render();
 
-		const addressBlock = document.getElementById('address');
-		const cartButton = new CartButton(addressBlock, 300);
-		cartButton.render();
+		if (user.cart.total > 0) {
+			const cartBlock = document.getElementById('cart');
+			const cartButton = new Button(cartBlock, { content: `${user.cart.total} ₽`, icon: cartIcon });
+			cartButton.render();
+		}
 
 		if (user) return;
 
 		const profileBlock = document.getElementById('profile');
-		const loginButton = new Button(profileBlock, 'primary', 'Войти', () => alert('Login'));
+		const loginButton = new Button(profileBlock, { content: 'Войти', onClick: () => alert('Login') });
 		loginButton.render();
 	}
 }

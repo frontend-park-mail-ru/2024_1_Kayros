@@ -8,19 +8,45 @@ class Button {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
-	 * @param {string} content - текст внутри кнопки
-	 * @param {'primary' | 'secondary'} type - тип кнопки
-	 * @param {Function} onClick - событие при клике
+	 * @param {Object} params - параметры кнопки
+	 * @param {string} params.content - текст внутри кнопки
+	 * @param {'primary' | 'secondary'} params.type - тип кнопки
+	 * @param {boolean} params.disabled - событие при клике
+	 * @param {Function} params.onClick - событие при клике
+	 * @param {string} params.icon - иконка
 	 */
-	constructor(parent, type, content, onClick) {
+	constructor(parent, { content = '', type = 'primary', disabled = false, onClick, icon }) {
 		this.parent = parent;
 		this.content = content;
 		this.type = type;
 		this.onClick = onClick;
+		this.disabled = disabled;
+		this.icon = icon;
+		this.id = this.getUID();
 	}
 
+	/**
+	 * Создание уникального идентификатора по родительскому id
+	 * @returns уникальный идентификатор для кнопки
+	 */
+	getUID() {
+		const currentButtons = this.parent.getElementsByClassName('btn');
+		let maxID = 0;
+
+		[...currentButtons].forEach((btn) => {
+			const btnId = Number(btn.id.split('_')[1]);
+
+			if (btnId > maxID) maxID = btnId;
+		});
+
+		return this.parent.id + '-btn_' + (maxID + 1);
+	}
+
+	/**
+	 * Получение html компонента
+	 */
 	getHTML() {
-		return template({ content: this.content, type: 'btn-' + this.type });
+		return template({ id: this.id, content: this.content, type: 'btn-' + this.type, icon: this.icon });
 	}
 
 	/**
@@ -29,9 +55,13 @@ class Button {
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const customButtons = this.parent.getElementsByClassName('btn-custom');
+		const currentButton = document.getElementById(this.id);
 
-		customButtons[customButtons.length - 1].onclick = this.onClick;
+		if (this.disabled) {
+			currentButton.disabled = true;
+		}
+
+		currentButton.onclick = this.onClick;
 	}
 }
 

@@ -19,10 +19,10 @@ class Restaurants {
 		const pass = new Input(example, 'beforeend', 'Пароль', true);
 		pass.render();
 
-		const button1 = new Button(example, 'primary', 'Нажми на меня 1', () => alert('1'));
+		const button1 = new Button(example, { content: 'Нажми на меня 1', onClick: () => alert('1'), disabled: true });
 		button1.render();
 
-		const button2 = new Button(example, 'primary', 'Нажми на меня 2', () => alert('2'));
+		const button2 = new Button(example, { content: 'Нажми на меня 2', onClick: () => alert('2') });
 		button2.render();
 	}
 }

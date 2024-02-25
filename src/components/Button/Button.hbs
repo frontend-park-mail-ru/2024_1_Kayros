@@ -1,1 +1,7 @@
-<button class="btn-custom {{this.type}}" type="button">{{this.content}}</button>
+<button class="btn {{this.type}}" id={{this.id}} type="button">
+	{{#if this.icon}}
+		<img src={{this.icon}} type="icon" alt="cart" />
+	{{/if}}
+
+	<span>{{this.content}}</span>
+</button>
