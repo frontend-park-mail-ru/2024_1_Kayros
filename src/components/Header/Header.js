@@ -1,6 +1,7 @@
 import cartIcon from '../../assets/cart.svg';
 import Button from '../Button';
 import Input from '../Input';
+import Profile from '../Profile';
 import template from './Header.hbs';
 import './Header.scss';
 
@@ -48,11 +49,15 @@ class Header {
 			cartButton.render();
 		}
 
-		if (user) return;
+		const profileBlock = document.getElementById('profileBlock');
 
-		const profileBlock = document.getElementById('profile');
-		const loginButton = new Button(profileBlock, { content: 'Войти', onClick: () => alert('Login') });
-		loginButton.render();
+		if (user) {
+			const profile = new Profile(profileBlock);
+			profile.render();
+		} else {
+			const loginButton = new Button(profileBlock, { content: 'Войти' });
+			loginButton.render();
+		}
 	}
 }
 

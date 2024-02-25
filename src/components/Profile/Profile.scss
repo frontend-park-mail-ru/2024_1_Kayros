@@ -1,0 +1,43 @@
+@import "../../constants.scss";
+
+#profile {
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: 25px;
+	font-family: Montserrat;
+	font-weight: 600;
+	height: 100%;
+
+	button {
+		height: 100%;
+		width: 114px;
+		border-radius: var(--layout-border-radius);
+	}
+
+	span {
+		font-size: 18px;
+		cursor: pointer;
+		transition: all 0.3s;
+
+		&:hover {
+			color: #6f6f6f;
+		}
+	}
+}
+
+#avatarContainer {
+	display: flex;
+	align-items: center;
+	border-radius: 19px;
+	height: 38px;
+	width: 38px;
+	overflow: hidden;
+	background: linear-gradient(120deg, #faff00 10%, #42ff13 140%);
+	cursor: pointer;
+
+	img {
+		width: 100%;
+		margin: 0;
+	}
+}
