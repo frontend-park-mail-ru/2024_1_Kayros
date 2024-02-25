@@ -2,16 +2,16 @@ import template from './Loader.hbs';
 import './Loader.scss';
 
 /**
- * Логотип
+ * Лоадер
  */
 class Loader {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
-	 * @param {Object} params - параметры
-	 * @param {'s' | 'm' | 'l' | 'xl'} params.size - размер
+	 * @param {Object} params - параметры компонента
+	 * @param {'s' | 'm' | 'l' | 'xl'} params.size - размер лоадера
 	 */
-	constructor(parent, { size }) {
+	constructor(parent, { size = 's' }) {
 		this.parent = parent;
 		this.size = size;
 	}
