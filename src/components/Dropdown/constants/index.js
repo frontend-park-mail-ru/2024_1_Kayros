@@ -1,4 +1,4 @@
-export const openProfileSlideOptions = [
+export const OPEN_PROFILE_SLIDE_OPTIONS = [
 	[{ width: '124px' }, { width: '258px' }],
 	{
 		duration: 250,
@@ -6,7 +6,7 @@ export const openProfileSlideOptions = [
 	},
 ];
 
-export const closeProfileSlideOptions = [
+export const CLOSE_PROFILE_SLIDE_OPTIONS = [
 	[{ width: '124px' }],
 	{
 		duration: 250,

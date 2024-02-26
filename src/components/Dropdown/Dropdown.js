@@ -1,6 +1,6 @@
 import template from './Dropdown.hbs';
 import './Dropdown.scss';
-import { closeProfileSlideOptions, openProfileSlideOptions } from './utils';
+import { OPEN_PROFILE_SLIDE_OPTIONS, CLOSE_PROFILE_SLIDE_OPTIONS } from './constants';
 
 const dropdownItems = [{ name: 'Выйти', exit: true }];
 
@@ -25,7 +25,7 @@ class Dropdown {
 
 		element.className = 'dropdown dropdown-open';
 		this.isOpen = true;
-		this.parent.animate(...openProfileSlideOptions);
+		this.parent.animate(...OPEN_PROFILE_SLIDE_OPTIONS);
 	}
 
 	close(element) {
@@ -33,7 +33,7 @@ class Dropdown {
 
 		element.className = 'dropdown';
 		this.isOpen = false;
-		this.parent.animate(...closeProfileSlideOptions);
+		this.parent.animate(...CLOSE_PROFILE_SLIDE_OPTIONS);
 	}
 
 	/**
