@@ -69,13 +69,13 @@ class Dropdown {
 			this.close(dropdown);
 		});
 
-		window.addEventListener('keydown', closeOnEsc);
-
 		const closeOnEsc = (event) => {
 			if (event.key === 'Escape') {
 				this.close(dropdown);
 			}
 		};
+
+		window.addEventListener('keydown', closeOnEsc);
 	}
 }
 
