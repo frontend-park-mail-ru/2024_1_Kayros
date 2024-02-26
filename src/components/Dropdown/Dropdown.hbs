@@ -1,0 +1,15 @@
+<div id="{{this.id}}" class="dropdown {{this.open}}">
+	<div id="items">
+		{{#each items}}
+			{{#if this.exit}}
+				<div class="link exit">
+					<span>{{this.name}}</span>
+				</div>
+			{{else}}
+				<div class="link">
+					<span>{{this.name}}</span>
+				</div>
+			{{/if}}
+		{{/each}}
+	</div>
+</div>

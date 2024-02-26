@@ -1,0 +1,39 @@
+.loader {
+	border: 2px solid transparent;
+	border-top: 2px solid var(--brand);
+	border-left: 2px solid var(--brand);
+	border-bottom: 2px solid var(--brand);
+	border-radius: 50%;
+	animation: animate 0.7s linear infinite;
+	cursor: pointer;
+
+	&.loader-s {
+		width: 16px;
+		height: 16px;
+	}
+
+	&.loader-m {
+		width: 32px;
+		height: 32px;
+	}
+
+	&.loader-l {
+		width: 40px;
+		height: 40px;
+	}
+
+	&.loader-xl {
+		width: 60px;
+		height: 60px;
+	}
+
+	@keyframes animate {
+		0% {
+			transform: rotate(0deg);
+		}
+
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+}

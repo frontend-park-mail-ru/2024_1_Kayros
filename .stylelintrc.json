@@ -1,0 +1,11 @@
+{
+	"extends": ["stylelint-config-standard-scss"],
+	"ignoreFiles": ["/generated/*"],
+	"rules": {
+		"selector-class-pattern": null,
+		"custom-property-empty-line-before": null,
+		"scss/at-import-partial-extension": null,
+		"color-no-hex": true,
+		"color-named": "never"
+	}
+}

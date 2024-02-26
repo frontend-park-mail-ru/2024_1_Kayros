@@ -10,9 +10,10 @@ module.exports = {
 	trailingComma: 'all',
 	overrides: [
 		{
-			files: ['**.*.css', '*.css'],
+			files: ['**.*.scss', '*.scss', '**.*.css', '*.css', '*.hbs'],
 			options: {
 				singleQuote: false,
+        endOfLine: 'auto',
 			},
 		},
 	],

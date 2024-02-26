@@ -1,0 +1,85 @@
+#input-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+
+	input {
+		height: var(--input-height);
+		font-size: var(--input-font-size);
+		padding: var(--input-padding);
+		border-radius: var(--input-border-radius);
+		border: 1px solid var(--input-border-color);
+		color: var(--input-border-color);
+		outline: none;
+		transition: all 0.3s;
+		width: 100%;
+
+		&:hover {
+			border-color: var(--input-border-color-hover);
+		}
+
+		&:focus {
+			border-color: var(--input-border-color-focus);
+			box-shadow: var(--input-box-shadow-focus);
+		}
+	}
+
+	#search-button {
+		position: absolute;
+		right: 4px;
+		border-radius: var(--button-border-radius);
+
+		&:active {
+			background: var(--button-bg-active);
+			transform: scale(0.9);
+		}
+
+		& ~ input {
+			padding: var(--input-search-padding);
+		}
+	}
+
+	#btn-eye {
+		display: flex;
+		position: absolute;
+		border: none;
+		background: none;
+		right: 15px;
+		cursor: pointer;
+		transition: all 0.3s;
+	}
+}
+
+#eye-open {
+	transition:
+		opacity 0.2s,
+		transform 0.3s;
+
+	.visible & {
+		transform: scale(1);
+		opacity: 1;
+	}
+
+	.hidden & {
+		transform: scale(0);
+		opacity: 0;
+	}
+}
+
+#eye-close {
+	transition:
+		opacity 0.2s,
+		transform 0.3s;
+
+	.visible & {
+		position: absolute;
+		transform: scale(0);
+		opacity: 0;
+	}
+
+	.hidden & {
+		position: absolute;
+		transform: scale(1);
+		opacity: 1;
+	}
+}

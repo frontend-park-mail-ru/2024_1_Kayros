@@ -1,18 +1,16 @@
-import * as path from 'path';
-import { fileURLToPath } from 'url';
-import Dotenv from 'dotenv';
-import ESLintWebpackPlugin from 'eslint-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const buildPath = path.resolve(__dirname, 'dist');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 Dotenv.config({ path: './.env.development' });
 
-export default {
+module.exports = {
 	entry: path.resolve(__dirname, './src/index.js'),
 	target: isDevelopment ? 'web' : 'browserslist',
 	output: {
@@ -43,6 +41,9 @@ export default {
 				test: /\.js$/,
 				exclude: /(node_modules|dist)/,
 				use: 'babel-loader',
+				resolve: {
+					fullySpecified: false,
+				},
 			},
 		],
 	},
@@ -61,6 +62,10 @@ export default {
 		new MiniCssExtractPlugin({
 			filename: '[name]-[hash].css',
 		}),
-		new ESLintWebpackPlugin(),
+		new CopyWebpackPlugin({ patterns: [{ from: 'src/assets', to: 'assets' }] }),
 	].filter(Boolean),
+
+	resolve: {
+		extensions: ['.js'],
+	},
 };

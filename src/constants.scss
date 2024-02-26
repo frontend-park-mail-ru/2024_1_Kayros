@@ -1,0 +1,44 @@
+:root {
+	--brand: #555;
+
+	--layout-border-radius: 30px;
+	--layout-bg-color: #f6f6f6;
+
+	--link-color: #636363;
+	--link-color-active: #2d2d2d;
+
+	--input-border-radius: 18px;
+	--input-height: 16px;
+	--input-font-size: 16px;
+	--input-padding: 10px 14px 10px 14px;
+	--input-search-padding: 10px 100px 10px 14px;
+	--input-border-color: #545454;
+	--input-border-color-hover: #b6b6b6;
+	--input-border-color-focus: #525252;
+	--input-box-shadow-focus: 0 0 0 1px #9c9c9c;
+	--input-placeholder-color: #545454;
+
+	--button-border-radius: 14px;
+	--button-bg-color: #2d2d2d;
+	--button-text-color: #fff;
+	--button-padding: 6px 18px;
+	--button-font-size: 16px;
+
+	--button-bg-hover: #545454;
+	--button-bg-active: #3a3a3a;
+	--button-bg-disabled: #ddd;
+	--button-bg-disabled-hover: #cbcbcb;
+	--button-color-disabled: #1b1b1b;
+
+	--address-bg: #fff;
+	--address-ouline-hover: #757575;
+
+	--avatar-bg-linear-color-first: #faff00;
+	--avatar-bg-linear-color-second: #42ff13;
+
+	--header-profile-name-color-hover: #6f6f6f;
+
+	--dropdown-width: 300px;
+	--dropdown-bg-color: #fff;
+	--dropdown-box-shadow: 0px 6px 10px 0px #b9b9b9;
+}
