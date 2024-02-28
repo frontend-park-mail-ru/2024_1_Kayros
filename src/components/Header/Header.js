@@ -51,7 +51,7 @@ class Header {
 
 		searchInput.render();
 
-		if (user.cart.total > 0) {
+		if (user?.cart && user.cart.total > 0) {
 			const cartBlock = document.getElementById('cart');
 			const cartButton = new Button(cartBlock, {
 				id: 'cart-button',

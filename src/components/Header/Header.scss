@@ -29,6 +29,7 @@
 
 #header-content {
 	display: flex;
+	position: relative;
 	align-items: center;
 	gap: 27px;
 	padding: 14px 15px;
@@ -40,6 +41,12 @@
 
 	#cart {
 		width: 130px;
+
+		span {
+			color: var(--cart-button-color);
+			font-size: 18px;
+			font-family: Roboto, sans-serif;
+		}
 	}
 }
 
@@ -62,4 +69,6 @@
 
 #profile-block {
 	margin-left: auto;
+	position: relative;
+	width: 90px;
 }
