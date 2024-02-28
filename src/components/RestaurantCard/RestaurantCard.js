@@ -10,16 +10,16 @@ class RestaurantCard {
 	 * @param {Element} parent - родительский элемент
 	 * @param {Object} params - параметры компонента
 	 * @param {string} image - URL изображения
-	 * @param {string} title - заголовок карточки
-	 * @param {string} subtitle - описание карточки
+	 * @param {string} name - название ресторана (заголовок карточки)
+	 * @param {string} description - описание ресторана
 	 * @param {string} rating - рейтинг ресторана
 	 */
 
-	constructor(parent, { image, title, subtitle, rating }) {
+	constructor(parent, { image, name, description, rating }) {
 		this.parent = parent;
 		this.image = image;
-		this.title = title;
-		this.subtitle = subtitle;
+		this.name = name;
+		this.description = description;
 		this.rating = rating;
 	}
 
@@ -27,7 +27,7 @@ class RestaurantCard {
 	 * Получение html компонента
 	 */
 	getHTML() {
-		return template({ image: this.image, title: this.title, subtitle: this.subtitle, rating: this.rating });
+		return template({ image: this.image, title: this.name, subtitle: this.description, rating: this.rating });
 	}
 
 	/**
