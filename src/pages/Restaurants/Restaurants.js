@@ -1,3 +1,5 @@
+import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
+import RESTAURANTS_MOCK from '../../mocks/restaurants';
 import template from './Restaurants.hbs';
 import './Restaurants.scss';
 
@@ -18,6 +20,21 @@ class Restaurants {
 	 */
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', template());
+
+		const restaurantsElement = document.getElementById('restaurants');
+
+		const restaurants = RESTAURANTS_MOCK;
+
+		restaurants.forEach((restaurant) => {
+			const restaurantCard = new RestaurantCard(restaurantsElement, {
+				image: restaurant.image,
+				title: restaurant.name,
+				subtitle: restaurant.description,
+				rating: restaurant.rating,
+			});
+
+			restaurantCard.render();
+		});
 	}
 }
 

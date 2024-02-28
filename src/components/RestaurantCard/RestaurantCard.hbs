@@ -1,0 +1,28 @@
+<div id="restaurant-card">
+
+	<div id="image-container">
+		{{#if this.image}}
+			<img alt="card-img" src={{this.image}} />
+		{{else}}
+			<img id="default-img" alt="card-img" src="assets/mocks/restaurants/default.jpg" />
+		{{/if}}
+	</div>
+
+	<div id="card-content">
+		<div id="card-title">
+			{{this.title}}
+		</div>
+
+		<div id="rating-container">
+			<img src="assets/rating-icon.svg" alt="rating-icon" />
+			<span>{{this.rating}}</span>
+		</div>
+
+		{{#if this.subtitle}}
+			<span id="card-subtitle">
+				{{this.subtitle}}
+			</span>
+		{{/if}}
+	</div>
+
+</div>
