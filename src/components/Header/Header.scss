@@ -1,12 +1,29 @@
 #header {
 	display: flex;
 	align-items: center;
-	margin-bottom: 36px;
 	gap: 100px;
-	width: 100%;
+	transition: all 0.3s;
+
+	&:not(.sticky) {
+		border-bottom: 1px solid var(--white);
+	}
 
 	#logo {
-		margin-left: 32px;
+		padding-left: 52px;
+	}
+}
+
+.sticky {
+	position: fixed;
+	top: 0;
+	z-index: 10;
+	background: var(--layout-bg-color);
+	width: 100%;
+	border-bottom: 1px solid var(--header-sticky-border-color);
+	box-shadow: var(--header-box-shadow);
+
+	& + #content {
+		padding-top: 100px;
 	}
 }
 
@@ -19,6 +36,7 @@
 	height: 38px;
 	border-radius: var(--layout-border-radius);
 	background: var(--layout-bg-color);
+	margin-right: 34px;
 
 	#cart {
 		width: 130px;

@@ -71,6 +71,16 @@ class Header {
 			const loginButton = new Button(profileBlock, { id: 'header-login-button', content: 'Войти' });
 			loginButton.render();
 		}
+
+		const headerElement = document.getElementById('header');
+
+		window.addEventListener('scroll', () => {
+			if (window.scrollY > 34) {
+				headerElement.className = 'sticky';
+			} else {
+				headerElement.className = '';
+			}
+		});
 	}
 }
 
