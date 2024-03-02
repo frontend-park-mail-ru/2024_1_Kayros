@@ -10,14 +10,13 @@ class Ajax {
 	 * @param {void} callback - функция-коллбэк для обработки результатов запроса
 	 */
 	async get(url, callback) {
-		const request = new Request(url, {
-			method: 'GET',
-		});
-
-		await fetch(request)
-			.then((res) => res.json())
-			.then((data) => callback(JSON.parse(data)))
-			.catch(() => callback(RESTAURANTS_MOCK));
+		try {
+			const response = await fetch(url);
+			const result = await response.json();
+			callback(result);
+		} catch (e) {
+			callback(RESTAURANTS_MOCK);
+		}
 	}
 }
 

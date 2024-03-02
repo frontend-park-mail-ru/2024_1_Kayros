@@ -1,7 +1,7 @@
-import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 import ajax from '../../modules/ajax';
 import urls from '../../modules/urls';
 import template from './Restaurants.hbs';
+import RestaurantCard from './components/RestaurantCard';
 import './Restaurants.scss';
 
 /**
@@ -20,8 +20,13 @@ class Restaurants {
 	 * Отрисовка карточек ресторанов
 	 */
 	renderData(items) {
+		const restaurantsElement = document.getElementById('restaurants');
+
+		if (!items) {
+			restaurantsElement.innerText = 'Нет доступных ресторанов';
+		}
+
 		items.forEach((item) => {
-			const restaurantsElement = document.getElementById('restaurants');
 			const restaurantCard = new RestaurantCard(restaurantsElement, item);
 			restaurantCard.render();
 		});
@@ -41,7 +46,6 @@ class Restaurants {
 	 */
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', template());
-
 		this.getData();
 	}
 }
