@@ -11,6 +11,7 @@ const user = {
 	cart: {
 		total: 300,
 	},
+	address: 'ул.Тверская, д.2',
 };
 
 /**
@@ -29,7 +30,7 @@ class Header {
 	 * Получение html компонента
 	 */
 	getHTML() {
-		return template({ address: 'ул.Тверская, д.2', user: { name: user?.name } });
+		return template({ user: { address: user?.address } });
 	}
 
 	/**

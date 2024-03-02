@@ -61,6 +61,7 @@
 	outline: 1px solid transparent;
 	transition: all 0.3s;
 	cursor: pointer;
+	margin-left: auto;
 
 	&:hover {
 		outline: 1px solid var(--address-ouline-hover);
@@ -68,7 +69,6 @@
 }
 
 #profile-block {
-	margin-left: auto;
 	position: relative;
-	width: 90px;
+	min-width: 30px;
 }
