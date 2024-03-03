@@ -76,7 +76,7 @@ class Header {
 		const headerElement = document.getElementById('header');
 
 		window.addEventListener('scroll', () => {
-			if (window.scrollY > 34) {
+			if (window.scrollY > 26) {
 				headerElement.className = 'sticky';
 			} else {
 				headerElement.className = '';

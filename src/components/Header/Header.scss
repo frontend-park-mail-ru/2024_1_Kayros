@@ -9,7 +9,7 @@
 	width: 100%;
 
 	&:not(.sticky) {
-		border-bottom: 1px solid var(--white);
+		border-bottom: 1px solid transparent;
 	}
 
 	#logo {
