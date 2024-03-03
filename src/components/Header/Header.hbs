@@ -7,7 +7,9 @@
 		<div id="searchInput"></div>
 
 		<div id="address">
-			<span>{{this.address}}</span>
+			{{#if this.user.address}}
+				<span>{{this.user.address}}</span>
+			{{/if}}
 		</div>
 
 		<div id="cart"></div>

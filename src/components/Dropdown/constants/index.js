@@ -1,5 +1,5 @@
 export const OPEN_PROFILE_SLIDE_OPTIONS = [
-	[{ width: '124px' }, { width: '258px' }],
+	[{ width: '124px' }, { width: '260px' }],
 	{
 		duration: 250,
 		fill: 'forwards',

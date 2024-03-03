@@ -23,7 +23,12 @@ class Dropdown {
 	open(element) {
 		if (this.isOpen) return;
 
+		const name = document.getElementById('name');
+		name.style.opacity = 1;
+		name.style.pointerEvents = 'all';
+
 		element.className = 'dropdown dropdown-open';
+
 		this.isOpen = true;
 		this.parent.animate(...OPEN_PROFILE_SLIDE_OPTIONS);
 	}
@@ -31,7 +36,12 @@ class Dropdown {
 	close(element) {
 		if (!this.isOpen) return;
 
+		const name = document.getElementById('name');
+		name.style.opacity = 0;
+		name.style.pointerEvents = 'none';
+
 		element.className = 'dropdown';
+
 		this.isOpen = false;
 		this.parent.animate(...CLOSE_PROFILE_SLIDE_OPTIONS);
 	}

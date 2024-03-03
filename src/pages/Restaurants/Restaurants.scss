@@ -1,6 +1,8 @@
 #restaurants {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	width: 30%;
+	display: grid;
+	gap: 50px;
+	grid-template-columns: repeat(auto-fit, 300px);
+	justify-content: space-evenly;
+	color: var(--brand);
+	font-size: 18px;
 }

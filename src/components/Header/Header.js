@@ -11,6 +11,7 @@ const user = {
 	cart: {
 		total: 300,
 	},
+	address: 'ул.Тверская, д.2',
 };
 
 /**
@@ -29,7 +30,7 @@ class Header {
 	 * Получение html компонента
 	 */
 	getHTML() {
-		return template({ address: 'ул.Тверская, д.2', user: { name: user?.name } });
+		return template({ user: { address: user?.address } });
 	}
 
 	/**
@@ -51,7 +52,7 @@ class Header {
 
 		searchInput.render();
 
-		if (user.cart.total > 0) {
+		if (user?.cart && user.cart.total > 0) {
 			const cartBlock = document.getElementById('cart');
 			const cartButton = new Button(cartBlock, {
 				id: 'cart-button',
@@ -71,6 +72,16 @@ class Header {
 			const loginButton = new Button(profileBlock, { id: 'header-login-button', content: 'Войти' });
 			loginButton.render();
 		}
+
+		const headerElement = document.getElementById('header');
+
+		window.addEventListener('scroll', () => {
+			if (window.scrollY > 26) {
+				headerElement.className = 'sticky';
+			} else {
+				headerElement.className = '';
+			}
+		});
 	}
 }
 
