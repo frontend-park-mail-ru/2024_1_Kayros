@@ -1,3 +1,4 @@
+import Button from '../../components/Button';
 import template from './NotFound.hbs';
 import './NotFound.scss';
 
@@ -26,6 +27,9 @@ class NotFound {
 		 */
 		const html = template();
 		this.parent.insertAdjacentHTML('beforeend', html);
+		const buttonBlock = document.getElementById('return-button');
+		const returnButton = new Button(buttonBlock, { id: 'returnButton', content: 'Вернуться на главную' });
+		returnButton.render();
 	}
 }
 
