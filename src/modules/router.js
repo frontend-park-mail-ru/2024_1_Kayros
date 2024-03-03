@@ -15,8 +15,8 @@ class Router {
 
 	/**
 	 * Добавляет маршрут в список маршрутов роутера.
-	 * @param {string} path Путь маршрута.
-	 * @param {Function} component Компонент, соответствующий маршруту.
+	 * @param {string} path - Путь маршрута.
+	 * @param {Function} component - Компонент, соответствующий маршруту.
 	 */
 	addRoute(path, component) {
 		this.routes.push({ path, component });
@@ -25,7 +25,7 @@ class Router {
 
 	/**
 	 * Выполняет навигацию по указанному пути.
-	 * @param {string} path Путь для навигации.
+	 * @param {string} path - Путь для навигации.
 	 */
 	navigate(path) {
 		window.history.pushState({}, '', path);
