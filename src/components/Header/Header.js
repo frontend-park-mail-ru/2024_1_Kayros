@@ -1,5 +1,5 @@
 import cartIcon from '../../assets/cart.svg';
-import { router } from '../../router';
+import { router } from '../../modules/router';
 import Button from '../Button';
 import Input from '../Input';
 import Logo from '../Logo/Logo';
@@ -48,9 +48,7 @@ class Header {
 		 * Обработка нажатия на лого
 		 */
 		logoBlock.addEventListener('click', () => {
-			if (!window.location.pathname.includes('/login')) {
-				router.navigate('/restaurants');
-			}
+			router.navigate('/restaurants');
 		});
 
 		const searchBlock = document.getElementById('searchInput');

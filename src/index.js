@@ -1,26 +1,24 @@
 import '@fontsource/roboto';
 import '@fontsource/montserrat';
-import Layout from './components/Layout/Layout';
-import LoginPage from './pages/Login/Login';
-import RegisterPage from './pages/Register/Register';
-import RestaurantsPage from './pages/Restaurants';
-import { router } from './router';
+import Layout from './components/Layout';
+import { router } from './modules/router';
+import routes from './routes';
 import './global.scss';
 
 const root = document.getElementById('root');
 const layout = new Layout(root);
 layout.render();
 
-// Регистрация маршрутов
-router
-	.addRoute('/restaurants', RestaurantsPage)
-	.addRoute('/login', LoginPage)
-	.addRoute('/register', RegisterPage)
-	.navigate(window.location.pathname);
+Object.entries(routes).forEach(([path, component]) => {
+	router.addRoute(path, component);
+});
 
-if (!window.location.pathname || window.location.pathname === '/') {
-	router.navigate('/restaurants');
+let initialPath;
+
+if (window.location.pathname === '/' || window.location.pathname === '') {
+	initialPath = '/restaurants';
+} else {
+	initialPath = window.location.pathname;
 }
-// //const content = document.getElementById('content');
-// //const restaurantsPage = new RestaurantsPage(content);
-// //restaurantsPage.render();
+
+router.navigate(initialPath);
