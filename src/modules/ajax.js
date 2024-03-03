@@ -14,7 +14,9 @@ class Ajax {
 			const response = await fetch(url);
 			const result = await response.json();
 			callback(result);
-		} catch (e) {
+		} catch (error) {
+			console.error(error);
+
 			callback(RESTAURANTS_MOCK);
 		}
 	}

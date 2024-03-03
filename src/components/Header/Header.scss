@@ -1,6 +1,9 @@
 #header {
 	display: flex;
 	align-items: center;
+	position: fixed;
+	top: 0;
+	z-index: 10;
 	gap: 100px;
 	transition: all 0.3s;
 
@@ -11,20 +14,17 @@
 	#logo {
 		padding-left: 52px;
 	}
-}
-
-.sticky {
-	position: fixed;
-	top: 0;
-	z-index: 10;
-	background: var(--layout-bg-color);
-	width: 100%;
-	border-bottom: 1px solid var(--header-sticky-border-color);
-	box-shadow: var(--header-box-shadow);
 
 	& + #content {
 		padding-top: 100px;
 	}
+}
+
+.sticky {
+	background: var(--layout-bg-color);
+	width: 100%;
+	border-bottom: 1px solid var(--header-sticky-border-color);
+	box-shadow: var(--header-box-shadow);
 }
 
 #header-content {
