@@ -5,7 +5,8 @@
 	top: 0;
 	z-index: 10;
 	gap: 100px;
-	transition: all 0.3s;
+	transition: all 0.15s;
+	width: 100%;
 
 	&:not(.sticky) {
 		border-bottom: 1px solid var(--white);
@@ -16,13 +17,12 @@
 	}
 
 	& + #content {
-		padding-top: 100px;
+		padding-top: 60px;
 	}
 }
 
 .sticky {
 	background: var(--layout-bg-color);
-	width: 100%;
 	border-bottom: 1px solid var(--header-sticky-border-color);
 	box-shadow: var(--header-box-shadow);
 }
