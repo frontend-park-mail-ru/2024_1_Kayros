@@ -20,6 +20,8 @@
 
 [Жиленков Илья](https://github.com/ilyushkaaa) - _Backend_
 
+[Бирюков Иван](https://github.com/ilyushkaaa) - _UX_
+
  - _UX_
 
 ## Ссылки
