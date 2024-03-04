@@ -10,10 +10,6 @@ class SignIn {
 	 * @param {Element} parent Элемент DOM, в который будет рендериться страница.
 	 */
 	constructor(parent) {
-		/**
-		 * Родительский элемент для страницы.
-		 * @type {Element}
-		 */
 		this.parent = parent;
 	}
 	/**

@@ -11,10 +11,6 @@ class NotFound {
 	 * @param {Element} parent Элемент DOM, в который будет рендериться страница "Не найдено".
 	 */
 	constructor(parent) {
-		/**
-		 * Родительский элемент для страницы.
-		 * @type {Element}
-		 */
 		this.parent = parent;
 	}
 	/**
