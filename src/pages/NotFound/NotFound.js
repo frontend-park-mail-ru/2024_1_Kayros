@@ -21,10 +21,6 @@ class NotFound {
 	 * Рендер страницы.
 	 */
 	render() {
-		/**
-		 * HTML-контент, полученный из шаблона Handlebars.
-		 * @type {string}
-		 */
 		const html = template();
 		this.parent.insertAdjacentHTML('beforeend', html);
 		const buttonBlock = document.getElementById('return-button');

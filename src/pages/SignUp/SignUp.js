@@ -21,10 +21,6 @@ class SignUp {
 	 * Рендер страницы.
 	 */
 	render() {
-		/**
-		 * HTML-контент, полученный из шаблона Handlebars.
-		 * @type {string}
-		 */
 		const html = template();
 		this.parent.insertAdjacentHTML('beforeend', html);
 	}
