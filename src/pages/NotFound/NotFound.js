@@ -20,7 +20,7 @@ class NotFound {
 		const html = template();
 		this.parent.insertAdjacentHTML('beforeend', html);
 		const buttonBlock = document.getElementById('return-button');
-		const returnButton = new Button(buttonBlock, { id: 'returnButton', content: 'Вернуться на главную' });
+		const returnButton = new Button(buttonBlock, { id: 'return-to-home', content: 'Вернуться на главную' });
 		returnButton.render();
 	}
 }
