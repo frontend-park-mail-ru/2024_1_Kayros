@@ -2,7 +2,7 @@ import '@fontsource/roboto';
 import '@fontsource/montserrat';
 import Layout from './components/Layout';
 import { router } from './modules/router';
-import routes from './routes';
+import { routes, urls } from './routes';
 import './global.scss';
 
 const root = document.getElementById('root');
@@ -15,8 +15,8 @@ Object.entries(routes).forEach(([path, component]) => {
 
 let initialPath;
 
-if (window.location.pathname === '/' || window.location.pathname === '') {
-	initialPath = '/restaurants';
+if (window.location.pathname === urls.base) {
+	initialPath = urls.restaurants;
 } else {
 	initialPath = window.location.pathname;
 }
