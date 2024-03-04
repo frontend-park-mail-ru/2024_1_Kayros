@@ -1,4 +1,3 @@
-import notificationApi from '../components/Notification/Notification';
 import RESTAURANTS_MOCK from '../mocks/restaurants';
 
 /**
@@ -18,8 +17,6 @@ class Ajax {
 		} catch (error) {
 			console.error(error);
 			callback(RESTAURANTS_MOCK);
-
-			notificationApi.open({ duration: 2, title: 'Ошибка сервера', description: error });
 		}
 	}
 }

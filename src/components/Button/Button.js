@@ -48,7 +48,7 @@ class Button {
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const currentButton = document.getElementById(this.id);
+		const currentButton = this.parent.querySelector(`#${this.id}`);
 
 		currentButton.onclick = this.onClick;
 	}

@@ -4,6 +4,7 @@ import { urls } from '../../routes/index.js';
 import Button from '../Button';
 import Input from '../Input';
 import Logo from '../Logo/Logo';
+import notificationApi from '../Notification/Notification';
 import Profile from '../Profile';
 import template from './Header.hbs';
 import './Header.scss';
@@ -91,6 +92,15 @@ class Header {
 				headerElement.className = '';
 			}
 		});
+
+		// EXPERIMENTAL
+		const testButton = new Button(searchBlock, {
+			id: 'test',
+			content: 'notify',
+			onClick: () => notificationApi.open({ duration: 0, title: 'Ошибка сервера', description: 'Lorem ipsum' }),
+		});
+
+		testButton.render();
 	}
 }
 
