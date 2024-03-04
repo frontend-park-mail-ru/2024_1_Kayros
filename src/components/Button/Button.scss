@@ -35,6 +35,11 @@
 		}
 	}
 
+	&.btn-clear {
+		background: transparent;
+		padding: 0;
+	}
+
 	&:disabled {
 		background: var(--button-bg-disabled);
 		cursor: not-allowed;

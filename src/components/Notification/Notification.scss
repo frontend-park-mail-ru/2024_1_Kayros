@@ -30,7 +30,7 @@
 	gap: 10px;
 }
 
-#notification-title {
+.notification-title {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -40,8 +40,6 @@
 
 	button {
 		transition: filter 0.2s;
-		background: transparent;
-		padding: 0;
 
 		&:hover {
 			filter: brightness(0.5);

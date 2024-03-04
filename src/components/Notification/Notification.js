@@ -10,10 +10,10 @@ class Notification {
 	 * Конструктор класса
 	 */
 	constructor() {
-		this.isOpen = false;
 		this.parent = document.getElementById('root');
 		this.position = 'bottom-right';
 		this.id = 'root-notification';
+		this.count = 0;
 	}
 
 	/**
@@ -21,9 +21,8 @@ class Notification {
 	 */
 	getHTML(params) {
 		return template({
-			open: '',
 			position: this.position,
-			id: this.id,
+			id: this.id + '-' + this.count,
 			...params,
 		});
 	}
@@ -32,15 +31,17 @@ class Notification {
 	 * Функция для закрытия уведомления
 	 */
 	close() {
-		if (!this.isOpen) return;
+		const openNotifications = document.getElementsByClassName('notification-open');
+		const lastNotification = openNotifications[openNotifications.length - 1];
+		lastNotification?.classList.remove('notification-open');
 
-		const element = document.getElementById('root-notification');
-		element.classList.remove('notification-open');
-		this.isOpen = false;
+		if (openNotifications.length == 1) {
+			this.count = 0;
+		}
 
 		setTimeout(() => {
-			element.remove();
-		}, 300);
+			lastNotification?.remove();
+		}, 50);
 	}
 
 	/**
@@ -51,25 +52,24 @@ class Notification {
 	 * @param {string} description - описание
 	 */
 	open({ duration, ...params }) {
-		if (this.isOpen) return;
-
+		this.count++;
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML(params));
 
-		const element = document.getElementById('root-notification');
-		const notificationTitle = document.getElementById('notification-title');
+		const element = document.getElementById(`root-notification-${this.count}`);
+		const notificationTitle = element.getElementsByClassName('notification-title')[0];
 
 		const closeButton = new Button(notificationTitle, {
 			id: 'notification-close',
 			icon: 'assets/close.svg',
 			onClick: () => this.close(),
+			style: 'clear',
 		});
 
 		closeButton.render();
 
 		setTimeout(() => {
 			element.classList.add('notification-open');
-			this.isOpen = true;
-		}, 100);
+		}, 50);
 
 		if (duration != 0) {
 			setTimeout(() => {
