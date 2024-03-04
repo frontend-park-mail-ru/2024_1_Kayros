@@ -1,0 +1,24 @@
+import template from './SignIn.hbs';
+import './SignIn.scss';
+
+/**
+ * Страница входа.
+ */
+class SignIn {
+	/**
+	 * Создает экземпляр страницы.
+	 * @param {Element} parent Элемент DOM, в который будет рендериться страница.
+	 */
+	constructor(parent) {
+		this.parent = parent;
+	}
+	/**
+	 * Рендер страницы.
+	 */
+	render() {
+		const html = template();
+		this.parent.insertAdjacentHTML('beforeend', html);
+	}
+}
+
+export default SignIn;

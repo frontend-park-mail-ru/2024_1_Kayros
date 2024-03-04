@@ -1,4 +1,6 @@
 import cartIcon from '../../assets/cart.svg';
+import { router } from '../../modules/router';
+import { urls } from '../../routes/index.js';
 import Button from '../Button';
 import Input from '../Input';
 import Logo from '../Logo/Logo';
@@ -42,6 +44,13 @@ class Header {
 		const logoBlock = document.getElementById('logoContainer');
 		const logo = new Logo(logoBlock);
 		logo.render();
+
+		/**
+		 * Обработка нажатия на лого
+		 */
+		logoBlock.addEventListener('click', () => {
+			router.navigate(urls.restaurants);
+		});
 
 		const searchBlock = document.getElementById('searchInput');
 		const searchInput = new Input(searchBlock, {
