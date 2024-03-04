@@ -1,4 +1,5 @@
 import Button from '../../components/Button';
+import { urls } from '../../routes/index.js';
 import template from './NotFound.hbs';
 import './NotFound.scss';
 
@@ -22,6 +23,14 @@ class NotFound {
 		const buttonBlock = document.getElementById('return-button');
 		const returnButton = new Button(buttonBlock, { id: 'return-to-home', content: 'Вернуться на главную' });
 		returnButton.render();
+
+		const returnToHomeButton = document.getElementById('return-to-home');
+
+		if (returnToHomeButton) {
+			returnToHomeButton.addEventListener('click', () => {
+				window.location.href = urls.base;
+			});
+		}
 	}
 }
 
