@@ -1,6 +1,6 @@
 .notification {
 	display: flex;
-	position: absolute;
+	position: fixed;
 	max-width: var(--notification-width);
 	height: fit-content;
 	border-radius: var(--notification-border-radius);
