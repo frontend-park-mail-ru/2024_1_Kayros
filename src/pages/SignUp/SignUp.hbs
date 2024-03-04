@@ -6,10 +6,13 @@
         <h1 class="signup-title">Регистрация</h1>
         <form id="sign-up-form" class="signup-form">
             <div id="email-input-container" class="input-container"></div>
+            <div class="error-message" id="email-error"></div> 
             <div id="password-input-container" class="input-container"></div>
+            <div class="error-message" id="password-error"></div> 
             <div id="confirm-password-input-container" class="input-container"></div>
+            <div class="error-message" id="confirm-password-error"></div> 
             <div id="sign-up-button-container" class="button-container"></div>
         </form>
-        <p class="signin-redirect">Уже зарегистрированы? <a href="/signin">Войти</a></p>
+        <p class="signin-redirect">Уже зарегистрированы? <a href="{{signInUrl}}">Войти</a></p>
     </div>
 </div>

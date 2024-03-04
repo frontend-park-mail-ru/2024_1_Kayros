@@ -1,6 +1,6 @@
 .logo-container-on-sign-up {
 	text-align: center;
-	margin-top: 20px;
+	padding-top: 40px;
 	margin-bottom: 20px;
 }
 
@@ -46,4 +46,12 @@
 .signup-page-container {
 	background-color: rgb(239 244 231);
 	min-height: 100vh;
+}
+
+.error-message {
+	color: rgb(255 0 0);
+	font-size: 14px;
+	margin: -18px 4px 20px;
+	text-align: left;
+	min-height: 10px;
 }
