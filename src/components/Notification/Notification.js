@@ -2,7 +2,7 @@ import Button from '../Button/Button';
 import template from './Notification.hbs';
 import './Notification.scss';
 
-const MAX_LIST_ELEMENTS_COUNT = 3;
+const MAX_LIST_ELEMENTS_COUNT = 4;
 
 /**
  * Всплывающее окошко с сообщением
@@ -13,8 +13,8 @@ class Notification {
 	 */
 	constructor() {
 		this.parent = document.getElementById('root');
-		this.position = 'bottom-right';
 		this.id = 'root-notification';
+		this.position = 'top-right';
 		this.count = 0;
 		this.list = true;
 	}
@@ -25,8 +25,8 @@ class Notification {
 	 */
 	getHTML(params) {
 		return template({
-			position: this.position,
 			id: this.id + '-' + this.count,
+			position: this.position,
 			...params,
 		});
 	}
@@ -63,7 +63,12 @@ class Notification {
 		let margin = openNotifications[0]?.offsetHeight + 15;
 
 		for (let i = openNotifications.length - 1; i >= 0; i--) {
-			openNotifications[i].style.marginTop = `${margin}px`;
+			if (this.position.includes('top')) {
+				openNotifications[i].style.marginTop = `${margin}px`;
+			} else {
+				openNotifications[i].style.marginBottom = `${margin}px`;
+			}
+
 			openNotifications[i].style.opacity = 1;
 
 			if (i > 0) margin += openNotifications[i].offsetHeight + 15;
@@ -80,7 +85,11 @@ class Notification {
 		let margin = 0;
 
 		for (let i = openNotifications.length - 1; i >= 0; i--) {
-			openNotifications[i].style.marginTop = `${margin}px`;
+			if (this.position.includes('top')) {
+				openNotifications[i].style.marginTop = `${margin}px`;
+			} else {
+				openNotifications[i].style.marginBottom = `${margin}px`;
+			}
 
 			margin += openNotifications[i].offsetHeight + 15;
 		}
@@ -91,21 +100,26 @@ class Notification {
 	 * @param {HTMLCollection} openNotifications - список открытых уведомлений
 	 */
 	animateCompressOnClose(openNotifications) {
-		const penult = openNotifications.length - 2;
+		const last = openNotifications.length - 1;
 
-		if (openNotifications[penult]) {
-			openNotifications[penult].style.marginTop = 0;
-			openNotifications[penult].style.opacity = 1;
+		if (openNotifications[last]) {
+			openNotifications[last].style.marginTop = '0px';
+			openNotifications[last].style.opacity = 1;
 		}
 
-		if (openNotifications[penult - 1]) {
-			openNotifications[penult - 1].style.marginTop = '10px';
-			openNotifications[penult - 1].style.opacity = 1;
+		if (openNotifications[last - 1]) {
+			openNotifications[last - 1].style.marginTop = '0px';
+			openNotifications[last - 1].style.opacity = 1;
 		}
 
-		if (openNotifications[penult - 2]) {
-			openNotifications[penult - 2].style.marginTop = '16px';
-			openNotifications[penult - 2].style.opacity = 0.5;
+		if (openNotifications[last - 2]) {
+			openNotifications[last - 2].style.marginTop = '10px';
+			openNotifications[last - 2].style.opacity = 1;
+		}
+
+		if (openNotifications[last - 3]) {
+			openNotifications[last - 3].style.marginTop = '16px';
+			openNotifications[last - 3].style.opacity = 0.5;
 		}
 	}
 
@@ -134,13 +148,13 @@ class Notification {
 			this.animateListOnClose(openNotifications);
 		}
 
-		if (openNotifications.length == 1) {
-			this.count = 0;
-		}
-
 		setTimeout(() => {
 			element?.remove();
 		}, 100);
+
+		if (openNotifications.length == 0) {
+			this.count = 0;
+		}
 	}
 
 	/**
@@ -149,13 +163,15 @@ class Notification {
 	 * @param {number} duration - время в секундах, после которого плашка исчезает
 	 * @param {string} title - заголовок сообщение
 	 * @param {string} description - описание
+	 * @param {'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'} position - расположение
 	 */
-	open({ duration, ...params }) {
+	open({ duration, position, ...params }) {
 		this.count++;
+		if (position) this.position = position;
 
 		const openNotifications = document.getElementsByClassName('notification-open');
 
-		if (openNotifications.length > MAX_LIST_ELEMENTS_COUNT) {
+		if (openNotifications.length > MAX_LIST_ELEMENTS_COUNT - 1) {
 			this.animateCompressOnOpen(openNotifications);
 			this.list = false;
 		} else {

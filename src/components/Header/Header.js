@@ -97,7 +97,7 @@ class Header {
 		const testButton = new Button(searchBlock, {
 			id: 'test',
 			content: 'notify',
-			onClick: () => notificationApi.open({ duration: 0, title: 'Ошибка сервера', description: 'Lorem ipsum' }),
+			onClick: () => notificationApi.open({ duration: 2, title: 'Ошибка сервера', description: 'Lorem ipsum' }),
 		});
 
 		testButton.render();
