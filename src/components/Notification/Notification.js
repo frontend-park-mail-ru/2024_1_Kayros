@@ -2,6 +2,8 @@ import Button from '../Button/Button';
 import template from './Notification.hbs';
 import './Notification.scss';
 
+const MAX_LIST_ELEMENTS_COUNT = 3;
+
 /**
  * Всплывающее окошко с сообщением
  */
@@ -14,10 +16,12 @@ class Notification {
 		this.position = 'bottom-right';
 		this.id = 'root-notification';
 		this.count = 0;
+		this.list = true;
 	}
 
 	/**
 	 * Получение html компонента
+	 * @param {Object} params - параметры для шаблона
 	 */
 	getHTML(params) {
 		return template({
@@ -27,9 +31,11 @@ class Notification {
 		});
 	}
 
-	animateOnOpen() {
-		const openNotifications = document.getElementsByClassName('notification-open');
-
+	/**
+	 * Функция для анимации сжатого списка при появлении нового уведомоления
+	 * @param {HTMLCollection} openNotifications - список открытых уведомлений
+	 */
+	animateCompressOnOpen(openNotifications) {
 		if (openNotifications[0]) openNotifications[0].style.marginTop = '16px';
 		if (openNotifications[1]) openNotifications[1].style.marginTop = '10px';
 
@@ -47,9 +53,44 @@ class Notification {
 		}
 	}
 
-	animateOnClose() {
-		const openNotifications = document.getElementsByClassName('notification-open');
+	/**
+	 * Функция для анимации развернутого списка при появлении нового уведомоления
+	 * @param {HTMLCollection} openNotifications - список открытых уведомлений
+	 */
+	animateListOnOpen(openNotifications) {
+		if (!openNotifications) return;
 
+		let margin = openNotifications[0]?.offsetHeight + 15;
+
+		for (let i = openNotifications.length - 1; i >= 0; i--) {
+			openNotifications[i].style.marginTop = `${margin}px`;
+			openNotifications[i].style.opacity = 1;
+
+			if (i > 0) margin += openNotifications[i].offsetHeight + 15;
+		}
+	}
+
+	/**
+	 * Функция для анимации развернутого списка при удалении
+	 * @param {HTMLCollection} openNotifications - список открытых уведомлений
+	 */
+	animateListOnClose(openNotifications) {
+		if (!openNotifications) return;
+
+		let margin = 0;
+
+		for (let i = openNotifications.length - 1; i >= 0; i--) {
+			openNotifications[i].style.marginTop = `${margin}px`;
+
+			margin += openNotifications[i].offsetHeight + 15;
+		}
+	}
+
+	/**
+	 * Функция для анимации сжатого списка при удалении
+	 * @param {HTMLCollection} openNotifications - список открытых уведомлений
+	 */
+	animateCompressOnClose(openNotifications) {
 		const penult = openNotifications.length - 2;
 
 		if (openNotifications[penult]) {
@@ -70,13 +111,28 @@ class Notification {
 
 	/**
 	 * Функция для закрытия уведомления
+	 * @param {HTMLCollection} openNotifications - список открытых уведомлений
 	 */
 	close(element) {
-		this.animateOnClose();
-
 		const openNotifications = document.getElementsByClassName('notification-open');
 
+		if (openNotifications.length > MAX_LIST_ELEMENTS_COUNT) {
+			this.animateCompressOnOpen(openNotifications);
+			this.list = false;
+		} else {
+			this.animateListOnOpen(openNotifications);
+			this.list = true;
+		}
+
+		if (!this.list) {
+			this.animateCompressOnClose(openNotifications);
+		}
+
 		element?.classList.remove('notification-open');
+
+		if (this.list) {
+			this.animateListOnClose(openNotifications);
+		}
 
 		if (openNotifications.length == 1) {
 			this.count = 0;
@@ -96,7 +152,16 @@ class Notification {
 	 */
 	open({ duration, ...params }) {
 		this.count++;
-		this.animateOnOpen();
+
+		const openNotifications = document.getElementsByClassName('notification-open');
+
+		if (openNotifications.length > MAX_LIST_ELEMENTS_COUNT) {
+			this.animateCompressOnOpen(openNotifications);
+			this.list = false;
+		} else {
+			this.animateListOnOpen(openNotifications);
+			this.list = true;
+		}
 
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML(params));
 
