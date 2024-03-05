@@ -7,7 +7,7 @@
 	"scripts": {
 		"dev": "NODE_ENV=development npx webpack serve --mode=development",
 		"prebuild": "NODE_ENV=production npx webpack --mode=production",
-		"build": "npm run prebuild && npx serve -s dist",
+		"build": "npm run prebuild && node static-server/index.js",
 		"lint": "eslint . \".env*\"",
 		"lint:fix": "eslint . \".env*\" --fix ",
 		"hbs-lint:fix": "ember-template-lint . --fix",

@@ -15,12 +15,36 @@ class Ajax {
 			const result = await response.json();
 			callback(result);
 		} catch (error) {
-			NotificationApi.open({ duration: 3, title: 'Ошибка сервера', description: error.message });
+			NotificationApi.open({ duration: 3, title: 'Ошибка сервера', description: error.detail || error.message });
 			callback();
 		}
 
 		const loader = document.querySelector('.loader');
 		loader?.remove();
+	}
+
+	/**
+	 *
+	 * @param {string} url - адрес сервера для отправки запроса
+	 * @param {void} body - объект, посылаемый в запросе
+	 */
+	async post(url, body) {
+		let data, responseError;
+
+		try {
+			const response = await fetch(url, {
+				method: 'POST',
+				credentials: 'include',
+				body: JSON.stringify(body),
+			});
+
+			data = await response.text();
+			if (!response.ok) responseError = data;
+		} catch (error) {
+			responseError = error;
+		}
+
+		return { data, error: responseError };
 	}
 }
 

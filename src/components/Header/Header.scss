@@ -40,7 +40,11 @@
 	margin-right: 34px;
 
 	#cart {
-		width: 130px;
+		width: 0;
+
+		&:has(span) {
+			width: 130px;
+		}
 
 		span {
 			color: var(--cart-button-color);
@@ -62,6 +66,11 @@
 	transition: all 0.3s;
 	cursor: pointer;
 	margin-left: auto;
+
+	&:not(:has(span)) {
+		opacity: 0;
+		pointer-events: none;
+	}
 
 	&:hover {
 		outline: 1px solid var(--address-ouline-hover);

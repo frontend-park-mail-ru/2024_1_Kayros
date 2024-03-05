@@ -3,13 +3,6 @@ import Dropdown from '../Dropdown/Dropdown';
 import template from './Profile.hbs';
 import './Profile.scss';
 
-const user = {
-	name: 'Роман',
-	cart: {
-		total: 300,
-	},
-};
-
 /**
  * Профиль
  */
@@ -25,7 +18,7 @@ class Profile {
 	/**
 	 * Получение html компонента
 	 */
-	getHTML() {
+	getHTML(user) {
 		const avatar = user.avatarUrl ? user.avatarUrl : defaultAvatar;
 
 		return template({ name: user.name, avatarUrl: avatar });
@@ -35,7 +28,9 @@ class Profile {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
+		let user = JSON.parse(localStorage.getItem('user-info'));
+
+		this.parent.insertAdjacentHTML('beforeend', this.getHTML(user));
 
 		const profile = document.getElementById('profile');
 

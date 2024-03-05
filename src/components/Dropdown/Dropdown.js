@@ -1,3 +1,5 @@
+import Header from '../../components/Header';
+import Button from '../Button/Button';
 import template from './Dropdown.hbs';
 import './Dropdown.scss';
 import { OPEN_PROFILE_SLIDE_OPTIONS, CLOSE_PROFILE_SLIDE_OPTIONS } from './constants';
@@ -57,6 +59,18 @@ class Dropdown {
 		});
 	}
 
+	handleExit() {
+		localStorage.removeItem('user-info');
+
+		const dropdown = document.getElementById(this.id);
+		this.close(dropdown);
+
+		const header = document.getElementById('header');
+		header.remove();
+		const newHeader = new Header(document.getElementById('layout'));
+		newHeader.render();
+	}
+
 	/**
 	 * Рендеринг компонента
 	 */
@@ -64,6 +78,17 @@ class Dropdown {
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
 		const dropdown = document.getElementById(this.id);
+
+		const link = dropdown.querySelector('.link');
+
+		const exitButton = new Button(link, {
+			id: 'exit-button',
+			content: 'Выйти',
+			style: 'clear',
+			onClick: () => this.handleExit(),
+		});
+
+		exitButton.render();
 
 		dropdown.addEventListener('click', (event) => {
 			event.stopPropagation();

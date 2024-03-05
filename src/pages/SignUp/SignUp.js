@@ -1,6 +1,7 @@
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Logo from '../../components/Logo';
+import api from '../../modules/api';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls.js';
 import template from './SignUp.hbs';
@@ -40,8 +41,8 @@ class SignUp {
 	 * Создает экземпляр страницы.
 	 * @param {Element} parent Элемент DOM, в который будет рендериться страница.
 	 */
-	constructor() {
-		this.parent = document.getElementById('root');
+	constructor(parent) {
+		this.parent = parent;
 		this.isLoading = false;
 	}
 
@@ -208,20 +209,12 @@ class SignUp {
 		const userData = {
 			email: document.getElementById('email').value,
 			password: document.getElementById('password').value,
-			confirmPassword: document.getElementById('confirm-password').value,
 		};
 
-		this.isLoading = true;
-
-		setTimeout(() => {
-			this.isLoading = false;
-
-			if (userData.email.includes('used')) {
-				alert('Такой логин уже существует.');
-			} else {
-				router.navigate(urls.restaurants);
-			}
-		}, 1000);
+		api.signup(userData, (data) => {
+			localStorage.setItem('user-info', JSON.stringify(data));
+			router.navigate(urls.restaurants);
+		});
 	}
 }
 

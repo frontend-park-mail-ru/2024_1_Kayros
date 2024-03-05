@@ -1,6 +1,7 @@
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Logo from '../../components/Logo';
+import api from '../../modules/api';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls.js';
 import template from './SignIn.hbs';
@@ -116,6 +117,7 @@ class SignIn {
 				passwordErrorElement.textContent = isPasswordValid
 					? ''
 					: 'Пароль должен содержать минимум 8 символов, включая число и букву';
+
 				passwordElement.style.borderColor = isPasswordValid ? 'initial' : 'red';
 			} else if (hasPasswordInputStarted) {
 				passwordErrorElement.textContent = 'Поле не может быть пустым';
@@ -153,19 +155,10 @@ class SignIn {
 			password: document.getElementById('password').value,
 		};
 
-		this.isLoading = true;
-		setTimeout(() => {
-			this.isLoading = false;
-
-			if (userData.email.includes('used')) {
-				const errorElement = document.getElementById('email-error');
-				errorElement.textContent = 'Этот email уже используется.';
-				errorElement.style.display = 'block';
-			} else {
-				localStorage.setItem('user', JSON.stringify(userData));
-				router.navigate(urls.restaurants);
-			}
-		}, 1000);
+		api.login(userData, (data) => {
+			localStorage.setItem('user-info', JSON.stringify(data));
+			router.navigate(urls.restaurants);
+		});
 	}
 }
 

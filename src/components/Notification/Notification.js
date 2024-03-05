@@ -23,10 +23,11 @@ class Notification {
 	 * Получение html компонента
 	 * @param {Object} params - параметры для шаблона
 	 */
-	getHTML(params) {
+	getHTML({ type, ...params }) {
 		return template({
 			id: this.id + '-' + this.count,
 			position: this.position,
+			icon: type === 'success' ? 'assets/success.svg' : 'assets/error.svg',
 			...params,
 		});
 	}
@@ -175,6 +176,7 @@ class Notification {
 	 * @param {string} params.title - заголовок сообщение
 	 * @param {string} params.description - описание
 	 * @param {'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'} params.position - расположение
+	 * @param {'success' | 'error'} params.type - тип уведомления
 	 */
 	open({ duration, position, ...params }) {
 		this.count++;

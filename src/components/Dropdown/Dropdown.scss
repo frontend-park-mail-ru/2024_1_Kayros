@@ -32,14 +32,21 @@
 .link {
 	display: flex;
 	align-items: center;
-	color: var(--link-color);
-	padding: 18px 24px;
+	padding: 18px 26px;
 	transition: all 0.3s;
 	font-size: 16px;
+
+	button {
+		width: fit-content !important;
+	}
 
 	span {
 		transition: all 0.3s;
 		cursor: pointer;
+		font-family: Montserrat, sans-serif;
+		font-size: 16px;
+		color: var(--link-color);
+		font-weight: 600;
 
 		&:hover {
 			color: var(--link-color-active);
