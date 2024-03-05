@@ -1,3 +1,5 @@
+import { router } from '../../modules/router.js';
+import urls from '../../routes/urls.js';
 import template from './Logo.hbs';
 import './Logo.scss';
 
@@ -18,6 +20,15 @@ class Logo {
 	 */
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', template());
+
+		const logoBlock = document.getElementById('logo');
+
+		/**
+		 * Обработка нажатия на лого
+		 */
+		logoBlock.addEventListener('click', () => {
+			router.navigate(urls.restaurants);
+		});
 	}
 }
 

@@ -2,7 +2,8 @@ import '@fontsource/roboto';
 import '@fontsource/montserrat';
 import Layout from './components/Layout';
 import { router } from './modules/router';
-import { routes, urls } from './routes';
+import { routes } from './routes';
+import urls from './routes/urls.js';
 import './global.scss';
 
 const root = document.getElementById('root');

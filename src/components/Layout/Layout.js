@@ -1,5 +1,3 @@
-import Content from '../Content';
-import Header from '../Header';
 import template from './Layout.hbs';
 import './Layout.scss';
 
@@ -20,14 +18,6 @@ class Layout {
 	 */
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', template());
-
-		const layout = document.getElementById('layout');
-
-		const header = new Header(layout);
-		header.render();
-
-		const content = new Content(layout);
-		content.render();
 	}
 }
 
