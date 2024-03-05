@@ -9,4 +9,4 @@ const routes = {
 	[urls.signUp]: SignUpPage,
 };
 
-export { routes, urls };
+export { routes };

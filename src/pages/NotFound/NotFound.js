@@ -1,5 +1,5 @@
 import Button from '../../components/Button';
-import { urls } from '../../routes/index.js';
+import urls from '../../routes/urls';
 // import { router } from '../../modules/router';
 import template from './NotFound.hbs';
 import './NotFound.scss';

@@ -1,6 +1,6 @@
 import cartIcon from '../../assets/cart.svg';
 import { router } from '../../modules/router';
-import { urls } from '../../routes/index.js';
+import urls from '../../routes/urls.js';
 import Button from '../Button';
 import Input from '../Input';
 import Logo from '../Logo/Logo';

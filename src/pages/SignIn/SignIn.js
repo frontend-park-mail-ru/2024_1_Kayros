@@ -1,9 +1,9 @@
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Logo from '../../components/Logo';
+import { router } from '../../modules/router';
 import urls from '../../routes/urls.js';
 import template from './SignIn.hbs';
-// import { router } from '../../modules/router';
 import './SignIn.scss';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -136,8 +136,8 @@ class SignIn {
 				errorElement.style.display = 'block';
 			} else {
 				localStorage.setItem('user', JSON.stringify(userData));
-				window.location.href = urls.base;
-				// router.navigate(urls.restaurants);
+				// window.location.href = urls.base;
+				router.navigate(urls.restaurants);
 			}
 		}, 1000);
 	}
