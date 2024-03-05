@@ -22,7 +22,7 @@
 		justify-content: center;
 	}
 
-	&.btn-primary {
+	&.btn-primary:not(:disabled) {
 		color: var(--button-text-color);
 		background: var(--button-bg-color);
 
@@ -35,13 +35,14 @@
 		}
 	}
 
+	&.btn-clear {
+		background: transparent;
+		padding: 0;
+	}
+
 	&:disabled {
 		background: var(--button-bg-disabled);
 		cursor: not-allowed;
 		color: var(--button-color-disabled);
-
-		&:hover {
-			background: var(--button-bg-disabled-hover);
-		}
 	}
 }

@@ -52,8 +52,10 @@ class Input {
 
 		if (this.type !== 'password') return;
 
-		const eyeButton = document.getElementById('btn-eye');
-		const password = document.getElementById(this.id);
+		const inputContainer = document.getElementById(`${this.id}-container`);
+
+		const eyeButton = inputContainer.querySelector('#btn-eye');
+		const password = inputContainer.getElementsByTagName('input')[0];
 
 		eyeButton.addEventListener('click', () => {
 			this.isVisible = !this.isVisible;

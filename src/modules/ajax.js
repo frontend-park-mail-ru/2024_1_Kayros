@@ -1,3 +1,4 @@
+import NotificationApi from '../components/Notification/Notification';
 import RESTAURANTS_MOCK from '../mocks/restaurants';
 
 /**
@@ -15,8 +16,7 @@ class Ajax {
 			const result = await response.json();
 			callback(result);
 		} catch (error) {
-			console.error(error);
-
+			NotificationApi.open({ duration: 3, title: 'Ошибка сервера', description: error.message });
 			callback(RESTAURANTS_MOCK);
 		}
 	}
