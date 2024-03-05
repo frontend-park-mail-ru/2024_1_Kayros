@@ -9,8 +9,9 @@ class Content {
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
 	 */
-	constructor(parent) {
+	constructor(parent, { withoutPadding = false } = {}) {
 		this.parent = parent;
+		this.withoutPadding = withoutPadding;
 	}
 
 	/**
@@ -18,6 +19,11 @@ class Content {
 	 */
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', template());
+		const content = document.getElementById('content');
+
+		if (this.withoutPadding) {
+			content.style.padding = '0';
+		}
 	}
 }
 

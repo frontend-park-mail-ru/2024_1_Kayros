@@ -1,4 +1,7 @@
+import Content from '../components/Content/index.js';
+import Header from '../components/Header/index.js';
 import NotFoundPage from '../pages/NotFound';
+import urls from '../routes/urls.js';
 
 /**
  * Класс для маршрутизации в одностраничном приложении (SPA).
@@ -32,6 +35,30 @@ class Router {
 		this.handleLocationChange();
 	}
 
+	handleChangeInnerLayout() {
+		const layout = document.getElementById('layout');
+		const header = document.getElementById('header');
+		const oldContent = document.getElementById('content');
+
+		oldContent?.remove();
+		let content;
+
+		if ([urls.signIn, urls.signUp].includes(window.location.pathname)) {
+			header?.remove();
+
+			content = new Content(layout, { withoutPadding: true });
+		} else {
+			if (!header) {
+				const header = new Header(layout);
+				header.render();
+			}
+
+			content = new Content(layout);
+		}
+
+		content.render();
+	}
+
 	/**
 	 * Обрабатывает изменение местоположения, отображая соответствующий маршрут или страницу "Не найдено".
 	 */
@@ -39,8 +66,9 @@ class Router {
 		const path = window.location.pathname;
 		const currentRoute = this.routes.find((route) => route.path === path);
 
+		this.handleChangeInnerLayout();
+
 		const content = document.getElementById('content');
-		content.innerHTML = '';
 
 		if (currentRoute) {
 			const page = new currentRoute.component(content);
@@ -50,7 +78,6 @@ class Router {
 
 		const notFoundPage = new NotFoundPage(content);
 		notFoundPage.render();
-		return;
 	}
 }
 

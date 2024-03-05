@@ -32,8 +32,8 @@ class SignIn {
 	 * Создает экземпляр страницы.
 	 * @param {Element} parent Элемент DOM, в который будет рендериться страница.
 	 */
-	constructor() {
-		this.parent = document.getElementById('root');
+	constructor(parent) {
+		this.parent = parent;
 		this.isLoading = false;
 	}
 	/**
@@ -44,7 +44,6 @@ class SignIn {
 			signUpUrl: urls.signUp,
 		};
 
-		this.parent.innerHTML = '';
 		const html = template(templateVars);
 		this.parent.insertAdjacentHTML('beforeend', html);
 
@@ -136,7 +135,6 @@ class SignIn {
 				errorElement.style.display = 'block';
 			} else {
 				localStorage.setItem('user', JSON.stringify(userData));
-				// window.location.href = urls.base;
 				router.navigate(urls.restaurants);
 			}
 		}, 1000);

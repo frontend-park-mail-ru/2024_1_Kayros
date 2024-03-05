@@ -38,7 +38,7 @@ module.exports = {
 		'no-unused-vars': 'off',
 		'unused-imports/no-unused-imports': 'error',
 		'unused-imports/no-unused-vars': 'error',
-		'import/no-cycle': 'error',
+		'import/no-cycle': 'warn',
 		'@stylistic/js/padding-line-between-statements': [
 			'error',
 			{

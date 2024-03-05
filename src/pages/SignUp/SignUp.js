@@ -1,9 +1,9 @@
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Logo from '../../components/Logo';
+import { router } from '../../modules/router';
 import urls from '../../routes/urls.js';
 import template from './SignUp.hbs';
-// import { router } from '../../modules/router';
 
 import './SignUp.scss';
 
@@ -173,8 +173,7 @@ class SignUp {
 			if (userData.email.includes('used')) {
 				alert('Такой логин уже существует.');
 			} else {
-				// router.navigate(urls.restaurants);
-				window.location.href = urls.base;
+				router.navigate(urls.restaurants);
 			}
 		}, 1000);
 	}

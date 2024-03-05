@@ -1,6 +1,6 @@
 import Button from '../../components/Button';
+import { router } from '../../modules/router';
 import urls from '../../routes/urls';
-// import { router } from '../../modules/router';
 import template from './NotFound.hbs';
 import './NotFound.scss';
 
@@ -25,8 +25,7 @@ class NotFound {
 			id: 'return-to-home',
 			content: 'Вернуться на главную',
 			onClick: () => {
-				window.location.href = urls.base;
-				// router.navigate(urls.restaurants);
+				router.navigate(urls.restaurants);
 			},
 		}).render();
 	}
