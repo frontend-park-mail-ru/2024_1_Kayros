@@ -1,11 +1,9 @@
-/**
- * @todo Переделать на выложенный сервак
- */
+import ajax from './ajax';
 
 /**
- * Класс, содержащий адреса для выполнения запросов
+ * Класс, содержащий запросы
  */
-class Urls {
+class Api {
 	/**
 	 * Конструктор класса
 	 */
@@ -17,12 +15,12 @@ class Urls {
 	}
 
 	/**
-	 * Адрес для получения списка ресторанов
+	 * Метод для получения списка ресторанов
 	 * @returns {string}
 	 */
-	getRestaurants() {
-		return `${this.url}/restaurants`;
+	getRestaurants(callback) {
+		return ajax.get(`${this.url}/restaurants`, callback);
 	}
 }
 
-export default new Urls();
+export default new Api();

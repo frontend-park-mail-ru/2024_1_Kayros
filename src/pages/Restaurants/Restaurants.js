@@ -1,6 +1,5 @@
 import Loader from '../../components/Loader';
-import ajax from '../../modules/ajax';
-import urls from '../../modules/urls';
+import api from '../../modules/api';
 import template from './Restaurants.hbs';
 import RestaurantCard from './components/RestaurantCard';
 import './Restaurants.scss';
@@ -23,9 +22,6 @@ class Restaurants {
 	renderData(items) {
 		const restaurantsElement = document.getElementById('restaurants');
 
-		const loader = restaurantsElement.querySelector('.loader');
-		loader?.remove();
-
 		if (!items) {
 			restaurantsElement.innerText = 'Нет доступных ресторанов';
 			return;
@@ -41,7 +37,7 @@ class Restaurants {
 	 * Получение данных о ресторанах
 	 */
 	getData() {
-		ajax.get(urls.getRestaurants(), (data) => {
+		api.getRestaurants((data) => {
 			this.renderData(data);
 		});
 	}

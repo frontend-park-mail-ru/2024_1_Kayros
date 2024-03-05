@@ -16,7 +16,11 @@ class Ajax {
 			callback(result);
 		} catch (error) {
 			NotificationApi.open({ duration: 3, title: 'Ошибка сервера', description: error.message });
+			callback();
 		}
+
+		const loader = document.querySelector('.loader');
+		loader?.remove();
 	}
 }
 
