@@ -63,7 +63,9 @@ class Notification {
 	 * @param {HTMLCollection} openNotifications - список открытых уведомлений
 	 */
 	animateListOnOpen(openNotifications) {
-		if (!openNotifications) return;
+		if (!openNotifications) {
+			return;
+		}
 
 		let margin = openNotifications[0]?.offsetHeight + 15;
 
@@ -87,7 +89,9 @@ class Notification {
 	 * @param {HTMLCollection} openNotifications - список открытых уведомлений
 	 */
 	animateListOnClose(openNotifications) {
-		if (!openNotifications) return;
+		if (!openNotifications) {
+			return;
+		}
 
 		let margin = 0;
 
@@ -159,7 +163,7 @@ class Notification {
 			element?.remove();
 		}, 100);
 
-		if (openNotifications.length == 0) {
+		if (openNotifications.length === 0) {
 			this.count = 0;
 		}
 	}
