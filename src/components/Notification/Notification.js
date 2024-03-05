@@ -36,8 +36,13 @@ class Notification {
 	 * @param {HTMLCollection} openNotifications - список открытых уведомлений
 	 */
 	animateCompressOnOpen(openNotifications) {
-		if (openNotifications[0]) openNotifications[0].style.marginTop = '16px';
-		if (openNotifications[1]) openNotifications[1].style.marginTop = '10px';
+		if (openNotifications[0]) {
+			openNotifications[0].style.marginTop = '16px';
+		}
+
+		if (openNotifications[1]) {
+			openNotifications[1].style.marginTop = '10px';
+		}
 
 		for (let i = 2; i < openNotifications.length; i++) {
 			if (openNotifications.length > i) {
@@ -71,7 +76,9 @@ class Notification {
 
 			openNotifications[i].style.opacity = 1;
 
-			if (i > 0) margin += openNotifications[i].offsetHeight + 15;
+			if (i > 0) {
+				margin += openNotifications[i].offsetHeight + 15;
+			}
 		}
 	}
 
@@ -160,14 +167,17 @@ class Notification {
 	/**
 	 * Функция для открытия уведомления
 	 * @param {Object} params - параметры
-	 * @param {number} duration - время в секундах, после которого плашка исчезает
-	 * @param {string} title - заголовок сообщение
-	 * @param {string} description - описание
-	 * @param {'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'} position - расположение
+	 * @param {number} params.duration - время в секундах, после которого плашка исчезает
+	 * @param {string} params.title - заголовок сообщение
+	 * @param {string} params.description - описание
+	 * @param {'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'} params.position - расположение
 	 */
 	open({ duration, position, ...params }) {
 		this.count++;
-		if (position) this.position = position;
+
+		if (position) {
+			this.position = position;
+		}
 
 		const openNotifications = document.getElementsByClassName('notification-open');
 
@@ -197,7 +207,7 @@ class Notification {
 			element.classList.add('notification-open');
 		}, 50);
 
-		if (duration != 0) {
+		if (duration !== 0) {
 			setTimeout(() => {
 				this.close(element);
 			}, duration * 1000);
