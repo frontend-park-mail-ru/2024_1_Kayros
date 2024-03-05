@@ -1,7 +1,6 @@
 .logo-container-on-sign-up {
 	text-align: center;
-	padding-top: 10px;
-	margin-bottom: 0;
+	padding-bottom: 100px;
 }
 
 .signup-container {
@@ -13,6 +12,7 @@
 	box-shadow: 0 4px 10px var(--header-box-shadow);
 	text-align: center;
 	top: -20px;
+	transform: translateY(-100px);
 }
 
 .signup-title {
