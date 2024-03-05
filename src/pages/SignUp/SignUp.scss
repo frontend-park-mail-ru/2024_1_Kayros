@@ -1,3 +1,11 @@
+:root {
+	--background-light: rgb(239 244 231);
+	--white: rgb(255 255 255);
+	--black: rgb(0 0 0);
+	--red: rgb(255 0 0);
+	--box-shadow-color: rgb(0 0 0 / 10%);
+}
+
 .logo-container-on-sign-up {
 	text-align: center;
 	padding-top: 40px;
@@ -8,9 +16,9 @@
 	max-width: 350px;
 	margin: 50px auto;
 	padding: 10px 50px;
-	background: rgb(255 255 255);
+	background: var(--white);
 	border-radius: 40px;
-	box-shadow: 0 4px 10px rgb(0 0 0 / 10%);
+	box-shadow: 0 4px 10px var(--box-shadow-color);
 	text-align: center;
 }
 
@@ -34,7 +42,7 @@
 }
 
 .signin-redirect a {
-	color: rgb(0 0 0);
+	color: var(--black);
 	text-decoration: none;
 	font-weight: bold;
 }
@@ -44,12 +52,12 @@
 }
 
 .signup-page-container {
-	background-color: rgb(239 244 231);
+	background-color: var(--background-light);
 	min-height: 100vh;
 }
 
 .error-message {
-	color: rgb(255 0 0);
+	color: var(--red);
 	font-size: 14px;
 	margin: -18px 4px 20px;
 	text-align: left;

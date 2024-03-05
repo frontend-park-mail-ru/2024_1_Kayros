@@ -1,5 +1,6 @@
 import Button from '../../components/Button';
 import { urls } from '../../routes/index.js';
+// import { router } from '../../modules/router';
 import template from './NotFound.hbs';
 import './NotFound.scss';
 
@@ -20,17 +21,14 @@ class NotFound {
 	render() {
 		const html = template();
 		this.parent.insertAdjacentHTML('beforeend', html);
-		const buttonBlock = document.getElementById('return-button');
-		const returnButton = new Button(buttonBlock, { id: 'return-to-home', content: 'Вернуться на главную' });
-		returnButton.render();
-
-		const returnToHomeButton = document.getElementById('return-to-home');
-
-		if (returnToHomeButton) {
-			returnToHomeButton.addEventListener('click', () => {
+		new Button(document.getElementById('return-button'), {
+			id: 'return-to-home',
+			content: 'Вернуться на главную',
+			onClick: () => {
 				window.location.href = urls.base;
-			});
-		}
+				// router.navigate(urls.restaurants);
+			},
+		}).render();
 	}
 }
 

@@ -2,10 +2,26 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import urls from '../../routes/urls.js';
 import template from './SignIn.hbs';
+// import { router } from '../../modules/router';
 import './SignIn.scss';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+const FIELDS = [
+	{
+		selector: '#email-input-container',
+		id: 'email',
+		placeholder: 'Почта',
+		type: 'email',
+	},
+	{
+		selector: '#password-input-container',
+		id: 'password',
+		placeholder: 'Пароль',
+		type: 'password',
+	},
+];
 
 /**
  * Страница входа.
@@ -31,30 +47,25 @@ class SignIn {
 		const html = template(templateVars);
 		this.parent.insertAdjacentHTML('beforeend', html);
 
-		// Создание и рендер полей формы
-		new Input(this.parent.querySelector('#email-input-container'), {
-			id: 'email',
-			placeholder: 'Почта',
-			type: 'email',
-		}).render();
-
-		new Input(this.parent.querySelector('#password-input-container'), {
-			id: 'password',
-			placeholder: 'Пароль',
-			type: 'password',
-		}).render();
+		FIELDS.forEach((field) => {
+			new Input(this.parent.querySelector(field.selector), {
+				id: field.id,
+				placeholder: field.placeholder,
+				type: field.type,
+			}).render();
+		});
 
 		new Button(this.parent.querySelector('#sign-in-button-container'), {
 			id: 'sign-in-button',
 			content: 'Войти',
 			type: 'submit',
+			disabled: true,
 			onClick: (e) => {
 				e.preventDefault();
 				this.handleSubmit();
 			},
 		}).render();
 
-		this.errorsContainer = this.parent.querySelector('#errors-container');
 		this.addFormValidation();
 	}
 
@@ -65,43 +76,47 @@ class SignIn {
 		const emailErrorElement = document.getElementById('email-error');
 		const passwordErrorElement = document.getElementById('password-error');
 
+		// Функция для валидации email
 		const validateEmail = () => {
-			if (emailElement.value === '') {
-				emailErrorElement.textContent = '';
-				emailElement.style.borderColor = 'initial';
-				return true;
-			}
-
 			const isEmailValid = EMAIL_REGEX.test(emailElement.value);
-			emailErrorElement.textContent = isEmailValid ? '' : 'Неверный формат электронной почты';
-			emailElement.style.borderColor = isEmailValid ? 'initial' : 'red';
-			return isEmailValid;
+			emailErrorElement.textContent = emailElement.value
+				? isEmailValid
+					? ''
+					: 'Неверный формат электронной почты'
+				: 'Поле не может быть пустым';
+			emailElement.style.borderColor = emailElement.value && isEmailValid ? 'initial' : 'red';
+			return emailElement.value && isEmailValid;
 		};
 
+		// Функция для валидации пароля
 		const validatePassword = () => {
-			if (passwordElement.value === '') {
-				passwordErrorElement.textContent = '';
-				passwordElement.style.borderColor = 'initial';
-				return true;
-			}
-
 			const isPasswordValid = PASSWORD_REGEX.test(passwordElement.value);
-			passwordErrorElement.textContent = isPasswordValid
-				? ''
-				: 'Пароль должен содержать минимум 8 символов, включая число и букву';
-			passwordElement.style.borderColor = isPasswordValid ? 'initial' : 'red';
-			return isPasswordValid;
+			passwordErrorElement.textContent = passwordElement.value
+				? isPasswordValid
+					? ''
+					: 'Пароль должен содержать минимум 8 символов, включая число и букву'
+				: 'Поле не может быть пустым';
+			passwordElement.style.borderColor = passwordElement.value && isPasswordValid ? 'initial' : 'red';
+			return passwordElement.value && isPasswordValid;
 		};
 
-		emailElement.addEventListener('input', validateEmail);
-		passwordElement.addEventListener('input', validatePassword);
+		emailElement.addEventListener('input', () => {
+			const isEmailValid = validateEmail();
+			const isPasswordValid = validatePassword();
+			updateSignUpButtonState(isEmailValid, isPasswordValid);
+		});
 
-		const updateSignInButtonState = () => {
+		passwordElement.addEventListener('input', () => {
+			const isPasswordValid = validatePassword();
+			const isEmailValid = validateEmail();
+			updateSignUpButtonState(isEmailValid, isPasswordValid);
+		});
+
+		// Обновление состояния кнопки регистрации
+		const updateSignUpButtonState = () => {
 			const isFormValid = validateEmail() && validatePassword();
 			document.getElementById('sign-in-button').disabled = !isFormValid;
 		};
-
-		updateSignInButtonState();
 	}
 
 	handleSubmit() {
@@ -121,6 +136,7 @@ class SignIn {
 			} else {
 				localStorage.setItem('user', JSON.stringify(userData));
 				window.location.href = urls.base;
+				// router.navigate(urls.restaurants);
 			}
 		}, 1000);
 	}
