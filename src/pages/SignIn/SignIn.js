@@ -1,5 +1,6 @@
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import Logo from '../../components/Logo';
 import urls from '../../routes/urls.js';
 import template from './SignIn.hbs';
 // import { router } from '../../modules/router';
@@ -47,6 +48,12 @@ class SignIn {
 		const html = template(templateVars);
 		this.parent.insertAdjacentHTML('beforeend', html);
 
+		const logoContainer = document.querySelector('.logo-container-on-sign-in');
+
+		if (logoContainer) {
+			new Logo(logoContainer).render();
+		}
+
 		FIELDS.forEach((field) => {
 			new Input(this.parent.querySelector(field.selector), {
 				id: field.id,
@@ -84,6 +91,7 @@ class SignIn {
 					? ''
 					: 'Неверный формат электронной почты'
 				: 'Поле не может быть пустым';
+
 			emailElement.style.borderColor = emailElement.value && isEmailValid ? 'initial' : 'red';
 			return emailElement.value && isEmailValid;
 		};
@@ -96,27 +104,20 @@ class SignIn {
 					? ''
 					: 'Пароль должен содержать минимум 8 символов, включая число и букву'
 				: 'Поле не может быть пустым';
+
 			passwordElement.style.borderColor = passwordElement.value && isPasswordValid ? 'initial' : 'red';
 			return passwordElement.value && isPasswordValid;
 		};
 
-		emailElement.addEventListener('input', () => {
+		const updateSignInButtonState = () => {
 			const isEmailValid = validateEmail();
 			const isPasswordValid = validatePassword();
-			updateSignUpButtonState(isEmailValid, isPasswordValid);
-		});
-
-		passwordElement.addEventListener('input', () => {
-			const isPasswordValid = validatePassword();
-			const isEmailValid = validateEmail();
-			updateSignUpButtonState(isEmailValid, isPasswordValid);
-		});
-
-		// Обновление состояния кнопки регистрации
-		const updateSignUpButtonState = () => {
-			const isFormValid = validateEmail() && validatePassword();
-			document.getElementById('sign-in-button').disabled = !isFormValid;
+			document.getElementById('sign-in-button').disabled = !(isEmailValid && isPasswordValid);
 		};
+
+		emailElement.addEventListener('input', updateSignInButtonState);
+
+		passwordElement.addEventListener('input', updateSignInButtonState);
 	}
 
 	handleSubmit() {

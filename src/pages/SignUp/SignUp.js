@@ -1,5 +1,6 @@
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import Logo from '../../components/Logo';
 import urls from '../../routes/urls.js';
 import template from './SignUp.hbs';
 // import { router } from '../../modules/router';
@@ -56,6 +57,12 @@ class SignUp {
 		const html = template(templateVars);
 		this.parent.insertAdjacentHTML('beforeend', html);
 
+		const logoContainer = document.querySelector('.logo-container-on-sign-up');
+
+		if (logoContainer) {
+			new Logo(logoContainer).render();
+		}
+
 		// Рендеринг полей формы в цикле
 		FIELDS.forEach((field) => {
 			new Input(this.parent.querySelector(field.selector), {
@@ -97,6 +104,7 @@ class SignUp {
 					? ''
 					: 'Неверный формат электронной почты'
 				: 'Поле не может быть пустым';
+
 			emailElement.style.borderColor = emailElement.value && isEmailValid ? 'initial' : 'red';
 			return emailElement.value && isEmailValid;
 		};
@@ -109,6 +117,7 @@ class SignUp {
 					? ''
 					: 'Пароль должен содержать минимум 8 символов, включая число и букву'
 				: 'Поле не может быть пустым';
+
 			passwordElement.style.borderColor = passwordElement.value && isPasswordValid ? 'initial' : 'red';
 			return passwordElement.value && isPasswordValid;
 		};
@@ -123,6 +132,7 @@ class SignUp {
 			if (!isConfirmPasswordValidFormat) {
 				confirmPasswordErrorElement.textContent =
 					'Повтор пароля должен содержать минимум 8 символов, включая число и букву, и совпадать с паролем';
+
 				confirmPasswordElement.style.borderColor = 'red';
 			} else if (!isPasswordsMatch) {
 				confirmPasswordErrorElement.textContent = 'Пароли не совпадают';
@@ -136,30 +146,15 @@ class SignUp {
 
 		// Обновление состояния кнопки регистрации
 		const updateSignUpButtonState = () => {
-			const isFormValid = validateEmail() && validatePassword() && validateConfirmPassword();
-			document.getElementById('sign-up-button').disabled = !isFormValid;
+			const isEmailValid = validateEmail();
+			const isPasswordValid = validatePassword();
+			const isPasswordsMatch = validateConfirmPassword();
+			document.getElementById('sign-up-button').disabled = !(isEmailValid && isPasswordValid && isPasswordsMatch);
 		};
 
-		emailElement.addEventListener('input', () => {
-			const isEmailValid = validateEmail();
-			const isPasswordValid = validatePassword();
-			const isPasswordsMatch = validateConfirmPassword();
-			updateSignUpButtonState(isEmailValid, isPasswordValid, isPasswordsMatch);
-		});
-
-		passwordElement.addEventListener('input', () => {
-			const isPasswordValid = validatePassword();
-			const isEmailValid = validateEmail();
-			const isPasswordsMatch = validateConfirmPassword();
-			updateSignUpButtonState(isEmailValid, isPasswordValid, isPasswordsMatch);
-		});
-
-		confirmPasswordElement.addEventListener('input', () => {
-			const isPasswordsMatch = validateConfirmPassword();
-			const isEmailValid = validateEmail();
-			const isPasswordValid = validatePassword();
-			updateSignUpButtonState(isEmailValid, isPasswordValid, isPasswordsMatch);
-		});
+		emailElement.addEventListener('input', updateSignUpButtonState);
+		passwordElement.addEventListener('input', updateSignUpButtonState);
+		confirmPasswordElement.addEventListener('input', updateSignUpButtonState);
 	}
 
 	handleSubmit() {
