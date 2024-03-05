@@ -53,7 +53,6 @@ class SignUp {
 			signInUrl: urls.signIn,
 		};
 
-		this.parent.innerHTML = '';
 		const html = template(templateVars);
 		this.parent.insertAdjacentHTML('beforeend', html);
 
@@ -132,6 +131,7 @@ class SignUp {
 				passwordErrorElement.textContent = isPasswordValid
 					? ''
 					: 'Пароль должен содержать минимум 8 символов, включая число и букву';
+
 				passwordElement.style.borderColor = isPasswordValid ? 'initial' : 'red';
 			} else if (hasPasswordInputStarted) {
 				passwordErrorElement.textContent = 'Поле не может быть пустым';

@@ -18,21 +18,6 @@ class Layout {
 	 */
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', template());
-
-		// const layout = document.getElementById('layout');
-		//
-		// let content;
-		//
-		// if ([urls.signIn, urls.signUp].includes(window.location.pathname)) {
-		// 	content = new Content(layout, {withoutPadding: true});
-		// } else {
-		// 	const header = new Header(layout);
-		// 	header.render();
-		//
-		// 	content = new Content(layout);
-		// }
-		//
-		// content.render();
 	}
 }
 
