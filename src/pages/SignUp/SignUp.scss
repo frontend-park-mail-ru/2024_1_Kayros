@@ -1,6 +1,7 @@
 .logo-container-on-sign-up {
 	text-align: center;
 	padding-bottom: 100px;
+	z-index: 5;
 }
 
 .signup-container {
@@ -13,6 +14,7 @@
 	text-align: center;
 	top: -20px;
 	transform: translateY(-100px);
+	z-index: 3;
 }
 
 .signup-title {
@@ -46,11 +48,23 @@
 
 .signup-page-container {
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background-color: var(--background-light);
-	min-height: 100vh;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+
+	#bg-image {
+		position: absolute;
+		min-height: 100vh;
+		width: 100vw;
+		filter: blur(2px);
+		top: 0;
+		left: 0;
+		z-index: 1;
+	}
 }
 
 .error-message {
