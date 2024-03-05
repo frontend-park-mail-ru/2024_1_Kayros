@@ -13,7 +13,7 @@ class Button {
 	 * @param {string} params.content - текст внутри кнопки
 	 * @param {'primary' | 'secondary' | 'clear'} params.style - стиль кнопки
 	 * @param {'submit' | 'button'} params.type - тип элемента
-	 * @param {boolean} params.disabled - событие при клике
+	 * @param {boolean} params.disabled - блокировка кнопки
 	 * @param {Function} params.onClick - событие при клике
 	 * @param {string | undefined} params.icon - иконка
 	 */
