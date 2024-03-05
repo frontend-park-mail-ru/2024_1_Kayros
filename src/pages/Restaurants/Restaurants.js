@@ -1,3 +1,4 @@
+import Loader from '../../components/Loader';
 import ajax from '../../modules/ajax';
 import urls from '../../modules/urls';
 import template from './Restaurants.hbs';
@@ -22,8 +23,12 @@ class Restaurants {
 	renderData(items) {
 		const restaurantsElement = document.getElementById('restaurants');
 
+		const loader = restaurantsElement.querySelector('.loader');
+		loader?.remove();
+
 		if (!items) {
 			restaurantsElement.innerText = 'Нет доступных ресторанов';
+			return;
 		}
 
 		items.forEach((item) => {
@@ -46,6 +51,11 @@ class Restaurants {
 	 */
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', template());
+
+		const restaurants = document.getElementById('restaurants');
+		const loader = new Loader(restaurants, { size: 'xl' });
+		loader.render();
+
 		this.getData();
 	}
 }

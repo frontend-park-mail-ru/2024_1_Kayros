@@ -11,7 +11,9 @@ class Urls {
 	 */
 	constructor() {
 		// TODO: поменять на домен бэка, когда появится, и добавить прокси для девелоп разработки
-		this.url = 'https://localhost:8000/api';
+		this.url = 'http://localhost:8000/api';
+
+		if (process.env.NODE_ENV === 'development') this.url = '/api';
 	}
 
 	/**

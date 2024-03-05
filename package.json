@@ -6,7 +6,8 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "NODE_ENV=development npx webpack serve --mode=development",
-		"build": "NODE_ENV=production npx webpack --mode=production",
+		"prebuild": "NODE_ENV=production npx webpack --mode=production",
+		"build": "npm run prebuild && npx serve dist",
 		"lint": "eslint . \".env*\"",
 		"lint:fix": "eslint . \".env*\" --fix ",
 		"hbs-lint:fix": "ember-template-lint . --fix",
@@ -27,7 +28,8 @@
 	"dependencies": {
 		"@fontsource/montserrat": "^5.0.16",
 		"@fontsource/roboto": "^5.0.8",
-		"handlebars": "^4.7.8"
+		"handlebars": "^4.7.8",
+		"serve": "^14.2.1"
 	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.23.9",
