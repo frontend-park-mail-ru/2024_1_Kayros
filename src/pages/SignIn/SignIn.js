@@ -67,6 +67,7 @@ class SignIn {
 			content: 'Войти',
 			type: 'submit',
 			disabled: true,
+			withLoader: true,
 			onClick: (e) => {
 				e.preventDefault();
 				this.handleSubmit();
@@ -150,6 +151,10 @@ class SignIn {
 	}
 
 	handleSubmit() {
+		const signinButton = this.parent.querySelector('#sign-in-button');
+		const loaderBlock = signinButton.querySelector('#btn-loader');
+		loaderBlock.classList.add('loading');
+
 		const userData = {
 			email: document.getElementById('email').value,
 			password: document.getElementById('password').value,
@@ -157,6 +162,7 @@ class SignIn {
 
 		api.login(userData, (data) => {
 			localStorage.setItem('user-info', JSON.stringify(data));
+			loaderBlock.classList.remove('loading');
 			router.navigate(urls.restaurants);
 		});
 	}

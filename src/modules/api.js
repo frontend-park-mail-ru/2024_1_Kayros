@@ -53,8 +53,8 @@ class Api {
 				type: 'error',
 			});
 
-			// TODO: убрать коллбэк после интерагции
-			callback(userInfo);
+			// TODO: убрать коллбэк после интерагции (таймаут для проверки лоадера)
+			setTimeout(() => callback(userInfo), 2000);
 			return;
 		}
 
@@ -102,6 +102,9 @@ class Api {
 				description: error || 'Ошибка сервера',
 				type: 'error',
 			});
+
+			// TODO: убрать коллбэк после интерагции
+			callback();
 		} else {
 			Notification.open({ duration: 3, title: 'Успешный выход', description: 'До встречи!', type: 'success' });
 			callback();

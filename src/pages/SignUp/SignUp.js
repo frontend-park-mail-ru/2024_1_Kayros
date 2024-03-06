@@ -84,6 +84,7 @@ class SignUp {
 			content: 'Создать аккаунт',
 			type: 'submit',
 			disabled: true,
+			withLoader: true,
 			onClick: (e) => {
 				e.preventDefault();
 				this.handleSubmit();
@@ -245,6 +246,10 @@ class SignUp {
 	}
 
 	handleSubmit() {
+		const signinButton = this.parent.querySelector('#sign-up-button');
+		const loaderBlock = signinButton.querySelector('#btn-loader');
+		loaderBlock.classList.add('loading');
+
 		// Подготовка данных пользователя
 		const userData = {
 			email: document.getElementById('email').value,
@@ -254,6 +259,7 @@ class SignUp {
 
 		api.signup(userData, (data) => {
 			localStorage.setItem('user-info', JSON.stringify(data));
+			loaderBlock.classList.remove('loading');
 			router.navigate(urls.restaurants);
 		});
 	}

@@ -1,3 +1,4 @@
+import Loader from '../Loader';
 import template from './Button.hbs';
 import './Button.scss';
 
@@ -14,16 +15,21 @@ class Button {
 	 * @param {'primary' | 'secondary' | 'clear'} params.style - стиль кнопки
 	 * @param {'submit' | 'button'} params.type - тип элемента
 	 * @param {boolean} params.disabled - блокировка кнопки
+	 * @param {boolean} params.withLoader - лоадер
 	 * @param {Function} params.onClick - событие при клике
 	 * @param {string | undefined} params.icon - иконка
 	 */
-	constructor(parent, { id, content = '', type = 'button', disabled = false, onClick, icon, style = 'primary' }) {
+	constructor(
+		parent,
+		{ id, content = '', type = 'button', disabled = false, onClick, icon, style = 'primary', withLoader = false },
+	) {
 		this.parent = parent;
 		this.content = content;
 		this.type = type;
 		this.onClick = onClick;
 		this.disabled = disabled;
 		this.icon = icon;
+		this.withLoader = withLoader;
 		this.style = style;
 		this.id = id;
 	}
@@ -37,6 +43,7 @@ class Button {
 			content: this.content,
 			class: 'btn-' + this.style,
 			icon: this.icon,
+			loader: this.withLoader,
 			type: this.type,
 			attribute: this.disabled ? 'disabled' : '',
 		});
@@ -51,6 +58,12 @@ class Button {
 		const currentButton = this.parent.querySelector(`#${this.id}`);
 
 		currentButton.onclick = this.onClick;
+
+		if (this.withLoader) {
+			const loaderBlock = currentButton.querySelector('#btn-loader');
+			const loader = new Loader(loaderBlock, { size: 's', style: 'secondary' });
+			loader.render();
+		}
 	}
 }
 

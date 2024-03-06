@@ -27,6 +27,18 @@
 		height: 60px;
 	}
 
+	&.loader-primary {
+		border-top: 2px solid var(--brand);
+		border-left: 2px solid var(--brand);
+		border-bottom: 2px solid var(--brand);
+	}
+
+	&.loader-secondary {
+		border-top: 2px solid var(--white);
+		border-left: 2px solid var(--white);
+		border-bottom: 2px solid var(--white);
+	}
+
 	@keyframes animate {
 		0% {
 			transform: rotate(0deg);

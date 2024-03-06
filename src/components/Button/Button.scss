@@ -46,3 +46,11 @@
 		color: var(--button-color-disabled);
 	}
 }
+
+#btn-loader {
+	display: none;
+
+	&.loading {
+		display: block;
+	}
+}
