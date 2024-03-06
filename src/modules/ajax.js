@@ -11,11 +11,7 @@ class Ajax {
 		let data, responseError;
 
 		try {
-			const response = await fetch(url, {
-				credentials: 'include',
-				mode: 'cors',
-			});
-
+			const response = await fetch(url);
 			data = await response.json();
 		} catch (error) {
 			responseError = error;
@@ -40,7 +36,7 @@ class Ajax {
 				method: 'POST',
 				credentials: 'include',
 				mode: 'cors',
-				body: body && JSON.stringify(body),
+				body: JSON.stringify(body),
 			});
 
 			const res = await response.text();
