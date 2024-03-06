@@ -211,7 +211,7 @@ class Notification {
 
 		setTimeout(() => {
 			element.classList.add('notification-open');
-		}, 50);
+		}, 20);
 
 		if (duration !== 0) {
 			setTimeout(() => {

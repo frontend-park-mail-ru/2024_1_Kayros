@@ -1,4 +1,6 @@
 import Notification from '../components/Notification/Notification';
+import restaurants from '../mocks/restaurants';
+import userInfo from '../mocks/userInfo';
 import ajax from './ajax';
 
 /**
@@ -19,8 +21,18 @@ class Api {
 	 * Метод для получения списка ресторанов
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
-	getRestaurants(callback) {
-		return ajax.get(`${this.url}/restaurants`, callback);
+	async getRestaurants(callback) {
+		const { data, error } = await ajax.get(`${this.url}/restaurants`);
+
+		if (error) {
+			Notification.open({ duration: 3, title: 'Ошибка сервера', description: error });
+
+			// TODO: убрать коллбэк после интерагции
+			callback(restaurants);
+			return;
+		}
+
+		callback(data);
 	}
 
 	/**
@@ -31,7 +43,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async login(body, callback) {
-		const { data, error } = await ajax.post(`${this.url}/signin`, body, callback);
+		const { data, error } = await ajax.post(`${this.url}/signin`, body);
 
 		if (error) {
 			Notification.open({
@@ -42,11 +54,12 @@ class Api {
 			});
 
 			// TODO: убрать коллбэк после интерагции
-			// callback(userInfo);
-		} else {
-			Notification.open({ duration: 3, title: 'Успешный вход', description: 'С возвращением!', type: 'success' });
-			callback(data);
+			callback(userInfo);
+			return;
 		}
+
+		Notification.open({ duration: 3, title: 'Успешный вход', description: 'С возвращением!', type: 'success' });
+		callback(data);
 	}
 
 	/**
@@ -68,7 +81,7 @@ class Api {
 			});
 
 			// TODO: убрать коллбэк после интерагции
-			// callback(userInfo);
+			callback(userInfo);
 		} else {
 			Notification.open({ duration: 3, title: 'Аккаунт создан', description: 'Добро пожаловать!', type: 'success' });
 			callback(data);

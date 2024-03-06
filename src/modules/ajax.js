@@ -1,5 +1,3 @@
-import NotificationApi from '../components/Notification/Notification';
-
 /**
  * Класс для выполнения асинхронных запросов
  */
@@ -9,18 +7,20 @@ class Ajax {
 	 * @param {string} url - адрес сервера для отправки запроса
 	 * @param {void} callback - функция-коллбэк для обработки результатов запроса
 	 */
-	async get(url, callback) {
+	async get(url) {
+		let data, responseError;
+
 		try {
 			const response = await fetch(url);
-			const result = await response.json();
-			callback(result);
+			data = await response.json();
 		} catch (error) {
-			NotificationApi.open({ duration: 3, title: 'Ошибка сервера', description: error.detail || error.message });
-			callback();
+			responseError = error;
 		}
 
 		const loader = document.querySelector('.loader');
 		loader?.remove();
+
+		return { data, error: responseError };
 	}
 
 	/**
@@ -29,7 +29,7 @@ class Ajax {
 	 * @param {void} body - объект, посылаемый в запросе
 	 */
 	async post(url, body) {
-		let data, responseError;
+		let result, responseError;
 
 		try {
 			const response = await fetch(url, {
@@ -42,13 +42,13 @@ class Ajax {
 				body: JSON.stringify(body),
 			});
 
-			data = await response.text();
-			if (!response.ok) responseError = data;
+			result = await response.text();
+			if (!response.ok) responseError = result;
 		} catch (error) {
 			responseError = error;
 		}
 
-		return { data, error: responseError };
+		return { data: result, error: responseError };
 	}
 }
 
