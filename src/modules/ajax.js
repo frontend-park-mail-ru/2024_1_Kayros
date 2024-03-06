@@ -11,7 +11,11 @@ class Ajax {
 		let data, responseError;
 
 		try {
-			const response = await fetch(url);
+			const response = await fetch(url, {
+				credentials: 'include',
+				mode: 'cors',
+			});
+
 			data = await response.json();
 		} catch (error) {
 			responseError = error;
@@ -36,12 +40,12 @@ class Ajax {
 				method: 'POST',
 				credentials: 'include',
 				mode: 'cors',
-				body: JSON.stringify(body),
+				body: body && JSON.stringify(body),
 			});
 
 			const res = await response.text();
 
-			if (!response.ok) responseError = result;
+			if (!response.ok) responseError = res;
 			if (response.ok) result = res;
 		} catch (error) {
 			responseError = error;
