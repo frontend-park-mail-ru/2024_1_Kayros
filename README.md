@@ -25,3 +25,5 @@
 ## Ссылки
 
 [Бэкенд проекта](https://github.com/go-park-mail-ru/2024_1_Kayros)
+
+[Сайт](http://resto-go.ru)
