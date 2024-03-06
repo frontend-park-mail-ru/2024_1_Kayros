@@ -3,7 +3,7 @@ import path from 'path';
 
 const app = express();
 
-const PORT = 8080;
+const PORT = 80;
 
 app.use(express.static('dist'));
 
