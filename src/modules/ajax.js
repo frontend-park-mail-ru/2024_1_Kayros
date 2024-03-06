@@ -36,15 +36,13 @@ class Ajax {
 				method: 'POST',
 				credentials: 'include',
 				mode: 'cors',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
 				body: JSON.stringify(body),
 			});
 
+			const res = await response.text();
+
 			if (!response.ok) responseError = result;
-			if (response.ok) result = await response.text();
+			if (response.ok) result = res;
 		} catch (error) {
 			responseError = error;
 		}

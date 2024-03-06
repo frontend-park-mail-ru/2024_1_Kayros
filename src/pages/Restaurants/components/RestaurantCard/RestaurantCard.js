@@ -15,9 +15,9 @@ class RestaurantCard {
 	 * @param {string} rating - рейтинг ресторана
 	 */
 
-	constructor(parent, { image, name, description, rating }) {
+	constructor(parent, { img_url, name, description, rating }) {
 		this.parent = parent;
-		this.image = image;
+		this.image = img_url;
 		this.name = name;
 		this.description = description;
 		this.rating = rating;
