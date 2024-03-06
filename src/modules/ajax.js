@@ -35,6 +35,7 @@ class Ajax {
 			const response = await fetch(url, {
 				method: 'POST',
 				credentials: 'include',
+				mode: 'cors',
 				headers: {
 					Accept: 'application/json',
 					'Content-Type': 'application/json',
@@ -42,8 +43,8 @@ class Ajax {
 				body: JSON.stringify(body),
 			});
 
-			result = await response.text();
 			if (!response.ok) responseError = result;
+			if (response.ok) result = await response.text();
 		} catch (error) {
 			responseError = error;
 		}

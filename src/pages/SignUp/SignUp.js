@@ -258,9 +258,12 @@ class SignUp {
 		};
 
 		api.signup(userData, (data) => {
-			localStorage.setItem('user-info', JSON.stringify(data));
+			if (data) {
+				localStorage.setItem('user-info', data);
+				router.navigate(urls.restaurants);
+			}
+
 			loaderBlock.classList.remove('loading');
-			router.navigate(urls.restaurants);
 		});
 	}
 }

@@ -21,14 +21,15 @@ class Profile {
 	getHTML(user) {
 		const avatar = user.avatarUrl ? user.avatarUrl : defaultAvatar;
 
-		return template({ name: user.name, avatarUrl: avatar });
+		return template({ name: user.name ? user.name : 'Пользователь', avatarUrl: avatar });
 	}
 
 	/**
 	 * Рендеринг компонента
 	 */
 	render() {
-		let user = JSON.parse(localStorage.getItem('user-info'));
+		const localInfo = localStorage.getItem('user-info');
+		let user = localInfo ? JSON.parse(localInfo) : null;
 
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML(user));
 

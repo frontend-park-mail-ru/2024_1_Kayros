@@ -1,6 +1,4 @@
 import Notification from '../components/Notification/Notification';
-import restaurants from '../mocks/restaurants';
-import userInfo from '../mocks/userInfo';
 import ajax from './ajax';
 
 /**
@@ -12,7 +10,7 @@ class Api {
 	 */
 	constructor() {
 		// TODO: поменять на домен бэка, когда появится, и добавить прокси для девелоп разработки
-		this.url = 'http://localhost:8000/';
+		this.url = 'http://109.120.180.238:8000';
 
 		if (process.env.NODE_ENV === 'development') this.url = '/api';
 	}
@@ -26,10 +24,6 @@ class Api {
 
 		if (error) {
 			Notification.open({ duration: 3, title: 'Ошибка сервера', description: error });
-
-			// TODO: убрать коллбэк после интерагции
-			callback(restaurants);
-			return;
 		}
 
 		callback(data);
@@ -45,7 +39,7 @@ class Api {
 	async login(body, callback) {
 		const { data, error } = await ajax.post(`${this.url}/signin`, body);
 
-		if (error) {
+		if (error || !data) {
 			Notification.open({
 				duration: 3,
 				title: 'Не удалось войти',
@@ -53,13 +47,11 @@ class Api {
 				type: 'error',
 			});
 
-			// TODO: убрать коллбэк после интерагции (таймаут для проверки лоадера)
-			setTimeout(() => callback(userInfo), 2000);
-			return;
+			callback();
+		} else {
+			Notification.open({ duration: 3, title: 'Успешный вход', description: 'С возвращением!', type: 'success' });
+			callback(data);
 		}
-
-		Notification.open({ duration: 3, title: 'Успешный вход', description: 'С возвращением!', type: 'success' });
-		callback(data);
 	}
 
 	/**
@@ -72,7 +64,7 @@ class Api {
 	async signup(body, callback) {
 		const { data, error } = await ajax.post(`${this.url}/signup`, body);
 
-		if (error) {
+		if (error || !data) {
 			Notification.open({
 				duration: 3,
 				title: 'Не удалось создать аккаунт',
@@ -80,8 +72,7 @@ class Api {
 				type: 'error',
 			});
 
-			// TODO: убрать коллбэк после интерагции
-			callback(userInfo);
+			callback();
 		} else {
 			Notification.open({ duration: 3, title: 'Аккаунт создан', description: 'Добро пожаловать!', type: 'success' });
 			callback(data);
@@ -102,9 +93,6 @@ class Api {
 				description: error || 'Ошибка сервера',
 				type: 'error',
 			});
-
-			// TODO: убрать коллбэк после интерагции
-			callback();
 		} else {
 			Notification.open({ duration: 3, title: 'Успешный выход', description: 'До встречи!', type: 'success' });
 			callback();
