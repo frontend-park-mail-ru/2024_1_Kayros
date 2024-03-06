@@ -10,6 +10,7 @@ import './SignUp.scss';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+const NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9]{1,19}$/;
 
 // Константа для описания полей формы
 const FIELDS = [
@@ -18,6 +19,12 @@ const FIELDS = [
 		id: 'email',
 		placeholder: 'Почта',
 		type: 'email',
+	},
+	{
+		selector: '#name-input-container',
+		id: 'name',
+		placeholder: 'Имя',
+		type: 'text',
 	},
 	{
 		selector: '#password-input-container',
@@ -89,20 +96,24 @@ class SignUp {
 
 	addFormValidation() {
 		const emailElement = document.getElementById('email');
+		const nameElement = document.getElementById('name');
 		const passwordElement = document.getElementById('password');
 		const confirmPasswordElement = document.getElementById('confirm-password');
 
 		const emailErrorElement = document.getElementById('email-error');
+		const nameErrorElement = document.getElementById('name-error');
 		const passwordErrorElement = document.getElementById('password-error');
 		const confirmPasswordErrorElement = document.getElementById('confirm-password-error');
 
 		// Флаги начала ввода для каждого поля
 		let hasEmailInputStarted = false;
+		let hasNameInputStarted = false;
 		let hasPasswordInputStarted = false;
 		let hasConfirmPasswordInputStarted = false;
 
 		// Состояние валидности каждого поля
 		let isEmailValid = false;
+		let isNameValid = false;
 		let isPasswordValid = false;
 		let isPasswordsMatch = false;
 
@@ -122,6 +133,24 @@ class SignUp {
 			}
 
 			return emailElement.value && isEmailValid;
+		};
+
+		// Функция для валидации имени
+		const validateName = () => {
+			const isNameValid = NAME_REGEX.test(nameElement.value);
+
+			if (nameElement.value) {
+				nameErrorElement.textContent = isNameValid ? '' : 'Неверный формат имени';
+				nameElement.style.borderColor = isNameValid ? 'initial' : 'red';
+			} else if (hasNameInputStarted) {
+				nameErrorElement.textContent = 'Поле не может быть пустым';
+				nameElement.style.borderColor = 'red';
+			} else {
+				nameErrorElement.textContent = '';
+				nameElement.style.borderColor = 'initial';
+			}
+
+			return nameElement.value && isNameValid;
 		};
 
 		// Функция для валидации пароля
@@ -175,13 +204,24 @@ class SignUp {
 
 		// Функция для обновления состояния кнопки регистрации
 		const updateSignUpButtonState = () => {
-			document.getElementById('sign-up-button').disabled = !(isEmailValid && isPasswordValid && isPasswordsMatch);
+			document.getElementById('sign-up-button').disabled = !(
+				isNameValid &&
+				isEmailValid &&
+				isPasswordValid &&
+				isPasswordsMatch
+			);
 		};
 
 		// Слушатели событий для обновления флагов и вызова функций валидации
 		emailElement.addEventListener('input', () => {
 			hasEmailInputStarted = true;
 			isEmailValid = validateEmail();
+			updateSignUpButtonState();
+		});
+
+		nameElement.addEventListener('input', () => {
+			hasNameInputStarted = true;
+			isNameValid = validateName();
 			updateSignUpButtonState();
 		});
 
@@ -208,6 +248,7 @@ class SignUp {
 		// Подготовка данных пользователя
 		const userData = {
 			email: document.getElementById('email').value,
+			name: document.getElementById('name').value,
 			password: document.getElementById('password').value,
 		};
 

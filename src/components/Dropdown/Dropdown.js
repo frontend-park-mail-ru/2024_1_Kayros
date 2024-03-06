@@ -1,4 +1,5 @@
 import Header from '../../components/Header';
+import api from '../../modules/api';
 import Button from '../Button/Button';
 import template from './Dropdown.hbs';
 import './Dropdown.scss';
@@ -85,7 +86,7 @@ class Dropdown {
 			id: 'exit-button',
 			content: 'Выйти',
 			style: 'clear',
-			onClick: () => this.handleExit(),
+			onClick: () => api.signout(() => this.handleExit()),
 		});
 
 		exitButton.render();

@@ -1,5 +1,4 @@
 import Notification from '../components/Notification/Notification';
-import userInfo from '../mocks/userInfo';
 import ajax from './ajax';
 
 /**
@@ -32,18 +31,18 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async login(body, callback) {
-		const { data, error } = await ajax.post(`${this.url}/user/login`, body, callback);
+		const { data, error } = await ajax.post(`${this.url}/signin`, body, callback);
 
 		if (error) {
 			Notification.open({
 				duration: 3,
 				title: 'Не удалось войти',
-				description: error.detail || error.message || 'Неверный пароль или почта!',
+				description: error || 'Неверный пароль или почта!',
 				type: 'error',
 			});
 
 			// TODO: убрать коллбэк после интерагции
-			callback(userInfo);
+			// callback(userInfo);
 		} else {
 			Notification.open({ duration: 3, title: 'Успешный вход', description: 'С возвращением!', type: 'success' });
 			callback(data);
@@ -58,21 +57,41 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async signup(body, callback) {
-		const { data, error } = await ajax.post(`${this.url}/user`, body, callback);
+		const { data, error } = await ajax.post(`${this.url}/signup`, body);
 
 		if (error) {
 			Notification.open({
 				duration: 3,
 				title: 'Не удалось создать аккаунт',
-				description: error.detail || error.message || 'Ошибка сервера',
+				description: error || 'Ошибка сервера',
 				type: 'error',
 			});
 
 			// TODO: убрать коллбэк после интерагции
-			callback(userInfo);
+			// callback(userInfo);
 		} else {
 			Notification.open({ duration: 3, title: 'Аккаунт создан', description: 'Добро пожаловать!', type: 'success' });
 			callback(data);
+		}
+	}
+
+	/**
+	 * Метод для выхода пользователя
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async signout(callback) {
+		const { error } = await ajax.post(`${this.url}/signout`);
+
+		if (error) {
+			Notification.open({
+				duration: 3,
+				title: 'Не удалось выйти из аккаунта',
+				description: error || 'Ошибка сервера',
+				type: 'error',
+			});
+		} else {
+			Notification.open({ duration: 3, title: 'Успешный выход', description: 'До встречи!', type: 'success' });
+			callback();
 		}
 	}
 }

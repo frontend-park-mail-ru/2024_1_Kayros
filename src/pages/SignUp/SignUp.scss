@@ -67,7 +67,8 @@
 	}
 }
 
-.error-message {
+.error-message,
+.error-name {
 	color: var(--red);
 	font-size: 14px;
 	margin: -18px 4px 20px;
