@@ -1,3 +1,9 @@
 #layout {
 	position: relative;
+
+	&:not(:has(#header)) {
+		& > br {
+			display: none;
+		}
+	}
 }
