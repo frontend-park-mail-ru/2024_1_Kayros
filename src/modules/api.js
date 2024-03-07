@@ -10,9 +10,7 @@ class Api {
 	 */
 	constructor() {
 		// TODO: поменять на домен бэка, когда появится, и добавить прокси для девелоп разработки
-		this.url = 'http://109.120.180.238:8000';
-
-		if (process.env.NODE_ENV === 'development') this.url = '/api';
+		this.url = '/api';
 	}
 
 	/**

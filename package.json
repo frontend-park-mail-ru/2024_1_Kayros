@@ -28,11 +28,8 @@
 	"dependencies": {
 		"@fontsource/montserrat": "^5.0.16",
 		"@fontsource/roboto": "^5.0.8",
-		"cors": "^2.8.5",
-		"handlebars": "^4.7.8",
-		"http-proxy-middleware": "^2.0.6",
-		"request": "^2.88.2",
-		"serve": "^14.2.1"
+		"express-http-proxy": "^2.0.0",
+		"handlebars": "^4.7.8"
 	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.23.9",
