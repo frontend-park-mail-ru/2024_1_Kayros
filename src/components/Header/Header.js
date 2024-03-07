@@ -33,7 +33,7 @@ class Header {
 	render() {
 		let user = JSON.parse(localStorage.getItem('user-info'));
 
-		this.parent.insertAdjacentHTML('afterbegin', this.getHTML(user));
+		this.parent.insertAdjacentHTML('beforeend', this.getHTML(user));
 
 		const logoBlock = document.getElementById('logoContainer');
 		const logo = new Logo(logoBlock);
