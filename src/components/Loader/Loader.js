@@ -8,7 +8,7 @@ class Loader {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
-	 * @param {Object} params - параметры компонента
+	 * @param {object} params - параметры компонента
 	 * @param {'s' | 'm' | 'l' | 'xl'} params.size - размер лоадера
 	 * @param {'primary' | 'secondary'} params.style - размер лоадера
 	 */

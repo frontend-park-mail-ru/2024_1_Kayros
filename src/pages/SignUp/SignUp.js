@@ -95,6 +95,9 @@ class SignUp {
 		this.addFormValidation();
 	}
 
+	/**
+	 * Валидация полей формы
+	 */
 	addFormValidation() {
 		const emailElement = document.getElementById('email');
 		const nameElement = document.getElementById('name');
@@ -245,6 +248,9 @@ class SignUp {
 		});
 	}
 
+	/**
+	 * Обработка кнопки входа
+	 */
 	handleSubmit() {
 		const signinButton = this.parent.querySelector('#sign-up-button');
 		const loaderBlock = signinButton.querySelector('#btn-loader');

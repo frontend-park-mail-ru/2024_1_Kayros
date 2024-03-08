@@ -9,11 +9,11 @@ class Input {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
-	 * @param {Object} id - идентификатор элемента
-	 * @param {Object} params - параметры инпута
-	 * @param {string} placeholder - текстовая подсказка внутри поля
-	 * @param {string} type - тип инпута
-	 * @param {string | undefined} button - название кнопки
+	 * @param {object} params - параметры инпута
+	 * @param {number} params.id - идентификатор элемента
+	 * @param {string} params.placeholder - текстовая подсказка внутри поля
+	 * @param {string} params.type - тип инпута
+	 * @param {string | undefined} params.button - название кнопки
 	 */
 	constructor(parent, { id, placeholder, type = 'text', button }) {
 		this.parent = parent;
@@ -26,8 +26,8 @@ class Input {
 
 	/**
 	 * Получение html компонента
+	 * @returns {HTMLDivElement} - html
 	 */
-
 	getHTML() {
 		return template({
 			placeholder: this.placeholder,

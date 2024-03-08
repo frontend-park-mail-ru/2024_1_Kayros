@@ -18,6 +18,7 @@ class Restaurants {
 
 	/**
 	 * Отрисовка карточек ресторанов
+	 * @param {Array} items - массив ресторанов
 	 */
 	renderData(items) {
 		const restaurantsElement = document.getElementById('restaurants');

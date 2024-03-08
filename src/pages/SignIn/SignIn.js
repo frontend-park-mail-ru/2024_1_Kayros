@@ -37,6 +37,7 @@ class SignIn {
 		this.parent = parent;
 		this.isLoading = false;
 	}
+
 	/**
 	 * Рендер страницы.
 	 */
@@ -77,6 +78,9 @@ class SignIn {
 		this.addFormValidation();
 	}
 
+	/**
+	 * Валидация полей формы
+	 */
 	addFormValidation() {
 		const emailElement = document.getElementById('email');
 		const passwordElement = document.getElementById('password');
@@ -150,6 +154,9 @@ class SignIn {
 		});
 	}
 
+	/**
+	 * Обработка кнопки входа
+	 */
 	handleSubmit() {
 		const signinButton = this.parent.querySelector('#sign-in-button');
 

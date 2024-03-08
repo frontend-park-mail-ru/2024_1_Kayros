@@ -20,6 +20,7 @@ class Router {
 	 * Добавляет маршрут в список маршрутов роутера.
 	 * @param {string} path - Путь маршрута.
 	 * @param {Function} component - Компонент, соответствующий маршруту.
+	 * @returns {ThisType} - контекст
 	 */
 	addRoute(path, component) {
 		this.routes.push({ path, component });
@@ -35,6 +36,9 @@ class Router {
 		this.handleLocationChange();
 	}
 
+	/**
+	 * Очищает layout страницы
+	 */
 	handleChangeInnerLayout() {
 		const layout = document.getElementById('layout');
 		const header = document.getElementById('header');

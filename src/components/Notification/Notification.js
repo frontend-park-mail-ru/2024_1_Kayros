@@ -21,7 +21,9 @@ class Notification {
 
 	/**
 	 * Получение html компонента
-	 * @param {Object} params - параметры для шаблона
+	 * @param {object} params - параметры для шаблона
+	 * @param {'success' | 'error'} params.type - тип уведомления
+	 * @returns {HTMLDivElement} - html
 	 */
 	getHTML({ type, ...params }) {
 		return template({
@@ -137,7 +139,7 @@ class Notification {
 
 	/**
 	 * Функция для закрытия уведомления
-	 * @param {HTMLCollection} openNotifications - список открытых уведомлений
+	 * @param {HTMLCollection} element - текущее уведомление
 	 */
 	close(element) {
 		const openNotifications = document.getElementsByClassName('notification-open');
@@ -171,7 +173,7 @@ class Notification {
 
 	/**
 	 * Функция для открытия уведомления
-	 * @param {Object} params - параметры
+	 * @param {object} params - параметры
 	 * @param {number} params.duration - время в секундах, после которого плашка исчезает
 	 * @param {string} params.title - заголовок сообщение
 	 * @param {string} params.description - описание

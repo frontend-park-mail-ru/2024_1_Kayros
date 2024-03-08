@@ -12,8 +12,8 @@ class Profile {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
-	 * @param {Object} params - параметры компонента
-	 * @param {Object} params.user - объект пользователя
+	 * @param {object} params - параметры компонента
+	 * @param {object} params.user - объект пользователя
 	 */
 	constructor(parent, { user }) {
 		this.parent = parent;
@@ -22,6 +22,7 @@ class Profile {
 
 	/**
 	 * Получение html компонента
+	 * @returns {HTMLDivElement} - html
 	 */
 	getHTML() {
 		const avatar = this.user.avatarUrl || defaultAvatar;
