@@ -24,7 +24,7 @@ class Profile {
 	 * Получение html компонента
 	 */
 	getHTML() {
-		const avatar = this.user.avatarUrl ? this.user.avatarUrl : defaultAvatar;
+		const avatar = this.user.avatarUrl || defaultAvatar;
 
 		return template({ name: this.user.name || DEFAULT_USERNAME, avatarUrl: avatar });
 	}

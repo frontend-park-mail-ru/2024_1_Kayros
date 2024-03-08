@@ -17,10 +17,14 @@ class Ajax {
 			responseError = error;
 		}
 
+		if (responseError) {
+			Notification.open({ duration: 3, title: 'Ошибка сервера', description: responseError });
+		}
+
 		const loader = document.querySelector('.loader');
 		loader?.remove();
 
-		return { data, error: responseError };
+		return data;
 	}
 
 	/**
@@ -42,7 +46,7 @@ class Ajax {
 			if (response.ok) {
 				data = result;
 			} else {
-				responseError = await response.text();
+				responseError = result;
 			}
 		} catch (error) {
 			responseError = error;

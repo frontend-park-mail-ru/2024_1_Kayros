@@ -1,4 +1,5 @@
 import Notification from '../components/Notification/Notification';
+import { SERVER_RESPONSE_ERROR } from '../constants';
 import ajax from './ajax';
 
 /**
@@ -18,11 +19,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async getRestaurants(callback) {
-		const { data, error } = await ajax.get(`${this.url}/restaurants`);
-
-		if (error) {
-			Notification.open({ duration: 3, title: 'Ошибка сервера', description: error });
-		}
+		const data = await ajax.get(`${this.url}/restaurants`);
 
 		callback(data);
 	}
@@ -46,7 +43,7 @@ class Api {
 		Notification.open({
 			duration: 3,
 			title: 'Не удалось войти',
-			description: error || 'Неверный пароль или почта!',
+			description: error || SERVER_RESPONSE_ERROR,
 			type: 'error',
 		});
 	}
@@ -70,7 +67,7 @@ class Api {
 		Notification.open({
 			duration: 3,
 			title: 'Не удалось создать аккаунт',
-			description: error || 'Ошибка сервера',
+			description: error || SERVER_RESPONSE_ERROR,
 			type: 'error',
 		});
 	}
@@ -86,7 +83,7 @@ class Api {
 			Notification.open({
 				duration: 3,
 				title: 'Не удалось выйти из аккаунта',
-				description: error || 'Ошибка сервера',
+				description: error || SERVER_RESPONSE_ERROR,
 				type: 'error',
 			});
 

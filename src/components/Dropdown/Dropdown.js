@@ -86,9 +86,7 @@ class Dropdown {
 			id: 'exit-button',
 			content: 'Выйти',
 			style: 'clear',
-			onClick: () => {
-				api.signout(() => this.handleExit());
-			},
+			onClick: () => api.signout(this.handleExit.bind(this)),
 		});
 
 		exitButton.render();

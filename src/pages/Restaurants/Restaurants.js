@@ -37,9 +37,7 @@ class Restaurants {
 	 * Получение данных о ресторанах
 	 */
 	getData() {
-		api.getRestaurants((data) => {
-			this.renderData(data);
-		});
+		api.getRestaurants(this.renderData);
 	}
 
 	/**
