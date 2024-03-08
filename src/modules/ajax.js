@@ -29,7 +29,7 @@ class Ajax {
 	 * @param {void} body - объект, посылаемый в запросе
 	 */
 	async post(url, body) {
-		let result, responseError;
+		let data, responseError;
 
 		try {
 			const response = await fetch(url, {
@@ -37,12 +37,12 @@ class Ajax {
 				body: JSON.stringify(body),
 			});
 
-			const res = await response.text();
+			const result = await response.text();
 
 			if (response.ok) {
-				result = res;
+				data = result;
 			} else {
-				responseError = res;
+				responseError = await response.text();
 			}
 		} catch (error) {
 			responseError = error;
@@ -51,7 +51,7 @@ class Ajax {
 		const loaderButton = document.querySelector('#btn-loader');
 		loaderButton?.classList.remove('loading');
 
-		return { data: result, error: responseError };
+		return { data, error: responseError };
 	}
 }
 
