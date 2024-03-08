@@ -28,15 +28,13 @@
 	}
 
 	&.loader-primary {
-		border-top: 2px solid var(--brand);
-		border-left: 2px solid var(--brand);
-		border-bottom: 2px solid var(--brand);
+		border: 2px solid var(--brand);
+		border-right: none;
 	}
 
 	&.loader-secondary {
-		border-top: 2px solid var(--white);
-		border-left: 2px solid var(--white);
-		border-bottom: 2px solid var(--white);
+		border: 2px solid var(--white);
+		border-right: none;
 	}
 
 	@keyframes animate {

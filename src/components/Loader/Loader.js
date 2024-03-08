@@ -24,7 +24,7 @@ class Loader {
 	render() {
 		this.parent.insertAdjacentHTML(
 			'beforeend',
-			template({ class: 'loader-' + this.size, style: 'loader-' + this.style }),
+			template({ class: `loader-${this.size}`, style: `loader-${this.style}` }),
 		);
 	}
 }

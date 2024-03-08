@@ -25,7 +25,7 @@ class Notification {
 	 */
 	getHTML({ type, ...params }) {
 		return template({
-			id: this.id + '-' + this.count,
+			id: `${this.id}-${this.count}`,
 			position: this.position,
 			icon: type === 'success' ? 'assets/success.svg' : 'assets/error.svg',
 			...params,

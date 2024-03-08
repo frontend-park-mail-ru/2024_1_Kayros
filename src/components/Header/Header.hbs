@@ -4,13 +4,13 @@
 
 	<div id="header-content">
 
-		<div id="searchInput"></div>
+		<div id="search-input"></div>
 
-		<div id="address">
-			{{#if this.user.address}}
+		{{#if this.user.address}}
+			<div id="address">
 				<span>{{this.user.address}}</span>
-			{{/if}}
-		</div>
+			</div>
+		{{/if}}
 
 		<div id="cart"></div>
 

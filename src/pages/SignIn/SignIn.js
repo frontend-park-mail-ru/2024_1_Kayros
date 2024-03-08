@@ -152,6 +152,7 @@ class SignIn {
 
 	handleSubmit() {
 		const signinButton = this.parent.querySelector('#sign-in-button');
+
 		const loaderBlock = signinButton.querySelector('#btn-loader');
 		loaderBlock.classList.add('loading');
 
@@ -161,12 +162,8 @@ class SignIn {
 		};
 
 		api.login(userData, (data) => {
-			if (data) {
-				localStorage.setItem('user-info', data);
-				router.navigate(urls.restaurants);
-			}
-
-			loaderBlock.classList.remove('loading');
+			localStorage.setItem('user-info', data);
+			router.navigate(urls.restaurants);
 		});
 	}
 }

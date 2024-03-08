@@ -1,6 +1,7 @@
 import cartIcon from '../../assets/cart.svg';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls';
+import { localStorageHelper } from '../../utils';
 import Button from '../Button';
 import Input from '../Input';
 import Logo from '../Logo/Logo';
@@ -31,15 +32,15 @@ class Header {
 	 * Рендеринг компонента
 	 */
 	render() {
-		let user = JSON.parse(localStorage.getItem('user-info'));
+		const user = localStorageHelper.getItem('user-info');
 
-		this.parent.insertAdjacentHTML('beforeend', this.getHTML(user));
+		this.parent.insertAdjacentHTML('afterbegin', this.getHTML(user));
 
 		const logoBlock = document.getElementById('logoContainer');
 		const logo = new Logo(logoBlock);
 		logo.render();
 
-		const searchBlock = document.getElementById('searchInput');
+		const searchBlock = document.getElementById('search-input');
 		const searchInput = new Input(searchBlock, {
 			id: 'restaurants-search',
 			placeholder: 'Рестораны, еда',
@@ -52,7 +53,7 @@ class Header {
 			const cartBlock = document.getElementById('cart');
 			const cartButton = new Button(cartBlock, {
 				id: 'cart-button',
-				content: '300 ₽',
+				content: `${user.cart.total} ₽`,
 				icon: cartIcon,
 			});
 
@@ -62,7 +63,7 @@ class Header {
 		const profileBlock = document.getElementById('profile-block');
 
 		if (user) {
-			const profile = new Profile(profileBlock);
+			const profile = new Profile(profileBlock, { user });
 			profile.render();
 		} else {
 			const loginButton = new Button(profileBlock, {

@@ -37,19 +37,18 @@ class Api {
 	async login(body, callback) {
 		const { data, error } = await ajax.post(`${this.url}/signin`, body);
 
-		if (error || !data) {
-			Notification.open({
-				duration: 3,
-				title: 'Не удалось войти',
-				description: error || 'Неверный пароль или почта!',
-				type: 'error',
-			});
-
-			callback();
-		} else {
+		if (data && !error) {
 			Notification.open({ duration: 3, title: 'Успешный вход', description: 'С возвращением!', type: 'success' });
 			callback(data);
+			return;
 		}
+
+		Notification.open({
+			duration: 3,
+			title: 'Не удалось войти',
+			description: error || 'Неверный пароль или почта!',
+			type: 'error',
+		});
 	}
 
 	/**
@@ -62,19 +61,18 @@ class Api {
 	async signup(body, callback) {
 		const { data, error } = await ajax.post(`${this.url}/signup`, body);
 
-		if (error || !data) {
-			Notification.open({
-				duration: 3,
-				title: 'Не удалось создать аккаунт',
-				description: error || 'Ошибка сервера',
-				type: 'error',
-			});
-
-			callback();
-		} else {
+		if (data && !error) {
 			Notification.open({ duration: 3, title: 'Аккаунт создан', description: 'Добро пожаловать!', type: 'success' });
 			callback(data);
+			return;
 		}
+
+		Notification.open({
+			duration: 3,
+			title: 'Не удалось создать аккаунт',
+			description: error || 'Ошибка сервера',
+			type: 'error',
+		});
 	}
 
 	/**
@@ -91,10 +89,12 @@ class Api {
 				description: error || 'Ошибка сервера',
 				type: 'error',
 			});
-		} else {
-			Notification.open({ duration: 3, title: 'Успешный выход', description: 'До встречи!', type: 'success' });
-			callback();
+
+			return;
 		}
+
+		Notification.open({ duration: 3, title: 'Успешный выход', description: 'До встречи!', type: 'success' });
+		callback();
 	}
 }
 

@@ -3,6 +3,8 @@ import Dropdown from '../Dropdown/Dropdown';
 import template from './Profile.hbs';
 import './Profile.scss';
 
+const DEFAULT_USERNAME = 'Пользователь';
+
 /**
  * Профиль
  */
@@ -10,28 +12,28 @@ class Profile {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
+	 * @param {Object} params - параметры компонента
+	 * @param {Object} params.user - объект пользователя
 	 */
-	constructor(parent) {
+	constructor(parent, { user }) {
 		this.parent = parent;
+		this.user = user;
 	}
 
 	/**
 	 * Получение html компонента
 	 */
-	getHTML(user) {
-		const avatar = user.avatarUrl ? user.avatarUrl : defaultAvatar;
+	getHTML() {
+		const avatar = this.user.avatarUrl ? this.user.avatarUrl : defaultAvatar;
 
-		return template({ name: user.name ? user.name : 'Пользователь', avatarUrl: avatar });
+		return template({ name: this.user.name || DEFAULT_USERNAME, avatarUrl: avatar });
 	}
 
 	/**
 	 * Рендеринг компонента
 	 */
 	render() {
-		const localInfo = localStorage.getItem('user-info');
-		let user = localInfo ? JSON.parse(localInfo) : null;
-
-		this.parent.insertAdjacentHTML('beforeend', this.getHTML(user));
+		this.parent.insertAdjacentHTML('beforeend', this.getHTML(this.user));
 
 		const profile = document.getElementById('profile');
 

@@ -34,18 +34,22 @@ class Ajax {
 		try {
 			const response = await fetch(url, {
 				method: 'POST',
-				credentials: 'include',
-				mode: 'cors',
 				body: JSON.stringify(body),
 			});
 
 			const res = await response.text();
 
-			if (!response.ok) responseError = res;
-			if (response.ok) result = res;
+			if (response.ok) {
+				result = res;
+			} else {
+				responseError = res;
+			}
 		} catch (error) {
 			responseError = error;
 		}
+
+		const loaderButton = document.querySelector('#btn-loader');
+		loaderButton?.classList.remove('loading');
 
 		return { data: result, error: responseError };
 	}

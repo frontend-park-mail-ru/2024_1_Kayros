@@ -93,10 +93,6 @@ class Dropdown {
 
 		exitButton.render();
 
-		dropdown.addEventListener('click', (event) => {
-			event.stopPropagation();
-		});
-
 		this.parent.addEventListener('click', (event) => {
 			event.stopPropagation();
 
