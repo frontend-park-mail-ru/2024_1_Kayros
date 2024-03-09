@@ -60,6 +60,17 @@ class SignIn {
 		const link = new Link(linkBlock, { id: 'signin-link', href: urls.signUp, text: 'Зарегистрироваться' });
 		link.render();
 
+		const backButtonBlock = document.getElementById('back-button');
+		const backButton = new Button(backButtonBlock, {
+			id: 'signin-back-button',
+			content: 'Назад',
+			style: 'clear',
+			icon: 'assets/back-arrow.svg',
+			onClick: () => router.back(),
+		});
+
+		backButton.render();
+
 		FIELDS.forEach((field) => {
 			new Input(this.parent.querySelector(field.selector), {
 				id: field.id,
@@ -175,7 +186,7 @@ class SignIn {
 
 		api.login(userData, (data) => {
 			localStorage.setItem('user-info', data);
-			router.navigate(urls.restaurants);
+			router.back();
 		});
 	}
 }

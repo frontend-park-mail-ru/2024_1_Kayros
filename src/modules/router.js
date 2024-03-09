@@ -32,8 +32,22 @@ class Router {
 	 * @param {string} path - Путь для навигации.
 	 */
 	navigate(path) {
-		window.history.pushState({}, '', path);
+		if (window.history.state?.path !== path) {
+			window.history.pushState({ path }, '', path);
+		}
+
 		this.handleLocationChange();
+	}
+
+	/**
+	 * Возвращает на шаг назад в истории
+	 */
+	back() {
+		if (window.history.length > 3) {
+			window.history.back();
+		} else {
+			this.navigate(urls.restaurants);
+		}
 	}
 
 	/**

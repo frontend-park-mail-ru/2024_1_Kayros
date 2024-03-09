@@ -75,6 +75,17 @@ class SignUp {
 		const link = new Link(linkBlock, { id: 'signin-link', href: urls.signIn, text: 'Войти' });
 		link.render();
 
+		const backButtonBlock = document.getElementById('back-button');
+		const backButton = new Button(backButtonBlock, {
+			id: 'signup-back-button',
+			content: 'Назад',
+			style: 'clear',
+			icon: 'assets/back-arrow.svg',
+			onClick: () => router.back(),
+		});
+
+		backButton.render();
+
 		// Рендеринг полей формы в цикле
 		FIELDS.forEach((field) => {
 			new Input(this.parent.querySelector(field.selector), {
@@ -270,7 +281,7 @@ class SignUp {
 
 		api.signup(userData, (data) => {
 			localStorage.setItem('user-info', data);
-			router.navigate(urls.restaurants);
+			router.back();
 		});
 	}
 }
