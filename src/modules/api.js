@@ -1,5 +1,5 @@
 import Notification from '../components/Notification/Notification';
-import { LOGIN_ERROR, SERVER_RESPONSE_ERROR, SIGNOUT_ERROR, SIGNUP_ERROR } from '../constants';
+import { ErrorMessages, SuccessMessages } from '../constants';
 import ajax from './ajax';
 
 /**
@@ -35,15 +35,21 @@ class Api {
 		const { data, error } = await ajax.post(`${this.url}/signin`, body);
 
 		if (data && !error) {
-			Notification.open({ duration: 3, title: 'Успешный вход', description: 'С возвращением!', type: 'success' });
+			Notification.open({
+				duration: 3,
+				title: SuccessMessages.login.title,
+				description: SuccessMessages.login.description,
+				type: 'success',
+			});
+
 			callback(data);
 			return;
 		}
 
 		Notification.open({
 			duration: 3,
-			title: LOGIN_ERROR,
-			description: error || SERVER_RESPONSE_ERROR,
+			title: ErrorMessages.LOGIN,
+			description: error || ErrorMessages.SERVER_RESPONSE,
 			type: 'error',
 		});
 	}
@@ -59,15 +65,21 @@ class Api {
 		const { data, error } = await ajax.post(`${this.url}/signup`, body);
 
 		if (data && !error) {
-			Notification.open({ duration: 3, title: 'Аккаунт создан', description: 'Добро пожаловать!', type: 'success' });
+			Notification.open({
+				duration: 3,
+				title: SuccessMessages.signup.title,
+				description: SuccessMessages.signup.description,
+				type: 'success',
+			});
+
 			callback(data);
 			return;
 		}
 
 		Notification.open({
 			duration: 3,
-			title: SIGNUP_ERROR,
-			description: error || SERVER_RESPONSE_ERROR,
+			title: ErrorMessages.SIGNUP,
+			description: error || ErrorMessages.SERVER_RESPONSE,
 			type: 'error',
 		});
 	}
@@ -82,15 +94,21 @@ class Api {
 		if (error) {
 			Notification.open({
 				duration: 3,
-				title: SIGNOUT_ERROR,
-				description: error || SERVER_RESPONSE_ERROR,
+				title: ErrorMessages.SIGNOUT,
+				description: error || ErrorMessages.SERVER_RESPONSE,
 				type: 'error',
 			});
 
 			return;
 		}
 
-		Notification.open({ duration: 3, title: 'Успешный выход', description: 'До встречи!', type: 'success' });
+		Notification.open({
+			duration: 3,
+			title: SuccessMessages.signout.title,
+			description: SuccessMessages.signout.description,
+			type: 'success',
+		});
+
 		callback();
 	}
 }
