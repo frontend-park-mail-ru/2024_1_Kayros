@@ -4,9 +4,18 @@ import SignUpPage from '../pages/SignUp';
 import urls from './urls';
 
 const routes = {
-	[urls.restaurants]: RestaurantsPage,
-	[urls.signIn]: SignInPage,
-	[urls.signUp]: SignUpPage,
+	[urls.restaurants]: {
+		title: 'Рестораны',
+		component: RestaurantsPage,
+	},
+	[urls.signIn]: {
+		title: 'Вход',
+		component: SignInPage,
+	},
+	[urls.signUp]: {
+		title: 'Регистрация',
+		component: SignUpPage,
+	},
 };
 
 export { routes };

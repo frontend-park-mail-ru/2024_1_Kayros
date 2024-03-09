@@ -1,6 +1,7 @@
 import Content from '../components/Content/index.js';
 import Header from '../components/Header/index.js';
 import NotFoundPage from '../pages/NotFound';
+import { routes } from '../routes/index.js';
 import urls from '../routes/urls.js';
 
 /**
@@ -32,7 +33,21 @@ class Router {
 	 * @param {string} path - Путь для навигации.
 	 */
 	navigate(path) {
-		if (window.history.state?.path !== path) {
+		const currentPath = window.history.state?.path;
+
+		document.title = `Resto - ${routes[path].title}`;
+
+		if (currentPath === path) {
+			this.handleLocationChange();
+			return;
+		}
+
+		if (
+			(currentPath === urls.signIn && path === urls.signUp) ||
+			(currentPath === urls.signUp && path === urls.signIn)
+		) {
+			window.history.replaceState({ path }, '', path);
+		} else {
 			window.history.pushState({ path }, '', path);
 		}
 

@@ -1,3 +1,4 @@
+import BackButton from '../../components/BackButton/BackButton';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Link from '../../components/Link/Link';
@@ -76,14 +77,7 @@ class SignUp {
 		link.render();
 
 		const backButtonBlock = document.getElementById('back-button');
-		const backButton = new Button(backButtonBlock, {
-			id: 'signup-back-button',
-			content: 'Назад',
-			style: 'clear',
-			icon: 'assets/back-arrow.svg',
-			onClick: () => router.back(),
-		});
-
+		const backButton = new BackButton(backButtonBlock, { id: 'signup-back-button' });
 		backButton.render();
 
 		// Рендеринг полей формы в цикле
