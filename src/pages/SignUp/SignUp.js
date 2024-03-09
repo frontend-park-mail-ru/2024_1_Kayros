@@ -2,44 +2,21 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Link from '../../components/Link/Link';
 import Logo from '../../components/Logo';
+import {
+	EMAIL_REGEX,
+	INVALID_EMAIL_CHAR_REGEX,
+	PASSWORD_REGEX,
+	INVALID_PASSWORD_CHAR_REGEX,
+	NAME_REGEX,
+	INVALID_NAME_CHAR_REGEX,
+	FIELDS_SIGN_UP,
+} from '../../constants';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls.js';
 import template from './SignUp.hbs';
 
 import './SignUp.scss';
-
-const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-const NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9]{1,19}$/;
-
-// Константа для описания полей формы
-const FIELDS = [
-	{
-		selector: '#email-input-container',
-		id: 'email',
-		placeholder: 'Почта',
-		type: 'email',
-	},
-	{
-		selector: '#name-input-container',
-		id: 'name',
-		placeholder: 'Имя',
-		type: 'text',
-	},
-	{
-		selector: '#password-input-container',
-		id: 'password',
-		placeholder: 'Пароль',
-		type: 'password',
-	},
-	{
-		selector: '#confirm-password-input-container',
-		id: 'confirm-password',
-		placeholder: 'Повторите пароль',
-		type: 'password',
-	},
-];
 
 /**
  * Страница регистрации.
@@ -76,7 +53,7 @@ class SignUp {
 		link.render();
 
 		// Рендеринг полей формы в цикле
-		FIELDS.forEach((field) => {
+		FIELDS_SIGN_UP.forEach((field) => {
 			new Input(this.parent.querySelector(field.selector), {
 				id: field.id,
 				placeholder: field.placeholder,
@@ -129,16 +106,17 @@ class SignUp {
 		// Функция для валидации email
 		const validateEmail = () => {
 			const isEmailValid = EMAIL_REGEX.test(emailElement.value);
+			const hasInvalidChars = INVALID_EMAIL_CHAR_REGEX.test(emailElement.value);
 
-			if (emailElement.value) {
+			if (hasInvalidChars) {
+				emailErrorElement.textContent = 'Содержит некорректный символ';
+				emailElement.style.borderColor = 'red';
+			} else if (emailElement.value) {
 				emailErrorElement.textContent = isEmailValid ? '' : 'Неверный формат электронной почты';
 				emailElement.style.borderColor = isEmailValid ? 'initial' : 'red';
-			} else if (hasEmailInputStarted) {
-				emailErrorElement.textContent = 'Поле не может быть пустым';
-				emailElement.style.borderColor = 'red';
 			} else {
-				emailErrorElement.textContent = '';
-				emailElement.style.borderColor = 'initial';
+				emailErrorElement.textContent = hasEmailInputStarted ? 'Поле не может быть пустым' : '';
+				emailElement.style.borderColor = hasEmailInputStarted ? 'red' : 'initial';
 			}
 
 			return emailElement.value && isEmailValid;
@@ -147,16 +125,17 @@ class SignUp {
 		// Функция для валидации имени
 		const validateName = () => {
 			const isNameValid = NAME_REGEX.test(nameElement.value);
+			const hasInvalidChars = INVALID_NAME_CHAR_REGEX.test(nameElement.value);
 
-			if (nameElement.value) {
-				nameErrorElement.textContent = isNameValid ? '' : 'Неверный формат имени';
-				nameElement.style.borderColor = isNameValid ? 'initial' : 'red';
-			} else if (hasNameInputStarted) {
-				nameErrorElement.textContent = 'Поле не может быть пустым';
+			if (hasInvalidChars) {
+				nameErrorElement.textContent = 'Содержит некорректный символ';
 				nameElement.style.borderColor = 'red';
+			} else if (nameElement.value) {
+				nameErrorElement.textContent = isNameValid ? '' : 'Имя должно начинаться с буквы и быть меньше 19 символов';
+				nameElement.style.borderColor = isNameValid ? 'initial' : 'red';
 			} else {
-				nameErrorElement.textContent = '';
-				nameElement.style.borderColor = 'initial';
+				nameErrorElement.textContent = hasNameInputStarted ? 'Поле не может быть пустым' : '';
+				nameElement.style.borderColor = hasNameInputStarted ? 'red' : 'initial';
 			}
 
 			return nameElement.value && isNameValid;
@@ -165,19 +144,20 @@ class SignUp {
 		// Функция для валидации пароля
 		const validatePassword = () => {
 			const isPasswordValid = PASSWORD_REGEX.test(passwordElement.value);
+			const hasInvalidChars = INVALID_PASSWORD_CHAR_REGEX.test(passwordElement.value);
 
-			if (passwordElement.value) {
+			if (hasInvalidChars) {
+				passwordErrorElement.textContent = 'Содержит некорректный символ';
+				passwordElement.style.borderColor = 'red';
+			} else if (passwordElement.value) {
 				passwordErrorElement.textContent = isPasswordValid
 					? ''
 					: 'Пароль должен содержать минимум 8 символов, включая число и букву';
 
 				passwordElement.style.borderColor = isPasswordValid ? 'initial' : 'red';
-			} else if (hasPasswordInputStarted) {
-				passwordErrorElement.textContent = 'Поле не может быть пустым';
-				passwordElement.style.borderColor = 'red';
 			} else {
-				passwordErrorElement.textContent = '';
-				passwordElement.style.borderColor = 'initial';
+				passwordErrorElement.textContent = hasPasswordInputStarted ? 'Поле не может быть пустым' : '';
+				passwordElement.style.borderColor = hasPasswordInputStarted ? 'red' : 'initial';
 			}
 
 			return passwordElement.value && isPasswordValid;
@@ -185,30 +165,20 @@ class SignUp {
 
 		// Функция для проверки совпадения паролей
 		const validateConfirmPassword = () => {
-			const isConfirmPasswordValidFormat = PASSWORD_REGEX.test(confirmPasswordElement.value);
 			const isPasswordsMatch = confirmPasswordElement.value === passwordElement.value;
 
-			if (!confirmPasswordElement.value) {
-				if (hasConfirmPasswordInputStarted) {
-					// Показываем ошибку, если начался ввод, но поле пустое
-					confirmPasswordErrorElement.textContent = 'Поле не может быть пустым';
-					confirmPasswordElement.style.borderColor = 'red';
-				} else {
-					confirmPasswordErrorElement.textContent = '';
-					confirmPasswordElement.style.borderColor = 'initial';
-				}
-			} else if (!isConfirmPasswordValidFormat || !isPasswordsMatch) {
-				confirmPasswordErrorElement.textContent = !isConfirmPasswordValidFormat
-					? 'Повтор пароля должен содержать минимум 8 символов, включая число и букву, и совпадать с паролем'
-					: 'Пароли не совпадают';
-
+			if (!isPasswordsMatch) {
+				confirmPasswordErrorElement.textContent = 'Пароли не совпадают';
+				confirmPasswordElement.style.borderColor = 'red';
+			} else if (!confirmPasswordElement.value && hasConfirmPasswordInputStarted) {
+				confirmPasswordErrorElement.textContent = 'Поле не может быть пустым';
 				confirmPasswordElement.style.borderColor = 'red';
 			} else {
 				confirmPasswordErrorElement.textContent = '';
 				confirmPasswordElement.style.borderColor = 'initial';
 			}
 
-			return isPasswordsMatch && isConfirmPasswordValidFormat;
+			return confirmPasswordElement.value && isPasswordsMatch;
 		};
 
 		// Функция для обновления состояния кнопки регистрации

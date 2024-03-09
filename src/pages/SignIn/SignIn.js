@@ -2,29 +2,18 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Link from '../../components/Link/Link';
 import Logo from '../../components/Logo';
+import {
+	EMAIL_REGEX,
+	INVALID_EMAIL_CHAR_REGEX,
+	PASSWORD_REGEX,
+	INVALID_PASSWORD_CHAR_REGEX,
+	FIELDS_SIGN_IN,
+} from '../../constants';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls.js';
 import template from './SignIn.hbs';
 import './SignIn.scss';
-
-const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-const FIELDS = [
-	{
-		selector: '#email-input-container',
-		id: 'email',
-		placeholder: 'Почта',
-		type: 'email',
-	},
-	{
-		selector: '#password-input-container',
-		id: 'password',
-		placeholder: 'Пароль',
-		type: 'password',
-	},
-];
 
 /**
  * Страница входа.
@@ -60,7 +49,7 @@ class SignIn {
 		const link = new Link(linkBlock, { id: 'signin-link', href: urls.signUp, text: 'Зарегистрироваться' });
 		link.render();
 
-		FIELDS.forEach((field) => {
+		FIELDS_SIGN_IN.forEach((field) => {
 			new Input(this.parent.querySelector(field.selector), {
 				id: field.id,
 				placeholder: field.placeholder,
@@ -104,16 +93,17 @@ class SignIn {
 		// Функция для валидации email
 		const validateEmail = () => {
 			const isEmailValid = EMAIL_REGEX.test(emailElement.value);
+			const hasInvalidChars = INVALID_EMAIL_CHAR_REGEX.test(emailElement.value);
 
-			if (emailElement.value) {
+			if (hasInvalidChars) {
+				emailErrorElement.textContent = 'Содержит некорректный символ';
+				emailElement.style.borderColor = 'red';
+			} else if (emailElement.value) {
 				emailErrorElement.textContent = isEmailValid ? '' : 'Неверный формат электронной почты';
 				emailElement.style.borderColor = isEmailValid ? 'initial' : 'red';
-			} else if (hasEmailInputStarted) {
-				emailErrorElement.textContent = 'Поле не может быть пустым';
-				emailElement.style.borderColor = 'red';
 			} else {
-				emailErrorElement.textContent = '';
-				emailElement.style.borderColor = 'initial';
+				emailErrorElement.textContent = hasEmailInputStarted ? 'Поле не может быть пустым' : '';
+				emailElement.style.borderColor = hasEmailInputStarted ? 'red' : 'initial';
 			}
 
 			return emailElement.value && isEmailValid;
@@ -122,19 +112,20 @@ class SignIn {
 		// Функция для валидации пароля
 		const validatePassword = () => {
 			const isPasswordValid = PASSWORD_REGEX.test(passwordElement.value);
+			const hasInvalidChars = INVALID_PASSWORD_CHAR_REGEX.test(passwordElement.value);
 
-			if (passwordElement.value) {
+			if (hasInvalidChars) {
+				passwordErrorElement.textContent = 'Содержит некорректный символ';
+				passwordElement.style.borderColor = 'red';
+			} else if (passwordElement.value) {
 				passwordErrorElement.textContent = isPasswordValid
 					? ''
 					: 'Пароль должен содержать минимум 8 символов, включая число и букву';
 
 				passwordElement.style.borderColor = isPasswordValid ? 'initial' : 'red';
-			} else if (hasPasswordInputStarted) {
-				passwordErrorElement.textContent = 'Поле не может быть пустым';
-				passwordElement.style.borderColor = 'red';
 			} else {
-				passwordErrorElement.textContent = '';
-				passwordElement.style.borderColor = 'initial';
+				passwordErrorElement.textContent = hasPasswordInputStarted ? 'Поле не может быть пустым' : '';
+				passwordElement.style.borderColor = hasPasswordInputStarted ? 'red' : 'initial';
 			}
 
 			return passwordElement.value && isPasswordValid;

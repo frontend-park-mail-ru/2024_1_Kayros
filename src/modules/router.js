@@ -32,8 +32,19 @@ class Router {
 	 * @param {string} path - Путь для навигации.
 	 */
 	navigate(path) {
-		window.history.pushState({}, '', path);
+		const normalizedPath = this.normalizePath(path);
+		window.history.pushState({}, '', normalizedPath);
 		this.handleLocationChange();
+	}
+
+	/**
+	 * Нормализует путь, удаляя повторяющиеся слеши и конечный слеш.
+	 * @param {string} path - Путь для нормализации.
+	 * @returns {string} Нормализованный путь.
+	 */
+	normalizePath(path) {
+		const noRepeatSlashes = path.replace(/\/\/+/g, '/');
+		return noRepeatSlashes !== '/' ? noRepeatSlashes.replace(/\/+$/, '') : '/';
 	}
 
 	/**
@@ -68,7 +79,8 @@ class Router {
 	 */
 	handleLocationChange() {
 		const path = window.location.pathname;
-		const currentRoute = this.routes.find((route) => route.path === path);
+		const normalizedPath = this.normalizePath(path);
+		const currentRoute = this.routes.find((route) => route.path === normalizedPath);
 
 		this.handleChangeInnerLayout();
 
