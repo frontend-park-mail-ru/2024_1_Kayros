@@ -1,6 +1,5 @@
 import Content from '../components/Content';
 import Header from '../components/Header';
-import NotFoundPage from '../pages/NotFound';
 import urls from '../routes/urls.js';
 
 /**
@@ -79,9 +78,6 @@ class Router {
 			page.render();
 			return;
 		}
-
-		const notFoundPage = new NotFoundPage(content);
-		notFoundPage.render();
 	}
 }
 

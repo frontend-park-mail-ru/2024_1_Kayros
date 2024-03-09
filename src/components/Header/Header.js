@@ -3,6 +3,7 @@ import { router } from '../../modules/router';
 import urls from '../../routes/urls';
 import { localStorageHelper } from '../../utils';
 import Button from '../Button';
+import Dropdown from '../Dropdown/Dropdown';
 import Input from '../Input';
 import Logo from '../Logo';
 import Profile from '../Profile';
@@ -77,6 +78,20 @@ class Header {
 		}
 
 		const headerElement = document.getElementById('header');
+
+		const profile = document.getElementById('profile');
+
+		if (profile) {
+			const dropdown = new Dropdown(profile, {
+				id: 'dropdown-profile',
+				onExit: () => {
+					headerElement.remove();
+					this.render();
+				},
+			});
+
+			dropdown.render();
+		}
 
 		window.addEventListener('scroll', () => {
 			if (window.scrollY > 20) {
