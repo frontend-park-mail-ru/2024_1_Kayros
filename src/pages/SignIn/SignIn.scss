@@ -68,3 +68,12 @@
 	text-align: left;
 	height: 15px;
 }
+
+#back-button {
+	filter: opacity(0.5);
+	transition: 0.3s;
+
+	&:hover {
+		filter: opacity(1);
+	}
+}

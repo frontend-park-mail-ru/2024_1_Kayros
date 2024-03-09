@@ -1,6 +1,7 @@
 import Content from '../components/Content/index.js';
 import Header from '../components/Header/index.js';
 import NotFoundPage from '../pages/NotFound';
+import { routes } from '../routes/index.js';
 import urls from '../routes/urls.js';
 
 /**
@@ -12,6 +13,7 @@ class Router {
 	 * Создает экземпляр роутера.
 	 */
 	constructor() {
+		this.previousState = null;
 		this.routes = [];
 		window.addEventListener('popstate', this.handleLocationChange.bind(this));
 	}
@@ -32,8 +34,38 @@ class Router {
 	 * @param {string} path - Путь для навигации.
 	 */
 	navigate(path) {
-		window.history.pushState({}, '', path);
+		const currentPath = window.history.state?.path;
+
+		document.title = `Resto - ${routes[path].title}`;
+
+		if (currentPath === path) {
+			this.handleLocationChange();
+			return;
+		}
+
+		if (
+			(currentPath === urls.signIn && path === urls.signUp) ||
+			(currentPath === urls.signUp && path === urls.signIn)
+		) {
+			window.history.replaceState({ path }, '', path);
+		} else {
+			this.previousState = window.history?.state;
+			window.history.pushState({ path }, '', path);
+		}
+
 		this.handleLocationChange();
+	}
+
+	/**
+	 * Возвращает на шаг назад в истории
+	 */
+	back() {
+		if (this.previousState) {
+			this.previousState = window.history?.state;
+			window.history.back();
+		} else {
+			this.navigate(urls.restaurants);
+		}
 	}
 
 	/**
