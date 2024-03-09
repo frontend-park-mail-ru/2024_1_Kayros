@@ -1,5 +1,5 @@
 import Notification from '../components/Notification/Notification';
-import { ErrorMessages, SuccessMessages } from '../constants';
+import { errorMessages, successMessages } from '../constants';
 import ajax from './ajax';
 
 /**
@@ -37,8 +37,8 @@ class Api {
 		if (data && !error) {
 			Notification.open({
 				duration: 3,
-				title: SuccessMessages.login.title,
-				description: SuccessMessages.login.description,
+				title: successMessages.login.title,
+				description: successMessages.login.description,
 				type: 'success',
 			});
 
@@ -48,8 +48,8 @@ class Api {
 
 		Notification.open({
 			duration: 3,
-			title: ErrorMessages.LOGIN,
-			description: error || ErrorMessages.SERVER_RESPONSE,
+			title: errorMessages.LOGIN,
+			description: error || errorMessages.SERVER_RESPONSE,
 			type: 'error',
 		});
 	}
@@ -67,8 +67,8 @@ class Api {
 		if (data && !error) {
 			Notification.open({
 				duration: 3,
-				title: SuccessMessages.signup.title,
-				description: SuccessMessages.signup.description,
+				title: successMessages.signup.title,
+				description: successMessages.signup.description,
 				type: 'success',
 			});
 
@@ -78,8 +78,8 @@ class Api {
 
 		Notification.open({
 			duration: 3,
-			title: ErrorMessages.SIGNUP,
-			description: error || ErrorMessages.SERVER_RESPONSE,
+			title: errorMessages.SIGNUP,
+			description: error || errorMessages.SERVER_RESPONSE,
 			type: 'error',
 		});
 	}
@@ -94,8 +94,8 @@ class Api {
 		if (error) {
 			Notification.open({
 				duration: 3,
-				title: ErrorMessages.SIGNOUT,
-				description: error || ErrorMessages.SERVER_RESPONSE,
+				title: errorMessages.SIGNOUT,
+				description: error || errorMessages.SERVER_RESPONSE,
 				type: 'error',
 			});
 
@@ -104,8 +104,8 @@ class Api {
 
 		Notification.open({
 			duration: 3,
-			title: SuccessMessages.signout.title,
-			description: SuccessMessages.signout.description,
+			title: successMessages.signout.title,
+			description: successMessages.signout.description,
 			type: 'success',
 		});
 
