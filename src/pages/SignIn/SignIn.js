@@ -1,5 +1,6 @@
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import Link from '../../components/Link/Link';
 import Logo from '../../components/Logo';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
@@ -53,6 +54,10 @@ class SignIn {
 		if (logoContainer) {
 			new Logo(logoContainer).render();
 		}
+
+		const linkBlock = document.getElementById('signin-redirect');
+		const link = new Link(linkBlock, { id: 'signin-link', href: urls.signUp, text: 'Зарегистрироваться' });
+		link.render();
 
 		FIELDS.forEach((field) => {
 			new Input(this.parent.querySelector(field.selector), {

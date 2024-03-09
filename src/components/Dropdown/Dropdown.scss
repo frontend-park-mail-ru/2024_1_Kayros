@@ -29,7 +29,7 @@
 	margin-top: 66px;
 }
 
-.link {
+.dropdown-item {
 	display: flex;
 	align-items: center;
 	padding: 18px 26px;
@@ -44,11 +44,11 @@
 		transition: all 0.3s;
 		cursor: pointer;
 		font-size: 18px;
-		color: var(--link-color);
+		color: var(--dropdown-item-color);
 		font-weight: 600;
 
 		&:hover {
-			color: var(--link-color-active);
+			color: var(--dropdown-item-color-hover);
 		}
 	}
 }
