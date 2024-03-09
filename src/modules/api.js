@@ -1,5 +1,5 @@
 import Notification from '../components/Notification/Notification';
-import { SERVER_RESPONSE_ERROR } from '../constants';
+import { LOGIN_ERROR, SERVER_RESPONSE_ERROR, SIGNOUT_ERROR, SIGNUP_ERROR } from '../constants';
 import ajax from './ajax';
 
 /**
@@ -42,7 +42,7 @@ class Api {
 
 		Notification.open({
 			duration: 3,
-			title: 'Не удалось войти',
+			title: LOGIN_ERROR,
 			description: error || SERVER_RESPONSE_ERROR,
 			type: 'error',
 		});
@@ -66,7 +66,7 @@ class Api {
 
 		Notification.open({
 			duration: 3,
-			title: 'Не удалось создать аккаунт',
+			title: SIGNUP_ERROR,
 			description: error || SERVER_RESPONSE_ERROR,
 			type: 'error',
 		});
@@ -82,7 +82,7 @@ class Api {
 		if (error) {
 			Notification.open({
 				duration: 3,
-				title: 'Не удалось выйти из аккаунта',
+				title: SIGNOUT_ERROR,
 				description: error || SERVER_RESPONSE_ERROR,
 				type: 'error',
 			});
