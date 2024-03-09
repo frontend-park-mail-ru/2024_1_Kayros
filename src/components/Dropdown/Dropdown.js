@@ -1,3 +1,6 @@
+import Header from '../../components/Header';
+import api from '../../modules/api';
+import Button from '../Button/Button';
 import template from './Dropdown.hbs';
 import './Dropdown.scss';
 import { OPEN_PROFILE_SLIDE_OPTIONS, CLOSE_PROFILE_SLIDE_OPTIONS } from './constants';
@@ -11,8 +14,8 @@ class Dropdown {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
-	 * @param {Object} params - параметры
-	 * @param {number} id - идентификатор
+	 * @param {object} params - параметры
+	 * @param {number} params.id - идентификатор
 	 */
 	constructor(parent, { id = 'dropdown' }) {
 		this.parent = parent;
@@ -20,6 +23,10 @@ class Dropdown {
 		this.id = id;
 	}
 
+	/**
+	 * Метод для открытия дропдауна
+	 * @param {HTMLDivElement} element - дропдаун
+	 */
 	open(element) {
 		if (this.isOpen) return;
 
@@ -33,6 +40,10 @@ class Dropdown {
 		this.parent.animate(...OPEN_PROFILE_SLIDE_OPTIONS);
 	}
 
+	/**
+	 * Метод для закрытия дропдауна
+	 * @param {HTMLDivElement} element - дропдаун
+	 */
 	close(element) {
 		if (!this.isOpen) return;
 
@@ -48,6 +59,7 @@ class Dropdown {
 
 	/**
 	 * Получение html компонента
+	 * @returns {HTMLElement} - html компонента
 	 */
 	getHTML() {
 		return template({
@@ -58,6 +70,21 @@ class Dropdown {
 	}
 
 	/**
+	 * Обработка кнопки для выхода из аккаунта
+	 */
+	handleExit() {
+		localStorage.removeItem('user-info');
+
+		const dropdown = document.getElementById(this.id);
+		this.close(dropdown);
+
+		const header = document.getElementById('header');
+		header.remove();
+		const newHeader = new Header(document.getElementById('layout'));
+		newHeader.render();
+	}
+
+	/**
 	 * Рендеринг компонента
 	 */
 	render() {
@@ -65,9 +92,16 @@ class Dropdown {
 
 		const dropdown = document.getElementById(this.id);
 
-		dropdown.addEventListener('click', (event) => {
-			event.stopPropagation();
+		const link = dropdown.querySelector('.dropdown-item');
+
+		const exitButton = new Button(link, {
+			id: 'exit-button',
+			content: 'Выйти',
+			style: 'clear',
+			onClick: () => api.signout(this.handleExit.bind(this)),
 		});
+
+		exitButton.render();
 
 		this.parent.addEventListener('click', (event) => {
 			event.stopPropagation();

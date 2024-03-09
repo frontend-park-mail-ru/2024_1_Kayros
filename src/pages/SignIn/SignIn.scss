@@ -1,6 +1,7 @@
 .logo-container-on-sign-in {
 	text-align: center;
 	padding-bottom: 120px;
+	z-index: 5;
 }
 
 .signin-container {
@@ -9,10 +10,11 @@
 	padding: 50px;
 	background: var(--white);
 	border-radius: 40px;
-	box-shadow: 0 4px 10px var(--header-box-shadow);
+	box-shadow: var(--dropdown-box-shadow);
 	text-align: center;
 	top: -20px;
 	transform: translateY(-120px);
+	z-index: 5;
 }
 
 .signin-title {
@@ -30,27 +32,33 @@
 	margin-top: 30px;
 }
 
-.signup-redirect {
+#signin-redirect {
 	margin-top: 25px;
-}
-
-.signup-redirect a {
-	color: var(--black);
-	text-decoration: none;
-	font-weight: bold;
-}
-
-.signup-redirect a:hover {
-	text-decoration: underline;
+	display: flex;
+	gap: 6px;
+	align-items: center;
+	justify-content: center;
 }
 
 .signin-page-container {
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background-color: var(--background-light);
-	min-height: 100vh;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+
+	#auth-background {
+		position: absolute;
+		min-height: 100vh;
+		width: 100vw;
+		filter: blur(2px);
+		top: 0;
+		left: 0;
+		z-index: 1;
+	}
 }
 
 .error-message {

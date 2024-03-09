@@ -29,20 +29,26 @@
 	margin-top: 66px;
 }
 
-.link {
+.dropdown-item {
 	display: flex;
 	align-items: center;
-	color: var(--link-color);
-	padding: 18px 24px;
+	padding: 18px 26px;
 	transition: all 0.3s;
 	font-size: 16px;
+
+	button {
+		width: fit-content !important;
+	}
 
 	span {
 		transition: all 0.3s;
 		cursor: pointer;
+		font-size: 18px;
+		color: var(--dropdown-item-color);
+		font-weight: 600;
 
 		&:hover {
-			color: var(--link-color-active);
+			color: var(--dropdown-item-color-hover);
 		}
 	}
 }

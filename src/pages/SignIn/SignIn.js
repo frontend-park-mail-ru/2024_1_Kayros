@@ -1,6 +1,8 @@
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import Link from '../../components/Link/Link';
 import Logo from '../../components/Logo';
+import api from '../../modules/api';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls.js';
 import template from './SignIn.hbs';
@@ -36,6 +38,7 @@ class SignIn {
 		this.parent = parent;
 		this.isLoading = false;
 	}
+
 	/**
 	 * Рендер страницы.
 	 */
@@ -53,6 +56,10 @@ class SignIn {
 			new Logo(logoContainer).render();
 		}
 
+		const linkBlock = document.getElementById('signin-redirect');
+		const link = new Link(linkBlock, { id: 'signin-link', href: urls.signUp, text: 'Зарегистрироваться' });
+		link.render();
+
 		FIELDS.forEach((field) => {
 			new Input(this.parent.querySelector(field.selector), {
 				id: field.id,
@@ -66,6 +73,7 @@ class SignIn {
 			content: 'Войти',
 			type: 'submit',
 			disabled: true,
+			withLoader: true,
 			onClick: (e) => {
 				e.preventDefault();
 				this.handleSubmit();
@@ -75,6 +83,9 @@ class SignIn {
 		this.addFormValidation();
 	}
 
+	/**
+	 * Валидация полей формы
+	 */
 	addFormValidation() {
 		const emailElement = document.getElementById('email');
 		const passwordElement = document.getElementById('password');
@@ -116,6 +127,7 @@ class SignIn {
 				passwordErrorElement.textContent = isPasswordValid
 					? ''
 					: 'Пароль должен содержать минимум 8 символов, включая число и букву';
+
 				passwordElement.style.borderColor = isPasswordValid ? 'initial' : 'red';
 			} else if (hasPasswordInputStarted) {
 				passwordErrorElement.textContent = 'Поле не может быть пустым';
@@ -147,25 +159,24 @@ class SignIn {
 		});
 	}
 
+	/**
+	 * Обработка кнопки входа
+	 */
 	handleSubmit() {
+		const signinButton = this.parent.querySelector('#sign-in-button');
+
+		const loaderBlock = signinButton.querySelector('#btn-loader');
+		loaderBlock.classList.add('loading');
+
 		const userData = {
 			email: document.getElementById('email').value,
 			password: document.getElementById('password').value,
 		};
 
-		this.isLoading = true;
-		setTimeout(() => {
-			this.isLoading = false;
-
-			if (userData.email.includes('used')) {
-				const errorElement = document.getElementById('email-error');
-				errorElement.textContent = 'Этот email уже используется.';
-				errorElement.style.display = 'block';
-			} else {
-				localStorage.setItem('user', JSON.stringify(userData));
-				router.navigate(urls.restaurants);
-			}
-		}, 1000);
+		api.login(userData, (data) => {
+			localStorage.setItem('user-info', data);
+			router.navigate(urls.restaurants);
+		});
 	}
 }
 

@@ -1,18 +1,13 @@
 import cartIcon from '../../assets/cart.svg';
+import { router } from '../../modules/router';
+import urls from '../../routes/urls';
+import { localStorageHelper } from '../../utils';
 import Button from '../Button';
 import Input from '../Input';
 import Logo from '../Logo/Logo';
 import Profile from '../Profile';
 import template from './Header.hbs';
 import './Header.scss';
-
-const user = {
-	name: 'Роман',
-	cart: {
-		total: 300,
-	},
-	address: 'ул.Тверская, д.2',
-};
 
 /**
  * Шапка
@@ -28,22 +23,26 @@ class Header {
 
 	/**
 	 * Получение html компонента
+	 * @param {object} user - информация о пользователе
+	 * @returns {HTMLDivElement} - html
 	 */
-	getHTML() {
-		return template({ user: { address: user?.address } });
+	getHTML(user) {
+		return template({ user: { address: user ? 'ул.Тверская, д.2' : '' } });
 	}
 
 	/**
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
+		const user = localStorageHelper.getItem('user-info');
+
+		this.parent.insertAdjacentHTML('afterbegin', this.getHTML(user));
 
 		const logoBlock = document.getElementById('logoContainer');
 		const logo = new Logo(logoBlock);
 		logo.render();
 
-		const searchBlock = document.getElementById('searchInput');
+		const searchBlock = document.getElementById('search-input');
 		const searchInput = new Input(searchBlock, {
 			id: 'restaurants-search',
 			placeholder: 'Рестораны, еда',
@@ -66,17 +65,22 @@ class Header {
 		const profileBlock = document.getElementById('profile-block');
 
 		if (user) {
-			const profile = new Profile(profileBlock);
+			const profile = new Profile(profileBlock, { user });
 			profile.render();
 		} else {
-			const loginButton = new Button(profileBlock, { id: 'header-login-button', content: 'Войти' });
+			const loginButton = new Button(profileBlock, {
+				id: 'header-login-button',
+				content: 'Войти',
+				onClick: () => router.navigate(urls.signIn),
+			});
+
 			loginButton.render();
 		}
 
 		const headerElement = document.getElementById('header');
 
 		window.addEventListener('scroll', () => {
-			if (window.scrollY > 26) {
+			if (window.scrollY > 20) {
 				headerElement.className = 'sticky';
 			} else {
 				headerElement.className = '';

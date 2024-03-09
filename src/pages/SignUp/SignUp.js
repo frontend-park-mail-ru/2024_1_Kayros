@@ -1,6 +1,8 @@
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import Link from '../../components/Link/Link';
 import Logo from '../../components/Logo';
+import api from '../../modules/api';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls.js';
 import template from './SignUp.hbs';
@@ -9,6 +11,7 @@ import './SignUp.scss';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+const NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9]{1,19}$/;
 
 // Константа для описания полей формы
 const FIELDS = [
@@ -17,6 +20,12 @@ const FIELDS = [
 		id: 'email',
 		placeholder: 'Почта',
 		type: 'email',
+	},
+	{
+		selector: '#name-input-container',
+		id: 'name',
+		placeholder: 'Имя',
+		type: 'text',
 	},
 	{
 		selector: '#password-input-container',
@@ -40,8 +49,8 @@ class SignUp {
 	 * Создает экземпляр страницы.
 	 * @param {Element} parent Элемент DOM, в который будет рендериться страница.
 	 */
-	constructor() {
-		this.parent = document.getElementById('root');
+	constructor(parent) {
+		this.parent = parent;
 		this.isLoading = false;
 	}
 
@@ -62,6 +71,10 @@ class SignUp {
 			new Logo(logoContainer).render();
 		}
 
+		const linkBlock = document.getElementById('signup-redirect');
+		const link = new Link(linkBlock, { id: 'signin-link', href: urls.signIn, text: 'Войти' });
+		link.render();
+
 		// Рендеринг полей формы в цикле
 		FIELDS.forEach((field) => {
 			new Input(this.parent.querySelector(field.selector), {
@@ -76,6 +89,7 @@ class SignUp {
 			content: 'Создать аккаунт',
 			type: 'submit',
 			disabled: true,
+			withLoader: true,
 			onClick: (e) => {
 				e.preventDefault();
 				this.handleSubmit();
@@ -86,22 +100,29 @@ class SignUp {
 		this.addFormValidation();
 	}
 
+	/**
+	 * Валидация полей формы
+	 */
 	addFormValidation() {
 		const emailElement = document.getElementById('email');
+		const nameElement = document.getElementById('name');
 		const passwordElement = document.getElementById('password');
 		const confirmPasswordElement = document.getElementById('confirm-password');
 
 		const emailErrorElement = document.getElementById('email-error');
+		const nameErrorElement = document.getElementById('name-error');
 		const passwordErrorElement = document.getElementById('password-error');
 		const confirmPasswordErrorElement = document.getElementById('confirm-password-error');
 
 		// Флаги начала ввода для каждого поля
 		let hasEmailInputStarted = false;
+		let hasNameInputStarted = false;
 		let hasPasswordInputStarted = false;
 		let hasConfirmPasswordInputStarted = false;
 
 		// Состояние валидности каждого поля
 		let isEmailValid = false;
+		let isNameValid = false;
 		let isPasswordValid = false;
 		let isPasswordsMatch = false;
 
@@ -121,6 +142,24 @@ class SignUp {
 			}
 
 			return emailElement.value && isEmailValid;
+		};
+
+		// Функция для валидации имени
+		const validateName = () => {
+			const isNameValid = NAME_REGEX.test(nameElement.value);
+
+			if (nameElement.value) {
+				nameErrorElement.textContent = isNameValid ? '' : 'Неверный формат имени';
+				nameElement.style.borderColor = isNameValid ? 'initial' : 'red';
+			} else if (hasNameInputStarted) {
+				nameErrorElement.textContent = 'Поле не может быть пустым';
+				nameElement.style.borderColor = 'red';
+			} else {
+				nameErrorElement.textContent = '';
+				nameElement.style.borderColor = 'initial';
+			}
+
+			return nameElement.value && isNameValid;
 		};
 
 		// Функция для валидации пароля
@@ -174,13 +213,24 @@ class SignUp {
 
 		// Функция для обновления состояния кнопки регистрации
 		const updateSignUpButtonState = () => {
-			document.getElementById('sign-up-button').disabled = !(isEmailValid && isPasswordValid && isPasswordsMatch);
+			document.getElementById('sign-up-button').disabled = !(
+				isNameValid &&
+				isEmailValid &&
+				isPasswordValid &&
+				isPasswordsMatch
+			);
 		};
 
 		// Слушатели событий для обновления флагов и вызова функций валидации
 		emailElement.addEventListener('input', () => {
 			hasEmailInputStarted = true;
 			isEmailValid = validateEmail();
+			updateSignUpButtonState();
+		});
+
+		nameElement.addEventListener('input', () => {
+			hasNameInputStarted = true;
+			isNameValid = validateName();
 			updateSignUpButtonState();
 		});
 
@@ -203,25 +253,25 @@ class SignUp {
 		});
 	}
 
+	/**
+	 * Обработка кнопки входа
+	 */
 	handleSubmit() {
+		const signinButton = this.parent.querySelector('#sign-up-button');
+		const loaderBlock = signinButton.querySelector('#btn-loader');
+		loaderBlock.classList.add('loading');
+
 		// Подготовка данных пользователя
 		const userData = {
 			email: document.getElementById('email').value,
+			name: document.getElementById('name').value,
 			password: document.getElementById('password').value,
-			confirmPassword: document.getElementById('confirm-password').value,
 		};
 
-		this.isLoading = true;
-
-		setTimeout(() => {
-			this.isLoading = false;
-
-			if (userData.email.includes('used')) {
-				alert('Такой логин уже существует.');
-			} else {
-				router.navigate(urls.restaurants);
-			}
-		}, 1000);
+		api.signup(userData, (data) => {
+			localStorage.setItem('user-info', data);
+			router.navigate(urls.restaurants);
+		});
 	}
 }
 

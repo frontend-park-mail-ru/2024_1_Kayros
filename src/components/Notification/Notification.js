@@ -21,12 +21,15 @@ class Notification {
 
 	/**
 	 * Получение html компонента
-	 * @param {Object} params - параметры для шаблона
+	 * @param {object} params - параметры для шаблона
+	 * @param {'success' | 'error'} params.type - тип уведомления
+	 * @returns {HTMLDivElement} - html
 	 */
-	getHTML(params) {
+	getHTML({ type, ...params }) {
 		return template({
-			id: this.id + '-' + this.count,
+			id: `${this.id}-${this.count}`,
 			position: this.position,
+			icon: type === 'success' ? 'assets/success.svg' : 'assets/error.svg',
 			...params,
 		});
 	}
@@ -136,7 +139,7 @@ class Notification {
 
 	/**
 	 * Функция для закрытия уведомления
-	 * @param {HTMLCollection} openNotifications - список открытых уведомлений
+	 * @param {HTMLCollection} element - текущее уведомление
 	 */
 	close(element) {
 		const openNotifications = document.getElementsByClassName('notification-open');
@@ -170,11 +173,12 @@ class Notification {
 
 	/**
 	 * Функция для открытия уведомления
-	 * @param {Object} params - параметры
+	 * @param {object} params - параметры
 	 * @param {number} params.duration - время в секундах, после которого плашка исчезает
 	 * @param {string} params.title - заголовок сообщение
 	 * @param {string} params.description - описание
 	 * @param {'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'} params.position - расположение
+	 * @param {'success' | 'error'} params.type - тип уведомления
 	 */
 	open({ duration, position, ...params }) {
 		this.count++;
@@ -209,7 +213,7 @@ class Notification {
 
 		setTimeout(() => {
 			element.classList.add('notification-open');
-		}, 50);
+		}, 20);
 
 		if (duration !== 0) {
 			setTimeout(() => {

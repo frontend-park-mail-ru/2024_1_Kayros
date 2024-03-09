@@ -4,8 +4,8 @@ module.exports = {
 		browser: true,
 		es2021: true,
 	},
-	plugins: ['unused-imports', '@stylistic/js'],
-	extends: ['eslint:recommended', 'plugin:import/recommended'],
+	plugins: ['unused-imports', '@stylistic/js', 'jsdoc'],
+	extends: ['eslint:recommended', 'plugin:import/recommended', 'plugin:jsdoc/recommended-error'],
 	overrides: [
 		{
 			files: ['.*'],
@@ -70,5 +70,6 @@ module.exports = {
 				],
 			},
 		],
+		'jsdoc/require-jsdoc': ['error', { require: { ClassDeclaration: true, MethodDefinition: true } }],
 	},
 };

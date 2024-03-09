@@ -1,15 +1,17 @@
 #header {
 	display: flex;
 	align-items: center;
-	position: sticky;
-	top: 0;
-	z-index: 10;
 	gap: 100px;
 	transition: all 0.15s;
-	width: 100%;
+	transition: all 0.15s;
+	z-index: 10;
+	position: sticky;
+	position: sticky;
+	top: 0;
+	margin-top: 26px;
 
 	&:not(.sticky) {
-		border-bottom: 1px solid transparent;
+		border-bottom: transparent;
 	}
 
 	#logo {
@@ -17,7 +19,7 @@
 	}
 
 	& + #content {
-		padding-top: 60px;
+		padding-top: 26px;
 	}
 }
 
@@ -40,12 +42,15 @@
 	margin-right: 34px;
 
 	#cart {
-		width: 130px;
+		width: 0;
+
+		&:has(span) {
+			width: 130px;
+		}
 
 		span {
 			color: var(--cart-button-color);
 			font-size: 18px;
-			font-family: Roboto, sans-serif;
 		}
 	}
 }
@@ -61,7 +66,6 @@
 	outline: 1px solid transparent;
 	transition: all 0.3s;
 	cursor: pointer;
-	margin-left: auto;
 
 	&:hover {
 		outline: 1px solid var(--address-ouline-hover);
@@ -71,4 +75,8 @@
 #profile-block {
 	position: relative;
 	min-width: 30px;
+}
+
+#search-input {
+	margin-right: auto;
 }

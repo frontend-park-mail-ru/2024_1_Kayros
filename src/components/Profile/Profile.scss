@@ -4,7 +4,6 @@
 	align-items: center;
 	position: absolute;
 	gap: 25px;
-	font-family: Montserrat, sans-serif;
 	font-weight: 600;
 	height: 100%;
 	color: var(--layout-border-color);
@@ -21,7 +20,8 @@
 	#name {
 		pointer-events: none;
 		opacity: 0;
-		font-size: 18px;
+		width: 0;
+		font-size: 20px;
 		cursor: pointer;
 		transition: all 0.3s;
 		z-index: 11;

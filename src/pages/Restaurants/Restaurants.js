@@ -1,5 +1,5 @@
-import ajax from '../../modules/ajax';
-import urls from '../../modules/urls';
+import Loader from '../../components/Loader';
+import api from '../../modules/api';
 import template from './Restaurants.hbs';
 import RestaurantCard from './components/RestaurantCard';
 import './Restaurants.scss';
@@ -18,12 +18,14 @@ class Restaurants {
 
 	/**
 	 * Отрисовка карточек ресторанов
+	 * @param {Array} items - массив ресторанов
 	 */
 	renderData(items) {
 		const restaurantsElement = document.getElementById('restaurants');
 
 		if (!items) {
 			restaurantsElement.innerText = 'Нет доступных ресторанов';
+			return;
 		}
 
 		items.forEach((item) => {
@@ -36,9 +38,7 @@ class Restaurants {
 	 * Получение данных о ресторанах
 	 */
 	getData() {
-		ajax.get(urls.getRestaurants(), (data) => {
-			this.renderData(data);
-		});
+		api.getRestaurants(this.renderData);
 	}
 
 	/**
@@ -46,6 +46,11 @@ class Restaurants {
 	 */
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', template());
+
+		const restaurants = document.getElementById('restaurants');
+		const loader = new Loader(restaurants, { size: 'xl' });
+		loader.render();
+
 		this.getData();
 	}
 }

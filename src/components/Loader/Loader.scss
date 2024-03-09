@@ -27,6 +27,16 @@
 		height: 60px;
 	}
 
+	&.loader-primary {
+		border: 2px solid var(--brand);
+		border-right: none;
+	}
+
+	&.loader-secondary {
+		border: 2px solid var(--white);
+		border-right: none;
+	}
+
 	@keyframes animate {
 		0% {
 			transform: rotate(0deg);

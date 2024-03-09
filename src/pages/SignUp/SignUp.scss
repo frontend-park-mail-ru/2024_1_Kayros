@@ -1,6 +1,7 @@
 .logo-container-on-sign-up {
 	text-align: center;
 	padding-bottom: 100px;
+	z-index: 5;
 }
 
 .signup-container {
@@ -9,10 +10,11 @@
 	padding: 50px;
 	background: var(--white);
 	border-radius: 40px;
-	box-shadow: 0 4px 10px var(--header-box-shadow);
+	box-shadow: var(--dropdown-box-shadow);
 	text-align: center;
 	top: -20px;
 	transform: translateY(-100px);
+	z-index: 3;
 }
 
 .signup-title {
@@ -30,30 +32,37 @@
 	margin-top: 30px;
 }
 
-.signin-redirect {
+#signup-redirect {
 	margin-top: 25px;
-}
-
-.signin-redirect a {
-	color: var(--black);
-	text-decoration: none;
-	font-weight: bold;
-}
-
-.signin-redirect a:hover {
-	text-decoration: underline;
+	display: flex;
+	gap: 6px;
+	align-items: center;
+	justify-content: center;
 }
 
 .signup-page-container {
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background-color: var(--background-light);
-	min-height: 100vh;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+
+	#auth-background {
+		position: absolute;
+		min-height: 100vh;
+		width: 100vw;
+		filter: blur(2px);
+		top: 0;
+		left: 0;
+		z-index: 1;
+	}
 }
 
-.error-message {
+.error-message,
+.error-name {
 	color: var(--red);
 	font-size: 14px;
 	margin: -18px 4px 20px;

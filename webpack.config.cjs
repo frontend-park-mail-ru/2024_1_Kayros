@@ -53,6 +53,16 @@ module.exports = {
 		port: process.env.PORT,
 		hot: true,
 		historyApiFallback: true,
+		static: {
+			directory: buildPath,
+		},
+		proxy: [
+			{
+				context: ['/api'],
+				target: 'http://109.120.180.238:8000',
+				pathRewrite: { '^/api': '' },
+			},
+		],
 	},
 
 	plugins: [
