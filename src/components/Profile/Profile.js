@@ -1,5 +1,5 @@
 import defaultAvatar from '../../assets/default-avatar.png';
-import Dropdown from '../Dropdown/Dropdown';
+import Dropdown from '../Dropdown';
 import template from './Profile.hbs';
 import './Profile.scss';
 

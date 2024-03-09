@@ -1,5 +1,5 @@
-import Content from '../components/Content/index.js';
-import Header from '../components/Header/index.js';
+import Content from '../components/Content';
+import Header from '../components/Header';
 import NotFoundPage from '../pages/NotFound';
 import urls from '../routes/urls.js';
 
@@ -53,7 +53,7 @@ class Router {
 			content = new Content(layout, { withoutPadding: true });
 		} else {
 			if (!header) {
-				const header = new Header(layout);
+				const header = new Header();
 				header.render();
 			}
 

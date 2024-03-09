@@ -80,7 +80,7 @@ class Dropdown {
 
 		const header = document.getElementById('header');
 		header.remove();
-		const newHeader = new Header(document.getElementById('layout'));
+		const newHeader = new Header();
 		newHeader.render();
 	}
 

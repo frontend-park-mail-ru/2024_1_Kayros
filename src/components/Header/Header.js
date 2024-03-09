@@ -4,7 +4,7 @@ import urls from '../../routes/urls';
 import { localStorageHelper } from '../../utils';
 import Button from '../Button';
 import Input from '../Input';
-import Logo from '../Logo/Logo';
+import Logo from '../Logo';
 import Profile from '../Profile';
 import template from './Header.hbs';
 import './Header.scss';
@@ -15,10 +15,9 @@ import './Header.scss';
 class Header {
 	/**
 	 * Конструктор класса
-	 * @param {Element} parent - родительский элемент
 	 */
-	constructor(parent) {
-		this.parent = parent;
+	constructor() {
+		this.parent = document.getElementById('layout');
 	}
 
 	/**
