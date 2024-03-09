@@ -64,11 +64,11 @@ export const FIELDS_SIGN_UP = [
 
 export const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-export const INVALID_EMAIL_CHAR_REGEX = /[^a-zA-Z0-9._%+-@]/;
+export const INVALID_EMAIL_CHAR_REGEX = /[^a-zA-Z0-9._%+\-@]/;
 
-export const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+=\-{}[\];:'"|,.<>/?]{8,}$/;
+export const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,}$/;
 
-export const INVALID_PASSWORD_CHAR_REGEX = /[^A-Za-z\d!@#$%^&*()_+=\-{}[\];:'"|,.<>/?]/;
+export const INVALID_PASSWORD_CHAR_REGEX = /[^A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
 
 export const NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9]{1,19}$/;
 
