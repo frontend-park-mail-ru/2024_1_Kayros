@@ -5,9 +5,9 @@ import { errorMessages } from '../constants';
  */
 class Ajax {
 	/**
-	 *
+	 * GET запрос
 	 * @param {string} url - адрес сервера для отправки запроса
-	 * @param {void} callback - функция-коллбэк для обработки результатов запроса
+	 * @returns {object} - полученные данные в виде json объекта
 	 */
 	async get(url) {
 		let data, responseError;
@@ -30,9 +30,10 @@ class Ajax {
 	}
 
 	/**
-	 *
+	 * POST запрос
 	 * @param {string} url - адрес сервера для отправки запроса
 	 * @param {void} body - объект, посылаемый в запросе
+	 * @returns {object} - объект, содержащий полученные данные и ошибку, если произошла
 	 */
 	async post(url, body) {
 		let data, responseError;

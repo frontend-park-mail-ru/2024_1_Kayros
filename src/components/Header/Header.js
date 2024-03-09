@@ -23,6 +23,8 @@ class Header {
 
 	/**
 	 * Получение html компонента
+	 * @param {object} user - информация о пользователе
+	 * @returns {HTMLDivElement} - html
 	 */
 	getHTML(user) {
 		return template({ user: { address: user ? 'ул.Тверская, д.2' : '' } });

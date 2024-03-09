@@ -8,6 +8,8 @@ class Content {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
+	 * @param {object} params - параметры компонента
+	 * @param {boolean} params.withoutPadding - отключить отступы
 	 */
 	constructor(parent, { withoutPadding = false } = {}) {
 		this.parent = parent;

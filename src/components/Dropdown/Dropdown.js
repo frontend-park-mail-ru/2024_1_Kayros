@@ -14,8 +14,8 @@ class Dropdown {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
-	 * @param {Object} params - параметры
-	 * @param {number} id - идентификатор
+	 * @param {object} params - параметры
+	 * @param {number} params.id - идентификатор
 	 */
 	constructor(parent, { id = 'dropdown' }) {
 		this.parent = parent;
@@ -23,6 +23,10 @@ class Dropdown {
 		this.id = id;
 	}
 
+	/**
+	 * Метод для открытия дропдауна
+	 * @param {HTMLDivElement} element - дропдаун
+	 */
 	open(element) {
 		if (this.isOpen) return;
 
@@ -36,6 +40,10 @@ class Dropdown {
 		this.parent.animate(...OPEN_PROFILE_SLIDE_OPTIONS);
 	}
 
+	/**
+	 * Метод для закрытия дропдауна
+	 * @param {HTMLDivElement} element - дропдаун
+	 */
 	close(element) {
 		if (!this.isOpen) return;
 
@@ -51,6 +59,7 @@ class Dropdown {
 
 	/**
 	 * Получение html компонента
+	 * @returns {HTMLElement} - html компонента
 	 */
 	getHTML() {
 		return template({
@@ -60,6 +69,9 @@ class Dropdown {
 		});
 	}
 
+	/**
+	 * Обработка кнопки для выхода из аккаунта
+	 */
 	handleExit() {
 		localStorage.removeItem('user-info');
 

@@ -9,7 +9,7 @@ class Button {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
-	 * @param {Object} params - параметры кнопки
+	 * @param {object} params - параметры кнопки
 	 * @param {string} params.id - идентификатор элемента
 	 * @param {string} params.content - текст внутри кнопки
 	 * @param {'primary' | 'secondary' | 'clear'} params.style - стиль кнопки
@@ -36,6 +36,7 @@ class Button {
 
 	/**
 	 * Получение html компонента
+	 * @returns {HTMLElement} html
 	 */
 	getHTML() {
 		return template({
