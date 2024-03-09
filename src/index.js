@@ -11,7 +11,7 @@ const root = document.getElementById('root');
 const layout = new Layout(root);
 layout.render();
 
-Object.entries(routes).forEach(([path, component]) => {
+Object.entries(routes).forEach(([path, { component }]) => {
 	router.addRoute(path, component);
 });
 
