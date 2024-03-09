@@ -10,6 +10,7 @@ class Link {
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
 	 * @param {object} params - параметры компонента
+	 * @param {string} params.id - id элемента
 	 * @param {string} params.href - url страницы на которую перенаправлять
 	 * @param {string} params.text - текст ссылки
 	 */
