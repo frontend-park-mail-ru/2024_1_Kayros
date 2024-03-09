@@ -1,6 +1,5 @@
 import Content from '../components/Content';
 import Header from '../components/Header';
-import { routes } from '../routes';
 import urls from '../routes/urls.js';
 
 /**
@@ -13,18 +12,17 @@ class Router {
 	 */
 	constructor() {
 		this.previousState = null;
-		this.routes = [];
+		this.routes = {};
 		window.addEventListener('popstate', this.handleLocationChange.bind(this));
 	}
 
 	/**
-	 * Добавляет маршрут в список маршрутов роутера.
-	 * @param {string} path - Путь маршрута.
-	 * @param {Function} component - Компонент, соответствующий маршруту.
+	 * Добавляет маршруты в список маршрутов роутера.
+	 * @param {object} routes - объект, содеражщий маршруты
 	 * @returns {ThisType} - контекст
 	 */
-	addRoute(path, component) {
-		this.routes.push({ path, component });
+	addRoutes(routes) {
+		this.routes = routes;
 		return this;
 	}
 
@@ -35,7 +33,7 @@ class Router {
 	navigate(path) {
 		const currentPath = window.history.state?.path;
 
-		document.title = `Resto - ${routes[path].title}`;
+		document.title = `Resto - ${this.routes[path]?.title || 'Страница не найдена'}`;
 
 		if (currentPath === path) {
 			this.handleLocationChange();
@@ -84,7 +82,7 @@ class Router {
 			content = new Content(layout, { withoutPadding: true });
 		} else {
 			if (!header) {
-				const header = new Header();
+				const header = new Header({ navigate: this.navigate.bind(this) });
 				header.render();
 			}
 
@@ -95,11 +93,11 @@ class Router {
 	}
 
 	/**
-	 * Обрабатывает изменение местоположения, отображая соответствующий маршрут или страницу "Не найдено".
+	 * Обрабатывает изменение местоположения, отображая соответствующий маршрут.
 	 */
 	handleLocationChange() {
 		const path = window.location.pathname;
-		const currentRoute = this.routes.find((route) => route.path === path);
+		const currentRoute = this.routes[path];
 
 		this.handleChangeInnerLayout();
 
