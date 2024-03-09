@@ -3,8 +3,6 @@ import Dropdown from '../Dropdown/Dropdown';
 import template from './Profile.hbs';
 import './Profile.scss';
 
-const DEFAULT_USERNAME = 'Пользователь';
-
 /**
  * Профиль
  */
@@ -26,7 +24,7 @@ class Profile {
 	getHTML() {
 		const avatar = this.user.avatarUrl || defaultAvatar;
 
-		return template({ name: this.user.name || DEFAULT_USERNAME, avatarUrl: avatar });
+		return template({ name: this.user.name, avatarUrl: avatar });
 	}
 
 	/**
