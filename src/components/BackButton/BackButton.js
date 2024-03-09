@@ -22,7 +22,7 @@ class BackButton {
 	render() {
 		const backButton = new Button(this.parent, {
 			id: this.id,
-			content: window.history.length < 3 ? 'На главную' : 'Назад',
+			content: router.previousState ? 'Назад' : 'На главную',
 			style: 'clear',
 			icon: 'assets/back-arrow.svg',
 			onClick: () => router.back(),

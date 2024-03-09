@@ -13,6 +13,7 @@ class Router {
 	 * Создает экземпляр роутера.
 	 */
 	constructor() {
+		this.previousState = null;
 		this.routes = [];
 		window.addEventListener('popstate', this.handleLocationChange.bind(this));
 	}
@@ -48,6 +49,7 @@ class Router {
 		) {
 			window.history.replaceState({ path }, '', path);
 		} else {
+			this.previousState = window.history?.state;
 			window.history.pushState({ path }, '', path);
 		}
 
@@ -58,7 +60,8 @@ class Router {
 	 * Возвращает на шаг назад в истории
 	 */
 	back() {
-		if (window.history.length > 3) {
+		if (this.previousState) {
+			this.previousState = window.history?.state;
 			window.history.back();
 		} else {
 			this.navigate(urls.restaurants);
