@@ -80,7 +80,7 @@ class Dropdown {
 
 		const dropdown = document.getElementById(this.id);
 
-		const link = dropdown.querySelector('.link');
+		const link = dropdown.querySelector('.dropdown-item');
 
 		const exitButton = new Button(link, {
 			id: 'exit-button',

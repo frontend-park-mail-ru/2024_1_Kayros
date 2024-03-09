@@ -32,18 +32,12 @@
 	margin-top: 30px;
 }
 
-.signup-redirect {
+#signin-redirect {
 	margin-top: 25px;
-}
-
-.signup-redirect a {
-	color: var(--black);
-	text-decoration: none;
-	font-weight: bold;
-}
-
-.signup-redirect a:hover {
-	text-decoration: underline;
+	display: flex;
+	gap: 6px;
+	align-items: center;
+	justify-content: center;
 }
 
 .signin-page-container {
