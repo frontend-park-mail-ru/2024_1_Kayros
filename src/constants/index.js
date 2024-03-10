@@ -67,6 +67,6 @@ export const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=[\
 
 export const INVALID_PASSWORD_CHAR_REGEX = /[^A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
 
-export const NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9]{1,19}$/;
+export const NAME_REGEX = /^[a-zA-Zа-яА-ЯёЁ][a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/;
 
-export const INVALID_NAME_CHAR_REGEX = /[^a-zA-Z0-9]/;
+export const INVALID_NAME_CHAR_REGEX = /[^a-zA-Zа-яА-ЯёЁ0-9]/;
