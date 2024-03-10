@@ -45,8 +45,8 @@ class Router {
 	 * @param {string} path - Путь для навигации.
 	 */
 	navigate(path) {
-		const currentPath = this.normalizePath(window.history.state?.path);
-
+		const currentPath = window.history.state?.path;
+		path = this.normalizePath(path);
 		document.title = `Resto - ${this.routes[path]?.title || 'Страница не найдена'}`;
 
 		if (currentPath === path) {
@@ -120,7 +120,7 @@ class Router {
 	 * Обрабатывает изменение местоположения, отображая соответствующий маршрут.
 	 */
 	handleLocationChange() {
-		const path = this.normalizePath(window.location.pathname);
+		const path = window.location.pathname;
 		const currentRoute = this.routes[path];
 
 		this.handleChangeInnerLayout();
