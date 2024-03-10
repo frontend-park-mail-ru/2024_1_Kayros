@@ -42,6 +42,10 @@
 		cursor: not-allowed;
 		color: var(--button-color-disabled);
 	}
+
+	&:has(#btn-loader) {
+		gap: 10px;
+	}
 }
 
 #btn-loader {
@@ -49,6 +53,5 @@
 
 	&.loading {
 		display: block;
-		gap: 10px;
 	}
 }

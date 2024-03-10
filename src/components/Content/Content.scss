@@ -1,3 +1,16 @@
 #content {
 	padding: 34px;
+
+	&:has(#content-loader) {
+		opacity: 0.5;
+		pointer-events: none;
+
+		.loader {
+			transition: 0.3s;
+			position: absolute;
+			left: calc(50% - 50px);
+			top: calc(50vh - 85px);
+			z-index: 15;
+		}
+	}
 }

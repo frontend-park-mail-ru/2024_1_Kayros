@@ -1,8 +1,6 @@
 import Content from '../components/Content/index.js';
 import Header from '../components/Header/index.js';
 import Notification from '../components/Notification/Notification.js';
-import NotFoundPage from '../pages/NotFound';
-import { routes } from '../routes/index.js';
 import urls from '../routes/urls.js';
 
 /**
@@ -15,18 +13,18 @@ class Router {
 	 */
 	constructor() {
 		this.previousState = null;
-		this.routes = [];
+		this.samePage = false;
+		this.routes = {};
 		window.addEventListener('popstate', this.handleLocationChange.bind(this));
 	}
 
 	/**
-	 * Добавляет маршрут в список маршрутов роутера.
-	 * @param {string} path - Путь маршрута.
-	 * @param {Function} component - Компонент, соответствующий маршруту.
+	 * Добавляет маршруты в список маршрутов роутера.
+	 * @param {object} routes - объект, содеражщий маршруты
 	 * @returns {ThisType} - контекст
 	 */
-	addRoute(path, component) {
-		this.routes.push({ path, component });
+	addRoutes(routes) {
+		this.routes = routes;
 		return this;
 	}
 
@@ -52,12 +50,15 @@ class Router {
 			return;
 		}
 
-		document.title = `Resto - ${routes[path].title}`;
+		document.title = `Resto - ${this.routes[path]?.title || 'Страница не найдена'}`;
 
 		if (currentPath === path) {
+			this.samePage = true;
 			this.handleLocationChange();
 			return;
 		}
+
+		this.samePage = false;
 
 		if (
 			(currentPath === urls.signIn && path === urls.signUp) ||
@@ -92,7 +93,10 @@ class Router {
 		const header = document.getElementById('header');
 		const oldContent = document.getElementById('content');
 
-		oldContent?.remove();
+		if (!(window.location.pathname === urls.restaurants && this.samePage)) {
+			oldContent?.remove();
+		}
+
 		let content;
 
 		if ([urls.signIn, urls.signUp].includes(window.location.pathname)) {
@@ -101,22 +105,26 @@ class Router {
 			content = new Content(layout, { withoutPadding: true });
 		} else {
 			if (!header) {
-				const header = new Header(layout);
+				const header = new Header({ navigate: this.navigate.bind(this) });
 				header.render();
 			}
 
 			content = new Content(layout);
 		}
 
-		content.render();
+		const currentContent = document.getElementById('content');
+
+		if (!currentContent) {
+			content.render();
+		}
 	}
 
 	/**
-	 * Обрабатывает изменение местоположения, отображая соответствующий маршрут или страницу "Не найдено".
+	 * Обрабатывает изменение местоположения, отображая соответствующий маршрут.
 	 */
 	handleLocationChange() {
 		const path = window.location.pathname;
-		const currentRoute = this.routes.find((route) => route.path === path);
+		const currentRoute = this.routes[path];
 
 		this.handleChangeInnerLayout();
 
@@ -127,9 +135,6 @@ class Router {
 			page.render();
 			return;
 		}
-
-		const notFoundPage = new NotFoundPage(content);
-		notFoundPage.render();
 	}
 }
 

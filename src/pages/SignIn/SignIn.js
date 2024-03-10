@@ -54,7 +54,7 @@ class SignIn {
 		const logoContainer = document.querySelector('.logo-container-on-sign-in');
 
 		if (logoContainer) {
-			new Logo(logoContainer).render();
+			new Logo(logoContainer, { onClick: () => router.navigate(urls.restaurants) }).render();
 		}
 
 		const linkBlock = document.getElementById('signin-redirect');

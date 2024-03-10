@@ -5,9 +5,5 @@
 	justify-content: space-evenly;
 	color: var(--brand);
 	font-size: 18px;
-
-	.loader {
-		position: absolute;
-		left: calc(50% - 30px);
-	}
+	transition: all 0.5s;
 }

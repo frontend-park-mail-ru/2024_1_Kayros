@@ -13,7 +13,8 @@
 	}
 
 	#logo {
-		padding-left: 52px;
+		margin-left: 52px;
+		width: 120px;
 	}
 
 	& + #content {
@@ -54,7 +55,7 @@
 }
 
 #address {
-	display: flex;
+	display: none;
 	align-items: center;
 	height: 100%;
 	border-radius: var(--layout-border-radius);
@@ -69,6 +70,7 @@
 	}
 
 	&:not(:empty) {
+		display: flex;
 		background: var(--address-bg);
 	}
 }
