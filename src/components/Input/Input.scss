@@ -51,7 +51,6 @@
 		right: 15px;
 		cursor: pointer;
 		transition: all 0.3s;
-		padding: 1px 3px;
 	}
 }
 
@@ -87,8 +86,4 @@
 		transform: scale(1);
 		opacity: 1;
 	}
-}
-
-.input-error {
-	border-color: var(--input-error-color);
 }

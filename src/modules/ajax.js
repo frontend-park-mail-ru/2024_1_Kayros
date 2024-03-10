@@ -1,4 +1,4 @@
-import { errorMessages } from '../constants';
+import { ERROR_MESSAGES } from '../constants';
 
 /**
  * Класс для выполнения асинхронных запросов
@@ -20,7 +20,7 @@ class Ajax {
 		}
 
 		if (responseError) {
-			Notification.open({ duration: 3, title: errorMessages.SERVER_RESPONSE, description: responseError });
+			Notification.open({ duration: 3, title: ERROR_MESSAGES.SERVER_RESPONSE, description: responseError });
 		}
 
 		const loader = document.querySelector('.loader');

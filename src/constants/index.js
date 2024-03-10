@@ -1,11 +1,11 @@
-export const errorMessages = {
+export const ERROR_MESSAGES = {
 	SERVER_RESPONSE: 'Ошибка сервера',
 	LOGIN: 'Не удалось войти',
 	SIGNUP: 'Не удалось создать аккаунт',
 	SIGNOUT: 'Не удалось выйти из аккаунта',
 };
 
-export const successMessages = {
+export const SUCCESS_MESSAGES = {
 	signup: {
 		title: 'Аккаунт успешно создан',
 		description: 'Добро пожаловать!',
@@ -52,11 +52,13 @@ export const FIELDS_SIGN_UP = [
 	},
 ];
 
-export const validationErrors = {
+export const VALIDATION_ERRORS = {
 	emailFormat: 'Неверный формат электронной почты',
 	incorrectSymbol: 'Содержит некорректный символ',
 	passwordRequirements: 'Пароль должен содержать минимум 8 символов, включая число и букву',
 	fieldRequired: 'Поле не может быть пустым',
+	passwordUnmatched: 'Пароли не совпадают',
+	nameFormat: 'Имя должно начинаться с буквы и быть меньше 19 символов',
 };
 
 export const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

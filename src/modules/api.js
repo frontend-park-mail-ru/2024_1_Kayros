@@ -1,5 +1,5 @@
 import Notification from '../components/Notification/Notification';
-import { errorMessages, successMessages } from '../constants';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../constants';
 import ajax from './ajax';
 
 /**
@@ -36,8 +36,8 @@ class Api {
 		if (data && !error) {
 			Notification.open({
 				duration: 3,
-				title: successMessages.login.title,
-				description: successMessages.login.description,
+				title: SUCCESS_MESSAGES.login.title,
+				description: SUCCESS_MESSAGES.login.description,
 				type: 'success',
 			});
 
@@ -47,8 +47,8 @@ class Api {
 
 		Notification.open({
 			duration: 3,
-			title: errorMessages.LOGIN,
-			description: error || errorMessages.SERVER_RESPONSE,
+			title: ERROR_MESSAGES.LOGIN,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
 		});
 	}
@@ -66,8 +66,8 @@ class Api {
 		if (data && !error) {
 			Notification.open({
 				duration: 3,
-				title: successMessages.signup.title,
-				description: successMessages.signup.description,
+				title: SUCCESS_MESSAGES.signup.title,
+				description: SUCCESS_MESSAGES.signup.description,
 				type: 'success',
 			});
 
@@ -77,8 +77,8 @@ class Api {
 
 		Notification.open({
 			duration: 3,
-			title: errorMessages.SIGNUP,
-			description: error || errorMessages.SERVER_RESPONSE,
+			title: ERROR_MESSAGES.SIGNUP,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
 		});
 	}
@@ -93,8 +93,8 @@ class Api {
 		if (error) {
 			Notification.open({
 				duration: 3,
-				title: errorMessages.SIGNOUT,
-				description: error || errorMessages.SERVER_RESPONSE,
+				title: ERROR_MESSAGES.SIGNOUT,
+				description: error || ERROR_MESSAGES.SERVER_RESPONSE,
 				type: 'error',
 			});
 
@@ -103,8 +103,8 @@ class Api {
 
 		Notification.open({
 			duration: 3,
-			title: successMessages.signout.title,
-			description: successMessages.signout.description,
+			title: SUCCESS_MESSAGES.signout.title,
+			description: SUCCESS_MESSAGES.signout.description,
 			type: 'success',
 		});
 

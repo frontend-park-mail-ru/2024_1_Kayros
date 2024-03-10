@@ -2,16 +2,8 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Link from '../../components/Link/Link';
 import Logo from '../../components/Logo';
-import {
-	validationErrors,
-	EMAIL_REGEX,
-	INVALID_EMAIL_CHAR_REGEX,
-	PASSWORD_REGEX,
-	INVALID_PASSWORD_CHAR_REGEX,
-	NAME_REGEX,
-	INVALID_NAME_CHAR_REGEX,
-	FIELDS_SIGN_UP,
-} from '../../constants';
+import { VALIDATION_ERRORS, NAME_REGEX, INVALID_NAME_CHAR_REGEX, FIELDS_SIGN_UP } from '../../constants';
+import { validateEmail, validatePassword } from '../../helpers/validation.js';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls.js';
@@ -104,62 +96,23 @@ class SignUp {
 		let isPasswordValid = false;
 		let isPasswordsMatch = false;
 
-		// Функция для валидации email
-		const validateEmail = () => {
-			const isEmailValid = EMAIL_REGEX.test(emailElement.value);
-			const hasInvalidChars = INVALID_EMAIL_CHAR_REGEX.test(emailElement.value);
-
-			if (hasInvalidChars) {
-				emailErrorElement.textContent = validationErrors.incorrectSymbol;
-				emailElement.classList.add('input-error');
-			} else if (emailElement.value) {
-				emailErrorElement.textContent = isEmailValid ? '' : validationErrors.emailFormat;
-				emailElement.style.borderColor = isEmailValid ? 'initial' : 'red';
-			} else {
-				emailErrorElement.textContent = hasEmailInputStarted ? validationErrors.fieldRequired : '';
-				emailElement.style.borderColor = hasEmailInputStarted ? 'red' : 'initial';
-			}
-
-			return emailElement.value && isEmailValid;
-		};
-
 		// Функция для валидации имени
 		const validateName = () => {
 			const isNameValid = NAME_REGEX.test(nameElement.value);
 			const hasInvalidChars = INVALID_NAME_CHAR_REGEX.test(nameElement.value);
 
 			if (hasInvalidChars) {
-				nameErrorElement.textContent = 'Содержит некорректный символ';
+				nameErrorElement.textContent = VALIDATION_ERRORS.incorrectSymbol;
 				nameElement.style.borderColor = 'red';
 			} else if (nameElement.value) {
-				nameErrorElement.textContent = isNameValid ? '' : 'Имя должно начинаться с буквы и быть меньше 19 символов';
+				nameErrorElement.textContent = isNameValid ? '' : VALIDATION_ERRORS.nameFormat;
 				nameElement.style.borderColor = isNameValid ? 'initial' : 'red';
 			} else {
-				nameErrorElement.textContent = hasNameInputStarted ? 'Поле не может быть пустым' : '';
+				nameErrorElement.textContent = hasNameInputStarted ? VALIDATION_ERRORS.fieldRequired : '';
 				nameElement.style.borderColor = hasNameInputStarted ? 'red' : 'initial';
 			}
 
 			return nameElement.value && isNameValid;
-		};
-
-		// Функция для валидации пароля
-		const validatePassword = () => {
-			const isPasswordValid = PASSWORD_REGEX.test(passwordElement.value);
-			const hasInvalidChars = INVALID_PASSWORD_CHAR_REGEX.test(passwordElement.value);
-
-			if (hasInvalidChars) {
-				passwordErrorElement.textContent = validationErrors.incorrectSymbol;
-				passwordElement.style.borderColor = 'red';
-			} else if (passwordElement.value) {
-				passwordErrorElement.textContent = isPasswordValid ? '' : validationErrors.passwordRequirements;
-
-				passwordElement.style.borderColor = isPasswordValid ? 'initial' : 'red';
-			} else {
-				passwordErrorElement.textContent = hasPasswordInputStarted ? validationErrors.fieldRequired : '';
-				passwordElement.style.borderColor = hasPasswordInputStarted ? 'red' : 'initial';
-			}
-
-			return passwordElement.value && isPasswordValid;
 		};
 
 		// Функция для проверки совпадения паролей
@@ -167,10 +120,10 @@ class SignUp {
 			const isPasswordsMatch = confirmPasswordElement.value === passwordElement.value;
 
 			if (!isPasswordsMatch) {
-				confirmPasswordErrorElement.textContent = 'Пароли не совпадают';
+				confirmPasswordErrorElement.textContent = VALIDATION_ERRORS.passwordUnmatched;
 				confirmPasswordElement.style.borderColor = 'red';
 			} else if (!confirmPasswordElement.value && hasConfirmPasswordInputStarted) {
-				confirmPasswordErrorElement.textContent = 'Поле не может быть пустым';
+				confirmPasswordErrorElement.textContent = VALIDATION_ERRORS.fieldRequired;
 				confirmPasswordElement.style.borderColor = 'red';
 			} else {
 				confirmPasswordErrorElement.textContent = '';
@@ -193,7 +146,7 @@ class SignUp {
 		// Слушатели событий для обновления флагов и вызова функций валидации
 		emailElement.addEventListener('input', () => {
 			hasEmailInputStarted = true;
-			isEmailValid = validateEmail();
+			isEmailValid = validateEmail(emailElement, emailErrorElement, hasEmailInputStarted);
 			updateSignUpButtonState();
 		});
 
@@ -205,7 +158,7 @@ class SignUp {
 
 		passwordElement.addEventListener('input', () => {
 			hasPasswordInputStarted = true;
-			isPasswordValid = validatePassword();
+			isPasswordValid = validatePassword(passwordElement, passwordErrorElement, hasPasswordInputStarted);
 
 			// При каждом изменении пароля, нужно заново проверять его совпадение с подтверждением
 			if (hasConfirmPasswordInputStarted) {
