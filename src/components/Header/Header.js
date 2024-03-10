@@ -39,7 +39,7 @@ class Header {
 		this.parent.insertAdjacentHTML('afterbegin', this.getHTML(user));
 
 		const logoBlock = document.getElementById('logo-container');
-		const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
+		const logo = new Logo(logoBlock);
 		logo.render();
 
 		const searchBlock = document.getElementById('search-input');

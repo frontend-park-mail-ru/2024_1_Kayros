@@ -69,7 +69,7 @@ class SignUp {
 		const logoContainer = document.querySelector('.logo-container-on-sign-up');
 
 		if (logoContainer) {
-			new Logo(logoContainer, { onClick: () => router.navigate(urls.restaurants) }).render();
+			new Logo(logoContainer).render();
 		}
 
 		const linkBlock = document.getElementById('signup-redirect');
