@@ -1,5 +1,5 @@
+import Modal from '../components/Modal/Modal';
 import RestaurantsPage from '../pages/Restaurants';
-import SignInPage from '../pages/SignIn';
 import SignUpPage from '../pages/SignUp';
 import urls from './urls';
 
@@ -10,7 +10,7 @@ const routes = {
 	},
 	[urls.signIn]: {
 		title: 'Вход',
-		component: SignInPage,
+		component: Modal,
 	},
 	[urls.signUp]: {
 		title: 'Регистрация',

@@ -1,6 +1,7 @@
 import Content from '../components/Content/index.js';
 import Header from '../components/Header/index.js';
 import NotFoundPage from '../pages/NotFound';
+import Restaurants from '../pages/Restaurants/Restaurants.js';
 import { routes } from '../routes/index.js';
 import urls from '../routes/urls.js';
 
@@ -76,21 +77,20 @@ class Router {
 		const header = document.getElementById('header');
 		const oldContent = document.getElementById('content');
 
-		oldContent?.remove();
 		let content;
 
-		if ([urls.signIn, urls.signUp].includes(window.location.pathname)) {
-			header?.remove();
-
-			content = new Content(layout, { withoutPadding: true });
-		} else {
-			if (!header) {
-				const header = new Header(layout);
-				header.render();
-			}
-
-			content = new Content(layout);
+		if ([urls.signIn, urls.signUp].includes(window.location.pathname) && this.previousState) {
+			return;
 		}
+
+		oldContent?.remove();
+
+		if (!header) {
+			const header = new Header(layout);
+			header.render();
+		}
+
+		content = new Content(layout);
 
 		content.render();
 	}
@@ -107,6 +107,11 @@ class Router {
 		const content = document.getElementById('content');
 
 		if (currentRoute) {
+			if (path === urls.signIn || path === urls.signUp) {
+				const restaurants = document.getElementById('restaurants');
+				if (!restaurants) new Restaurants(content).render();
+			}
+
 			const page = new currentRoute.component(content);
 			page.render();
 			return;
