@@ -50,17 +50,14 @@ class AuthForm {
 		const loaderBlock = signinButton.querySelector('#btn-loader');
 		loaderBlock.classList.add('loading');
 
-		const userData =
-			this.type === 'signin'
-				? {
-						email: document.getElementById('email').value,
-						password: document.getElementById('password').value,
-					}
-				: {
-						email: document.getElementById('email').value,
-						name: document.getElementById('name').value,
-						password: document.getElementById('password').value,
-					};
+		const userData = {
+			email: document.getElementById('email').value,
+			password: document.getElementById('password').value,
+		};
+
+		if (this.type === 'signup') {
+			userData.name = document.getElementById('name').value;
+		}
 
 		if (this.type === 'signin') {
 			api.login(userData, (data) => {
