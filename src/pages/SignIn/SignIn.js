@@ -3,6 +3,7 @@ import Input from '../../components/Input';
 import Link from '../../components/Link/Link';
 import Logo from '../../components/Logo';
 import {
+	validationErrors,
 	EMAIL_REGEX,
 	INVALID_EMAIL_CHAR_REGEX,
 	PASSWORD_REGEX,
@@ -96,13 +97,13 @@ class SignIn {
 			const hasInvalidChars = INVALID_EMAIL_CHAR_REGEX.test(emailElement.value);
 
 			if (hasInvalidChars) {
-				emailErrorElement.textContent = 'Содержит некорректный символ';
-				emailElement.style.borderColor = 'red';
+				emailErrorElement.textContent = validationErrors.incorrectSymbol;
+				emailElement.classList.add('input-error');
 			} else if (emailElement.value) {
-				emailErrorElement.textContent = isEmailValid ? '' : 'Неверный формат электронной почты';
+				emailErrorElement.textContent = isEmailValid ? '' : validationErrors.emailFormat;
 				emailElement.style.borderColor = isEmailValid ? 'initial' : 'red';
 			} else {
-				emailErrorElement.textContent = hasEmailInputStarted ? 'Поле не может быть пустым' : '';
+				emailErrorElement.textContent = hasEmailInputStarted ? validationErrors.fieldRequired : '';
 				emailElement.style.borderColor = hasEmailInputStarted ? 'red' : 'initial';
 			}
 
@@ -115,16 +116,14 @@ class SignIn {
 			const hasInvalidChars = INVALID_PASSWORD_CHAR_REGEX.test(passwordElement.value);
 
 			if (hasInvalidChars) {
-				passwordErrorElement.textContent = 'Содержит некорректный символ';
+				passwordErrorElement.textContent = validationErrors.incorrectSymbol;
 				passwordElement.style.borderColor = 'red';
 			} else if (passwordElement.value) {
-				passwordErrorElement.textContent = isPasswordValid
-					? ''
-					: 'Пароль должен содержать минимум 8 символов, включая число и букву';
+				passwordErrorElement.textContent = isPasswordValid ? '' : validationErrors.passwordRequirements;
 
 				passwordElement.style.borderColor = isPasswordValid ? 'initial' : 'red';
 			} else {
-				passwordErrorElement.textContent = hasPasswordInputStarted ? 'Поле не может быть пустым' : '';
+				passwordErrorElement.textContent = hasPasswordInputStarted ? validationErrors.fieldRequired : '';
 				passwordElement.style.borderColor = hasPasswordInputStarted ? 'red' : 'initial';
 			}
 

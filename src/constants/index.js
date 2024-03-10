@@ -36,24 +36,14 @@ export const FIELDS_SIGN_IN = [
 ];
 
 export const FIELDS_SIGN_UP = [
-	{
-		selector: '#email-input-container',
-		id: 'email',
-		placeholder: 'Почта',
-		type: 'email',
-	},
+	FIELDS_SIGN_IN[0],
 	{
 		selector: '#name-input-container',
 		id: 'name',
 		placeholder: 'Имя',
 		type: 'text',
 	},
-	{
-		selector: '#password-input-container',
-		id: 'password',
-		placeholder: 'Пароль',
-		type: 'password',
-	},
+	FIELDS_SIGN_IN[1],
 	{
 		selector: '#confirm-password-input-container',
 		id: 'confirm-password',
@@ -61,6 +51,13 @@ export const FIELDS_SIGN_UP = [
 		type: 'password',
 	},
 ];
+
+export const validationErrors = {
+	emailFormat: 'Неверный формат электронной почты',
+	incorrectSymbol: 'Содержит некорректный символ',
+	passwordRequirements: 'Пароль должен содержать минимум 8 символов, включая число и букву',
+	fieldRequired: 'Поле не может быть пустым',
+};
 
 export const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
