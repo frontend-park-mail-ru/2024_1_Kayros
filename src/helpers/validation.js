@@ -12,15 +12,25 @@ export const validateEmail = (emailElement, emailErrorElement, hasEmailInputStar
 	const isEmailValid = EMAIL_REGEX.test(emailElement.value);
 	const hasInvalidChars = INVALID_EMAIL_CHAR_REGEX.test(emailElement.value);
 
+	// if (hasInvalidChars) {
+	// 	emailErrorElement.textContent = VALIDATION_ERRORS.incorrectSymbol;
+	// 	emailElement.classList.add('input-error');
+	// } else if (emailElement.value) {
+	// 	emailErrorElement.textContent = isEmailValid ? '' : VALIDATION_ERRORS.emailFormat;
+	// 	emailElement.style.borderColor = isEmailValid ? 'initial' : 'red';
+	// } else {
+	// 	emailErrorElement.textContent = hasEmailInputStarted ? VALIDATION_ERRORS.fieldRequired : '';
+	// 	emailElement.style.borderColor = hasEmailInputStarted ? 'red' : 'initial';
+	// }
 	if (hasInvalidChars) {
 		emailErrorElement.textContent = VALIDATION_ERRORS.incorrectSymbol;
 		emailElement.classList.add('input-error');
 	} else if (emailElement.value) {
 		emailErrorElement.textContent = isEmailValid ? '' : VALIDATION_ERRORS.emailFormat;
-		emailElement.style.borderColor = isEmailValid ? 'initial' : 'red';
+		emailElement.classList.toggle('input-error', !isEmailValid);
 	} else {
 		emailErrorElement.textContent = hasEmailInputStarted ? VALIDATION_ERRORS.fieldRequired : '';
-		emailElement.style.borderColor = hasEmailInputStarted ? 'red' : 'initial';
+		emailElement.classList.toggle('input-error', hasEmailInputStarted);
 	}
 
 	return emailElement.value && isEmailValid;
