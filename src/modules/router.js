@@ -14,6 +14,7 @@ class Router {
 	 */
 	constructor() {
 		this.previousState = null;
+		this.samePage = false;
 		this.routes = [];
 		window.addEventListener('popstate', this.handleLocationChange.bind(this));
 	}
@@ -39,9 +40,12 @@ class Router {
 		document.title = `Resto - ${routes[path].title}`;
 
 		if (currentPath === path) {
+			this.samePage = true;
 			this.handleLocationChange();
 			return;
 		}
+
+		this.samePage = false;
 
 		if (
 			(currentPath === urls.signIn && path === urls.signUp) ||
@@ -76,7 +80,10 @@ class Router {
 		const header = document.getElementById('header');
 		const oldContent = document.getElementById('content');
 
-		oldContent?.remove();
+		if (!(window.location.pathname === urls.restaurants && this.samePage)) {
+			oldContent?.remove();
+		}
+
 		let content;
 
 		if ([urls.signIn, urls.signUp].includes(window.location.pathname)) {
@@ -92,7 +99,11 @@ class Router {
 			content = new Content(layout);
 		}
 
-		content.render();
+		const currentContent = document.getElementById('content');
+
+		if (!currentContent) {
+			content.render();
+		}
 	}
 
 	/**

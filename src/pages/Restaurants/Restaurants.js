@@ -22,6 +22,11 @@ class Restaurants {
 	 */
 	renderData(items) {
 		const restaurantsElement = document.getElementById('restaurants');
+		restaurantsElement?.remove();
+
+		this.parent.insertAdjacentHTML('beforeend', template());
+
+		const newRestaurants = document.getElementById('restaurants');
 
 		if (!items) {
 			restaurantsElement.innerText = 'Нет доступных ресторанов';
@@ -29,7 +34,7 @@ class Restaurants {
 		}
 
 		items.forEach((item) => {
-			const restaurantCard = new RestaurantCard(restaurantsElement, item);
+			const restaurantCard = new RestaurantCard(newRestaurants, item);
 			restaurantCard.render();
 		});
 	}
@@ -38,14 +43,18 @@ class Restaurants {
 	 * Получение данных о ресторанах
 	 */
 	getData() {
-		api.getRestaurants(this.renderData);
+		api.getRestaurants(this.renderData.bind(this));
 	}
 
 	/**
 	 * Рендеринг страницы
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('beforeend', template());
+		const restaurantsElement = document.getElementById('restaurants');
+
+		if (!restaurantsElement) {
+			this.parent.insertAdjacentHTML('beforeend', template());
+		}
 
 		const restaurants = document.getElementById('restaurants');
 		const loader = new Loader(restaurants, { size: 'xl' });
