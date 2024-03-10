@@ -1,5 +1,4 @@
 import Content from '../components/Content';
-import Header from '../components/Header';
 import urls from '../routes/urls.js';
 
 /**
@@ -78,14 +77,8 @@ class Router {
 
 		if ([urls.signIn, urls.signUp].includes(window.location.pathname)) {
 			header?.remove();
-
 			content = new Content(layout, { withoutPadding: true });
 		} else {
-			if (!header) {
-				const header = new Header({ navigate: this.navigate.bind(this) });
-				header.render();
-			}
-
 			content = new Content(layout);
 		}
 

@@ -1,3 +1,5 @@
+import { router } from '../../modules/router';
+import urls from '../../routes/urls';
 import template from './Logo.hbs';
 import './Logo.scss';
 
@@ -8,11 +10,8 @@ class Logo {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
-	 * @param {object} params -  параметры
-	 * @param {void} params.onClick - функция при клике на лого
 	 */
-	constructor(parent, { onClick }) {
-		this.onClick = onClick;
+	constructor(parent) {
 		this.parent = parent;
 	}
 
@@ -28,7 +27,7 @@ class Logo {
 		 * Обработка нажатия на лого
 		 */
 		logoBlock.addEventListener('click', () => {
-			this.onClick();
+			router.navigate(urls.restaurants);
 		});
 	}
 }

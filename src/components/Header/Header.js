@@ -1,4 +1,5 @@
 import cartIcon from '../../assets/cart.svg';
+import { router } from '../../modules/router';
 import urls from '../../routes/urls';
 import { localStorageHelper } from '../../utils';
 import Button from '../Button';
@@ -15,11 +16,8 @@ import './Header.scss';
 class Header {
 	/**
 	 * Конструктор класса
-	 * @param {object} params - параметры
-	 * @param {void} params.navigate - функция навигации по страницам
 	 */
-	constructor({ navigate }) {
-		this.navigate = navigate;
+	constructor() {
 		this.parent = document.getElementById('layout');
 	}
 
@@ -73,7 +71,7 @@ class Header {
 			const loginButton = new Button(profileBlock, {
 				id: 'header-login-button',
 				content: 'Войти',
-				onClick: () => this.navigate(urls.signIn),
+				onClick: () => router.navigate(urls.signIn),
 			});
 
 			loginButton.render();
