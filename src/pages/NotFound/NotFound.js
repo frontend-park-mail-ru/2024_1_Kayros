@@ -10,10 +10,9 @@ import './NotFound.scss';
 class NotFound {
 	/**
 	 * Создает экземпляр страницы NotFound.
-	 * @param {Element} parent Элемент DOM, в который будет рендериться страница "Не найдено".
 	 */
-	constructor(parent) {
-		this.parent = parent;
+	constructor() {
+		this.parent = document.getElementById('content');
 	}
 	/**
 	 * Рендер страницы.
