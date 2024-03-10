@@ -1,3 +1,4 @@
+import Notification from '../components/Notification/Notification';
 import { errorMessages } from '../constants';
 
 /**
@@ -7,19 +8,27 @@ class Ajax {
 	/**
 	 * GET запрос
 	 * @param {string} url - адрес сервера для отправки запроса
+	 * @param {object} params - параметры
+	 * @param {boolean} params.notifyError - показывать ошибку
 	 * @returns {object} - полученные данные в виде json объекта
 	 */
-	async get(url) {
+	async get(url, { notifyError }) {
 		let data, responseError;
 
 		try {
 			const response = await fetch(url);
-			data = await response.json();
+			const result = await response.json();
+
+			if (response.ok) {
+				data = result;
+			} else {
+				responseError = result.detail;
+			}
 		} catch (error) {
 			responseError = error;
 		}
 
-		if (responseError) {
+		if (responseError && notifyError) {
 			Notification.open({ duration: 3, title: errorMessages.SERVER_RESPONSE, description: responseError });
 		}
 
@@ -44,12 +53,12 @@ class Ajax {
 				body: JSON.stringify(body),
 			});
 
-			const result = await response.text();
+			const result = await response.json();
 
 			if (response.ok) {
 				data = result;
 			} else {
-				responseError = result;
+				responseError = result.detail;
 			}
 		} catch (error) {
 			responseError = error;

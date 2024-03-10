@@ -18,7 +18,17 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async getRestaurants(callback) {
-		const data = await ajax.get(`${this.url}/restaurants`);
+		const data = await ajax.get(`${this.url}/restaurants`, { notifyError: true });
+
+		callback(data);
+	}
+
+	/**
+	 * Метод для получения информации о пользователе
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getUserInfo(callback) {
+		const data = await ajax.get(`${this.url}/user`, { notifyError: false });
 
 		callback(data);
 	}

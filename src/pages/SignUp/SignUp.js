@@ -274,7 +274,7 @@ class SignUp {
 		};
 
 		api.signup(userData, (data) => {
-			localStorage.setItem('user-info', data);
+			localStorage.setItem('user-info', JSON.stringify(data));
 			router.back();
 		});
 	}

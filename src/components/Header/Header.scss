@@ -3,9 +3,7 @@
 	align-items: center;
 	gap: 100px;
 	transition: all 0.15s;
-	transition: all 0.15s;
 	z-index: 10;
-	position: sticky;
 	position: sticky;
 	top: 0;
 	margin-top: 26px;
@@ -59,7 +57,6 @@
 	display: flex;
 	align-items: center;
 	height: 100%;
-	background: var(--address-bg);
 	border-radius: var(--layout-border-radius);
 	padding: 0 15px;
 	font-size: 16px;
@@ -69,6 +66,10 @@
 
 	&:hover {
 		outline: 1px solid var(--address-ouline-hover);
+	}
+
+	&:not(:empty) {
+		background: var(--address-bg);
 	}
 }
 

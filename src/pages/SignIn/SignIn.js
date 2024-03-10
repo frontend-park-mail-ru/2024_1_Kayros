@@ -179,7 +179,7 @@ class SignIn {
 		};
 
 		api.login(userData, (data) => {
-			localStorage.setItem('user-info', data);
+			localStorage.setItem('user-info', JSON.stringify(data));
 			router.back();
 		});
 	}

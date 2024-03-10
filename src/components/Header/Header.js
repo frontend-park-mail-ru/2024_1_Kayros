@@ -1,4 +1,5 @@
 import cartIcon from '../../assets/cart.svg';
+import api from '../../modules/api';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls';
 import { localStorageHelper } from '../../utils';
@@ -22,21 +23,30 @@ class Header {
 	}
 
 	/**
-	 * Получение html компонента
-	 * @param {object} user - информация о пользователе
-	 * @returns {HTMLDivElement} - html
+	 * Обработка полученных данных
+	 * @param {object} data - информация о пользователе
 	 */
-	getHTML(user) {
-		return template({ user: { address: user ? 'ул.Тверская, д.2' : '' } });
+	handleUserData(data) {
+		if (!data) {
+			localStorage.removeItem('user-info');
+			return;
+		}
+
+		localStorage.setItem('user-info', JSON.stringify(data));
+	}
+
+	/**
+	 * Получение данных пользователя
+	 */
+	async userData() {
+		await api.getUserInfo(this.handleUserData);
 	}
 
 	/**
 	 * Рендеринг компонента
 	 */
-	render() {
-		const user = localStorageHelper.getItem('user-info');
-
-		this.parent.insertAdjacentHTML('afterbegin', this.getHTML(user));
+	async render() {
+		this.parent.insertAdjacentHTML('afterbegin', template());
 
 		const logoBlock = document.getElementById('logoContainer');
 		const logo = new Logo(logoBlock);
@@ -50,6 +60,12 @@ class Header {
 		});
 
 		searchInput.render();
+
+		await this.userData();
+		const user = localStorageHelper.getItem('user-info');
+
+		const address = document.getElementById('address');
+		address.innerHTML = user ? 'Тверская, д. 21' : '';
 
 		if (user?.cart && user.cart.total > 0) {
 			const cartBlock = document.getElementById('cart');
