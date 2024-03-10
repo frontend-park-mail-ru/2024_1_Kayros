@@ -273,8 +273,7 @@ class SignUp {
 			password: document.getElementById('password').value,
 		};
 
-		api.signup(userData, (data) => {
-			localStorage.setItem('user-info', JSON.stringify(data));
+		api.signup(userData, () => {
 			router.back();
 		});
 	}

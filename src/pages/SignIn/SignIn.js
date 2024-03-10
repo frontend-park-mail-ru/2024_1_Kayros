@@ -178,8 +178,7 @@ class SignIn {
 			password: document.getElementById('password').value,
 		};
 
-		api.login(userData, (data) => {
-			localStorage.setItem('user-info', JSON.stringify(data));
+		api.login(userData, () => {
 			router.back();
 		});
 	}

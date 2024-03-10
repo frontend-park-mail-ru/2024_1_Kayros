@@ -36,7 +36,7 @@ class Router {
 		const currentPath = window.history.state?.path;
 		const user = localStorage.getItem('user-info');
 
-		if (user && (window.location.pathname === urls.signIn || window.location.pathname === urls.signUp)) {
+		if (user && [urls.signIn, urls.signUp].uncludes(window.location.pathname)) {
 			window.history.replaceState({ path: urls.restaurants }, '', urls.restaurants);
 			this.handleLocationChange();
 

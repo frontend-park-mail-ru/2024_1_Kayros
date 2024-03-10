@@ -9,10 +9,10 @@ class Ajax {
 	 * GET запрос
 	 * @param {string} url - адрес сервера для отправки запроса
 	 * @param {object} params - параметры
-	 * @param {boolean} params.notifyError - показывать ошибку
+	 * @param {boolean} params.showNotifyError - показывать ошибку
 	 * @returns {object} - полученные данные в виде json объекта
 	 */
-	async get(url, { notifyError }) {
+	async get(url, { showNotifyError = true } = {}) {
 		let data, responseError;
 
 		try {
@@ -25,10 +25,10 @@ class Ajax {
 				responseError = result.detail;
 			}
 		} catch (error) {
-			responseError = error;
+			responseError = 'Сервер не отвечает';
 		}
 
-		if (responseError && notifyError) {
+		if (responseError && showNotifyError) {
 			Notification.open({ duration: 3, title: errorMessages.SERVER_RESPONSE, description: responseError });
 		}
 
