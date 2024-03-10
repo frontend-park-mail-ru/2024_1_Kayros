@@ -1,16 +1,6 @@
-import BackButton from '../../components/BackButton/BackButton';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
-import Link from '../../components/Link/Link';
-import Logo from '../../components/Logo';
-import { VALIDATION_ERRORS, NAME_REGEX, INVALID_NAME_CHAR_REGEX, FIELDS_SIGN_UP } from '../../constants';
+import AuthForm from '../../components/AuthForm';
+import { VALIDATION_ERRORS, NAME_REGEX, INVALID_NAME_CHAR_REGEX } from '../../constants';
 import { validateEmail, validatePassword } from '../../helpers/validation.js';
-import api from '../../modules/api';
-import { router } from '../../modules/router';
-import urls from '../../routes/urls.js';
-import template from './SignUp.hbs';
-
-import './SignUp.scss';
 
 /**
  * Страница регистрации.
@@ -29,49 +19,14 @@ class SignUp {
 	 * Рендер страницы.
 	 */
 	render() {
-		const templateVars = {
-			signInUrl: urls.signIn,
-		};
-
-		const html = template(templateVars);
-		this.parent.insertAdjacentHTML('beforeend', html);
-
-		const logoContainer = document.querySelector('.logo-container-on-sign-up');
-
-		if (logoContainer) {
-			new Logo(logoContainer, { onClick: () => router.navigate(urls.restaurants) }).render();
-		}
-
-		const linkBlock = document.getElementById('signup-redirect');
-		const link = new Link(linkBlock, { id: 'signin-link', href: urls.signIn, text: 'Войти' });
-		link.render();
-
-		const backButtonBlock = document.getElementById('back-button');
-		const backButton = new BackButton(backButtonBlock, { id: 'signup-back-button' });
-		backButton.render();
-
-		// Рендеринг полей формы в цикле
-		FIELDS_SIGN_UP.forEach((field) => {
-			new Input(this.parent.querySelector(field.selector), {
-				id: field.id,
-				placeholder: field.placeholder,
-				type: field.type,
-			}).render();
+		const authForm = new AuthForm(this.parent, {
+			title: 'Регистрация',
+			redirectText: 'Уже зарегистрированы?',
+			type: 'signup',
 		});
 
-		new Button(this.parent.querySelector('#sign-up-button-container'), {
-			id: 'sign-up-button',
-			content: 'Создать аккаунт',
-			type: 'submit',
-			disabled: true,
-			withLoader: true,
-			onClick: (e) => {
-				e.preventDefault();
-				this.handleSubmit();
-			},
-		}).render();
+		authForm.render();
 
-		this.errorsContainer = this.parent.querySelector('#errors-container');
 		this.addFormValidation();
 	}
 
@@ -140,7 +95,7 @@ class SignUp {
 
 		// Функция для обновления состояния кнопки регистрации
 		const updateSignUpButtonState = () => {
-			document.getElementById('sign-up-button').disabled = !(
+			document.getElementById('signup-button').disabled = !(
 				isNameValid &&
 				isEmailValid &&
 				isPasswordValid &&
@@ -177,27 +132,6 @@ class SignUp {
 			hasConfirmPasswordInputStarted = true;
 			isPasswordsMatch = validateConfirmPassword();
 			updateSignUpButtonState();
-		});
-	}
-
-	/**
-	 * Обработка кнопки входа
-	 */
-	handleSubmit() {
-		const signinButton = this.parent.querySelector('#sign-up-button');
-		const loaderBlock = signinButton.querySelector('#btn-loader');
-		loaderBlock.classList.add('loading');
-
-		// Подготовка данных пользователя
-		const userData = {
-			email: document.getElementById('email').value,
-			name: document.getElementById('name').value,
-			password: document.getElementById('password').value,
-		};
-
-		api.signup(userData, (data) => {
-			localStorage.setItem('user-info', data);
-			router.back();
 		});
 	}
 }

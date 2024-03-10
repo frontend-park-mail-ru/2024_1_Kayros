@@ -1,10 +1,10 @@
-.logo-container-on-sign-up {
+.logo-container-on-auth {
 	text-align: center;
 	padding-bottom: 100px;
 	z-index: 5;
 }
 
-.signup-container {
+.auth-container {
 	width: 350px;
 	margin-top: 30px;
 	padding: 50px;
@@ -17,7 +17,7 @@
 	z-index: 3;
 }
 
-.signup-title {
+.auth-title {
 	margin-bottom: 20px;
 }
 
@@ -32,7 +32,7 @@
 	margin-top: 30px;
 }
 
-#signup-redirect {
+#auth-redirect {
 	margin-top: 25px;
 	display: flex;
 	gap: 6px;
@@ -40,7 +40,7 @@
 	justify-content: center;
 }
 
-.signup-page-container {
+.auth-page-container {
 	display: flex;
 	position: relative;
 	flex-direction: column;

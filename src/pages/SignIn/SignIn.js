@@ -1,15 +1,5 @@
-import BackButton from '../../components/BackButton/BackButton';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
-import Link from '../../components/Link/Link';
-import Logo from '../../components/Logo';
-import { FIELDS_SIGN_IN } from '../../constants';
+import AuthForm from '../../components/AuthForm';
 import { validateEmail, validatePassword } from '../../helpers/validation.js';
-import api from '../../modules/api';
-import { router } from '../../modules/router';
-import urls from '../../routes/urls.js';
-import template from './SignIn.hbs';
-import './SignIn.scss';
 
 /**
  * Страница входа.
@@ -28,46 +18,8 @@ class SignIn {
 	 * Рендер страницы.
 	 */
 	render() {
-		const templateVars = {
-			signUpUrl: urls.signUp,
-		};
-
-		const html = template(templateVars);
-		this.parent.insertAdjacentHTML('beforeend', html);
-
-		const logoContainer = document.querySelector('.logo-container-on-sign-in');
-
-		if (logoContainer) {
-			new Logo(logoContainer, { onClick: () => router.navigate(urls.restaurants) }).render();
-		}
-
-		const linkBlock = document.getElementById('signin-redirect');
-		const link = new Link(linkBlock, { id: 'signin-link', href: urls.signUp, text: 'Зарегистрироваться' });
-		link.render();
-
-		const backButtonBlock = document.getElementById('back-button');
-		const backButton = new BackButton(backButtonBlock, { id: 'signin-back-button' });
-		backButton.render();
-
-		FIELDS_SIGN_IN.forEach((field) => {
-			new Input(this.parent.querySelector(field.selector), {
-				id: field.id,
-				placeholder: field.placeholder,
-				type: field.type,
-			}).render();
-		});
-
-		new Button(this.parent.querySelector('#sign-in-button-container'), {
-			id: 'sign-in-button',
-			content: 'Войти',
-			type: 'submit',
-			disabled: true,
-			withLoader: true,
-			onClick: (e) => {
-				e.preventDefault();
-				this.handleSubmit();
-			},
-		}).render();
+		const authForm = new AuthForm(this.parent, { title: 'Вход', redirectText: 'Нет аккаунта?', type: 'signin' });
+		authForm.render();
 
 		this.addFormValidation();
 	}
@@ -103,27 +55,7 @@ class SignIn {
 	 *
 	 */
 	updateSignInButtonState() {
-		document.getElementById('sign-in-button').disabled = !(this.isEmailValid && this.isPasswordValid);
-	}
-
-	/**
-	 * Обработка кнопки входа
-	 */
-	handleSubmit() {
-		const signinButton = this.parent.querySelector('#sign-in-button');
-
-		const loaderBlock = signinButton.querySelector('#btn-loader');
-		loaderBlock.classList.add('loading');
-
-		const userData = {
-			email: document.getElementById('email').value,
-			password: document.getElementById('password').value,
-		};
-
-		api.login(userData, (data) => {
-			localStorage.setItem('user-info', data);
-			router.back();
-		});
+		document.getElementById('signin-button').disabled = !(this.isEmailValid && this.isPasswordValid);
 	}
 }
 
