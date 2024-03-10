@@ -103,13 +103,13 @@ class SignUp {
 
 			if (hasInvalidChars) {
 				nameErrorElement.textContent = VALIDATION_ERRORS.incorrectSymbol;
-				nameElement.style.borderColor = 'red';
+				nameElement.classList.add('input-error');
 			} else if (nameElement.value) {
 				nameErrorElement.textContent = isNameValid ? '' : VALIDATION_ERRORS.nameFormat;
-				nameElement.style.borderColor = isNameValid ? 'initial' : 'red';
+				nameElement.classList.toggle('input-error', !isNameValid);
 			} else {
 				nameErrorElement.textContent = hasNameInputStarted ? VALIDATION_ERRORS.fieldRequired : '';
-				nameElement.style.borderColor = hasNameInputStarted ? 'red' : 'initial';
+				nameElement.classList.toggle('input-error', hasNameInputStarted);
 			}
 
 			return nameElement.value && isNameValid;
@@ -121,13 +121,13 @@ class SignUp {
 
 			if (!isPasswordsMatch) {
 				confirmPasswordErrorElement.textContent = VALIDATION_ERRORS.passwordUnmatched;
-				confirmPasswordElement.style.borderColor = 'red';
+				confirmPasswordErrorElement.classList.add('input-error');
 			} else if (!confirmPasswordElement.value && hasConfirmPasswordInputStarted) {
 				confirmPasswordErrorElement.textContent = VALIDATION_ERRORS.fieldRequired;
-				confirmPasswordElement.style.borderColor = 'red';
+				confirmPasswordErrorElement.classList.add('input-error');
 			} else {
 				confirmPasswordErrorElement.textContent = '';
-				confirmPasswordElement.style.borderColor = 'initial';
+				confirmPasswordErrorElement.classList.remove('input-error');
 			}
 
 			return confirmPasswordElement.value && isPasswordsMatch;
