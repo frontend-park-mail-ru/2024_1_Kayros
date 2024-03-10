@@ -29,7 +29,7 @@ class Restaurants {
 		const newRestaurants = document.getElementById('restaurants');
 
 		if (!items) {
-			restaurantsElement.innerText = 'Нет доступных ресторанов';
+			newRestaurants.innerText = 'Нет доступных ресторанов';
 			return;
 		}
 
