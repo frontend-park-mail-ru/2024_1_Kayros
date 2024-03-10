@@ -1,6 +1,5 @@
 import AuthForm from '../../components/AuthForm';
-import { VALIDATION_ERRORS, NAME_REGEX, INVALID_NAME_CHAR_REGEX } from '../../constants';
-import { validateEmail, validatePassword } from '../../helpers/validation.js';
+import { validateEmail, validatePassword, validateName, validateConfirmPassword } from '../../helpers/validation.js';
 
 /**
  * Страница регистрации.
@@ -56,43 +55,6 @@ class SignUp {
 		let isPasswordValid = false;
 		let isPasswordsMatch = false;
 
-		// Функция для валидации имени
-		const validateName = () => {
-			const isNameValid = NAME_REGEX.test(nameElement.value);
-			const hasInvalidChars = INVALID_NAME_CHAR_REGEX.test(nameElement.value);
-
-			if (hasInvalidChars) {
-				nameErrorElement.textContent = VALIDATION_ERRORS.incorrectSymbol;
-				nameElement.classList.add('input-error');
-			} else if (nameElement.value) {
-				nameErrorElement.textContent = isNameValid ? '' : VALIDATION_ERRORS.nameFormat;
-				nameElement.classList.toggle('input-error', !isNameValid);
-			} else {
-				nameErrorElement.textContent = hasNameInputStarted ? VALIDATION_ERRORS.fieldRequired : '';
-				nameElement.classList.toggle('input-error', hasNameInputStarted);
-			}
-
-			return nameElement.value && isNameValid;
-		};
-
-		// Функция для проверки совпадения паролей
-		const validateConfirmPassword = () => {
-			const isPasswordsMatch = confirmPasswordElement.value === passwordElement.value;
-
-			if (!isPasswordsMatch) {
-				confirmPasswordErrorElement.textContent = VALIDATION_ERRORS.passwordUnmatched;
-				confirmPasswordErrorElement.classList.add('input-error');
-			} else if (!confirmPasswordElement.value && hasConfirmPasswordInputStarted) {
-				confirmPasswordErrorElement.textContent = VALIDATION_ERRORS.fieldRequired;
-				confirmPasswordErrorElement.classList.add('input-error');
-			} else {
-				confirmPasswordErrorElement.textContent = '';
-				confirmPasswordErrorElement.classList.remove('input-error');
-			}
-
-			return confirmPasswordElement.value && isPasswordsMatch;
-		};
-
 		// Функция для обновления состояния кнопки регистрации
 		const updateSignUpButtonState = () => {
 			document.getElementById('signup-button').disabled = !(
@@ -112,7 +74,7 @@ class SignUp {
 
 		nameElement.addEventListener('input', () => {
 			hasNameInputStarted = true;
-			isNameValid = validateName();
+			isNameValid = validateName(nameElement, nameErrorElement, hasNameInputStarted);
 			updateSignUpButtonState();
 		});
 
@@ -122,7 +84,12 @@ class SignUp {
 
 			// При каждом изменении пароля, нужно заново проверять его совпадение с подтверждением
 			if (hasConfirmPasswordInputStarted) {
-				isPasswordsMatch = validateConfirmPassword();
+				isPasswordsMatch = validateConfirmPassword(
+					passwordElement,
+					confirmPasswordElement,
+					confirmPasswordErrorElement,
+					hasConfirmPasswordInputStarted,
+				);
 			}
 
 			updateSignUpButtonState();
@@ -130,7 +97,12 @@ class SignUp {
 
 		confirmPasswordElement.addEventListener('input', () => {
 			hasConfirmPasswordInputStarted = true;
-			isPasswordsMatch = validateConfirmPassword();
+			isPasswordsMatch = validateConfirmPassword(
+				passwordElement,
+				confirmPasswordElement,
+				confirmPasswordErrorElement,
+				hasConfirmPasswordInputStarted,
+			);
 			updateSignUpButtonState();
 		});
 	}

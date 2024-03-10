@@ -6,6 +6,8 @@ import {
 	INVALID_EMAIL_CHAR_REGEX,
 	PASSWORD_REGEX,
 	INVALID_PASSWORD_CHAR_REGEX,
+	NAME_REGEX,
+	INVALID_NAME_CHAR_REGEX,
 } from '../constants';
 
 export const validateEmail = (emailElement, emailErrorElement, hasEmailInputStarted) => {
@@ -42,4 +44,44 @@ export const validatePassword = (passwordElement, passwordErrorElement, hasPassw
 	}
 
 	return passwordElement.value && isPasswordValid;
+};
+
+export const validateName = (nameElement, nameErrorElement, hasNameInputStarted) => {
+	const isNameValid = NAME_REGEX.test(nameElement.value);
+	const hasInvalidChars = INVALID_NAME_CHAR_REGEX.test(nameElement.value);
+
+	if (hasInvalidChars) {
+		nameErrorElement.textContent = VALIDATION_ERRORS.incorrectSymbol;
+		nameElement.classList.add('input-error');
+	} else if (nameElement.value) {
+		nameErrorElement.textContent = isNameValid ? '' : VALIDATION_ERRORS.nameFormat;
+		nameElement.classList.toggle('input-error', !isNameValid);
+	} else {
+		nameErrorElement.textContent = hasNameInputStarted ? VALIDATION_ERRORS.fieldRequired : '';
+		nameElement.classList.toggle('input-error', hasNameInputStarted);
+	}
+
+	return nameElement.value && isNameValid;
+};
+
+export const validateConfirmPassword = (
+	passwordElement,
+	confirmPasswordElement,
+	confirmPasswordErrorElement,
+	hasConfirmPasswordInputStarted,
+) => {
+	const isPasswordsMatch = confirmPasswordElement.value === passwordElement.value;
+
+	if (!isPasswordsMatch) {
+		confirmPasswordErrorElement.textContent = VALIDATION_ERRORS.passwordUnmatched;
+		confirmPasswordErrorElement.classList.add('input-error');
+	} else if (!confirmPasswordElement.value && hasConfirmPasswordInputStarted) {
+		confirmPasswordErrorElement.textContent = VALIDATION_ERRORS.fieldRequired;
+		confirmPasswordErrorElement.classList.add('input-error');
+	} else {
+		confirmPasswordErrorElement.textContent = '';
+		confirmPasswordErrorElement.classList.remove('input-error');
+	}
+
+	return confirmPasswordElement.value && isPasswordsMatch;
 };

@@ -58,7 +58,7 @@ export const VALIDATION_ERRORS = {
 	passwordRequirements: 'Пароль должен содержать минимум 8 символов, включая число и букву',
 	fieldRequired: 'Поле не может быть пустым',
 	passwordUnmatched: 'Пароли не совпадают',
-	nameFormat: 'Имя должно начинаться с буквы и быть меньше 19 символов',
+	nameFormat: 'Имя должно начинаться с буквы и содержать от 2 до 19 символов',
 };
 
 export const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
