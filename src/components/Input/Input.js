@@ -53,7 +53,7 @@ class Input {
 		if (this.type !== 'password') return;
 
 		const inputContainer = document.getElementById(`${this.id}-container`);
-
+		inputContainer.classList.add('password-input');
 		const eyeButton = inputContainer.querySelector('#btn-eye');
 		const password = inputContainer.getElementsByTagName('input')[0];
 

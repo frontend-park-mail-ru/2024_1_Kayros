@@ -24,6 +24,10 @@
 		}
 	}
 
+	&.password-input input {
+		padding: var(--input-password-padding);
+	}
+
 	#search-button {
 		position: absolute;
 		right: 4px;
@@ -47,6 +51,7 @@
 		right: 15px;
 		cursor: pointer;
 		transition: all 0.3s;
+		padding: 1px 3px;
 	}
 }
 
