@@ -57,7 +57,7 @@ class Restaurants {
 		}
 
 		const restaurants = document.getElementById('restaurants');
-		const loader = new Loader(restaurants, { size: 'xl' });
+		const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });
 		loader.render();
 
 		this.getData();

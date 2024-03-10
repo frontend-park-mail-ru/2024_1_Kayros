@@ -6,17 +6,4 @@
 	color: var(--brand);
 	font-size: 18px;
 	transition: all 0.5s;
-
-	&:has(.loader) {
-		opacity: 0.5;
-		pointer-events: none;
-	}
-
-	.loader {
-		transition: 0.3s;
-		position: absolute;
-		left: calc(50% - 50px);
-		top: calc(50vh - 85px);
-		z-index: 15;
-	}
 }

@@ -1,9 +1,19 @@
 .loader {
-	border-right: 2px solid transparent;
-	border: 2px solid var(--brand);
 	border-radius: 50%;
 	animation: animate 0.7s linear infinite;
 	cursor: pointer;
+
+	&.loader-primary {
+		&:not(.loader-xl) {
+			border: 2px solid var(--brand);
+			border-right: none;
+		}
+	}
+
+	&.loader-secondary {
+		border: 2px solid var(--white);
+		border-right: none;
+	}
 
 	&.loader-s {
 		width: 16px;
@@ -21,18 +31,9 @@
 	}
 
 	&.loader-xl {
-		width: 94px;
+		width: 92px;
 		height: 90px;
-		border-width: 4px !important;
-	}
-
-	&.loader-primary {
-		border: 2px solid var(--brand);
-		border-right: none;
-	}
-
-	&.loader-secondary {
-		border: 2px solid var(--white);
+		border: 3px solid var(--brand);
 		border-right: none;
 	}
 
