@@ -1,5 +1,4 @@
 import defaultAvatar from '../../assets/default-avatar.png';
-import Dropdown from '../Dropdown/Dropdown';
 import template from './Profile.hbs';
 import './Profile.scss';
 
@@ -33,11 +32,6 @@ class Profile {
 	 */
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML(this.user));
-
-		const profile = document.getElementById('profile');
-
-		const dropdown = new Dropdown(profile, { id: 'dropdown-profile' });
-		dropdown.render();
 	}
 }
 

@@ -1,4 +1,3 @@
-import Header from '../../components/Header';
 import api from '../../modules/api';
 import Button from '../Button/Button';
 import template from './Dropdown.hbs';
@@ -16,11 +15,13 @@ class Dropdown {
 	 * @param {Element} parent - родительский элемент
 	 * @param {object} params - параметры
 	 * @param {number} params.id - идентификатор
+	 * @param {void} params.onExit - функция, выполняемая при выходе пользователя
 	 */
-	constructor(parent, { id = 'dropdown' }) {
+	constructor(parent, { id = 'dropdown', onExit }) {
 		this.parent = parent;
 		this.isOpen = false;
 		this.id = id;
+		this.onExit = onExit;
 	}
 
 	/**
@@ -78,10 +79,7 @@ class Dropdown {
 		const dropdown = document.getElementById(this.id);
 		this.close(dropdown);
 
-		const header = document.getElementById('header');
-		header.remove();
-		const newHeader = new Header(document.getElementById('layout'));
-		newHeader.render();
+		this.onExit();
 	}
 
 	/**

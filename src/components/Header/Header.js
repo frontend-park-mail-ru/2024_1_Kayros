@@ -1,10 +1,10 @@
 import cartIcon from '../../assets/cart.svg';
-import { router } from '../../modules/router';
 import urls from '../../routes/urls';
 import { localStorageHelper } from '../../utils';
 import Button from '../Button';
+import Dropdown from '../Dropdown/Dropdown';
 import Input from '../Input';
-import Logo from '../Logo/Logo';
+import Logo from '../Logo';
 import Profile from '../Profile';
 import template from './Header.hbs';
 import './Header.scss';
@@ -15,10 +15,12 @@ import './Header.scss';
 class Header {
 	/**
 	 * Конструктор класса
-	 * @param {Element} parent - родительский элемент
+	 * @param {object} params - параметры
+	 * @param {void} params.navigate - функция навигации по страницам
 	 */
-	constructor(parent) {
-		this.parent = parent;
+	constructor({ navigate }) {
+		this.navigate = navigate;
+		this.parent = document.getElementById('layout');
 	}
 
 	/**
@@ -38,8 +40,8 @@ class Header {
 
 		this.parent.insertAdjacentHTML('afterbegin', this.getHTML(user));
 
-		const logoBlock = document.getElementById('logoContainer');
-		const logo = new Logo(logoBlock);
+		const logoBlock = document.getElementById('logo-container');
+		const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
 		logo.render();
 
 		const searchBlock = document.getElementById('search-input');
@@ -71,13 +73,27 @@ class Header {
 			const loginButton = new Button(profileBlock, {
 				id: 'header-login-button',
 				content: 'Войти',
-				onClick: () => router.navigate(urls.signIn),
+				onClick: () => this.navigate(urls.signIn),
 			});
 
 			loginButton.render();
 		}
 
 		const headerElement = document.getElementById('header');
+
+		const profile = document.getElementById('profile');
+
+		if (profile) {
+			const dropdown = new Dropdown(profile, {
+				id: 'dropdown-profile',
+				onExit: () => {
+					headerElement.remove();
+					this.render();
+				},
+			});
+
+			dropdown.render();
+		}
 
 		window.addEventListener('scroll', () => {
 			if (window.scrollY > 20) {
