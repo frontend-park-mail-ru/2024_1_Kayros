@@ -1,5 +1,6 @@
 import Content from '../components/Content/index.js';
 import Header from '../components/Header/index.js';
+import Notification from '../components/Notification/Notification.js';
 import NotFoundPage from '../pages/NotFound';
 import { routes } from '../routes/index.js';
 import urls from '../routes/urls.js';
@@ -35,6 +36,21 @@ class Router {
 	 */
 	navigate(path) {
 		const currentPath = window.history.state?.path;
+		const user = localStorage.getItem('user-info');
+
+		if (user && (window.location.pathname === urls.signIn || window.location.pathname === urls.signUp)) {
+			window.history.replaceState({ path: urls.restaurants }, '', urls.restaurants);
+			this.handleLocationChange();
+
+			Notification.open({
+				duration: 3,
+				title: 'Вы уже вошли в аккаунт',
+				description: 'Еще раз входить не требуется!',
+				type: 'success',
+			});
+
+			return;
+		}
 
 		document.title = `Resto - ${routes[path].title}`;
 
