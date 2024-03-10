@@ -9,10 +9,12 @@ class Loader {
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
 	 * @param {object} params - параметры компонента
+	 * @param {number} params.id - id элемента
 	 * @param {'s' | 'm' | 'l' | 'xl'} params.size - размер лоадера
 	 * @param {'primary' | 'secondary'} params.style - размер лоадера
 	 */
-	constructor(parent, { size = 's', style = 'primary' }) {
+	constructor(parent, { id = '', size = 's', style = 'primary' }) {
+		this.id = id;
 		this.parent = parent;
 		this.size = size;
 		this.style = style;
@@ -24,7 +26,7 @@ class Loader {
 	render() {
 		this.parent.insertAdjacentHTML(
 			'beforeend',
-			template({ class: `loader-${this.size}`, style: `loader-${this.style}` }),
+			template({ id: this.id, class: `loader-${this.size}`, style: `loader-${this.style}` }),
 		);
 	}
 }

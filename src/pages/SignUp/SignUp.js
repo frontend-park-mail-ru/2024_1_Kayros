@@ -1,3 +1,4 @@
+import BackButton from '../../components/BackButton/BackButton';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Link from '../../components/Link/Link';
@@ -38,12 +39,16 @@ class SignUp {
 		const logoContainer = document.querySelector('.logo-container-on-sign-up');
 
 		if (logoContainer) {
-			new Logo(logoContainer).render();
+			new Logo(logoContainer, { onClick: () => router.navigate(urls.restaurants) }).render();
 		}
 
 		const linkBlock = document.getElementById('signup-redirect');
 		const link = new Link(linkBlock, { id: 'signin-link', href: urls.signIn, text: 'Войти' });
 		link.render();
+
+		const backButtonBlock = document.getElementById('back-button');
+		const backButton = new BackButton(backButtonBlock, { id: 'signup-back-button' });
+		backButton.render();
 
 		// Рендеринг полей формы в цикле
 		FIELDS_SIGN_UP.forEach((field) => {
@@ -192,7 +197,7 @@ class SignUp {
 
 		api.signup(userData, (data) => {
 			localStorage.setItem('user-info', data);
-			router.navigate(urls.restaurants);
+			router.back();
 		});
 	}
 }

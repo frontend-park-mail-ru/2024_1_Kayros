@@ -1,3 +1,4 @@
+import BackButton from '../../components/BackButton/BackButton';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Link from '../../components/Link/Link';
@@ -37,12 +38,16 @@ class SignIn {
 		const logoContainer = document.querySelector('.logo-container-on-sign-in');
 
 		if (logoContainer) {
-			new Logo(logoContainer).render();
+			new Logo(logoContainer, { onClick: () => router.navigate(urls.restaurants) }).render();
 		}
 
 		const linkBlock = document.getElementById('signin-redirect');
 		const link = new Link(linkBlock, { id: 'signin-link', href: urls.signUp, text: 'Зарегистрироваться' });
 		link.render();
+
+		const backButtonBlock = document.getElementById('back-button');
+		const backButton = new BackButton(backButtonBlock, { id: 'signin-back-button' });
+		backButton.render();
 
 		FIELDS_SIGN_IN.forEach((field) => {
 			new Input(this.parent.querySelector(field.selector), {
@@ -117,7 +122,7 @@ class SignIn {
 
 		api.login(userData, (data) => {
 			localStorage.setItem('user-info', data);
-			router.navigate(urls.restaurants);
+			router.back();
 		});
 	}
 }
