@@ -18,4 +18,8 @@ export const successMessages = {
 		title: 'Успешный выход',
 		description: 'До встречи!',
 	},
+	repeatLoginTry: {
+		title: 'Вы уже вошли в аккаунт',
+		description: 'Еще раз входить не требуется!',
+	},
 };

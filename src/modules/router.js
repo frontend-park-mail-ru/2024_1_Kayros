@@ -1,6 +1,7 @@
 import Content from '../components/Content/index.js';
 import Header from '../components/Header/index.js';
 import Notification from '../components/Notification/Notification.js';
+import { successMessages } from '../constants/index.js';
 import urls from '../routes/urls.js';
 
 /**
@@ -36,14 +37,14 @@ class Router {
 		const currentPath = window.history.state?.path;
 		const user = localStorage.getItem('user-info');
 
-		if (user && [urls.signIn, urls.signUp].uncludes(window.location.pathname)) {
+		if (user && [urls.signIn, urls.signUp].includes(window.location.pathname)) {
 			window.history.replaceState({ path: urls.restaurants }, '', urls.restaurants);
 			this.handleLocationChange();
 
 			Notification.open({
 				duration: 3,
-				title: 'Вы уже вошли в аккаунт',
-				description: 'Еще раз входить не требуется!',
+				title: successMessages.repeatLoginTry.title,
+				description: successMessages.repeatLoginTry.description,
 				type: 'success',
 			});
 
