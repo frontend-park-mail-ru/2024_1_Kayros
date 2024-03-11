@@ -1,9 +1,6 @@
 # 2024_1_Kayros
 Фронтенд проекта "Delivery Club" команды "Кайрос"
 
-На проекте настроены пакеты ```husky``` и ```lint-staged``` для pre-commit хука.
-Для того, чтобы проверить работу скрипта, не создавая при этом не нужный коммит, напишите ```exit 1``` в конце .husky/pre-commit.
-
 ## Авторы
 
 [Дорожкин Павел](https://github.com/Skotyty) - _Frontend-разработчик_
@@ -22,7 +19,10 @@
 
 [Бирюков Иван](https://github.com/Ivan-Bir) - _UX_
 
-## Ссылки
+## UX
+[Макет](https://www.figma.com/file/zoXRrBpzkKVlcCpuen8vVU/%C2%A0%C2%A0%C2%A0Resto)
+
+[Описание сервиса](https://docs.google.com/document/d/10eWcYr5QyEXd_tSppIij8bKbJLy6Djw9Hr6cXpK2KL4)
 
 ## Бэкенд
 
