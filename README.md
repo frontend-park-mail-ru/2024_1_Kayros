@@ -24,11 +24,6 @@
 
 ## Ссылки
 
-[Бэкенд проекта](https://github.com/go-park-mail-ru/2024_1_Kayros)
-
-<<<<<<< Updated upstream
-[Сайт проекта](https://resto-go.ru)
-=======
 ## Бэкенд
 
 [Репозиторий](https://github.com/go-park-mail-ru/2024_1_Kayros)
@@ -39,15 +34,14 @@
 
 ## Установка
 
+### Для запуска сервера разработки ввести
+```
+> npm i
+> npm run dev
+```
+
 ## Инструкция
 
 ### Проверка lint-staged
 На проекте настроены пакеты ```husky``` и ```lint-staged``` для pre-commit хука.
 Для того, чтобы проверить работу скрипта, не создавая при этом не нужный коммит, напишите ```exit 1``` в конце .husky/pre-commit.
-
-### Запуск сервера разработки ввести
-```
-> npm i
-> npm run dev
-```
->>>>>>> Stashed changes
