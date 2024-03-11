@@ -103,6 +103,7 @@ class SignUp {
 				confirmPasswordErrorElement,
 				hasConfirmPasswordInputStarted,
 			);
+
 			updateSignUpButtonState();
 		});
 	}

@@ -8,19 +8,28 @@ class Ajax {
 	/**
 	 * GET запрос
 	 * @param {string} url - адрес сервера для отправки запроса
+	 * @param {object} params - параметры
+	 * @param {boolean} params.showNotifyError - показывать ошибку
 	 * @returns {object} - полученные данные в виде json объекта
 	 */
-	async get(url) {
-		let data, responseError;
+	async get(url, { showNotifyError = true } = {}) {
+		let data, responseError, result;
 
 		try {
 			const response = await fetch(url);
-			data = await response.json();
-		} catch (error) {
-			responseError = error;
+
+			result = await response.text();
+
+			if (response.ok) {
+				data = JSON.parse(result);
+			} else {
+				responseError = JSON.parse(result).detail;
+			}
+		} catch {
+			responseError = result;
 		}
 
-		if (responseError) {
+		if (responseError && showNotifyError) {
 			Notification.open({ duration: 3, title: ERROR_MESSAGES.SERVER_RESPONSE, description: responseError });
 		}
 
@@ -37,7 +46,7 @@ class Ajax {
 	 * @returns {object} - объект, содержащий полученные данные и ошибку, если произошла
 	 */
 	async post(url, body) {
-		let data, responseError;
+		let data, responseError, result;
 
 		try {
 			const response = await fetch(url, {
@@ -45,15 +54,15 @@ class Ajax {
 				body: JSON.stringify(body),
 			});
 
-			const result = await response.text();
+			result = await response.text();
 
 			if (response.ok) {
-				data = result;
+				data = JSON.parse(result);
 			} else {
-				responseError = result;
+				responseError = JSON.parse(result).detail;
 			}
-		} catch (error) {
-			responseError = error;
+		} catch {
+			responseError = result;
 		}
 
 		const loaderButton = document.querySelector('#btn-loader');

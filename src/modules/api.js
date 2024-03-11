@@ -24,6 +24,16 @@ class Api {
 	}
 
 	/**
+	 * Метод для получения информации о пользователе
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getUserInfo(callback) {
+		const data = await ajax.get(`${this.url}/user`, { showNotifyError: false });
+
+		callback(data);
+	}
+
+	/**
 	 * Метод для авторизации пользователя
 	 * @param {object} body - объект, посылаемый в запросе
 	 * @param {string} body.email - почта пользователя

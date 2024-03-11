@@ -1,5 +1,7 @@
-import Content from '../components/Content';
-import Header from '../components/Header';
+import Content from '../components/Content/index.js';
+import Header from '../components/Header/index.js';
+import Notification from '../components/Notification/Notification.js';
+import { SUCCESS_MESSAGES } from '../constants/index.js';
 import urls from '../routes/urls.js';
 
 /**
@@ -47,6 +49,23 @@ class Router {
 	navigate(path) {
 		const currentPath = window.history.state?.path;
 		path = this.normalizePath(path);
+
+		const user = localStorage.getItem('user-info');
+
+		if (user && [urls.signIn, urls.signUp].includes(window.location.pathname)) {
+			window.history.replaceState({ path: urls.restaurants }, '', urls.restaurants);
+			this.handleLocationChange();
+
+			Notification.open({
+				duration: 3,
+				title: SUCCESS_MESSAGES.repeatLoginTry.title,
+				description: SUCCESS_MESSAGES.repeatLoginTry.description,
+				type: 'success',
+			});
+
+			return;
+		}
+
 		document.title = `Resto - ${this.routes[path]?.title || 'Страница не найдена'}`;
 
 		if (currentPath === path) {
