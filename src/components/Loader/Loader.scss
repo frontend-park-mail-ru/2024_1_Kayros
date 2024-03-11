@@ -1,0 +1,49 @@
+.loader {
+	border-radius: 50%;
+	animation: animate 0.7s linear infinite;
+	cursor: pointer;
+
+	&.loader-primary {
+		&:not(.loader-xl) {
+			border: 2px solid var(--brand);
+			border-right: none;
+		}
+	}
+
+	&.loader-secondary {
+		border: 2px solid var(--white);
+		border-right: none;
+	}
+
+	&.loader-s {
+		width: 16px;
+		height: 16px;
+	}
+
+	&.loader-m {
+		width: 32px;
+		height: 32px;
+	}
+
+	&.loader-l {
+		width: 40px;
+		height: 40px;
+	}
+
+	&.loader-xl {
+		width: 92px;
+		height: 90px;
+		border: 3px solid var(--brand);
+		border-right: none;
+	}
+
+	@keyframes animate {
+		0% {
+			transform: rotate(0deg);
+		}
+
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+}

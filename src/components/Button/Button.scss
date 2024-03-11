@@ -1,0 +1,57 @@
+.btn {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: var(--button-font-size);
+	border: none;
+	border-radius: var(--button-border-radius);
+	padding: var(--button-padding);
+	transition:
+		background 0.3s,
+		transform 0.1s;
+	cursor: pointer;
+
+	img {
+		float: left;
+	}
+
+	&:has(:only-child) {
+		justify-content: center;
+	}
+
+	&.btn-primary:not(:disabled) {
+		color: var(--button-text-color);
+		background: var(--button-bg-color);
+
+		&:hover {
+			background: var(--button-bg-hover);
+		}
+
+		&:active {
+			background: var(--button-bg-active);
+		}
+	}
+
+	&.btn-clear {
+		background: transparent;
+		padding: 0;
+	}
+
+	&:disabled {
+		background: var(--button-bg-disabled);
+		cursor: not-allowed;
+		color: var(--button-color-disabled);
+	}
+
+	&:has(#btn-loader) {
+		gap: 10px;
+	}
+}
+
+#btn-loader {
+	display: none;
+
+	&.loading {
+		display: block;
+	}
+}

@@ -1,0 +1,60 @@
+#restaurant-card {
+	display: inline-flex;
+	flex-direction: column;
+	cursor: pointer;
+}
+
+#card-content {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 15px;
+}
+
+#card-title {
+	color: var(--text-color);
+	font-size: 20px;
+	font-weight: 600;
+	font-family: Montserrat, sans-serif;
+}
+
+#card-subtitle {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	color: var(--text-color);
+	font-size: 16px;
+	font-family: monospace;
+}
+
+#image-container {
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	background: var(--layout-bg-color);
+	height: 200px;
+	border-radius: 18px;
+
+	img {
+		width: 100%;
+		min-height: 100%;
+		transition: all 0.5s;
+		filter: brightness(0.95);
+
+		&:hover {
+			transform: scale(1.1);
+
+			&:not(#default-img) {
+				filter: brightness(1.1);
+			}
+		}
+	}
+}
+
+#rating-container {
+	display: flex;
+	align-items: flex-start;
+	gap: 4px;
+	color: var(--restaurant-card-rating-color);
+}

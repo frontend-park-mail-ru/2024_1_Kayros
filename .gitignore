@@ -1,0 +1,16 @@
+# dependencies
+/node_modules
+
+# editor directories and files
+.idea
+.vscode
+
+# production
+/dist
+/build
+
+# jsDoc generated documentation
+/generated/jsDocs
+
+# logs
+*.log

@@ -1,0 +1,19 @@
+<div id="restaurant-card">
+
+	<div id="image-container">
+	  <img alt="card-img" src={{this.image}} />
+	</div>
+
+	<div id="card-content">
+		<div id="card-title">
+			{{this.title}}
+		</div>
+
+		{{#if this.subtitle}}
+			<span id="card-subtitle">
+				{{this.subtitle}}
+			</span>
+		{{/if}}
+	</div>
+
+</div>
