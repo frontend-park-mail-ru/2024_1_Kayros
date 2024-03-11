@@ -16,15 +16,15 @@ const CONFIG = {
 		redirectLinkText: 'Зарегистрироваться',
 		fields: FIELDS_SIGN_IN,
 		submitButtonText: 'Войти',
-		apiMethod: api.login,
+		apiMethod: api.login.bind(api),
 	},
 	signup: {
 		redirectLinkHref: urls.signIn,
 		redirectLinkText: 'Войти',
 		fields: FIELDS_SIGN_UP,
 		submitButtonText: 'Зарегистрироваться',
-		apiMethod: api.signup,
-	}
+		apiMethod: api.signup.bind(api),
+	},
 };
 
 /**
@@ -81,7 +81,6 @@ class AuthForm {
 			localStorage.setItem('user-info', data);
 			router.back();
 		});
-
 	}
 
 	/**
@@ -123,8 +122,8 @@ class AuthForm {
 			type: 'submit',
 			disabled: true,
 			withLoader: true,
-			onClick: (e) => {
-				e.preventDefault();
+			onClick: (event) => {
+				event.preventDefault();
 				this.handleSubmit();
 			},
 		}).render();
