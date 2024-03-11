@@ -6,6 +6,16 @@ import './Button.scss';
  * Кнопка
  */
 class Button {
+	#parent;
+	#content;
+	#type;
+	#onClick;
+	#disabled;
+	#icon;
+	#withLoader;
+	#style;
+	#id;
+
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
@@ -23,15 +33,15 @@ class Button {
 		parent,
 		{ id, content = '', type = 'button', disabled = false, onClick, icon, style = 'primary', withLoader = false },
 	) {
-		this.parent = parent;
-		this.content = content;
-		this.type = type;
-		this.onClick = onClick;
-		this.disabled = disabled;
-		this.icon = icon;
-		this.withLoader = withLoader;
-		this.style = style;
-		this.id = id;
+		this.#parent = parent;
+		this.#content = content;
+		this.#type = type;
+		this.#onClick = onClick;
+		this.#disabled = disabled;
+		this.#icon = icon;
+		this.#withLoader = withLoader;
+		this.#style = style;
+		this.#id = id;
 	}
 
 	/**
@@ -40,13 +50,13 @@ class Button {
 	 */
 	getHTML() {
 		return template({
-			id: this.id,
-			content: this.content,
-			class: 'btn-' + this.style,
-			icon: this.icon,
-			loader: this.withLoader,
-			type: this.type,
-			attribute: this.disabled ? 'disabled' : '',
+			id: this.#id,
+			content: this.#content,
+			class: 'btn-' + this.#style,
+			icon: this.#icon,
+			loader: this.#withLoader,
+			type: this.#type,
+			attribute: this.#disabled ? 'disabled' : '',
 		});
 	}
 
@@ -54,13 +64,13 @@ class Button {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
+		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const currentButton = this.parent.querySelector(`#${this.id}`);
+		const currentButton = this.#parent.querySelector(`#${this.#id}`);
 
-		currentButton.onclick = this.onClick;
+		currentButton.onclick = this.#onClick;
 
-		if (this.withLoader) {
+		if (this.#withLoader) {
 			const loaderBlock = currentButton.querySelector('#btn-loader');
 			const loader = new Loader(loaderBlock, { size: 's', style: 'secondary' });
 			loader.render();

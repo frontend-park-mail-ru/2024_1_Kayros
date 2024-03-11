@@ -11,13 +11,13 @@
 	}
 
 	&.loader-secondary {
-		border: 2px solid var(--white);
+		border: 2px solid var(--loader-secondary);
 		border-right: none;
 	}
 
 	&.loader-s {
-		width: 16px;
-		height: 16px;
+		width: 13px;
+		height: 12px;
 	}
 
 	&.loader-m {

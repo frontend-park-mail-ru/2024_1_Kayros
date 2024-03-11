@@ -31,7 +31,7 @@ module.exports = {
 			},
 			{
 				test: /\.s?css$/,
-				use: ['style-loader', 'css-loader', 'sass-loader'],
+				use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
 			},
 			{
 				test: /\.hbs$/,

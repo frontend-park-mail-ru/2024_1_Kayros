@@ -8,15 +8,21 @@ const MAX_LIST_ELEMENTS_COUNT = 4;
  * Всплывающее окошко с сообщением
  */
 class Notification {
+	#parent;
+	#id;
+	#position;
+	#count;
+	#list;
+
 	/**
 	 * Конструктор класса
 	 */
 	constructor() {
-		this.parent = document.getElementById('root');
-		this.id = 'root-notification';
-		this.position = 'top-right';
-		this.count = 0;
-		this.list = true;
+		this.#parent = document.getElementById('root');
+		this.#id = 'root-notification';
+		this.#position = 'top-right';
+		this.#count = 0;
+		this.#list = true;
 	}
 
 	/**
@@ -27,8 +33,8 @@ class Notification {
 	 */
 	getHTML({ type, ...params }) {
 		return template({
-			id: `${this.id}-${this.count}`,
-			position: this.position,
+			id: `${this.#id}-${this.#count}`,
+			position: this.#position,
 			icon: type === 'success' ? 'assets/success.svg' : 'assets/error.svg',
 			...params,
 		});
@@ -73,7 +79,7 @@ class Notification {
 		let margin = openNotifications[0]?.offsetHeight + 15;
 
 		for (let i = openNotifications.length - 1; i >= 0; i--) {
-			if (this.position.includes('top')) {
+			if (this.#position.includes('top')) {
 				openNotifications[i].style.marginTop = `${margin}px`;
 			} else {
 				openNotifications[i].style.marginBottom = `${margin}px`;
@@ -99,7 +105,7 @@ class Notification {
 		let margin = 0;
 
 		for (let i = openNotifications.length - 1; i >= 0; i--) {
-			if (this.position.includes('top')) {
+			if (this.#position.includes('top')) {
 				openNotifications[i].style.marginTop = `${margin}px`;
 			} else {
 				openNotifications[i].style.marginBottom = `${margin}px`;
@@ -146,19 +152,19 @@ class Notification {
 
 		if (openNotifications.length > MAX_LIST_ELEMENTS_COUNT) {
 			this.animateCompressOnOpen(openNotifications);
-			this.list = false;
+			this.#list = false;
 		} else {
 			this.animateListOnOpen(openNotifications);
-			this.list = true;
+			this.#list = true;
 		}
 
-		if (!this.list) {
+		if (!this.#list) {
 			this.animateCompressOnClose(openNotifications);
 		}
 
 		element?.classList.remove('notification-open');
 
-		if (this.list) {
+		if (this.#list) {
 			this.animateListOnClose(openNotifications);
 		}
 
@@ -167,7 +173,7 @@ class Notification {
 		}, 100);
 
 		if (openNotifications.length === 0) {
-			this.count = 0;
+			this.#count = 0;
 		}
 	}
 
@@ -181,25 +187,25 @@ class Notification {
 	 * @param {'success' | 'error'} params.type - тип уведомления
 	 */
 	open({ duration, position, ...params }) {
-		this.count++;
+		this.#count++;
 
 		if (position) {
-			this.position = position;
+			this.#position = position;
 		}
 
 		const openNotifications = document.getElementsByClassName('notification-open');
 
 		if (openNotifications.length > MAX_LIST_ELEMENTS_COUNT - 1) {
 			this.animateCompressOnOpen(openNotifications);
-			this.list = false;
+			this.#list = false;
 		} else {
 			this.animateListOnOpen(openNotifications);
-			this.list = true;
+			this.#list = true;
 		}
 
-		this.parent.insertAdjacentHTML('beforeend', this.getHTML(params));
+		this.#parent.insertAdjacentHTML('beforeend', this.getHTML(params));
 
-		const element = document.getElementById(`root-notification-${this.count}`);
+		const element = document.getElementById(`root-notification-${this.#count}`);
 		const notificationTitle = element.getElementsByClassName('notification-title')[0];
 
 		const closeButton = new Button(notificationTitle, {

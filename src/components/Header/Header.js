@@ -14,14 +14,17 @@ import './Header.scss';
  * Шапка
  */
 class Header {
+	#parent;
+	#navigate;
+
 	/**
 	 * Конструктор класса
 	 * @param {object} params - параметры
 	 * @param {void} params.navigate - функция навигации по страницам
 	 */
 	constructor({ navigate }) {
-		this.navigate = navigate;
-		this.parent = document.getElementById('layout');
+		this.#navigate = navigate;
+		this.#parent = document.getElementById('layout');
 	}
 
 	/**
@@ -48,10 +51,10 @@ class Header {
 	 * Рендеринг компонента
 	 */
 	async render() {
-		this.parent.insertAdjacentHTML('afterbegin', template());
+		this.#parent.insertAdjacentHTML('afterbegin', template());
 
 		const logoBlock = document.getElementById('logo-container');
-		const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
+		const logo = new Logo(logoBlock, { onClick: () => this.#navigate(urls.restaurants) });
 		logo.render();
 
 		const searchBlock = document.getElementById('search-input');
@@ -89,7 +92,7 @@ class Header {
 			const loginButton = new Button(profileBlock, {
 				id: 'header-login-button',
 				content: 'Войти',
-				onClick: () => this.navigate(urls.signIn),
+				onClick: () => this.#navigate(urls.signIn),
 			});
 
 			loginButton.render();
