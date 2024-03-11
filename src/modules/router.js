@@ -28,12 +28,25 @@ class Router {
 	}
 
 	/**
+	 * Нормализует путь, удаляя повторяющиеся слеши и конечный слеш.
+	 * @param {string} path - Путь для нормализации.
+	 * @returns {string} Нормализованный путь.
+	 */
+	normalizePath(path) {
+		if (!path) {
+			return undefined;
+		}
+
+		const noRepeatSlashes = path.replace(/\/\/+/g, '/');
+		return noRepeatSlashes !== '/' ? noRepeatSlashes.replace(/\/+$/, '') : '/';
+	}
+	/**
 	 * Выполняет навигацию по указанному пути.
 	 * @param {string} path - Путь для навигации.
 	 */
 	navigate(path) {
 		const currentPath = window.history.state?.path;
-
+		path = this.normalizePath(path);
 		document.title = `Resto - ${this.routes[path]?.title || 'Страница не найдена'}`;
 
 		if (currentPath === path) {

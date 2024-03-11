@@ -22,6 +22,14 @@
 			border-color: var(--input-border-color-focus);
 			box-shadow: var(--input-box-shadow-focus);
 		}
+
+		&.input-error {
+			border-color: var(--input-error-color);
+		}
+	}
+
+	&.password-input input {
+		padding: var(--input-password-padding);
 	}
 
 	#search-button {
