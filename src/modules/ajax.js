@@ -13,19 +13,20 @@ class Ajax {
 	 * @returns {object} - полученные данные в виде json объекта
 	 */
 	async get(url, { showNotifyError = true } = {}) {
-		let data, responseError;
+		let data, responseError, result;
 
 		try {
 			const response = await fetch(url);
-			const result = await response.json();
+
+			result = await response.text();
 
 			if (response.ok) {
-				data = result;
+				data = JSON.parse(result);
 			} else {
-				responseError = result.detail;
+				responseError = JSON.parse(result).detail;
 			}
-		} catch (error) {
-			responseError = 'Сервер не отвечает';
+		} catch {
+			responseError = result;
 		}
 
 		if (responseError && showNotifyError) {
@@ -45,7 +46,7 @@ class Ajax {
 	 * @returns {object} - объект, содержащий полученные данные и ошибку, если произошла
 	 */
 	async post(url, body) {
-		let data, responseError;
+		let data, responseError, result;
 
 		try {
 			const response = await fetch(url, {
@@ -53,15 +54,15 @@ class Ajax {
 				body: JSON.stringify(body),
 			});
 
-			const result = await response.json();
+			result = await response.text();
 
 			if (response.ok) {
-				data = result;
+				data = JSON.parse(result);
 			} else {
-				responseError = result.detail;
+				responseError = JSON.parse(result).detail;
 			}
-		} catch (error) {
-			responseError = error;
+		} catch {
+			responseError = result;
 		}
 
 		const loaderButton = document.querySelector('#btn-loader');
