@@ -1,7 +1,7 @@
 import Content from '../components/Content/index.js';
 import Header from '../components/Header/index.js';
 import Notification from '../components/Notification/Notification.js';
-import { successMessages } from '../constants/index.js';
+import { SUCCESS_MESSAGES } from '../constants/index.js';
 import urls from '../routes/urls.js';
 
 /**
@@ -30,11 +30,26 @@ class Router {
 	}
 
 	/**
+	 * Нормализует путь, удаляя повторяющиеся слеши и конечный слеш.
+	 * @param {string} path - Путь для нормализации.
+	 * @returns {string} Нормализованный путь.
+	 */
+	normalizePath(path) {
+		if (!path) {
+			return undefined;
+		}
+
+		const noRepeatSlashes = path.replace(/\/\/+/g, '/');
+		return noRepeatSlashes !== '/' ? noRepeatSlashes.replace(/\/+$/, '') : '/';
+	}
+	/**
 	 * Выполняет навигацию по указанному пути.
 	 * @param {string} path - Путь для навигации.
 	 */
 	navigate(path) {
 		const currentPath = window.history.state?.path;
+		path = this.normalizePath(path);
+
 		const user = localStorage.getItem('user-info');
 
 		if (user && [urls.signIn, urls.signUp].includes(window.location.pathname)) {
@@ -43,8 +58,8 @@ class Router {
 
 			Notification.open({
 				duration: 3,
-				title: successMessages.repeatLoginTry.title,
-				description: successMessages.repeatLoginTry.description,
+				title: SUCCESS_MESSAGES.repeatLoginTry.title,
+				description: SUCCESS_MESSAGES.repeatLoginTry.description,
 				type: 'success',
 			});
 

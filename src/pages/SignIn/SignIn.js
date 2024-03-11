@@ -1,31 +1,5 @@
-import BackButton from '../../components/BackButton/BackButton';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
-import Link from '../../components/Link/Link';
-import Logo from '../../components/Logo';
-import api from '../../modules/api';
-import { router } from '../../modules/router';
-import urls from '../../routes/urls.js';
-import template from './SignIn.hbs';
-import './SignIn.scss';
-
-const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-const FIELDS = [
-	{
-		selector: '#email-input-container',
-		id: 'email',
-		placeholder: 'Почта',
-		type: 'email',
-	},
-	{
-		selector: '#password-input-container',
-		id: 'password',
-		placeholder: 'Пароль',
-		type: 'password',
-	},
-];
+import AuthForm from '../../components/AuthForm';
+import { validateEmail, validatePassword } from '../../helpers/validation.js';
 
 /**
  * Страница входа.
@@ -44,46 +18,8 @@ class SignIn {
 	 * Рендер страницы.
 	 */
 	render() {
-		const templateVars = {
-			signUpUrl: urls.signUp,
-		};
-
-		const html = template(templateVars);
-		this.parent.insertAdjacentHTML('beforeend', html);
-
-		const logoContainer = document.querySelector('.logo-container-on-sign-in');
-
-		if (logoContainer) {
-			new Logo(logoContainer, { onClick: () => router.navigate(urls.restaurants) }).render();
-		}
-
-		const linkBlock = document.getElementById('signin-redirect');
-		const link = new Link(linkBlock, { id: 'signin-link', href: urls.signUp, text: 'Зарегистрироваться' });
-		link.render();
-
-		const backButtonBlock = document.getElementById('back-button');
-		const backButton = new BackButton(backButtonBlock, { id: 'signin-back-button' });
-		backButton.render();
-
-		FIELDS.forEach((field) => {
-			new Input(this.parent.querySelector(field.selector), {
-				id: field.id,
-				placeholder: field.placeholder,
-				type: field.type,
-			}).render();
-		});
-
-		new Button(this.parent.querySelector('#sign-in-button-container'), {
-			id: 'sign-in-button',
-			content: 'Войти',
-			type: 'submit',
-			disabled: true,
-			withLoader: true,
-			onClick: (e) => {
-				e.preventDefault();
-				this.handleSubmit();
-			},
-		}).render();
+		const authForm = new AuthForm(this.parent, { title: 'Вход', redirectText: 'Нет аккаунта?', type: 'signin' });
+		authForm.render();
 
 		this.addFormValidation();
 	}
@@ -102,85 +38,24 @@ class SignIn {
 		let hasEmailInputStarted = false;
 		let hasPasswordInputStarted = false;
 
-		// Состояние валидности каждого поля
-		let isEmailValid = false;
-		let isPasswordValid = false;
-
-		// Функция для валидации email
-		const validateEmail = () => {
-			const isEmailValid = EMAIL_REGEX.test(emailElement.value);
-
-			if (emailElement.value) {
-				emailErrorElement.textContent = isEmailValid ? '' : 'Неверный формат электронной почты';
-				emailElement.style.borderColor = isEmailValid ? 'initial' : 'red';
-			} else if (hasEmailInputStarted) {
-				emailErrorElement.textContent = 'Поле не может быть пустым';
-				emailElement.style.borderColor = 'red';
-			} else {
-				emailErrorElement.textContent = '';
-				emailElement.style.borderColor = 'initial';
-			}
-
-			return emailElement.value && isEmailValid;
-		};
-
-		// Функция для валидации пароля
-		const validatePassword = () => {
-			const isPasswordValid = PASSWORD_REGEX.test(passwordElement.value);
-
-			if (passwordElement.value) {
-				passwordErrorElement.textContent = isPasswordValid
-					? ''
-					: 'Пароль должен содержать минимум 8 символов, включая число и букву';
-
-				passwordElement.style.borderColor = isPasswordValid ? 'initial' : 'red';
-			} else if (hasPasswordInputStarted) {
-				passwordErrorElement.textContent = 'Поле не может быть пустым';
-				passwordElement.style.borderColor = 'red';
-			} else {
-				passwordErrorElement.textContent = '';
-				passwordElement.style.borderColor = 'initial';
-			}
-
-			return passwordElement.value && isPasswordValid;
-		};
-
-		// Функция для обновления состояния кнопки регистрации
-		const updateSignInButtonState = () => {
-			document.getElementById('sign-in-button').disabled = !(isEmailValid && isPasswordValid);
-		};
-
-		// Слушатели событий для обновления флагов и вызова функций валидации
 		emailElement.addEventListener('input', () => {
 			hasEmailInputStarted = true;
-			isEmailValid = validateEmail();
-			updateSignInButtonState();
+			this.isEmailValid = validateEmail(emailElement, emailErrorElement, hasEmailInputStarted);
+			this.updateSignInButtonState();
 		});
 
 		passwordElement.addEventListener('input', () => {
 			hasPasswordInputStarted = true;
-			isPasswordValid = validatePassword();
-			updateSignInButtonState();
+			this.isPasswordValid = validatePassword(passwordElement, passwordErrorElement, hasPasswordInputStarted);
+			this.updateSignInButtonState();
 		});
 	}
 
 	/**
-	 * Обработка кнопки входа
+	 *
 	 */
-	handleSubmit() {
-		const signinButton = this.parent.querySelector('#sign-in-button');
-
-		const loaderBlock = signinButton.querySelector('#btn-loader');
-		loaderBlock.classList.add('loading');
-
-		const userData = {
-			email: document.getElementById('email').value,
-			password: document.getElementById('password').value,
-		};
-
-		api.login(userData, () => {
-			router.back();
-		});
+	updateSignInButtonState() {
+		document.getElementById('signin-button').disabled = !(this.isEmailValid && this.isPasswordValid);
 	}
 }
 
