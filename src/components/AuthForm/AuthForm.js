@@ -10,6 +10,23 @@ import Logo from '../Logo/Logo';
 import template from './AuthForm.hbs';
 import './AuthForm.scss';
 
+const CONFIG = {
+	signin: {
+		redirectLinkHref: urls.signUp,
+		redirectLinkText: 'Зарегистрироваться',
+		fields: FIELDS_SIGN_IN,
+		submitButtonText: 'Войти',
+		apiMethod: api.login,
+	},
+	signup: {
+		redirectLinkHref: urls.signIn,
+		redirectLinkText: 'Войти',
+		fields: FIELDS_SIGN_UP,
+		submitButtonText: 'Зарегистрироваться',
+		apiMethod: api.signup,
+	}
+};
+
 /**
  * Форма авторизации
  */
@@ -27,6 +44,7 @@ class AuthForm {
 		this.title = title;
 		this.redirectText = redirectText;
 		this.type = type;
+		this.config = CONFIG[type];
 	}
 
 	/**
@@ -59,17 +77,11 @@ class AuthForm {
 			userData.name = document.getElementById('name').value;
 		}
 
-		if (this.type === 'signin') {
-			api.login(userData, (data) => {
-				localStorage.setItem('user-info', data);
-				router.back();
-			});
-		} else {
-			api.signup(userData, (data) => {
-				localStorage.setItem('user-info', data);
-				router.back();
-			});
-		}
+		this.config.apiMethod(userData, (data) => {
+			localStorage.setItem('user-info', data);
+			router.back();
+		});
+
 	}
 
 	/**
@@ -87,8 +99,8 @@ class AuthForm {
 		const linkBlock = document.getElementById('auth-redirect');
 		const link = new Link(linkBlock, {
 			id: `${this.type}-link`,
-			href: this.type === 'signin' ? urls.signUp : urls.signIn,
-			text: this.type === 'signup' ? 'Войти' : 'Зарегистрироваться',
+			href: this.config.redirectLinkHref,
+			text: this.config.redirectLinkText,
 		});
 
 		link.render();
@@ -97,7 +109,7 @@ class AuthForm {
 		const backButton = new BackButton(backButtonBlock, { id: `${this.type}-back-button` });
 		backButton.render();
 
-		(this.type === 'signin' ? FIELDS_SIGN_IN : FIELDS_SIGN_UP).forEach((field) => {
+		this.config.fields.forEach((field) => {
 			new Input(this.parent.querySelector(field.selector), {
 				id: field.id,
 				placeholder: field.placeholder,
@@ -107,7 +119,7 @@ class AuthForm {
 
 		new Button(this.parent.querySelector('#auth-button-container'), {
 			id: `${this.type}-button`,
-			content: this.type === 'signin' ? 'Войти' : 'Зарегистрироваться',
+			content: this.config.submitButtonText,
 			type: 'submit',
 			disabled: true,
 			withLoader: true,
