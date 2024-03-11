@@ -5,12 +5,14 @@ import { validateEmail, validatePassword, validateName, validateConfirmPassword 
  * Страница регистрации.
  */
 class SignUp {
+	#parent;
+
 	/**
 	 * Создает экземпляр страницы.
 	 * @param {Element} parent Элемент DOM, в который будет рендериться страница.
 	 */
 	constructor(parent) {
-		this.parent = parent;
+		this.#parent = parent;
 		this.isLoading = false;
 	}
 
@@ -18,7 +20,7 @@ class SignUp {
 	 * Рендер страницы.
 	 */
 	render() {
-		const authForm = new AuthForm(this.parent, {
+		const authForm = new AuthForm(this.#parent, {
 			title: 'Регистрация',
 			redirectText: 'Уже зарегистрированы?',
 			type: 'signup',

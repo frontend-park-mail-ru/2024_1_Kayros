@@ -6,11 +6,13 @@ import ajax from './ajax';
  * Класс, содержащий запросы
  */
 class Api {
+	#url;
+
 	/**
 	 * Конструктор класса
 	 */
 	constructor() {
-		this.url = '/api';
+		this.#url = '/api';
 	}
 
 	/**
@@ -18,7 +20,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async getRestaurants(callback) {
-		const data = await ajax.get(`${this.url}/restaurants`);
+		const data = await ajax.get(`${this.#url}/restaurants`);
 
 		callback(data);
 	}
@@ -28,7 +30,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async getUserInfo(callback) {
-		const data = await ajax.get(`${this.url}/user`, { showNotifyError: false });
+		const data = await ajax.get(`${this.#url}/user`, { showNotifyError: false });
 
 		callback(data);
 	}
@@ -41,7 +43,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async login(body, callback) {
-		const { data, error } = await ajax.post(`${this.url}/signin`, body);
+		const { data, error } = await ajax.post(`${this.#url}/signin`, body);
 
 		if (data && !error) {
 			Notification.open({
@@ -71,7 +73,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async signup(body, callback) {
-		const { data, error } = await ajax.post(`${this.url}/signup`, body);
+		const { data, error } = await ajax.post(`${this.#url}/signup`, body);
 
 		if (data && !error) {
 			Notification.open({
@@ -98,7 +100,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async signout(callback) {
-		const { error } = await ajax.post(`${this.url}/signout`);
+		const { error } = await ajax.post(`${this.#url}/signout`);
 
 		if (error) {
 			Notification.open({

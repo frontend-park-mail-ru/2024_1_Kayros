@@ -9,12 +9,14 @@ import './Restaurants.scss';
  * Страница со списком ресторанов
  */
 class Restaurants {
+	#parent;
+
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
 	 */
 	constructor(parent) {
-		this.parent = parent;
+		this.#parent = parent;
 	}
 
 	/**
@@ -25,7 +27,7 @@ class Restaurants {
 		const restaurantsElement = document.getElementById('restaurants');
 		restaurantsElement?.remove();
 
-		this.parent.insertAdjacentHTML('beforeend', template());
+		this.#parent.insertAdjacentHTML('beforeend', template());
 
 		const newRestaurants = document.getElementById('restaurants');
 
@@ -54,7 +56,7 @@ class Restaurants {
 		const restaurantsElement = document.getElementById('restaurants');
 
 		if (!restaurantsElement) {
-			this.parent.insertAdjacentHTML('beforeend', template());
+			this.#parent.insertAdjacentHTML('beforeend', template());
 		}
 
 		const currentHeader = document.getElementById('header');

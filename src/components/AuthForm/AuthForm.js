@@ -31,6 +31,12 @@ const CONFIG = {
  * Форма авторизации
  */
 class AuthForm {
+	#parent;
+	#config;
+	#title;
+	#redirectText;
+	#type;
+
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
@@ -40,11 +46,11 @@ class AuthForm {
 	 * @param {'signin' | 'signup'} params.type - тип формы
 	 */
 	constructor(parent, { title, redirectText, type }) {
-		this.parent = parent;
-		this.title = title;
-		this.redirectText = redirectText;
-		this.type = type;
-		this.config = CONFIG[type];
+		this.#parent = parent;
+		this.#config = CONFIG[type];
+		this.#title = title;
+		this.#redirectText = redirectText;
+		this.#type = type;
 	}
 
 	/**
@@ -53,9 +59,9 @@ class AuthForm {
 	 */
 	getHTML() {
 		return template({
-			title: this.title,
-			redirectText: this.redirectText,
-			signup: this.type === 'signup',
+			title: this.#title,
+			redirectText: this.#redirectText,
+			signup: this.#type === 'signup',
 		});
 	}
 
@@ -63,7 +69,7 @@ class AuthForm {
 	 * Обработка кнопки
 	 */
 	handleSubmit() {
-		const signinButton = this.parent.querySelector(`#${this.type}-button`);
+		const signinButton = this.#parent.querySelector(`#${this.#type}-button`);
 
 		const loaderBlock = signinButton.querySelector('#btn-loader');
 		loaderBlock.classList.add('loading');
@@ -73,11 +79,11 @@ class AuthForm {
 			password: document.getElementById('password').value,
 		};
 
-		if (this.type === 'signup') {
+		if (this.#type === 'signup') {
 			userData.name = document.getElementById('name').value;
 		}
 
-		this.config.apiMethod(userData, (data) => {
+		this.#config.apiMethod(userData, (data) => {
 			localStorage.setItem('user-info', data);
 			router.back();
 		});
@@ -87,7 +93,7 @@ class AuthForm {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
+		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
 		const logoContainer = document.querySelector('.logo-container-on-auth');
 
@@ -97,28 +103,28 @@ class AuthForm {
 
 		const linkBlock = document.getElementById('auth-redirect');
 		const link = new Link(linkBlock, {
-			id: `${this.type}-link`,
-			href: this.config.redirectLinkHref,
-			text: this.config.redirectLinkText,
+			id: `${this.#type}-link`,
+			href: this.#config.redirectLinkHref,
+			text: this.#config.redirectLinkText,
 		});
 
 		link.render();
 
 		const backButtonBlock = document.getElementById('back-button');
-		const backButton = new BackButton(backButtonBlock, { id: `${this.type}-back-button` });
+		const backButton = new BackButton(backButtonBlock, { id: `${this.#type}-back-button` });
 		backButton.render();
 
-		this.config.fields.forEach((field) => {
-			new Input(this.parent.querySelector(field.selector), {
+		this.#config.fields.forEach((field) => {
+			new Input(this.#parent.querySelector(field.selector), {
 				id: field.id,
 				placeholder: field.placeholder,
 				type: field.type,
 			}).render();
 		});
 
-		new Button(this.parent.querySelector('#auth-button-container'), {
-			id: `${this.type}-button`,
-			content: this.config.submitButtonText,
+		new Button(this.#parent.querySelector('#auth-button-container'), {
+			id: `${this.#type}-button`,
+			content: this.#config.submitButtonText,
 			type: 'submit',
 			disabled: true,
 			withLoader: true,
