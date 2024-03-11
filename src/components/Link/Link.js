@@ -6,6 +6,11 @@ import './Link.scss';
  * Ссылка
  */
 class Link {
+	#parent;
+	#id;
+	#text;
+	#href;
+
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
@@ -15,22 +20,22 @@ class Link {
 	 * @param {string} params.text - текст ссылки
 	 */
 	constructor(parent, { id, href, text }) {
-		this.parent = parent;
-		this.id = id;
-		this.href = href;
-		this.text = text;
+		this.#parent = parent;
+		this.#id = id;
+		this.#href = href;
+		this.#text = text;
 	}
 
 	/**
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('beforeend', template({ text: this.text, id: this.id }));
+		this.#parent.insertAdjacentHTML('beforeend', template({ text: this.#text, id: this.#id }));
 
-		const link = this.parent.querySelector(`#${this.id}`);
+		const link = this.#parent.querySelector(`#${this.#id}`);
 
 		link.addEventListener('click', () => {
-			router.navigate(this.href);
+			router.navigate(this.#href);
 		});
 	}
 }

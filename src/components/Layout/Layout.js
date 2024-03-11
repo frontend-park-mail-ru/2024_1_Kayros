@@ -5,19 +5,21 @@ import './Layout.scss';
  * Макет
  */
 class Layout {
+	#parent;
+
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
 	 */
 	constructor(parent) {
-		this.parent = parent;
+		this.#parent = parent;
 	}
 
 	/**
 	 * Рендеринг страницы
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('beforeend', template());
+		this.#parent.insertAdjacentHTML('beforeend', template());
 	}
 }
 

@@ -5,6 +5,11 @@ import './Loader.scss';
  * Лоадер
  */
 class Loader {
+	#id;
+	#parent;
+	#size;
+	#style;
+
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
@@ -14,19 +19,19 @@ class Loader {
 	 * @param {'primary' | 'secondary'} params.style - размер лоадера
 	 */
 	constructor(parent, { id = '', size = 's', style = 'primary' }) {
-		this.id = id;
-		this.parent = parent;
-		this.size = size;
-		this.style = style;
+		this.#id = id;
+		this.#parent = parent;
+		this.#size = size;
+		this.#style = style;
 	}
 
 	/**
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.parent.insertAdjacentHTML(
+		this.#parent.insertAdjacentHTML(
 			'beforeend',
-			template({ id: this.id, class: `loader-${this.size}`, style: `loader-${this.style}` }),
+			template({ id: this.#id, class: `loader-${this.#size}`, style: `loader-${this.#style}` }),
 		);
 	}
 }

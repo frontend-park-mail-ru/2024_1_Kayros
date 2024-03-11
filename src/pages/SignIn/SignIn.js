@@ -5,12 +5,14 @@ import { validateEmail, validatePassword } from '../../helpers/validation.js';
  * Страница входа.
  */
 class SignIn {
+	#parent;
+
 	/**
 	 * Создает экземпляр страницы.
 	 * @param {Element} parent Элемент DOM, в который будет рендериться страница.
 	 */
 	constructor(parent) {
-		this.parent = parent;
+		this.#parent = parent;
 		this.isLoading = false;
 	}
 
@@ -18,7 +20,7 @@ class SignIn {
 	 * Рендер страницы.
 	 */
 	render() {
-		const authForm = new AuthForm(this.parent, { title: 'Вход', redirectText: 'Нет аккаунта?', type: 'signin' });
+		const authForm = new AuthForm(this.#parent, { title: 'Вход', redirectText: 'Нет аккаунта?', type: 'signin' });
 		authForm.render();
 
 		this.addFormValidation();

@@ -10,6 +10,10 @@ const dropdownItems = [{ name: 'Выйти', exit: true }];
  * Раскрывающееся окошко
  */
 class Dropdown {
+	#parent;
+	#id;
+	#onExit;
+
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
@@ -18,10 +22,10 @@ class Dropdown {
 	 * @param {void} params.onExit - функция, выполняемая при выходе пользователя
 	 */
 	constructor(parent, { id = 'dropdown', onExit }) {
-		this.parent = parent;
+		this.#parent = parent;
+		this.#id = id;
+		this.#onExit = onExit;
 		this.isOpen = false;
-		this.id = id;
-		this.onExit = onExit;
 	}
 
 	/**
@@ -38,7 +42,7 @@ class Dropdown {
 		element.className = 'dropdown dropdown-open';
 
 		this.isOpen = true;
-		this.parent.animate(...OPEN_PROFILE_SLIDE_OPTIONS);
+		this.#parent.animate(...OPEN_PROFILE_SLIDE_OPTIONS);
 	}
 
 	/**
@@ -55,7 +59,7 @@ class Dropdown {
 		element.className = 'dropdown';
 
 		this.isOpen = false;
-		this.parent.animate(...CLOSE_PROFILE_SLIDE_OPTIONS);
+		this.#parent.animate(...CLOSE_PROFILE_SLIDE_OPTIONS);
 	}
 
 	/**
@@ -65,7 +69,7 @@ class Dropdown {
 	getHTML() {
 		return template({
 			open: this.isOpen ? 'dropdown-open' : '',
-			id: this.id,
+			id: this.#id,
 			items: dropdownItems,
 		});
 	}
@@ -76,19 +80,19 @@ class Dropdown {
 	handleExit() {
 		localStorage.removeItem('user-info');
 
-		const dropdown = document.getElementById(this.id);
+		const dropdown = document.getElementById(this.#id);
 		this.close(dropdown);
 
-		this.onExit();
+		this.#onExit();
 	}
 
 	/**
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
+		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const dropdown = document.getElementById(this.id);
+		const dropdown = document.getElementById(this.#id);
 
 		const link = dropdown.querySelector('.dropdown-item');
 
@@ -101,7 +105,7 @@ class Dropdown {
 
 		exitButton.render();
 
-		this.parent.addEventListener('click', (event) => {
+		this.#parent.addEventListener('click', (event) => {
 			event.stopPropagation();
 
 			this.open(dropdown);
