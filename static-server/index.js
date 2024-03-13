@@ -14,10 +14,17 @@ const __dirname = path.dirname(__filename);
 const HTTP_PORT = 80;
 const HTTPS_PORT = 443;
 
-const privateKey = fs.readFileSync(path.resolve(__dirname, 'sslcert/server.key'), 'utf8');
-const certificate = fs.readFileSync(path.resolve(__dirname, 'sslcert/server.crt'), 'utf8');
+const privateKey = fs.readFileSync(path.resolve(__dirname, '..', '..', 'sslcert/server.key'), 'utf8');
+const certificate = fs.readFileSync(path.resolve(__dirname, '..', '..', 'sslcert/server.crt'), 'utf8');
 
 const credentials = { key: privateKey, cert: certificate };
+
+app.use((req, res, next) => {
+	if (!req.secure) {
+		return res.redirect(`https://${req.headers.host + req.url}`);
+	}
+	next();
+});
 
 app.use('/api', proxy('http://localhost:8000'));
 app.use(express.static('dist'));
