@@ -7,7 +7,10 @@ import { routes } from './routes';
 import urls from './routes/urls.js';
 import './global.scss';
 
-const root = document.getElementById('root');
+const root = document.createElement('div');
+root.id = 'root';
+document.body.appendChild(root);
+
 const layout = new Layout(root);
 layout.render();
 
