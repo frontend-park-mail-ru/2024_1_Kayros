@@ -70,3 +70,12 @@
 	text-align: left;
 	height: 15px;
 }
+
+#back-button {
+	filter: opacity(0.7);
+	transition: 0.3s;
+
+	&:hover {
+		filter: opacity(1);
+	}
+}

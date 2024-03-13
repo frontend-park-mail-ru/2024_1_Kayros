@@ -109,9 +109,7 @@ class Router {
 		const header = document.getElementById('header');
 		const oldContent = document.getElementById('content');
 
-		if (!(window.location.pathname === urls.restaurants && this.samePage)) {
-			oldContent?.remove();
-		}
+		oldContent?.remove();
 
 		let content;
 
@@ -140,7 +138,11 @@ class Router {
 	 */
 	handleLocationChange() {
 		const path = window.location.pathname;
-		const currentRoute = this.routes[path];
+		let currentRoute = this.routes[path];
+
+		if (path === urls.base) {
+			currentRoute = this.routes[urls.restaurants];
+		}
 
 		this.handleChangeInnerLayout();
 
@@ -149,7 +151,6 @@ class Router {
 		if (currentRoute) {
 			const page = new currentRoute.component(content);
 			page.render();
-			return;
 		}
 	}
 }
