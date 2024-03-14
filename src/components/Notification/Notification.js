@@ -18,7 +18,7 @@ class Notification {
 	 * Конструктор класса
 	 */
 	constructor() {
-		this.#parent = document.getElementById('root');
+		this.#parent = document.querySelector('body');
 		this.#id = 'root-notification';
 		this.#position = 'top-right';
 		this.#count = 0;
