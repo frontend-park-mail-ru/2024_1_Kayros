@@ -14,7 +14,6 @@ class Router {
 	 */
 	constructor() {
 		this.previousState = null;
-		this.samePage = false;
 		this.routes = {};
 		window.addEventListener('popstate', this.handleLocationChange.bind(this));
 	}
@@ -50,6 +49,10 @@ class Router {
 		const currentPath = window.history.state?.path;
 		path = this.normalizePath(path);
 
+		if (path === urls.base) {
+			path = urls.restaurants;
+		}
+
 		const user = localStorage.getItem('user-info');
 
 		if (user && [urls.signIn, urls.signUp].includes(window.location.pathname)) {
@@ -69,12 +72,9 @@ class Router {
 		document.title = `Resto - ${this.routes[path]?.title || 'Страница не найдена'}`;
 
 		if (currentPath === path) {
-			this.samePage = true;
 			this.handleLocationChange();
 			return;
 		}
-
-		this.samePage = false;
 
 		if (
 			(currentPath === urls.signIn && path === urls.signUp) ||
@@ -140,11 +140,11 @@ class Router {
 		const path = window.location.pathname;
 		let currentRoute = this.routes[path];
 
-		this.handleChangeInnerLayout();
-
 		if (path === urls.base) {
-			this.navigate(urls.restaurants);
+			currentRoute = this.routes[urls.restaurants];
 		}
+
+		this.handleChangeInnerLayout();
 
 		const content = document.getElementById('content');
 
