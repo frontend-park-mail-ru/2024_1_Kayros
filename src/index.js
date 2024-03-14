@@ -16,15 +16,7 @@ layout.render();
 
 router.addRoutes(routes);
 
-let initialPath;
-
-if (window.location.pathname === urls.base) {
-	initialPath = urls.restaurants;
-} else {
-	initialPath = window.location.pathname;
-}
-
-router.navigate(initialPath);
+router.navigate(window.location.pathname);
 
 if (Object.values(urls).indexOf(window.location.pathname) === -1) {
 	const notFoundPage = new NotFoundPage();

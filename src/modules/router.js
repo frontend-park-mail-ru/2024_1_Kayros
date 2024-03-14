@@ -140,11 +140,11 @@ class Router {
 		const path = window.location.pathname;
 		let currentRoute = this.routes[path];
 
-		if (path === urls.base) {
-			currentRoute = this.routes[urls.restaurants];
-		}
-
 		this.handleChangeInnerLayout();
+
+		if (path === urls.base) {
+			this.navigate(urls.restaurants);
+		}
 
 		const content = document.getElementById('content');
 

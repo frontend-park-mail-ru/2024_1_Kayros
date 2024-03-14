@@ -67,6 +67,7 @@ module.exports = {
 
 	plugins: [
 		new HtmlWebpackPlugin({
+			title: 'Resto',
 			favicon: './src/assets/favicon.png',
 			base: '/',
 		}),
