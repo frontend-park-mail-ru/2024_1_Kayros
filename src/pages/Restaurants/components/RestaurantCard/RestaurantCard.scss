@@ -39,15 +39,10 @@
 	img {
 		width: 100%;
 		min-height: 100%;
-		transition: all 0.5s;
-		filter: brightness(0.95);
+		transition: all 0.4s;
 
 		&:hover {
 			transform: scale(1.1);
-
-			&:not(#default-img) {
-				filter: brightness(1.1);
-			}
 		}
 	}
 }

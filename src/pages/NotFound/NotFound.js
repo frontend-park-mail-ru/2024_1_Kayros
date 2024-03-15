@@ -12,9 +12,10 @@ class NotFound {
 
 	/**
 	 * Создает экземпляр страницы NotFound.
+	 * @param {HTMLDivElement} parent - родительский элемент
 	 */
-	constructor() {
-		this.#parent = document.getElementById('content');
+	constructor(parent) {
+		this.#parent = parent;
 	}
 	/**
 	 * Рендер страницы.

@@ -67,13 +67,15 @@ module.exports = {
 
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: path.join(__dirname, './public/index.html'),
+			title: 'Resto',
+			favicon: './src/assets/favicon.png',
+			base: '/',
 		}),
 		new MiniCssExtractPlugin({
 			filename: '[name]-[hash].css',
 		}),
 		new CopyWebpackPlugin({ patterns: [{ from: 'src/assets', to: 'assets' }] }),
-	].filter(Boolean),
+	],
 
 	resolve: {
 		extensions: ['.js'],

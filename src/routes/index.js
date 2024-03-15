@@ -1,3 +1,4 @@
+import NotFound from '../pages/NotFound';
 import RestaurantsPage from '../pages/Restaurants';
 import SignInPage from '../pages/SignIn';
 import SignUpPage from '../pages/SignUp';
@@ -18,4 +19,16 @@ const routes = {
 	},
 };
 
-export { routes };
+const invalidRouteCatcher = {
+	get(object, key) {
+		if (key in object) {
+			return object[key];
+		}
+
+		return { title: 'Страница не найдена', component: NotFound };
+	},
+};
+
+const safeRoutes = new Proxy(routes, invalidRouteCatcher);
+
+export default safeRoutes;
