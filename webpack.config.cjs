@@ -11,11 +11,11 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 Dotenv.config({ path: './.env.development' });
 
 module.exports = {
-	entry: path.resolve(__dirname, './src/index.js'),
+	entry: { app: path.resolve(__dirname, './src/index.js'), 'service-worker': './src/service-worker.js' },
 	target: isDevelopment ? 'web' : 'browserslist',
 	output: {
 		path: buildPath,
-		filename: 'bundle.js',
+		filename: '[name].js',
 	},
 
 	module: {
@@ -72,7 +72,7 @@ module.exports = {
 			base: '/',
 		}),
 		new MiniCssExtractPlugin({
-			filename: '[name]-[hash].css',
+			filename: 'styles.css',
 		}),
 		new CopyWebpackPlugin({ patterns: [{ from: 'src/assets', to: 'assets' }] }),
 	],

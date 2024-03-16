@@ -15,3 +15,15 @@ layout.render();
 router.addRoutes(routes);
 
 router.navigate(window.location.pathname);
+
+const registerServiceWorker = async () => {
+	if ('serviceWorker' in navigator) {
+		try {
+			await navigator.serviceWorker.register('service-worker.js', { scope: '/' });
+		} catch (error) {
+			console.error(`ServiceWorker registration failed with ${error}`);
+		}
+	}
+};
+
+registerServiceWorker();
