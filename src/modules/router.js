@@ -113,7 +113,7 @@ class Router {
 
 		let content;
 
-		if ([urls.signIn, urls.signUp].includes(window.location.pathname)) {
+		if ([urls.signIn, urls.signUp, urls.map].includes(window.location.pathname)) {
 			header?.remove();
 
 			content = new Content(layout, { withoutPadding: true });
