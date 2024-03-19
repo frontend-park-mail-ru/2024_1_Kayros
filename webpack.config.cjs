@@ -62,6 +62,11 @@ module.exports = {
 				target: 'http://109.120.180.238:8000',
 				pathRewrite: { '^/api': '' },
 			},
+			{
+				context: ['/tiles'],
+				target: 'http://localhost:9000/resto-map-tiles/',
+				pathRewrite: { '^/tiles': '' },
+			},
 		],
 	},
 

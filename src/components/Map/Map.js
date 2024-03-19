@@ -17,7 +17,7 @@ class Map {
 	 * @param {number} params.startY - начальная точка по оси Y
 	 * @param {number} params.startZoom - начальное приближение
 	 */
-	constructor(parent, { startX = 0, startY = 0, startZoom = 6 } = {}) {
+	constructor(parent, { startX = 0, startY = 0, startZoom = 1 } = {}) {
 		this.#parent = parent;
 		this.indentLeft = -startX;
 		this.indentTop = -startY;
@@ -32,9 +32,8 @@ class Map {
 	async loadImage(url) {
 		return new Promise((resolve) => {
 			const img = new Image();
-			img.src = url;
-
 			img.onload = () => resolve(img);
+			img.src = url;
 		});
 	}
 
@@ -80,6 +79,7 @@ class Map {
 
 		document.onmouseup = () => {
 			document.onmousemove = null;
+			this.drawTiles(map);
 		};
 	}
 
@@ -111,19 +111,39 @@ class Map {
 	}
 
 	/**
+	 * Функция для отрисовки фрагментов карты
+	 * @param {HTMLElement} map - карта
+	 */
+	drawTiles(map) {
+		const ctx = map.getContext('2d');
+
+		let zoom = 15;
+		const tileSize = 256;
+
+		const startX = 19784 + Math.floor(-this.indentLeft / tileSize / this.scale) - 1;
+		const endX = startX + Math.floor(window.innerWidth / tileSize / this.scale) + 2;
+
+		const startY = 10218 + Math.floor(-this.indentTop / tileSize / this.scale) - 1;
+		const endY = startY + Math.floor(window.innerHeight / tileSize / this.scale) + 2;
+
+		for (let i = startX; i <= endX; i++) {
+			for (let j = startY; j <= endY; j++) {
+				this.loadImage(`tiles/${zoom}/${i}/${j}.png`).then((image) => {
+					ctx.drawImage(image, (i - 19784) * tileSize, (j - 10218) * tileSize, tileSize, tileSize);
+				});
+			}
+		}
+	}
+
+	/**
 	 * Рендеринг компонента
 	 */
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', template());
 
 		const map = document.getElementById('canvas-map');
-		const ctx = map.getContext('2d');
 
 		map.style.transform = `translate(${this.indentLeft}px, ${this.indentTop}px) scale(${this.scale}) `;
-
-		this.loadImage('/assets/map.jpg').then((img) => {
-			ctx.drawImage(img, 0, 0);
-		});
 
 		map.onmousedown = (event) => {
 			event.preventDefault();
@@ -131,8 +151,15 @@ class Map {
 		};
 
 		map.onwheel = (event) => {
+			this.centerPoint = {
+				x: window.innerWidth / 2 - this.indentLeft,
+				y: window.innerHeight / 2 - this.indentTop,
+			};
+
 			this.zoom(event, map);
 		};
+
+		this.drawTiles(map);
 	}
 }
 
