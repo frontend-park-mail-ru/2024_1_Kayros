@@ -1,7 +1,5 @@
 :root {
-	--brand: #555;
-
-	--white: #fff;
+	--brand: #2d2d2d;
 
 	--red: #ff0000;
 
@@ -18,6 +16,7 @@
 	--input-border-radius: 18px;
 	--input-height: 16px;
 	--input-font-size: 16px;
+	--input-password-padding: 10px 48px 10px 14px;
 	--input-padding: 10px 14px 10px 14px;
 	--input-search-padding: 10px 100px 10px 14px;
 	--input-border-color: #545454;
@@ -25,6 +24,7 @@
 	--input-border-color-focus: #525252;
 	--input-box-shadow-focus: 0 0 0 1px #9c9c9c;
 	--input-placeholder-color: #545454;
+	--input-error-color: #ff0000;
 
 	--button-border-radius: 14px;
 	--button-bg-color: #2d2d2d;
@@ -63,6 +63,10 @@
 	--notification-description-color: #555;
 
 	--background-light: #eff4e7;
+
+	--auth-background: #fff;
+
+	--loader-secondary: #fff;
 
 	--modal-wrapper-background: #00000078;
 	--modal-content-background: #fff;

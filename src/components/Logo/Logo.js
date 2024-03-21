@@ -1,5 +1,3 @@
-import { router } from '../../modules/router.js';
-import urls from '../../routes/urls.js';
 import template from './Logo.hbs';
 import './Logo.scss';
 
@@ -7,19 +5,25 @@ import './Logo.scss';
  * Логотип
  */
 class Logo {
+	#onClick;
+	#parent;
+
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
+	 * @param {object} params -  параметры
+	 * @param {void} params.onClick - функция при клике на лого
 	 */
-	constructor(parent) {
-		this.parent = parent;
+	constructor(parent, { onClick }) {
+		this.#onClick = onClick;
+		this.#parent = parent;
 	}
 
 	/**
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('beforeend', template());
+		this.#parent.insertAdjacentHTML('beforeend', template());
 
 		const logoBlock = document.getElementById('logo');
 
@@ -27,7 +31,7 @@ class Logo {
 		 * Обработка нажатия на лого
 		 */
 		logoBlock.addEventListener('click', () => {
-			router.navigate(urls.restaurants);
+			this.#onClick();
 		});
 	}
 }

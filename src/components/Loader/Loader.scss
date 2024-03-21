@@ -1,15 +1,23 @@
 .loader {
-	border: 2px solid transparent;
-	border-top: 2px solid var(--brand);
-	border-left: 2px solid var(--brand);
-	border-bottom: 2px solid var(--brand);
 	border-radius: 50%;
 	animation: animate 0.7s linear infinite;
 	cursor: pointer;
 
+	&.loader-primary {
+		&:not(.loader-xl) {
+			border: 2px solid var(--brand);
+			border-right: none;
+		}
+	}
+
+	&.loader-secondary {
+		border: 2px solid var(--loader-secondary);
+		border-right: none;
+	}
+
 	&.loader-s {
-		width: 16px;
-		height: 16px;
+		width: 13px;
+		height: 12px;
 	}
 
 	&.loader-m {
@@ -23,17 +31,9 @@
 	}
 
 	&.loader-xl {
-		width: 60px;
-		height: 60px;
-	}
-
-	&.loader-primary {
-		border: 2px solid var(--brand);
-		border-right: none;
-	}
-
-	&.loader-secondary {
-		border: 2px solid var(--white);
+		width: 92px;
+		height: 90px;
+		border: 3px solid var(--brand);
 		border-right: none;
 	}
 

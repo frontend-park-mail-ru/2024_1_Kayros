@@ -1,5 +1,4 @@
 import defaultAvatar from '../../assets/default-avatar.png';
-import Dropdown from '../Dropdown/Dropdown';
 import template from './Profile.hbs';
 import './Profile.scss';
 
@@ -7,6 +6,9 @@ import './Profile.scss';
  * Профиль
  */
 class Profile {
+	#parent;
+	#user;
+
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
@@ -14,8 +16,8 @@ class Profile {
 	 * @param {object} params.user - объект пользователя
 	 */
 	constructor(parent, { user }) {
-		this.parent = parent;
-		this.user = user;
+		this.#parent = parent;
+		this.#user = user;
 	}
 
 	/**
@@ -23,21 +25,16 @@ class Profile {
 	 * @returns {HTMLDivElement} - html
 	 */
 	getHTML() {
-		const avatar = this.user.avatarUrl || defaultAvatar;
+		const avatar = this.#user.avatarUrl || defaultAvatar;
 
-		return template({ name: this.user.name, avatarUrl: avatar });
+		return template({ name: this.#user.name, avatarUrl: avatar });
 	}
 
 	/**
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('beforeend', this.getHTML(this.user));
-
-		const profile = document.getElementById('profile');
-
-		const dropdown = new Dropdown(profile, { id: 'dropdown-profile' });
-		dropdown.render();
+		this.#parent.insertAdjacentHTML('beforeend', this.getHTML(this.#user));
 	}
 }
 

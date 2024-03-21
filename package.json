@@ -50,7 +50,6 @@
 		"jsdoc": "^4.0.2",
 		"lint-staged": "^15.2.2",
 		"mini-css-extract-plugin": "^2.8.0",
-		"postcss-loader": "^8.1.0",
 		"sass": "^1.71.1",
 		"sass-loader": "^14.1.1",
 		"style-loader": "^3.3.4",
@@ -62,7 +61,9 @@
 		"webpack-dev-server": "^5.0.2"
 	},
 	"browserslist": [
-		"IE 11"
+		">0.2%",
+		"not dead",
+		"not ie <= 11"
 	],
 	"babel": {
 		"presets": [

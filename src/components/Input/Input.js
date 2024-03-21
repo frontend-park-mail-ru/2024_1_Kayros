@@ -6,6 +6,13 @@ import './Input.scss';
  * Инпут
  */
 class Input {
+	#parent;
+	#placeholder;
+	#button;
+	#type;
+	#isVisible;
+	#id;
+
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
@@ -16,12 +23,12 @@ class Input {
 	 * @param {string | undefined} params.button - название кнопки
 	 */
 	constructor(parent, { id, placeholder, type = 'text', button }) {
-		this.parent = parent;
-		this.placeholder = placeholder;
-		this.button = button;
-		this.type = type;
-		this.id = id;
-		this.isVisible = false;
+		this.#parent = parent;
+		this.#placeholder = placeholder;
+		this.#button = button;
+		this.#type = type;
+		this.#id = id;
+		this.#isVisible = false;
 	}
 
 	/**
@@ -30,11 +37,11 @@ class Input {
 	 */
 	getHTML() {
 		return template({
-			placeholder: this.placeholder,
-			button: this.button,
-			type: this.type,
-			isPassword: this.type === 'password',
-			id: this.id,
+			placeholder: this.#placeholder,
+			button: this.#button,
+			type: this.#type,
+			isPassword: this.#type === 'password',
+			id: this.#id,
 		});
 	}
 
@@ -42,25 +49,25 @@ class Input {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
+		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		if (this.button) {
+		if (this.#button) {
 			const buttonBlock = document.getElementById('search-button');
 			const searchButton = new Button(buttonBlock, { id: 'header-search-button', content: 'Найти' });
 			searchButton.render();
 		}
 
-		if (this.type !== 'password') return;
+		if (this.#type !== 'password') return;
 
-		const inputContainer = document.getElementById(`${this.id}-container`);
-
+		const inputContainer = document.getElementById(`${this.#id}-container`);
+		inputContainer.classList.add('password-input');
 		const eyeButton = inputContainer.querySelector('#btn-eye');
 		const password = inputContainer.getElementsByTagName('input')[0];
 
 		eyeButton.addEventListener('click', () => {
-			this.isVisible = !this.isVisible;
+			this.#isVisible = !this.#isVisible;
 
-			if (this.isVisible) {
+			if (this.#isVisible) {
 				eyeButton.className = 'visible';
 				password.type = 'text';
 			} else {

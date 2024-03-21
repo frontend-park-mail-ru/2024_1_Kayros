@@ -8,19 +8,21 @@ import './NotFound.scss';
  * Класс спользуется для отображения сообщения об отсутствии страницы или ресурса.
  */
 class NotFound {
+	#parent;
+
 	/**
 	 * Создает экземпляр страницы NotFound.
-	 * @param {Element} parent Элемент DOM, в который будет рендериться страница "Не найдено".
+	 * @param {HTMLDivElement} parent - родительский элемент
 	 */
 	constructor(parent) {
-		this.parent = parent;
+		this.#parent = parent;
 	}
 	/**
 	 * Рендер страницы.
 	 */
 	render() {
 		const html = template();
-		this.parent.insertAdjacentHTML('beforeend', html);
+		this.#parent.insertAdjacentHTML('beforeend', html);
 		new Button(document.getElementById('return-button'), {
 			id: 'return-to-home',
 			content: 'Вернуться на главную',

@@ -1,5 +1,6 @@
-import Modal from '../components/Modal/Modal';
+import NotFound from '../pages/NotFound';
 import RestaurantsPage from '../pages/Restaurants';
+import SignInPage from '../pages/SignIn';
 import SignUpPage from '../pages/SignUp';
 import urls from './urls';
 
@@ -10,7 +11,7 @@ const routes = {
 	},
 	[urls.signIn]: {
 		title: 'Вход',
-		component: Modal,
+		component: SignInPage,
 	},
 	[urls.signUp]: {
 		title: 'Регистрация',
@@ -18,4 +19,16 @@ const routes = {
 	},
 };
 
-export { routes };
+const invalidRouteCatcher = {
+	get(object, key) {
+		if (key in object) {
+			return object[key];
+		}
+
+		return { title: 'Страница не найдена', component: NotFound };
+	},
+};
+
+const safeRoutes = new Proxy(routes, invalidRouteCatcher);
+
+export default safeRoutes;

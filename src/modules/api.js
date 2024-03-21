@@ -1,16 +1,18 @@
 import Notification from '../components/Notification/Notification';
-import { errorMessages, successMessages } from '../constants';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../constants';
 import ajax from './ajax';
 
 /**
  * Класс, содержащий запросы
  */
 class Api {
+	#url;
+
 	/**
 	 * Конструктор класса
 	 */
 	constructor() {
-		this.url = '/api';
+		this.#url = '/api';
 	}
 
 	/**
@@ -18,7 +20,17 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async getRestaurants(callback) {
-		const data = await ajax.get(`${this.url}/restaurants`);
+		const data = await ajax.get(`${this.#url}/restaurants`);
+
+		callback(data);
+	}
+
+	/**
+	 * Метод для получения информации о пользователе
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getUserInfo(callback) {
+		const data = await ajax.get(`${this.#url}/user`, { showNotifyError: false });
 
 		callback(data);
 	}
@@ -31,13 +43,13 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async login(body, callback) {
-		const { data, error } = await ajax.post(`${this.url}/signin`, body);
+		const { data, error } = await ajax.post(`${this.#url}/signin`, body);
 
 		if (data && !error) {
 			Notification.open({
 				duration: 3,
-				title: successMessages.login.title,
-				description: successMessages.login.description,
+				title: SUCCESS_MESSAGES.login.title,
+				description: SUCCESS_MESSAGES.login.description,
 				type: 'success',
 			});
 
@@ -47,8 +59,8 @@ class Api {
 
 		Notification.open({
 			duration: 3,
-			title: errorMessages.LOGIN,
-			description: error || errorMessages.SERVER_RESPONSE,
+			title: ERROR_MESSAGES.LOGIN,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
 		});
 	}
@@ -61,13 +73,13 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async signup(body, callback) {
-		const { data, error } = await ajax.post(`${this.url}/signup`, body);
+		const { data, error } = await ajax.post(`${this.#url}/signup`, body);
 
 		if (data && !error) {
 			Notification.open({
 				duration: 3,
-				title: successMessages.signup.title,
-				description: successMessages.signup.description,
+				title: SUCCESS_MESSAGES.signup.title,
+				description: SUCCESS_MESSAGES.signup.description,
 				type: 'success',
 			});
 
@@ -77,8 +89,8 @@ class Api {
 
 		Notification.open({
 			duration: 3,
-			title: errorMessages.SIGNUP,
-			description: error || errorMessages.SERVER_RESPONSE,
+			title: ERROR_MESSAGES.SIGNUP,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
 		});
 	}
@@ -88,13 +100,13 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async signout(callback) {
-		const { error } = await ajax.post(`${this.url}/signout`);
+		const { error } = await ajax.post(`${this.#url}/signout`);
 
 		if (error) {
 			Notification.open({
 				duration: 3,
-				title: errorMessages.SIGNOUT,
-				description: error || errorMessages.SERVER_RESPONSE,
+				title: ERROR_MESSAGES.SIGNOUT,
+				description: error || ERROR_MESSAGES.SERVER_RESPONSE,
 				type: 'error',
 			});
 
@@ -103,8 +115,8 @@ class Api {
 
 		Notification.open({
 			duration: 3,
-			title: successMessages.signout.title,
-			description: successMessages.signout.description,
+			title: SUCCESS_MESSAGES.signout.title,
+			description: SUCCESS_MESSAGES.signout.description,
 			type: 'success',
 		});
 

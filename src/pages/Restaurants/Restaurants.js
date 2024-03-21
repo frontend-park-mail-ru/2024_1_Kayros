@@ -1,3 +1,4 @@
+import Header from '../../components/Header';
 import Loader from '../../components/Loader';
 import api from '../../modules/api';
 import template from './Restaurants.hbs';
@@ -8,12 +9,14 @@ import './Restaurants.scss';
  * Страница со списком ресторанов
  */
 class Restaurants {
+	#parent;
+
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
 	 */
 	constructor(parent) {
-		this.parent = parent;
+		this.#parent = parent;
 	}
 
 	/**
@@ -21,15 +24,15 @@ class Restaurants {
 	 * @param {Array} items - массив ресторанов
 	 */
 	renderData(items) {
-		const restaurantsElement = document.getElementById('restaurants');
+		const restaurants = document.getElementById('restaurants');
 
 		if (!items) {
-			restaurantsElement.innerText = 'Нет доступных ресторанов';
+			restaurants.innerText = 'Нет доступных ресторанов';
 			return;
 		}
 
 		items.forEach((item) => {
-			const restaurantCard = new RestaurantCard(restaurantsElement, item);
+			const restaurantCard = new RestaurantCard(restaurants, item);
 			restaurantCard.render();
 		});
 	}
@@ -38,17 +41,24 @@ class Restaurants {
 	 * Получение данных о ресторанах
 	 */
 	getData() {
-		api.getRestaurants(this.renderData);
+		api.getRestaurants(this.renderData.bind(this));
 	}
 
 	/**
 	 * Рендеринг страницы
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('beforeend', template());
+		this.#parent.insertAdjacentHTML('beforeend', template());
+
+		const currentHeader = document.getElementById('header');
+
+		if (!currentHeader) {
+			const header = new Header();
+			header.render();
+		}
 
 		const restaurants = document.getElementById('restaurants');
-		const loader = new Loader(restaurants, { size: 'xl' });
+		const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });
 		loader.render();
 
 		this.getData();

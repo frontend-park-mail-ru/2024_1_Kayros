@@ -1,10 +1,11 @@
 import cartIcon from '../../assets/cart.svg';
-import { router } from '../../modules/router';
+import api from '../../modules/api';
 import urls from '../../routes/urls';
 import { localStorageHelper } from '../../utils';
 import Button from '../Button';
+import Dropdown from '../Dropdown/Dropdown';
 import Input from '../Input';
-import Logo from '../Logo/Logo';
+import Logo from '../Logo';
 import Profile from '../Profile';
 import template from './Header.hbs';
 import './Header.scss';
@@ -13,33 +14,47 @@ import './Header.scss';
  * Шапка
  */
 class Header {
+	#parent;
+	#navigate;
+
 	/**
 	 * Конструктор класса
-	 * @param {Element} parent - родительский элемент
+	 * @param {object} params - параметры
+	 * @param {void} params.navigate - функция навигации по страницам
 	 */
-	constructor(parent) {
-		this.parent = parent;
+	constructor({ navigate }) {
+		this.#navigate = navigate;
+		this.#parent = document.getElementById('layout');
 	}
 
 	/**
-	 * Получение html компонента
-	 * @param {object} user - информация о пользователе
-	 * @returns {HTMLDivElement} - html
+	 * Обработка полученных данных
+	 * @param {object} data - информация о пользователе
 	 */
-	getHTML(user) {
-		return template({ user: { address: user ? 'ул.Тверская, д.2' : '' } });
+	handleUserData(data) {
+		if (!data) {
+			localStorage.removeItem('user-info');
+			return;
+		}
+
+		localStorage.setItem('user-info', JSON.stringify(data));
+	}
+
+	/**
+	 * Получение данных пользователя
+	 */
+	async userData() {
+		await api.getUserInfo(this.handleUserData);
 	}
 
 	/**
 	 * Рендеринг компонента
 	 */
-	render() {
-		const user = localStorageHelper.getItem('user-info');
+	async render() {
+		this.#parent.insertAdjacentHTML('afterbegin', template());
 
-		this.parent.insertAdjacentHTML('afterbegin', this.getHTML(user));
-
-		const logoBlock = document.getElementById('logoContainer');
-		const logo = new Logo(logoBlock);
+		const logoBlock = document.getElementById('logo-container');
+		const logo = new Logo(logoBlock, { onClick: () => this.#navigate(urls.restaurants) });
 		logo.render();
 
 		const searchBlock = document.getElementById('search-input');
@@ -50,6 +65,12 @@ class Header {
 		});
 
 		searchInput.render();
+
+		await this.userData();
+		const user = localStorageHelper.getItem('user-info');
+
+		const address = document.getElementById('address');
+		address.innerHTML = user ? 'Тверская, д. 21' : '';
 
 		if (user?.cart && user.cart.total > 0) {
 			const cartBlock = document.getElementById('cart');
@@ -71,13 +92,27 @@ class Header {
 			const loginButton = new Button(profileBlock, {
 				id: 'header-login-button',
 				content: 'Войти',
-				onClick: () => router.navigate(urls.signIn),
+				onClick: () => this.#navigate(urls.signIn),
 			});
 
 			loginButton.render();
 		}
 
 		const headerElement = document.getElementById('header');
+
+		const profile = document.getElementById('profile');
+
+		if (profile) {
+			const dropdown = new Dropdown(profile, {
+				id: 'dropdown-profile',
+				onExit: () => {
+					headerElement.remove();
+					this.render();
+				},
+			});
+
+			dropdown.render();
+		}
 
 		window.addEventListener('scroll', () => {
 			if (window.scrollY > 20) {
