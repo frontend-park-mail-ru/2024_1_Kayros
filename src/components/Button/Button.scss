@@ -4,12 +4,14 @@
 	align-items: center;
 	font-size: var(--button-font-size);
 	border: none;
+	outline: 1px solid transparent;
 	border-radius: var(--button-border-radius);
 	padding: var(--button-padding);
 	transition:
 		background 0.3s,
 		transform 0.1s;
 	cursor: pointer;
+	gap: 10px;
 
 	img {
 		float: left;
@@ -35,6 +37,16 @@
 	&.btn-clear {
 		background: transparent;
 		padding: 0;
+	}
+
+	&.btn-secondary {
+		background: var(--button-secondary-bg);
+		color: var(--button-secondary-text-color);
+		transition: 0.3s;
+
+		&:hover {
+			outline: 1px solid var(--brand);
+		}
 	}
 
 	&:disabled {

@@ -20,10 +20,10 @@
 }
 
 #modal-content {
-	width: 1000px;
-	height: 200px;
+	position: relative;
+	width: 900px;
 	margin: 0 40px;
-	border-radius: 10px;
+	border-radius: 30px;
 	background-color: var(--modal-content-background);
 	transform: scale(0.1);
 	transition: transform 0.3s;
@@ -31,5 +31,16 @@
 
 	&.modal-open {
 		transform: scale(1);
+	}
+
+	#modal-close {
+		position: absolute;
+		right: 30px;
+		top: 30px;
+		transition: filter 0.2s;
+
+		&:hover {
+			filter: brightness(0.5);
+		}
 	}
 }

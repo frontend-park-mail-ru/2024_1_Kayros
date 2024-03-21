@@ -1,5 +1,6 @@
 import { router } from '../../modules/router';
 import urls from '../../routes/urls';
+import Button from '../Button/Button';
 import template from './Modal.hbs';
 import './Modal.scss';
 
@@ -9,24 +10,32 @@ import './Modal.scss';
 class Modal {
 	/**
 	 * Конструктор класса
+	 * @param {object} params - параметры компонента
+	 * @param {string} params.initiatorId - id элемента, инициирующего открытие модалки
 	 */
-	constructor() {
-		this.parent = document.getElementById('root');
+	constructor({ initiatorId = '' } = {}) {
+		this.parent = document.querySelector('body');
 		this.isOpen = false;
 		this.rendered = false;
+		this.initiatorId = initiatorId;
 	}
 
 	/**
-	 * Функция, определяющая стартовую позицию для открыти модалки
+	 * Функция, определяющая стартовую позицию для открытия модалки
+	 * (при отсутствии инициатора - открытие из центра экрана)
 	 */
 	detectStartPosition() {
-		const loginButton = document.getElementById('header-login-button');
+		if (!this.initiatorId) {
+			return;
+		}
+
+		const initiatorElement = document.getElementById(this.initiatorId);
 		const modalContent = document.getElementById('modal-content');
 
-		const rect = loginButton.getBoundingClientRect();
+		const rect = initiatorElement.getBoundingClientRect();
 
 		const buttonTop = rect.top;
-		const buttonLeft = rect.left + 15;
+		const buttonLeft = rect.left + rect.width / 2;
 
 		const windowWidth = window.innerWidth,
 			windowHeight = window.innerHeight;
@@ -45,7 +54,10 @@ class Modal {
 	 * @param {HTMLDivElement} element - модалка
 	 */
 	open(element) {
-		if (this.isOpen) return;
+		if (this.isOpen) {
+			return;
+		}
+
 		this.isOpen = true;
 
 		this.detectStartPosition();
@@ -58,18 +70,20 @@ class Modal {
 	/**
 	 * Метод для закрытия модалки
 	 * @param {HTMLDivElement} element - модалка
+	 * @param {boolean} force - не обращать внимание на isOpen (использовать только для кнопки закрытия модалки)
 	 */
-	close(element) {
-		if (!this.isOpen) return;
+	close(element, force = false) {
+		if (!this.isOpen && !force) {
+			return;
+		}
+
 		this.isOpen = false;
+
+		this.detectStartPosition();
 
 		element.classList.remove('modal-open');
 
-		window.history.replaceState(
-			{ path: router.previousState?.path || urls.restaurants },
-			'',
-			router.previousState?.path || urls.restaurants,
-		);
+		router.navigateFromModal();
 	}
 
 	/**
@@ -77,7 +91,13 @@ class Modal {
 	 * @returns {HTMLElement} html
 	 */
 	getHTML() {
-		return template();
+		if (window.location.pathname === urls.address) {
+			this.isOpen = true;
+		} else {
+			this.isOpen = false;
+		}
+
+		return template({ class: this.isOpen ? 'modal-open' : '' });
 	}
 
 	/**
@@ -85,10 +105,20 @@ class Modal {
 	 */
 	firstRender() {
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
+		const modalContent = document.getElementById('modal-content');
+
+		const closeButton = new Button(modalContent, {
+			id: 'modal-close',
+			icon: 'assets/close.svg',
+			onClick: () => this.close(modalContent, true),
+			style: 'clear',
+		});
+
+		closeButton.render();
 	}
 
 	/**
-	 * Открытие/закрытие модалки
+	 * Открытие модалки и создание обработчиков событий
 	 */
 	render() {
 		const modalContent = document.getElementById('modal-content');
@@ -111,6 +141,12 @@ class Modal {
 
 		modalWrapper.addEventListener('click', () => {
 			this.close(modalContent);
+		});
+
+		window.addEventListener('popstate', () => {
+			if (window.location.pathname !== urls.address) {
+				this.close(modalContent);
+			}
 		});
 	}
 }
