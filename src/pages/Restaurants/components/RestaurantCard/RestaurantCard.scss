@@ -7,7 +7,7 @@
 #card-content {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
+	gap: 4px;
 	margin-top: 15px;
 }
 
@@ -15,7 +15,6 @@
 	color: var(--text-color);
 	font-size: 20px;
 	font-weight: 600;
-	font-family: Montserrat, sans-serif;
 }
 
 #card-subtitle {
@@ -25,7 +24,6 @@
 	overflow: hidden;
 	color: var(--text-color);
 	font-size: 16px;
-	font-family: monospace;
 }
 
 #image-container {
