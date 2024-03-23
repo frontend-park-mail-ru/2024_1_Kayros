@@ -76,15 +76,18 @@ class Router {
 			return;
 		}
 
-		this.previousState = window.history?.state;
-
 		if (
 			(currentPath === urls.signIn && path === urls.signUp) ||
 			(currentPath === urls.signUp && path === urls.signIn) ||
 			path === urls.address
 		) {
+			if (path === urls.address) {
+				this.previousState = window.history?.state;
+			}
+
 			window.history.replaceState({ path }, '', path);
 		} else {
+			this.previousState = window.history?.state;
 			window.history.pushState({ path }, '', path);
 		}
 

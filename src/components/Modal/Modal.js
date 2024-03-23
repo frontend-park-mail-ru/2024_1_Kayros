@@ -1,5 +1,4 @@
 import { router } from '../../modules/router';
-import urls from '../../routes/urls';
 import Button from '../Button/Button';
 import template from './Modal.hbs';
 import './Modal.scss';
@@ -11,13 +10,17 @@ class Modal {
 	/**
 	 * Конструктор класса
 	 * @param {object} params - параметры компонента
+	 * @param {string} params.content - html элемент внутри модалки
+	 * @param {string} params.url - url, по которому открывается модалка
 	 * @param {string} params.initiatorId - id элемента, инициирующего открытие модалки
 	 */
-	constructor({ initiatorId = '' } = {}) {
+	constructor({ content, url, initiatorId = '' }) {
 		this.parent = document.querySelector('body');
 		this.isOpen = false;
 		this.rendered = false;
 		this.initiatorId = initiatorId;
+		this.content = content;
+		this.url = url;
 	}
 
 	/**
@@ -30,6 +33,11 @@ class Modal {
 		}
 
 		const initiatorElement = document.getElementById(this.initiatorId);
+
+		if (!initiatorElement) {
+			return;
+		}
+
 		const modalContent = document.getElementById('modal-content');
 
 		const rect = initiatorElement.getBoundingClientRect();
@@ -51,37 +59,39 @@ class Modal {
 
 	/**
 	 * Метод для открытия модалки
-	 * @param {HTMLDivElement} element - модалка
 	 */
-	open(element) {
+	open() {
 		if (this.isOpen) {
 			return;
 		}
 
-		this.isOpen = true;
-
 		this.detectStartPosition();
 
-		setTimeout(() => {
-			element.classList.add('modal-open');
-		}, 50);
+		const modalContent = document.getElementById('modal-content');
+		modalContent.classList.add('modal-open');
+
+		this.isOpen = true;
 	}
 
 	/**
 	 * Метод для закрытия модалки
-	 * @param {HTMLDivElement} element - модалка
-	 * @param {boolean} force - не обращать внимание на isOpen (использовать только для кнопки закрытия модалки)
 	 */
-	close(element, force = false) {
-		if (!this.isOpen && !force) {
+	close() {
+		if (!this.isOpen) {
 			return;
 		}
 
-		this.isOpen = false;
+		const modalContent = document.getElementById('modal-content');
+		const modalWrapper = document.getElementById('modal-wrapper');
 
 		this.detectStartPosition();
 
-		element.classList.remove('modal-open');
+		modalContent.classList.remove('modal-open');
+		this.isOpen = false;
+
+		setTimeout(() => {
+			modalWrapper?.remove();
+		}, 100);
 
 		router.navigateFromModal();
 	}
@@ -91,45 +101,19 @@ class Modal {
 	 * @returns {HTMLElement} html
 	 */
 	getHTML() {
-		if (window.location.pathname === urls.address) {
-			this.isOpen = true;
-		} else {
-			this.isOpen = false;
-		}
-
-		return template({ class: this.isOpen ? 'modal-open' : '' });
+		return template({ content: this.content, class: '' });
 	}
 
 	/**
-	 * Первая отрисовка в дереве
+	 * Добавление обработчиков событий
 	 */
-	firstRender() {
-		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
-		const modalContent = document.getElementById('modal-content');
-
-		const closeButton = new Button(modalContent, {
-			id: 'modal-close',
-			icon: 'assets/close.svg',
-			onClick: () => this.close(modalContent, true),
-			style: 'clear',
-		});
-
-		closeButton.render();
-	}
-
-	/**
-	 * Открытие модалки и создание обработчиков событий
-	 */
-	render() {
-		const modalContent = document.getElementById('modal-content');
+	initListeners() {
 		const modalWrapper = document.getElementById('modal-wrapper');
-
-		this.open(modalContent);
+		const modalContent = document.getElementById('modal-content');
 
 		const closeOnEsc = (event) => {
 			if (event.key === 'Escape') {
-				this.close(modalContent);
-				modalContent.classList.remove('modal-open');
+				this.close();
 			}
 		};
 
@@ -140,17 +124,38 @@ class Modal {
 		});
 
 		modalWrapper.addEventListener('click', () => {
-			this.close(modalContent);
+			this.close();
 		});
 
 		window.addEventListener('popstate', () => {
-			if (window.location.pathname !== urls.address) {
-				this.close(modalContent);
+			if (window.location.pathname !== this.url) {
+				this.close();
 			}
 		});
 	}
-}
 
-new Modal().firstRender();
+	/**
+	 * Открытие модалки и создание обработчиков событий
+	 */
+	render() {
+		this.rendered = true;
+
+		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
+		const modalContent = document.getElementById('modal-content');
+
+		const closeButton = new Button(modalContent, {
+			id: 'modal-close',
+			icon: 'assets/close.svg',
+			onClick: () => this.close(),
+			style: 'clear',
+		});
+
+		closeButton.render();
+
+		this.open();
+
+		this.initListeners();
+	}
+}
 
 export default Modal;
