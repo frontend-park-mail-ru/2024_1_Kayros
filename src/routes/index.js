@@ -1,4 +1,5 @@
 import NotFound from '../pages/NotFound';
+import RestaurantPage from '../pages/Restaurant';
 import RestaurantsPage from '../pages/Restaurants';
 import SignInPage from '../pages/SignIn';
 import SignUpPage from '../pages/SignUp';
@@ -8,6 +9,10 @@ const routes = {
 	[urls.restaurants]: {
 		title: 'Рестораны',
 		component: RestaurantsPage,
+	},
+	[urls.restaurant]: {
+		title: '',
+		component: RestaurantPage,
 	},
 	[urls.signIn]: {
 		title: 'Вход',
