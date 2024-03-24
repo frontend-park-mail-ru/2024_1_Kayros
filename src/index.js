@@ -19,7 +19,7 @@ router.addRoutes(routes);
 router.navigate(window.location.pathname);
 
 const registerServiceWorker = async () => {
-	if (Object.hasOwn(navigator, 'serviceWorker')) {
+	if ('serviceWorker' in navigator) {
 		try {
 			await navigator.serviceWorker.register('service-worker.js', { scope: urls.base });
 		} catch (error) {

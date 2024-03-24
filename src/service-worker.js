@@ -45,7 +45,23 @@ const networkFirst = async (request) => {
 };
 
 self.addEventListener('install', (event) => {
-	event.waitUntil(addResourcesToCache(['/', '/index.html', '/styles.css', '/app.js']));
+	event.waitUntil(
+		addResourcesToCache([
+			'/',
+			'/index.html',
+			'/styles.css',
+			'/app.js',
+			'/assets/',
+			'/assets/close.svg',
+			'/assets/success.svg',
+			'/assets/error.svg',
+			'/assets/back-arrow.svg',
+			'/assets/eye-close.svg',
+			'/assets/eye-open.svg',
+			'/assets/favicon.png',
+			'/assets/background.jpeg',
+		]),
+	);
 });
 
 self.addEventListener('activate', async () => {
