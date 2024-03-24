@@ -1,3 +1,27 @@
 #restaurant-container {
+	display: grid;
+	grid-template-columns: 240px 1fr;
+}
+
+#restaurant-sidebar {
 	display: flex;
+	flex-direction: column;
+	gap: 36px;
+}
+
+#restaurant-main {
+	#restaurant-banner-container {
+		background: var(--layout-bg-color);
+		border-radius: 10px;
+		width: 100%;
+		min-height: 278px;
+	}
+
+	#restaurant-food {
+		display: grid;
+		gap: 12px;
+		grid-template-columns: repeat(auto-fit, 260px);
+		justify-content: space-evenly;
+		margin-top: 36px;
+	}
 }

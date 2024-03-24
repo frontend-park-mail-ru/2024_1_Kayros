@@ -11,7 +11,7 @@ const routes = {
 		component: RestaurantsPage,
 	},
 	[urls.restaurant]: {
-		title: '',
+		title: 'Ресторан',
 		component: RestaurantPage,
 	},
 	[urls.signIn]: {

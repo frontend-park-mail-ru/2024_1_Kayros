@@ -26,6 +26,7 @@
 		"*.scss": "npm run scss-lint:fix"
 	},
 	"dependencies": {
+		"@fontsource/inter": "^5.0.17",
 		"@fontsource/montserrat": "^5.0.16",
 		"@fontsource/roboto": "^5.0.8",
 		"express-http-proxy": "^2.0.0",
