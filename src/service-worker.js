@@ -61,7 +61,7 @@ self.addEventListener('activate', async () => {
 });
 
 self.addEventListener('fetch', (event) => {
-	if (event.request.method !== 'GET') return;
+	if (event.request.method !== 'GET' || !event.request.url.startsWith('http')) return;
 
 	const destination = event.request.destination;
 
