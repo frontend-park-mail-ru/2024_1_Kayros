@@ -65,7 +65,7 @@ self.addEventListener('fetch', (event) => {
 
 	const destination = event.request.destination;
 
-	if (destination === 'image' || destination === 'font') {
+	if (['image', 'font'].includes(destination)) {
 		event.respondWith(cacheFirst(event.request));
 		return;
 	}
