@@ -1,6 +1,7 @@
 import '@fontsource/roboto';
 import '@fontsource/montserrat';
 import Layout from './components/Layout';
+import Notification from './components/Notification/Notification';
 import { router } from './modules/router';
 import routes from './routes';
 import urls from './routes/urls';
@@ -28,3 +29,21 @@ const registerServiceWorker = async () => {
 };
 
 registerServiceWorker();
+
+window.addEventListener('online', () =>
+	Notification.open({
+		duration: 6,
+		title: 'Соединение восстановлено!',
+		description: 'С возвращением в интернет',
+		type: 'success',
+	}),
+);
+
+window.addEventListener('offline', () =>
+	Notification.open({
+		duration: 6,
+		title: 'Упс... соединение потеряно!',
+		description: 'Сайт работает в офлайн режиме',
+		type: 'error',
+	}),
+);
