@@ -42,10 +42,12 @@ class Router {
 		return noRepeatSlashes !== '/' ? noRepeatSlashes.replace(/\/+$/, '') : '/';
 	}
 	/**
-	 * Выполняет навигацию по указанному пути.
-	 * @param {string} path - Путь для навигации.
+	 * Выполняет навигацию по указанному пути
+	 * @param {string} path - Путь для навигации
+	 * @param {object} params - Параметры навигации
+	 * @param {string} params.pageTitle - Заголовок страницы
 	 */
-	navigate(path) {
+	navigate(path, { pageTitle = '' } = {}) {
 		const currentPath = window.history.state?.path;
 		path = this.normalizePath(path);
 
@@ -69,7 +71,7 @@ class Router {
 			return;
 		}
 
-		document.title = `Resto - ${this.routes[path]?.title || 'Страница не найдена'}`;
+		document.title = `Resto - ${pageTitle || this.routes[path]?.title || 'Страница не найдена'}`;
 
 		if (currentPath === path) {
 			this.handleLocationChange();
@@ -137,10 +139,39 @@ class Router {
 	 * Обрабатывает изменение местоположения, отображая соответствующий маршрут.
 	 */
 	handleLocationChange() {
-		const path = window.location.pathname;
-		let currentRoute = this.routes[path];
+		const params = {};
 
-		if (path === urls.base) {
+		const currentPath = window.location.pathname;
+		const urlSegments = currentPath.split('/').slice(1);
+
+		let currentRoute = Object.entries(this.routes).find((route) => {
+			const routeSegments = route[0].split('/').slice(1);
+
+			if (routeSegments.length !== urlSegments.length) {
+				return false;
+			}
+
+			const found = routeSegments.every((pathSegment, i) => {
+				return pathSegment === urlSegments[i] || pathSegment[0] === ':';
+			});
+
+			if (found) {
+				routeSegments.forEach((segment, i) => {
+					if (segment[0] === ':') {
+						const paramName = segment.slice(1);
+						params[paramName] = urlSegments[i];
+					}
+				});
+			}
+
+			return found;
+		});
+
+		if (currentRoute) {
+			currentRoute = currentRoute[1];
+		}
+
+		if (currentPath === urls.base) {
 			currentRoute = this.routes[urls.restaurants];
 		}
 
@@ -149,7 +180,7 @@ class Router {
 		const content = document.getElementById('content');
 
 		if (currentRoute) {
-			const page = new currentRoute.component(content);
+			const page = new currentRoute.component(content, params);
 			page.render();
 		}
 	}

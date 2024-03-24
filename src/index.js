@@ -1,5 +1,6 @@
 import '@fontsource/roboto';
 import '@fontsource/montserrat';
+import '@fontsource/inter';
 import Layout from './components/Layout';
 import { router } from './modules/router';
 import routes from './routes';

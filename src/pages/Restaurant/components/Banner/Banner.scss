@@ -1,0 +1,42 @@
+#restaurant-banner {
+	display: grid;
+	grid-template-columns: 45% 55%;
+
+	#info {
+		display: flex;
+		font-family: Montserrat, sans-serif;
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 20px 26px;
+		gap: 8px;
+		font-size: 14px;
+
+		#rating-container {
+			display: flex;
+			align-items: flex-start;
+			gap: 8px;
+			font-weight: 600;
+			font-size: 16px;
+			margin-top: auto;
+
+			#rating-value {
+				margin-right: 16px;
+			}
+		}
+	}
+
+	#banner-image {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 278px;
+		overflow: hidden;
+		border-radius: 10px;
+
+		img {
+			object-fit: cover;
+			width: 100%;
+			height: 100%;
+		}
+	}
+}

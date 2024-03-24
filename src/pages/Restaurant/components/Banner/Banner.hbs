@@ -1,0 +1,27 @@
+<div id="restaurant-banner">
+
+  <div id="info">
+
+		{{#if this.logo_url}}
+			<img src="{{this.logo_url}}" alt="" />
+		{{else}}
+			<h1>{{this.name}}</h1>
+		{{/if}}
+
+		<div id="description">{{this.long_description}}</div>
+
+		<div id="rating-container">
+			<img src="assets/rating-icon.svg" alt="" />
+			<span id="rating-value">{{this.rating}}</span>
+			<span>Отзывы</span>
+		</div>
+
+	</div>
+
+	<div id="banner-image">
+		{{#if this.img_url}}
+			<img src="{{this.img_url}}" alt="" />
+		{{/if}}
+	</div>
+
+</div>

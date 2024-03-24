@@ -1,5 +1,6 @@
 import Notification from '../components/Notification/Notification';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../constants';
+import restaurantInfo from '../mocks/restaurantInfo';
 import ajax from './ajax';
 
 /**
@@ -31,6 +32,21 @@ class Api {
 	 */
 	async getUserInfo(callback) {
 		const data = await ajax.get(`${this.#url}/user`, { showNotifyError: false });
+
+		callback(data);
+	}
+
+	/**
+	 * Метод для получения информации о ресторане
+	 * @param {number} id - id ресторана
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getRestaurantInfo(id, callback) {
+		let data = await ajax.get(`${this.#url}/restaurant/${id}`);
+
+		if (!data) {
+			data = restaurantInfo;
+		}
 
 		callback(data);
 	}
