@@ -1,5 +1,3 @@
-import addressIcon from '../../assets/address.svg';
-import cartIcon from '../../assets/cart.svg';
 import api from '../../modules/api';
 import urls from '../../routes/urls';
 import { localStorageHelper } from '../../utils';
@@ -77,7 +75,7 @@ class Header {
 				this.#navigate(urls.address);
 			},
 			content: user?.address || 'Укажите адрес доставки',
-			icon: user?.address ? '' : addressIcon,
+			icon: user?.address ? '' : 'address',
 			style: user?.address ? 'secondary' : 'primary',
 		});
 
@@ -88,7 +86,7 @@ class Header {
 			const cartButton = new Button(cartBlock, {
 				id: 'cart-button',
 				content: `${user.cart.total} ₽`,
-				icon: cartIcon,
+				icon: 'cart',
 			});
 
 			cartButton.render();

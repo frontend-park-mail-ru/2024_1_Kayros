@@ -145,7 +145,7 @@ class Modal {
 
 		const closeButton = new Button(modalContent, {
 			id: 'modal-close',
-			icon: 'assets/close.svg',
+			icon: 'close',
 			onClick: () => this.close(),
 			style: 'clear',
 		});
