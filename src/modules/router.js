@@ -168,7 +168,9 @@ class Router {
 
 		if (currentRoute) {
 			if (path === urls.address && content.children.length === 0) {
-				new this.routes[this.previousState || urls.restaurants].component(content).render();
+				const previousRoute = this.routes[this.previousState?.path || urls.restaurants];
+				const previousPage = new previousRoute.component(content);
+				previousPage.render();
 			}
 
 			const page = new currentRoute.component(content);

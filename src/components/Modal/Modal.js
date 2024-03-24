@@ -45,11 +45,11 @@ class Modal {
 		const buttonTop = rect.top;
 		const buttonLeft = rect.left + rect.width / 2;
 
-		const windowWidth = window.innerWidth,
-			windowHeight = window.innerHeight;
+		const windowWidth = window.innerWidth;
+		const windowHeight = window.innerHeight;
 
-		const modalWidth = modalContent.offsetWidth,
-			modalHeight = modalContent.offsetHeight;
+		const modalWidth = modalContent.offsetWidth;
+		const modalHeight = modalContent.offsetHeight;
 
 		const x = -(windowWidth / 2 - modalWidth / 2 - buttonLeft);
 		const y = -(windowHeight / 2 - modalHeight / 2 - buttonTop);
