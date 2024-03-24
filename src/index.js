@@ -1,4 +1,5 @@
 import '@fontsource/montserrat';
+import '@fontsource/inter';
 import Layout from './components/Layout';
 import Notification from './components/Notification/Notification';
 import { router } from './modules/router';
