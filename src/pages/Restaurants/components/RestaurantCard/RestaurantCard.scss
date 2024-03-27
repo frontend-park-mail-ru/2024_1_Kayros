@@ -5,6 +5,7 @@
 	padding: 16px;
 	width: 90%;
 	min-width: 290px;
+	max-width: 380px;
 }
 
 #card-content {
@@ -18,6 +19,7 @@
 	color: var(--text-color);
 	font-size: 20px;
 	font-weight: 600;
+	font-family: Montserrat, sans-serif;
 }
 
 #card-subtitle {
@@ -27,6 +29,7 @@
 	overflow: hidden;
 	color: var(--text-color);
 	font-size: 16px;
+	min-height: 40px;
 }
 
 #image-container {
@@ -34,7 +37,8 @@
 	align-items: center;
 	overflow: hidden;
 	background: var(--layout-bg-color);
-	height: 200px;
+	height: 70%;
+	max-height: 230px;
 	border-radius: 18px;
 
 	img {
