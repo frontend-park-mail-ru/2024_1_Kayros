@@ -27,7 +27,7 @@ class BackButton {
 			id: this.#id,
 			content: router.previousState ? 'Назад' : 'На главную',
 			style: 'clear',
-			icon: 'assets/back-arrow.svg',
+			icon: 'back-arrow',
 			onClick: () => router.back(),
 		});
 

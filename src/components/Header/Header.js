@@ -1,4 +1,3 @@
-import cartIcon from '../../assets/cart.svg';
 import api from '../../modules/api';
 import urls from '../../routes/urls';
 import { localStorageHelper } from '../../utils';
@@ -69,15 +68,25 @@ class Header {
 		await this.userData();
 		const user = localStorageHelper.getItem('user-info');
 
-		const address = document.getElementById('address');
-		address.innerHTML = user ? 'Тверская, д. 21' : '';
+		const addressBlock = document.getElementById('address');
+		const addressButton = new Button(addressBlock, {
+			id: 'address-button',
+			onClick: () => {
+				this.#navigate(urls.address);
+			},
+			content: user?.address || 'Укажите адрес доставки',
+			icon: user?.address ? '' : 'address',
+			style: user?.address ? 'secondary' : 'primary',
+		});
+
+		addressButton.render();
 
 		if (user?.cart && user.cart.total > 0) {
 			const cartBlock = document.getElementById('cart');
 			const cartButton = new Button(cartBlock, {
 				id: 'cart-button',
 				content: `${user.cart.total} ₽`,
-				icon: cartIcon,
+				icon: 'cart',
 			});
 
 			cartButton.render();

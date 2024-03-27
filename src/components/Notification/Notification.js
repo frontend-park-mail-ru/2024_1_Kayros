@@ -35,7 +35,7 @@ class Notification {
 		return template({
 			id: `${this.#id}-${this.#count}`,
 			position: this.#position,
-			icon: type === 'success' ? 'assets/success.svg' : 'assets/error.svg',
+			icon: type === 'success' ? 'success' : 'error',
 			...params,
 		});
 	}
@@ -210,7 +210,7 @@ class Notification {
 
 		const closeButton = new Button(notificationTitle, {
 			id: 'notification-close',
-			icon: 'assets/close.svg',
+			icon: 'close',
 			onClick: () => this.close(element),
 			style: 'clear',
 		});
