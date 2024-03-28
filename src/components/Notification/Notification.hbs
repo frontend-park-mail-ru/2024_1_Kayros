@@ -4,6 +4,9 @@
 		<div class="notification-title">
 			{{this.title}}
 		</div>
-		<div id="notification-description">{{this.description}}</div>
+
+		{{#if this.description}}
+			<div id="notification-description">{{this.description}}</div>
+		{{/if}}
 	</div>
 </div>
