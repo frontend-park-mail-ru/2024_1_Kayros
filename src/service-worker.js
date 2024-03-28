@@ -1,8 +1,12 @@
 const CACHE_NAME = 'resto_v1';
+const CACHE_URLS = ['/', '/index.html', '/styles.css', '/app.js', '/assets/'];
 
-const addResourcesToCache = async (resources) => {
+const preCacheResources = async (resources) => {
+	const fetchResponse = await fetch('/assets_filenames.txt');
+	const assets = await fetchResponse.json();
+
 	const cache = await caches.open(CACHE_NAME);
-	await cache.addAll(resources);
+	await cache.addAll([...resources, ...assets]);
 };
 
 const addResponseToCache = async (request, response) => {
@@ -45,23 +49,7 @@ const networkFirst = async (request) => {
 };
 
 self.addEventListener('install', (event) => {
-	event.waitUntil(
-		addResourcesToCache([
-			'/',
-			'/index.html',
-			'/styles.css',
-			'/app.js',
-			'/assets/',
-			'/assets/close.svg',
-			'/assets/success.svg',
-			'/assets/error.svg',
-			'/assets/back-arrow.svg',
-			'/assets/eye-close.svg',
-			'/assets/eye-open.svg',
-			'/assets/favicon.png',
-			'/assets/background.jpeg',
-		]),
-	);
+	event.waitUntil(preCacheResources(CACHE_URLS));
 });
 
 self.addEventListener('activate', async () => {

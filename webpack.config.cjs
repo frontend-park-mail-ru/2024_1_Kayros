@@ -1,14 +1,20 @@
+const fs = require('fs');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CreateFilePlugin = require('create-file-webpack');
 
 const buildPath = path.resolve(__dirname, 'dist');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 Dotenv.config({ path: './.env.development' });
+
+const assets = fs.readdirSync('src/assets/').map((filename) => {
+	return `"/assets/${filename}"`;
+});
 
 module.exports = {
 	entry: { app: path.resolve(__dirname, './src/index.js'), 'service-worker': './src/service-worker.js' },
@@ -75,6 +81,11 @@ module.exports = {
 			filename: 'styles.css',
 		}),
 		new CopyWebpackPlugin({ patterns: [{ from: 'src/assets', to: 'assets' }] }),
+		new CreateFilePlugin({
+			path: buildPath,
+			fileName: 'assets_filenames.txt',
+			content: `[${assets}]`,
+		}),
 	],
 
 	resolve: {
