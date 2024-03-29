@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -9,15 +10,21 @@ const CreateFilePlugin = require('create-file-webpack');
 const buildPath = path.resolve(__dirname, 'dist');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
+const dotenvFilename = isDevelopment ? './.env.development' : './.env.production';
 
-Dotenv.config({ path: './.env.development' });
+Dotenv.config({ path: dotenvFilename });
+
+const cacheEnable = process.env.CACHE_ENABLE === 'true';
 
 const assets = fs.readdirSync('src/assets/').map((filename) => {
 	return `"/assets/${filename}"`;
 });
 
 module.exports = {
-	entry: { app: path.resolve(__dirname, './src/index.js'), 'service-worker': './src/service-worker.js' },
+	entry: {
+		app: path.resolve(__dirname, './src/index.js'),
+		...(cacheEnable && { 'service-worker': './src/service-worker.js' }),
+	},
 	target: isDevelopment ? 'web' : 'browserslist',
 	output: {
 		path: buildPath,
@@ -85,6 +92,9 @@ module.exports = {
 			path: buildPath,
 			fileName: 'assets_filenames.txt',
 			content: `[${assets}]`,
+		}),
+		new webpack.DefinePlugin({
+			'process.env.CACHE_ENABLE': cacheEnable,
 		}),
 	],
 

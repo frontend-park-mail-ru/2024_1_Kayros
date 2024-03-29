@@ -15,20 +15,21 @@ const layout = new Layout(root);
 layout.render();
 
 router.addRoutes(routes);
-
 router.navigate(window.location.pathname);
 
-const registerServiceWorker = async () => {
-	if ('serviceWorker' in navigator) {
-		try {
-			await navigator.serviceWorker.register('service-worker.js', { scope: urls.base });
-		} catch (error) {
-			console.error(`ServiceWorker registration failed with ${error}`);
+if (process.env.CACHE_ENABLE) {
+	const registerServiceWorker = async () => {
+		if ('serviceWorker' in navigator) {
+			try {
+				await navigator.serviceWorker.register('service-worker.js', { scope: urls.base });
+			} catch (error) {
+				console.error(`ServiceWorker registration failed with ${error}`);
+			}
 		}
-	}
-};
+	};
 
-registerServiceWorker();
+	registerServiceWorker();
+}
 
 window.addEventListener('online', () =>
 	Notification.open({
