@@ -52,8 +52,8 @@ class Input {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
 		if (this.#button) {
-			const buttonBlock = document.getElementById('search-button');
-			const searchButton = new Button(buttonBlock, { id: 'header-search-button', content: 'Найти' });
+			const buttonBlock = this.#parent.querySelector('#search-button');
+			const searchButton = new Button(buttonBlock, { id: `${this.#id}-search-button`, content: this.#button });
 			searchButton.render();
 		}
 

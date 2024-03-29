@@ -1,0 +1,30 @@
+#find-address {
+	display: flex;
+	flex-direction: column;
+	padding: 30px;
+
+	#title {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		font-size: 28px;
+		font-weight: 600;
+		margin-bottom: 10px;
+	}
+
+	#subtitle {
+		font-size: 16px;
+		color: var(--subtitle);
+		margin-bottom: 30px;
+	}
+
+	#search-container {
+		margin-bottom: 24px;
+	}
+
+	#map-container {
+		border: 1px solid var(--subtitle);
+		border-radius: 14px;
+		height: 400px;
+	}
+}

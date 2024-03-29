@@ -4,6 +4,7 @@ const urls = {
 	restaurant: '/restaurants/:id',
 	signIn: '/signin',
 	signUp: '/signup',
+	address: '/address',
 };
 
 export default urls;

@@ -3,6 +3,8 @@
 
 	--red: #ff0000;
 
+	--subtitle: #818181;
+
 	--text-color: #2d2d2d;
 
 	--layout-border-radius: 30px;
@@ -38,6 +40,9 @@
 	--button-bg-disabled-hover: #cbcbcb;
 	--button-color-disabled: #9e9e9e;
 
+	--button-secondary-text-color: #000;
+	--button-secondary-bg: #fff;
+
 	--cart-button-color: #e3e3e3;
 
 	--address-bg: #fff;
@@ -67,6 +72,9 @@
 	--auth-background: #fff;
 
 	--loader-secondary: #fff;
+
+	--modal-wrapper-background: #00000078;
+	--modal-content-background: #fff;
 
 	--counter-add-bg-active: linear-gradient(-90deg, #b9b9b9, 40%, transparent);
 	--counter-remove-bg-active: linear-gradient(90deg, #b9b9b9, 40%, transparent);
