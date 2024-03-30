@@ -64,7 +64,7 @@ module.exports = {
 			},
 			{
 				context: ['/tiles'],
-				target: 'http://localhost:9000/resto-map-tiles/',
+				target: 'http://109.120.180.238/minio-api/map-tiles/',
 				pathRewrite: { '^/tiles': '' },
 			},
 		],
