@@ -1,5 +1,6 @@
 import urls from '../../routes/urls';
 import Input from '../Input/Input';
+import Map from '../Map';
 import Modal from '../Modal/Modal';
 import template from './AddressForm.hbs';
 import './AddressForm.scss';
@@ -29,6 +30,10 @@ class AddressForm {
 		});
 
 		addressInput.render();
+
+		const mapContainer = modalContent.querySelector('#address-map-container');
+		const map = new Map(mapContainer);
+		map.render();
 	}
 }
 

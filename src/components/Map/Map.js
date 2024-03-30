@@ -89,8 +89,10 @@ class Map {
 	 * @param {HTMLElement} map - карта
 	 */
 	zoom(event, map) {
-		const currentX = (event.clientX - this.indentLeft) / this.scale;
-		const currentY = (event.clientY - this.indentTop) / this.scale;
+		const rect = this.#parent.getBoundingClientRect();
+
+		const currentX = (event.clientX - rect.left - this.indentLeft) / this.scale;
+		const currentY = (event.clientY - rect.top - this.indentTop) / this.scale;
 
 		const delta = -event.deltaY;
 
@@ -104,8 +106,8 @@ class Map {
 
 		this.scale = Math.min(this.scale, MAX_ZOOM);
 
-		this.indentLeft = event.clientX - currentX * this.scale;
-		this.indentTop = event.clientY - currentY * this.scale;
+		this.indentLeft = event.clientX - rect.left - currentX * this.scale;
+		this.indentTop = event.clientY - rect.top - currentY * this.scale;
 
 		this.transform(map);
 	}
@@ -151,6 +153,8 @@ class Map {
 		};
 
 		map.onwheel = (event) => {
+			event.preventDefault();
+
 			this.centerPoint = {
 				x: window.innerWidth / 2 - this.indentLeft,
 				y: window.innerHeight / 2 - this.indentTop,

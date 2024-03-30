@@ -22,9 +22,9 @@
 		margin-bottom: 24px;
 	}
 
-	#map-container {
-		border: 1px solid var(--subtitle);
+	#address-map-container {
 		border-radius: 14px;
 		height: 400px;
+		overflow: hidden;
 	}
 }
