@@ -78,8 +78,13 @@ class Router {
 
 		if (
 			(currentPath === urls.signIn && path === urls.signUp) ||
-			(currentPath === urls.signUp && path === urls.signIn)
+			(currentPath === urls.signUp && path === urls.signIn) ||
+			path === urls.address
 		) {
+			if (path === urls.address) {
+				this.previousState = window.history?.state;
+			}
+
 			window.history.replaceState({ path }, '', path);
 		} else {
 			this.previousState = window.history?.state;
@@ -87,6 +92,17 @@ class Router {
 		}
 
 		this.handleLocationChange();
+	}
+
+	/**
+	 *
+	 */
+	navigateFromModal() {
+		const previousPath = this.previousState?.path || urls.restaurants;
+
+		window.history.replaceState({ path: previousPath }, '', previousPath);
+
+		document.title = `Resto - ${this.routes[previousPath]?.title || 'Страница не найдена'}`;
 	}
 
 	/**
@@ -109,7 +125,9 @@ class Router {
 		const header = document.getElementById('header');
 		const oldContent = document.getElementById('content');
 
-		oldContent?.remove();
+		if (window.location.pathname !== urls.address) {
+			oldContent?.remove();
+		}
 
 		let content;
 
@@ -149,6 +167,12 @@ class Router {
 		const content = document.getElementById('content');
 
 		if (currentRoute) {
+			if (path === urls.address && content.children.length === 0) {
+				const previousRoute = this.routes[this.previousState?.path || urls.restaurants];
+				const previousPage = new previousRoute.component(content);
+				previousPage.render();
+			}
+
 			const page = new currentRoute.component(content);
 			page.render();
 		}

@@ -1,4 +1,3 @@
-import '@fontsource/roboto';
 import '@fontsource/montserrat';
 import Layout from './components/Layout';
 import { router } from './modules/router';

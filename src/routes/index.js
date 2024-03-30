@@ -1,3 +1,4 @@
+import AddressForm from '../components/AddressForm/AddressForm';
 import Map from '../components/Map/Map';
 import NotFound from '../pages/NotFound';
 import RestaurantsPage from '../pages/Restaurants';
@@ -17,6 +18,10 @@ const routes = {
 	[urls.signUp]: {
 		title: 'Регистрация',
 		component: SignUpPage,
+	},
+	[urls.address]: {
+		title: 'Поиск адреса',
+		component: AddressForm,
 	},
 	[urls.map]: {
 		title: 'Карта',

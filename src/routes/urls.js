@@ -3,6 +3,7 @@ const urls = {
 	restaurants: '/restaurants',
 	signIn: '/signin',
 	signUp: '/signup',
+	address: '/address',
 	map: '/map',
 };
 
