@@ -74,6 +74,8 @@ class Map {
 	 * @param {HTMLElement} map - карты
 	 */
 	dragDrop(event, map) {
+		const mapPinIcon = document.querySelector('#address-map-pin');
+
 		const dragStartX = event.clientX - this.indentLeft;
 		const dragStartY = event.clientY - this.indentTop;
 
@@ -85,6 +87,7 @@ class Map {
 		}, 100);
 
 		document.onmousemove = (event) => {
+			mapPinIcon?.classList.add('move');
 			clearTimeout(mouseMoveTimer);
 			mouseMoveTimer = setTimeout(() => {
 				mouseStopped = true;
@@ -106,6 +109,7 @@ class Map {
 
 			if (mouseStopped) {
 				this.drawTiles(map);
+				mapPinIcon?.classList.remove('move');
 				return;
 			}
 
@@ -134,6 +138,9 @@ class Map {
 
 		setTimeout(() => {
 			this.drawTiles(map);
+
+			const mapPinIcon = document.querySelector('#address-map-pin');
+			mapPinIcon?.classList.remove('move');
 		}, 200);
 	}
 

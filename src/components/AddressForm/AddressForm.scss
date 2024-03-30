@@ -23,8 +23,25 @@
 	}
 
 	#address-map-container {
+		position: relative;
 		border-radius: 14px;
 		height: 400px;
 		overflow: hidden;
+
+		img {
+			position: absolute;
+			pointer-events: none;
+			transition: 0.2s;
+			left: 50%;
+			top: 50%;
+			transform: translateX(-50%);
+			transform: translateY(-50%);
+			z-index: 10;
+
+			&.move {
+				padding-bottom: 20px;
+				box-shadow: var(--address-pin-box-shadow);
+			}
+		}
 	}
 }
