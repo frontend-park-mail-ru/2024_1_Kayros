@@ -22,6 +22,7 @@ class Map {
 		this.indentLeft = -startX;
 		this.indentTop = -startY;
 		this.scale = startZoom;
+		this.dragTime = 0;
 	}
 
 	/**
@@ -40,8 +41,10 @@ class Map {
 	/**
 	 * Трансформация карты
 	 * @param {HTMLElement} map - карта
+	 * @param {object} params - параметры трарсформации
+	 * @param {number} params.duration - длительность трансформации
 	 */
-	transform(map) {
+	transform(map, { duration = 0 } = {}) {
 		if (this.indentLeft > 0) {
 			this.indentLeft = 0;
 		}
@@ -58,7 +61,11 @@ class Map {
 			this.indentTop = -map.offsetHeight * this.scale + window.innerHeight;
 		}
 
-		map.style.transform = `translate(${this.indentLeft}px, ${this.indentTop}px) scale(${this.scale})`;
+		map.animate([{ transform: `translate(${this.indentLeft}px, ${this.indentTop}px) scale(${this.scale})` }], {
+			fill: 'forwards',
+			easing: 'cubic-bezier(.05,.34,.45,1)',
+			duration,
+		});
 	}
 
 	/**
@@ -70,7 +77,19 @@ class Map {
 		const dragStartX = event.clientX - this.indentLeft;
 		const dragStartY = event.clientY - this.indentTop;
 
+		let mouseMoveTimer;
+		let mouseStopped = false;
+
+		const scrollInterval = setInterval(() => {
+			this.dragTime += 0.1;
+		}, 100);
+
 		document.onmousemove = (event) => {
+			clearTimeout(mouseMoveTimer);
+			mouseMoveTimer = setTimeout(() => {
+				mouseStopped = true;
+			}, 50);
+
 			this.indentLeft = event.clientX - dragStartX;
 			this.indentTop = event.clientY - dragStartY;
 
@@ -79,8 +98,43 @@ class Map {
 
 		document.onmouseup = () => {
 			document.onmousemove = null;
-			this.drawTiles(map);
+
+			const dragStopX = event.clientX - this.indentLeft;
+			const dragStopY = event.clientY - this.indentTop;
+
+			clearInterval(scrollInterval);
+
+			if (mouseStopped) {
+				this.drawTiles(map);
+				return;
+			}
+
+			this.afterDragScroll(map, dragStartX - dragStopX, dragStartY - dragStopY);
 		};
+	}
+
+	/**
+	 * Продолжительный скролл карты
+	 * @param {HTMLElement} map - карта
+	 * @param {number} scrollDistanceX - длина скролла по оси X в пикселях
+	 * @param {number} scrollDistanceY - длина скролла по оси Y в пикселях
+	 */
+	afterDragScroll(map, scrollDistanceX, scrollDistanceY) {
+		if ((!scrollDistanceX && !scrollDistanceY) || this.dragTime <= 0.1) return;
+
+		let scrollSpeedX = scrollDistanceX / this.dragTime;
+		let scrollSpeedY = scrollDistanceY / this.dragTime;
+
+		this.indentLeft += scrollSpeedX * 0.2;
+		this.indentTop += scrollSpeedY * 0.2;
+
+		this.transform(map, { duration: 200 });
+
+		this.dragTime = 0;
+
+		setTimeout(() => {
+			this.drawTiles(map);
+		}, 200);
 	}
 
 	/**
