@@ -32,7 +32,7 @@ class AddressForm {
 		addressInput.render();
 
 		const mapContainer = modalContent.querySelector('#address-map-container');
-		const map = new Map(mapContainer);
+		const map = new Map(mapContainer, { fullPage: false });
 		map.render();
 	}
 }

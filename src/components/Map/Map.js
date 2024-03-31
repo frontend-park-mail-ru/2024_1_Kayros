@@ -16,12 +16,14 @@ class Map {
 	 * @param {number} params.startX - начальная точка по оси X
 	 * @param {number} params.startY - начальная точка по оси Y
 	 * @param {number} params.startZoom - начальное приближение
+	 * @param {boolean} params.fullPage - карта на всю страницу
 	 */
-	constructor(parent, { startX = 0, startY = 0, startZoom = 1 } = {}) {
+	constructor(parent, { startX = 0, startY = 0, startZoom = 1, fullPage = true } = {}) {
 		this.#parent = parent;
 		this.indentLeft = -startX;
 		this.indentTop = -startY;
 		this.scale = startZoom;
+		this.fullPage = fullPage;
 		this.dragTime = 0;
 	}
 
@@ -178,20 +180,47 @@ class Map {
 	}
 
 	/**
+	 * Функция для приближения и удаления карты из центра
+	 * @param {HTMLElement} map - карта
+	 * @param {HTMLElement} mapContainer - контейнер
+	 * @param {object} params - параметры
+	 * @param {'in' | 'out'} params.direction - направление
+	 * @param {DOMRect} params.rect - информация о родительском элементе
+	 */
+	buttonZoom(map, mapContainer, { direction, rect }) {
+		const currentX = (rect.left + mapContainer.offsetWidth / 2 - rect.left - this.indentLeft) / this.scale;
+		const currentY = (rect.top + mapContainer.offsetHeight / 2 - rect.top - this.indentTop) / this.scale;
+
+		if (direction === 'in') {
+			this.scale *= 1.8;
+			this.scale = Math.min(this.scale, MAX_ZOOM);
+		} else {
+			this.scale /= 1.8;
+			this.scale = Math.max(this.scale, 0.4);
+		}
+
+		this.indentLeft = rect.left + mapContainer.offsetWidth / 2 - rect.left - currentX * this.scale;
+		this.indentTop = rect.top + mapContainer.offsetHeight / 2 - rect.top - currentY * this.scale;
+
+		this.transform(map, { duration: 100 });
+	}
+
+	/**
 	 * Функция для отрисовки фрагментов карты
 	 * @param {HTMLElement} map - карта
 	 */
 	drawTiles(map) {
 		const ctx = map.getContext('2d');
+		const mapContainer = document.getElementById('map-container');
 
 		let zoom = 15;
 		const tileSize = 256;
 
 		const startX = 19784 + Math.floor(-this.indentLeft / tileSize / this.scale) - 1;
-		const endX = startX + Math.floor(window.innerWidth / tileSize / this.scale) + 2;
+		const endX = startX + Math.floor(mapContainer.offsetWidth / tileSize / this.scale) + 2;
 
 		const startY = 10218 + Math.floor(-this.indentTop / tileSize / this.scale) - 1;
-		const endY = startY + Math.floor(window.innerHeight / tileSize / this.scale) + 2;
+		const endY = startY + Math.floor(mapContainer.offsetHeight / tileSize / this.scale) + 2;
 
 		for (let i = startX; i <= endX; i++) {
 			for (let j = startY; j <= endY; j++) {
@@ -206,8 +235,9 @@ class Map {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('beforeend', template());
+		this.#parent.insertAdjacentHTML('beforeend', template({ class: this.fullPage && 'fullpage' }));
 
+		const mapContainer = document.getElementById('map-container');
 		const map = document.getElementById('canvas-map');
 
 		map.style.transform = `translate(${this.indentLeft}px, ${this.indentTop}px) scale(${this.scale}) `;
@@ -220,15 +250,23 @@ class Map {
 		map.onwheel = (event) => {
 			event.preventDefault();
 
-			this.centerPoint = {
-				x: window.innerWidth / 2 - this.indentLeft,
-				y: window.innerHeight / 2 - this.indentTop,
-			};
-
 			this.zoom(event, map);
 		};
 
 		this.drawTiles(map);
+
+		const zoomInButton = document.querySelector('#increase-zoom-button');
+		const zoomOutButton = document.querySelector('#decrease-zoom-button');
+
+		const rect = this.#parent.getBoundingClientRect();
+
+		zoomInButton.onclick = () => {
+			this.buttonZoom(map, mapContainer, { direction: 'in', rect });
+		};
+
+		zoomOutButton.onclick = () => {
+			this.buttonZoom(map, mapContainer, { direction: 'out', rect });
+		};
 	}
 }
 
