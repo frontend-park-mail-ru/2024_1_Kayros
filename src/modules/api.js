@@ -100,9 +100,9 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async signout(callback) {
-		const { error } = await ajax.post(`${this.#url}/signout`);
+		const { data, error } = await ajax.post(`${this.#url}/signout`);
 
-		if (error) {
+		if (error || !data) {
 			Notification.open({
 				duration: 3,
 				title: ERROR_MESSAGES.SIGNOUT,
