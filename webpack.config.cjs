@@ -10,11 +10,10 @@ const CreateFilePlugin = require('create-file-webpack');
 const buildPath = path.resolve(__dirname, 'dist');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
-const dotenvFilename = isDevelopment ? './.env.development' : './.env.production';
 
-Dotenv.config({ path: dotenvFilename });
+Dotenv.config({ path: './.env.development' });
 
-const cacheEnable = process.env.CACHE_ENABLE === 'true';
+const cacheEnable = !isDevelopment || process.env.CACHE_ENABLE;
 
 const assets = fs.readdirSync('src/assets/').map((filename) => {
 	return `"/assets/${filename}"`;
