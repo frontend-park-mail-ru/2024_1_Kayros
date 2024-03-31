@@ -124,7 +124,12 @@ class Map {
 	 * @param {number} scrollDistanceY - длина скролла по оси Y в пикселях
 	 */
 	afterDragScroll(map, scrollDistanceX, scrollDistanceY) {
-		if ((!scrollDistanceX && !scrollDistanceY) || this.dragTime <= 0.1) return;
+		const mapPinIcon = document.querySelector('#address-map-pin');
+
+		if ((!scrollDistanceX && !scrollDistanceY) || this.dragTime < 0.1) {
+			mapPinIcon?.classList.remove('move');
+			return;
+		}
 
 		let scrollSpeedX = scrollDistanceX / this.dragTime;
 		let scrollSpeedY = scrollDistanceY / this.dragTime;
@@ -139,7 +144,6 @@ class Map {
 		setTimeout(() => {
 			this.drawTiles(map);
 
-			const mapPinIcon = document.querySelector('#address-map-pin');
 			mapPinIcon?.classList.remove('move');
 		}, 200);
 	}
