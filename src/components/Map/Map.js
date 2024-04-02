@@ -8,6 +8,7 @@ const MAX_ZOOM = 20;
  */
 class Map {
 	#parent;
+	#container;
 
 	/**
 	 * Конструктор класса
@@ -55,12 +56,12 @@ class Map {
 			this.indentTop = 0;
 		}
 
-		if (this.indentLeft < -map.offsetWidth * this.scale + window.innerWidth) {
-			this.indentLeft = -map.offsetWidth * this.scale + window.innerWidth;
+		if (this.indentLeft < -map.offsetWidth * this.scale + this.#container.offsetWidth) {
+			this.indentLeft = -map.offsetWidth * this.scale + this.#container.offsetWidth;
 		}
 
-		if (this.indentTop < -map.offsetHeight * this.scale + window.innerHeight) {
-			this.indentTop = -map.offsetHeight * this.scale + window.innerHeight;
+		if (this.indentTop < -map.offsetHeight * this.scale + this.#container.offsetHeight) {
+			this.indentTop = -map.offsetHeight * this.scale + this.#container.offsetHeight;
 		}
 
 		map.animate([{ transform: `translate(${this.indentLeft}px, ${this.indentTop}px) scale(${this.scale})` }], {
@@ -167,7 +168,7 @@ class Map {
 			this.scale *= 1.03;
 		}
 
-		if (delta < 0 && (map.offsetWidth * this.scale) / 1.03 > window.innerWidth) {
+		if (delta < 0 && (map.offsetWidth * this.scale) / 1.03 > this.#container.offsetWidth) {
 			this.scale /= 1.03;
 		}
 
@@ -182,25 +183,24 @@ class Map {
 	/**
 	 * Функция для приближения и удаления карты из центра
 	 * @param {HTMLElement} map - карта
-	 * @param {HTMLElement} mapContainer - контейнер
 	 * @param {object} params - параметры
 	 * @param {'in' | 'out'} params.direction - направление
-	 * @param {DOMRect} params.rect - информация о родительском элементе
 	 */
-	buttonZoom(map, mapContainer, { direction, rect }) {
-		const currentX = (rect.left + mapContainer.offsetWidth / 2 - rect.left - this.indentLeft) / this.scale;
-		const currentY = (rect.top + mapContainer.offsetHeight / 2 - rect.top - this.indentTop) / this.scale;
+	buttonZoom(map, { direction }) {
+		const currentX = (this.#container.offsetWidth / 2 - this.indentLeft) / this.scale;
+		const currentY = (this.#container.offsetHeight / 2 - this.indentTop) / this.scale;
 
 		if (direction === 'in') {
 			this.scale *= 1.8;
 			this.scale = Math.min(this.scale, MAX_ZOOM);
 		} else {
-			this.scale /= 1.8;
-			this.scale = Math.max(this.scale, 0.4);
+			if ((map.offsetWidth * this.scale) / 1.8 > this.#container.offsetWidth) {
+				this.scale /= 1.8;
+			}
 		}
 
-		this.indentLeft = rect.left + mapContainer.offsetWidth / 2 - rect.left - currentX * this.scale;
-		this.indentTop = rect.top + mapContainer.offsetHeight / 2 - rect.top - currentY * this.scale;
+		this.indentLeft = this.#container.offsetWidth / 2 - currentX * this.scale;
+		this.indentTop = this.#container.offsetHeight / 2 - currentY * this.scale;
 
 		this.transform(map, { duration: 100 });
 	}
@@ -211,16 +211,15 @@ class Map {
 	 */
 	drawTiles(map) {
 		const ctx = map.getContext('2d');
-		const mapContainer = document.getElementById('map-container');
 
 		let zoom = 15;
 		const tileSize = 256;
 
 		const startX = 19784 + Math.floor(-this.indentLeft / tileSize / this.scale) - 1;
-		const endX = startX + Math.floor(mapContainer.offsetWidth / tileSize / this.scale) + 2;
+		const endX = startX + Math.floor(this.#container.offsetWidth / tileSize / this.scale) + 2;
 
 		const startY = 10218 + Math.floor(-this.indentTop / tileSize / this.scale) - 1;
-		const endY = startY + Math.floor(mapContainer.offsetHeight / tileSize / this.scale) + 2;
+		const endY = startY + Math.floor(this.#container.offsetHeight / tileSize / this.scale) + 2;
 
 		for (let i = startX; i <= endX; i++) {
 			for (let j = startY; j <= endY; j++) {
@@ -237,7 +236,7 @@ class Map {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', template({ class: this.fullPage && 'fullpage' }));
 
-		const mapContainer = document.getElementById('map-container');
+		this.#container = document.getElementById('map-container');
 		const map = document.getElementById('canvas-map');
 
 		map.style.transform = `translate(${this.indentLeft}px, ${this.indentTop}px) scale(${this.scale}) `;
@@ -258,14 +257,12 @@ class Map {
 		const zoomInButton = document.querySelector('#increase-zoom-button');
 		const zoomOutButton = document.querySelector('#decrease-zoom-button');
 
-		const rect = this.#parent.getBoundingClientRect();
-
 		zoomInButton.onclick = () => {
-			this.buttonZoom(map, mapContainer, { direction: 'in', rect });
+			this.buttonZoom(map, { direction: 'in' });
 		};
 
 		zoomOutButton.onclick = () => {
-			this.buttonZoom(map, mapContainer, { direction: 'out', rect });
+			this.buttonZoom(map, { direction: 'out' });
 		};
 	}
 }

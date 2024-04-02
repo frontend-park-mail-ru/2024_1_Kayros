@@ -71,12 +71,11 @@ module.exports = {
 		proxy: [
 			{
 				context: ['/api'],
-				target: 'http://109.120.180.238:8000',
-				pathRewrite: { '^/api': '' },
+				target: 'https://109.120.180.238',
 			},
 			{
 				context: ['/tiles'],
-				target: 'http://109.120.180.238/minio-api/map-tiles/',
+				target: 'https://109.120.180.238/minio-api/map-tiles/',
 				pathRewrite: { '^/tiles': '' },
 			},
 		],
