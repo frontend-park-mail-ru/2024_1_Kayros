@@ -3,6 +3,9 @@
 	display: flex;
 	height: 100%;
 	overflow: hidden;
+	background: var(--map-background-color);
+	background-image: radial-gradient(var(--map-background-dot-color) 1px, transparent 0);
+	background-size: 24px 24px;
 
 	canvas {
 		position: absolute;
