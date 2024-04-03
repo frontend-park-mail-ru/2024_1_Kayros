@@ -1,5 +1,5 @@
 import Notification from '../components/Notification/Notification';
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../constants';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_KEY } from '../constants';
 import ajax from './ajax';
 
 /**
@@ -121,6 +121,48 @@ class Api {
 		});
 
 		callback();
+	}
+
+	/**
+	 * Метод для получения саджестов
+	 * @param {object} text - слово, по которому создаются саджесты
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getSujests(text, callback) {
+		const { results } = await ajax.get(
+			`https://suggest-maps.yandex.ru/v1/suggest?text=${text}&apikey=${YANDEX_API_KEY}`,
+		);
+
+		callback(results);
+	}
+
+	/**
+	 * Метод для добавления адреса
+	 * @param {object} body - объект, посылаемый в запросе
+	 * @param {string} body.address - адрес пользователя
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async saveAddress(body, callback) {
+		const { data, error } = await ajax.post(`${this.#url}/address`, body);
+
+		if (data && !error) {
+			Notification.open({
+				duration: 3,
+				title: SUCCESS_MESSAGES.address.title,
+				description: SUCCESS_MESSAGES.address.description,
+				type: 'success',
+			});
+
+			callback(data);
+			return;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.ADDRESS,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
 	}
 }
 

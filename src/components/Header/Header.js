@@ -2,10 +2,10 @@ import api from '../../modules/api';
 import urls from '../../routes/urls';
 import { localStorageHelper } from '../../utils';
 import Button from '../Button';
-import Dropdown from '../Dropdown/Dropdown';
 import Input from '../Input';
 import Logo from '../Logo';
 import Profile from '../Profile';
+import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 import template from './Header.hbs';
 import './Header.scss';
 
@@ -112,15 +112,15 @@ class Header {
 		const profile = document.getElementById('profile');
 
 		if (profile) {
-			const dropdown = new Dropdown(profile, {
-				id: 'dropdown-profile',
+			const profileDropdown = new ProfileDropdown(profile, {
+				id: 'profile-dropdown-profile',
 				onExit: () => {
 					headerElement.remove();
 					this.render();
 				},
 			});
 
-			dropdown.render();
+			profileDropdown.render();
 		}
 
 		window.addEventListener('scroll', () => {

@@ -1,7 +1,7 @@
 import api from '../../modules/api';
 import Button from '../Button/Button';
-import template from './Dropdown.hbs';
-import './Dropdown.scss';
+import template from './ProfileDropdown.hbs';
+import './ProfileDropdown.scss';
 import { OPEN_PROFILE_SLIDE_OPTIONS, CLOSE_PROFILE_SLIDE_OPTIONS } from './constants';
 
 const dropdownItems = [{ name: 'Выйти', exit: true }];
@@ -9,7 +9,7 @@ const dropdownItems = [{ name: 'Выйти', exit: true }];
 /**
  * Раскрывающееся окошко
  */
-class Dropdown {
+class ProfileDropdown {
 	#parent;
 	#id;
 	#onExit;
@@ -21,7 +21,7 @@ class Dropdown {
 	 * @param {number} params.id - идентификатор
 	 * @param {void} params.onExit - функция, выполняемая при выходе пользователя
 	 */
-	constructor(parent, { id = 'dropdown', onExit }) {
+	constructor(parent, { id = 'profile-dropdown', onExit }) {
 		this.#parent = parent;
 		this.#id = id;
 		this.#onExit = onExit;
@@ -39,7 +39,7 @@ class Dropdown {
 		name.style.opacity = 1;
 		name.style.pointerEvents = 'all';
 
-		element.className = 'dropdown dropdown-open';
+		element.className = 'profile-dropdown profile-dropdown-open';
 
 		this.isOpen = true;
 		this.#parent.animate(...OPEN_PROFILE_SLIDE_OPTIONS);
@@ -56,7 +56,7 @@ class Dropdown {
 		name.style.opacity = 0;
 		name.style.pointerEvents = 'none';
 
-		element.className = 'dropdown';
+		element.className = 'profile-dropdown';
 
 		this.isOpen = false;
 		this.#parent.animate(...CLOSE_PROFILE_SLIDE_OPTIONS);
@@ -68,7 +68,7 @@ class Dropdown {
 	 */
 	getHTML() {
 		return template({
-			open: this.isOpen ? 'dropdown-open' : '',
+			open: this.isOpen ? 'profile-dropdown-open' : '',
 			id: this.#id,
 			items: dropdownItems,
 		});
@@ -80,8 +80,8 @@ class Dropdown {
 	handleExit() {
 		localStorage.removeItem('user-info');
 
-		const dropdown = document.getElementById(this.#id);
-		this.close(dropdown);
+		const profileDropdown = document.getElementById(this.#id);
+		this.close(profileDropdown);
 
 		this.#onExit();
 	}
@@ -92,9 +92,9 @@ class Dropdown {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const dropdown = document.getElementById(this.#id);
+		const profileDropdown = document.getElementById(this.#id);
 
-		const link = dropdown.querySelector('.dropdown-item');
+		const link = profileDropdown.querySelector('.profile-dropdown-item');
 
 		const exitButton = new Button(link, {
 			id: 'exit-button',
@@ -108,16 +108,16 @@ class Dropdown {
 		this.#parent.addEventListener('click', (event) => {
 			event.stopPropagation();
 
-			this.open(dropdown);
+			this.open(profileDropdown);
 		});
 
 		window.addEventListener('click', () => {
-			this.close(dropdown);
+			this.close(profileDropdown);
 		});
 
 		const closeOnEsc = (event) => {
 			if (event.key === 'Escape') {
-				this.close(dropdown);
+				this.close(profileDropdown);
 			}
 		};
 
@@ -125,4 +125,4 @@ class Dropdown {
 	}
 }
 
-export default Dropdown;
+export default ProfileDropdown;

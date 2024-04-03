@@ -5,7 +5,7 @@
 	overflow: hidden;
 	background: var(--map-background-color);
 	background-image: radial-gradient(var(--map-background-dot-color) 1px, transparent 0);
-	background-size: 24px 24px;
+	background-size: 18px 18px;
 
 	canvas {
 		position: absolute;
@@ -35,6 +35,7 @@
 		flex-direction: column;
 		box-shadow: var(--map-controls-box-shadow);
 		border-radius: 8px;
+		min-width: 34px;
 
 		button {
 			border: 1px solid var(--map-controls-border-color);

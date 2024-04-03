@@ -3,6 +3,7 @@ export const ERROR_MESSAGES = {
 	LOGIN: 'Не удалось войти',
 	SIGNUP: 'Не удалось создать аккаунт',
 	SIGNOUT: 'Не удалось выйти из аккаунта',
+	ADDRESS: 'Не удалось добавить адрес',
 };
 
 export const SUCCESS_MESSAGES = {
@@ -21,6 +22,10 @@ export const SUCCESS_MESSAGES = {
 	repeatLoginTry: {
 		title: 'Вы уже вошли в аккаунт',
 		description: 'Еще раз входить не требуется!',
+	},
+	address: {
+		title: 'Адрес успешно сохранен',
+		description: 'Осталось лишь заказать',
 	},
 };
 
@@ -76,3 +81,5 @@ export const INVALID_PASSWORD_CHAR_REGEX = /[^A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\
 export const NAME_REGEX = /^[a-zA-Zа-яА-ЯёЁ][a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/;
 
 export const INVALID_NAME_CHAR_REGEX = /[^a-zA-Zа-яА-ЯёЁ0-9]/;
+
+export const YANDEX_API_KEY = 'API_KEY';

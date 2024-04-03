@@ -1,0 +1,29 @@
+.dropdown {
+	& > div + div {
+		border-top: 1px solid var(--sujests-dropdown-border);
+	}
+}
+
+.dropdown-item {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 40px;
+	padding: 8px 10px;
+	cursor: pointer;
+
+	#item-subtitle {
+		font-size: 14px;
+		color: var(--sujests-dropdown-subtitle-color);
+	}
+
+	&:hover {
+		#item-title {
+			color: var(--sujests-dropdown-title-color-hover);
+		}
+
+		#item-subtitle {
+			color: var(--sujests-dropdown-subtitle-color-hover);
+		}
+	}
+}
