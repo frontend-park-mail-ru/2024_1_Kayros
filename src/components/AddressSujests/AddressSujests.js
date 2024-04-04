@@ -116,6 +116,8 @@ class AddressSujests {
 		const input = searchContainer.querySelector('input');
 		const dropdown = sujestsContainer.querySelector('.dropdown-container');
 
+		let stopTyping;
+
 		input.onblur = () => {
 			dropdown.classList.remove('dropdown-open');
 			this.open = false;
@@ -140,19 +142,23 @@ class AddressSujests {
 		};
 
 		input.oninput = (event) => {
-			if (!this.open && event.target.value) {
-				this.open = true;
-				dropdown.classList.add('dropdown-open');
-			}
+			clearTimeout(stopTyping);
 
-			if (this.open && !event.target.value) {
-				this.open = false;
-				dropdown.classList.remove('dropdown-open');
-			}
+			stopTyping = setTimeout(() => {
+				if (!this.open && event.target.value) {
+					this.open = true;
+					dropdown.classList.add('dropdown-open');
+				}
 
-			if (event.target.value) {
-				this.getData(event.target.value);
-			}
+				if (this.open && !event.target.value) {
+					this.open = false;
+					dropdown.classList.remove('dropdown-open');
+				}
+
+				if (event.target.value) {
+					this.getData(event.target.value);
+				}
+			}, 200);
 		};
 	}
 }
