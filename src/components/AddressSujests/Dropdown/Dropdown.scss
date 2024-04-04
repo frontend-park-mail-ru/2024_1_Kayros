@@ -1,6 +1,4 @@
 .dropdown {
-	min-height: 40px;
-
 	& > div + div {
 		border-top: 1px solid var(--sujests-dropdown-border);
 	}
@@ -13,6 +11,11 @@
 	height: 40px;
 	padding: 8px 10px;
 	cursor: pointer;
+
+	&.disabled {
+		pointer-events: none;
+		cursor: default;
+	}
 
 	#item-subtitle {
 		font-size: 14px;
@@ -28,4 +31,13 @@
 			color: var(--sujests-dropdown-subtitle-color-hover);
 		}
 	}
+}
+
+.address-not-found {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+	padding: 26px 0 16px;
 }

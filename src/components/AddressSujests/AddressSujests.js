@@ -74,6 +74,7 @@ class AddressSujests {
 				});
 
 				input.value = currentItem.title.text;
+				input.blur();
 				this.address = currentItem.title.text;
 			},
 		});
@@ -118,6 +119,12 @@ class AddressSujests {
 
 		let stopTyping;
 
+		const clearIcon = searchContainer.querySelector('#clear-icon');
+
+		clearIcon.onclick = () => {
+			input.value = '';
+		};
+
 		input.onblur = () => {
 			dropdown.classList.remove('dropdown-open');
 			this.open = false;
@@ -132,6 +139,14 @@ class AddressSujests {
 		};
 
 		input.onclick = (event) => {
+			event.stopPropagation();
+		};
+
+		dropdown.onmousedown = (event) => {
+			event.preventDefault();
+		};
+
+		dropdown.onclick = (event) => {
 			event.stopPropagation();
 		};
 

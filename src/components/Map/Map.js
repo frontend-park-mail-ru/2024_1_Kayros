@@ -26,6 +26,7 @@ class Map {
 		this.scale = startZoom;
 		this.fullPage = fullPage;
 		this.dragTime = 0;
+		this.open = true;
 	}
 
 	/**
@@ -34,9 +35,10 @@ class Map {
 	 * @returns {Promise} - изображение
 	 */
 	async loadImage(url) {
-		return new Promise((resolve) => {
+		return new Promise((resolve, reject) => {
 			const img = new Image();
 			img.onload = () => resolve(img);
+			img.onerror = () => reject('');
 			img.src = url;
 		});
 	}
@@ -209,7 +211,7 @@ class Map {
 	 * Функция для отрисовки фрагментов карты
 	 * @param {HTMLElement} map - карта
 	 */
-	drawTiles(map) {
+	async drawTiles(map) {
 		const ctx = map.getContext('2d');
 
 		let zoom = 15;
@@ -223,9 +225,14 @@ class Map {
 
 		for (let i = startX; i <= endX; i++) {
 			for (let j = startY; j <= endY; j++) {
-				this.loadImage(`tiles/${zoom}/${i}/${j}.png`).then((image) => {
+				if (!this.open) return;
+
+				try {
+					const image = await this.loadImage(`tiles/${zoom}/${i}/${j}.png`);
 					ctx.drawImage(image, (i - 19784) * tileSize, (j - 10218) * tileSize, tileSize, tileSize);
-				});
+				} catch {
+					continue;
+				}
 			}
 		}
 	}

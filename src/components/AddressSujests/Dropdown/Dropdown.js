@@ -1,3 +1,4 @@
+import Button from '../../Button/Button';
 import template from './Dropdown.hbs';
 import './Dropdown.scss';
 
@@ -41,6 +42,18 @@ class Dropdown {
 				this.onClick(item.id);
 			};
 		});
+
+		if (!this.items) {
+			const notFound = this.#parent.querySelector('.address-not-found');
+			const button = new Button(notFound, {
+				id: 'add-missing-address-btn',
+				content: 'Добавить адрес',
+				style: 'secondary',
+				icon: 'add-icon',
+			});
+
+			button.render();
+		}
 	}
 }
 

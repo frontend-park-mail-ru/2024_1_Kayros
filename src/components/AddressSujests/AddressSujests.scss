@@ -7,26 +7,50 @@
 .search-container {
 	display: flex;
 	gap: 16px;
+
+	button {
+		margin-left: auto;
+	}
+}
+
+.search-input-container {
+	width: 100%;
 	position: relative;
 
-	img {
+	#search-icon {
 		position: absolute;
 		top: 0;
 		left: 14px;
 		bottom: 0;
 		margin: auto 0;
 		width: 20px;
+		z-index: 1;
+	}
+
+	#clear-icon {
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		right: 14px;
+		bottom: 0;
+		margin: auto 0;
+		width: 20px;
+		transition: 0.3s;
+
+		&:hover {
+			filter: brightness(0.5);
+		}
 	}
 
 	input {
 		padding: 12px 40px 12px 50px;
 		border: none;
 		outline: none;
-		width: 100%;
 		font-size: 16px;
 		background: var(--sujests-input-bg-color);
 		border-radius: 16px;
 		transition: 0.2s;
+		width: calc(100% - 90px);
 
 		&:focus {
 			border-color: var(--input-border-color-focus);

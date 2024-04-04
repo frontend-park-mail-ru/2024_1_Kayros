@@ -23,15 +23,18 @@ class AddressForm {
 
 		const modalContent = document.getElementById('modal-content');
 
-		const sujestsElement = new AddressSujests(modalContent.querySelector('#sujests-container'), {
-			closeModal: () => modal.close(),
-		});
-
-		sujestsElement.render();
-
 		const mapContainer = modalContent.querySelector('#address-map-container');
 		const map = new Map(mapContainer, { fullPage: false });
 		map.render();
+
+		const sujestsElement = new AddressSujests(modalContent.querySelector('#sujests-container'), {
+			closeModal: () => {
+				map.open = false;
+				modal.close();
+			},
+		});
+
+		sujestsElement.render();
 	}
 }
 
