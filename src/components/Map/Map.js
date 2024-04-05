@@ -224,7 +224,7 @@ class Map {
 
 		for (let i = startX; i <= endX; i++) {
 			for (let j = startY; j <= endY; j++) {
-				this.loadImage(`tiles/${zoom}/${i}/${j}.png`).then((image) => {
+				this.loadImage(`minio-api/map-tiles/${zoom}/${i}/${j}.png`).then((image) => {
 					ctx.drawImage(image, (i - 19784) * tileSize, (j - 10218) * tileSize, tileSize, tileSize);
 				});
 			}
