@@ -35,10 +35,9 @@ class Map {
 	 * @returns {Promise} - изображение
 	 */
 	async loadImage(url) {
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			const img = new Image();
 			img.onload = () => resolve(img);
-			img.onerror = () => reject('');
 			img.src = url;
 		});
 	}
@@ -139,8 +138,8 @@ class Map {
 		let scrollSpeedX = scrollDistanceX / this.dragTime;
 		let scrollSpeedY = scrollDistanceY / this.dragTime;
 
-		this.indentLeft += scrollSpeedX * 0.2;
-		this.indentTop += scrollSpeedY * 0.2;
+		this.indentLeft += scrollSpeedX * 0.3;
+		this.indentTop += scrollSpeedY * 0.3;
 
 		this.transform(map, { duration: 200 });
 
@@ -211,7 +210,7 @@ class Map {
 	 * Функция для отрисовки фрагментов карты
 	 * @param {HTMLElement} map - карта
 	 */
-	async drawTiles(map) {
+	drawTiles(map) {
 		const ctx = map.getContext('2d');
 
 		let zoom = 15;
@@ -225,14 +224,9 @@ class Map {
 
 		for (let i = startX; i <= endX; i++) {
 			for (let j = startY; j <= endY; j++) {
-				if (!this.open) return;
-
-				try {
-					const image = await this.loadImage(`tiles/${zoom}/${i}/${j}.png`);
+				this.loadImage(`tiles/${zoom}/${i}/${j}.png`).then((image) => {
 					ctx.drawImage(image, (i - 19784) * tileSize, (j - 10218) * tileSize, tileSize, tileSize);
-				} catch {
-					continue;
-				}
+				});
 			}
 		}
 	}

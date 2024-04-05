@@ -130,7 +130,7 @@ class Api {
 	 */
 	async getSujests(text, callback) {
 		const { results } = await ajax.get(
-			`https://suggest-maps.yandex.ru/v1/suggest?text=${text}&apikey=${YANDEX_API_KEY}`,
+			`https://suggest-maps.yandex.ru/v1/suggest?text=${text}&bbox=37.39,55.57~37.84,55.9&strict_bounds=1&apikey=${YANDEX_API_KEY}&lang=ru`,
 		);
 
 		callback(results);

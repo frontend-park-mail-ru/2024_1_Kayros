@@ -47,7 +47,7 @@ class Dropdown {
 			const notFound = this.#parent.querySelector('.address-not-found');
 			const button = new Button(notFound, {
 				id: 'add-missing-address-btn',
-				content: 'Добавить адрес',
+				content: 'Предложить адрес',
 				style: 'secondary',
 				icon: 'add-icon',
 			});

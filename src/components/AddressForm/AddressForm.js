@@ -29,7 +29,6 @@ class AddressForm {
 
 		const sujestsElement = new AddressSujests(modalContent.querySelector('#sujests-container'), {
 			closeModal: () => {
-				map.open = false;
 				modal.close();
 			},
 		});
