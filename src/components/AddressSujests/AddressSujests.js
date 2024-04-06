@@ -73,9 +73,11 @@ class AddressSujests {
 					return i === Number(id);
 				});
 
-				input.value = currentItem.title.text;
+				const address = currentItem.subtitle.text.split(' · ')[1] || currentItem.subtitle.text;
+
+				input.value = address;
 				input.blur();
-				this.address = currentItem.title.text;
+				this.address = address;
 			},
 		});
 

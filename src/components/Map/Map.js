@@ -1,7 +1,52 @@
 import template from './Map.hbs';
 import './Map.scss';
 
-const MAX_ZOOM = 20;
+const MAX_ZOOM = 2;
+
+const ZOOM_PROPERTIES = {
+	11: {
+		startX: 1236,
+		startY: 638,
+		scale: 16,
+		left: -2050,
+		top: -2430,
+	},
+	12: {
+		startX: 2473,
+		startY: 1277,
+		scale: 8,
+		left: 0,
+		top: -385,
+	},
+	13: {
+		startX: 4946,
+		startY: 2554,
+		scale: 4,
+		left: 0,
+		top: -385,
+	},
+	14: {
+		startX: 9892,
+		startY: 5108,
+		scale: 2,
+		left: 0,
+		top: -385,
+	},
+	15: {
+		startX: 19784,
+		startY: 10217,
+		scale: 1,
+		left: 0,
+		top: -128,
+	},
+	16: {
+		startX: 39568,
+		startY: 20435,
+		scale: 1 / 2,
+		left: 0,
+		top: 0,
+	},
+};
 
 /**
  * Карта
@@ -27,6 +72,7 @@ class Map {
 		this.fullPage = fullPage;
 		this.dragTime = 0;
 		this.open = true;
+		this.zoomLevel = 15;
 	}
 
 	/**
@@ -158,6 +204,30 @@ class Map {
 	 * @param {HTMLElement} map - карта
 	 */
 	zoom(event, map) {
+		if (this.scale > 1.2) {
+			this.zoomLevel = 16;
+		}
+
+		if (this.scale > 0.8 && this.scale < 1.2) {
+			this.zoomLevel = 15;
+		}
+
+		if (this.scale > 0.5 && this.scale < 0.8) {
+			this.zoomLevel = 14;
+		}
+
+		if (this.scale > 0.3 && this.scale < 0.5) {
+			this.zoomLevel = 13;
+		}
+
+		if (this.scale > 0.1 && this.scale < 0.3) {
+			this.zoomLevel = 12;
+		}
+
+		if (this.scale < 0.1) {
+			this.zoomLevel = 11;
+		}
+
 		const rect = this.#parent.getBoundingClientRect();
 
 		const currentX = (event.clientX - rect.left - this.indentLeft) / this.scale;
@@ -213,19 +283,24 @@ class Map {
 	drawTiles(map) {
 		const ctx = map.getContext('2d');
 
-		let zoom = 15;
-		const tileSize = 256;
+		const tileSize = 256 * ZOOM_PROPERTIES[this.zoomLevel].scale;
 
-		const startX = 19784 + Math.floor(-this.indentLeft / tileSize / this.scale) - 1;
-		const endX = startX + Math.floor(this.#container.offsetWidth / tileSize / this.scale) + 2;
+		const startX = ZOOM_PROPERTIES[this.zoomLevel].startX + Math.floor(-this.indentLeft / tileSize / this.scale);
+		const endX = startX + Math.floor(this.#container.offsetWidth / tileSize / this.scale) + 1;
 
-		const startY = 10218 + Math.floor(-this.indentTop / tileSize / this.scale) - 1;
-		const endY = startY + Math.floor(this.#container.offsetHeight / tileSize / this.scale) + 2;
+		const startY = ZOOM_PROPERTIES[this.zoomLevel].startY + Math.floor(-this.indentTop / tileSize / this.scale);
+		const endY = startY + Math.floor(this.#container.offsetHeight / tileSize / this.scale) + 1;
 
 		for (let i = startX; i <= endX; i++) {
 			for (let j = startY; j <= endY; j++) {
-				this.loadImage(`minio-api/map-tiles/${zoom}/${i}/${j}.png`).then((image) => {
-					ctx.drawImage(image, (i - 19784) * tileSize, (j - 10218) * tileSize, tileSize, tileSize);
+				this.loadImage(`minio-api/map-tiles/${this.zoomLevel}/${i}/${j}.png`).then((image) => {
+					ctx.drawImage(
+						image,
+						(i - ZOOM_PROPERTIES[this.zoomLevel].startX) * tileSize + ZOOM_PROPERTIES[this.zoomLevel].left,
+						(j - ZOOM_PROPERTIES[this.zoomLevel].startY) * tileSize + ZOOM_PROPERTIES[this.zoomLevel].top,
+						tileSize,
+						tileSize,
+					);
 				});
 			}
 		}
@@ -247,8 +322,15 @@ class Map {
 			this.dragDrop(event, map);
 		};
 
+		let zoomTimer;
+
 		map.onwheel = (event) => {
 			event.preventDefault();
+
+			clearTimeout(zoomTimer);
+			zoomTimer = setTimeout(() => {
+				this.drawTiles(map);
+			}, 100);
 
 			this.zoom(event, map);
 		};
