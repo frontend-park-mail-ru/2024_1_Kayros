@@ -1,5 +1,5 @@
 import Notification from '../components/Notification/Notification';
-import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_KEY } from '../constants';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SUJESTS } from '../constants';
 import ajax from './ajax';
 
 /**
@@ -130,10 +130,25 @@ class Api {
 	 */
 	async getSujests(text, callback) {
 		const { results } = await ajax.get(
-			`https://suggest-maps.yandex.ru/v1/suggest?text=${text}&bbox=37.39,55.57~37.84,55.9&strict_bounds=1&apikey=${YANDEX_API_KEY}&lang=ru`,
+			`https://suggest-maps.yandex.ru/v1/suggest?text=${text}&bbox=37.39,55.57~37.84,55.9&strict_bounds=1&apikey=${YANDEX_API_SUJESTS}&lang=ru`,
 		);
 
 		callback(results);
+	}
+
+	/**
+	 * Метод для получения координат объекта
+	 * @param {object} address - адрес, по которому находятся координаты
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async geoCoder(address, callback) {
+		const { response } = await ajax.get(
+			`https://geocode-maps.yandex.ru/1.x/?apikey=${YANDEX_API_GEOCODER}&geocode=${address}&format=json&&bbox=37.39,55.57~37.84,55.92&rspn=1`,
+		);
+
+		const [lon, lat] = response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ');
+
+		callback([Number(lon), Number(lat)]);
 	}
 
 	/**

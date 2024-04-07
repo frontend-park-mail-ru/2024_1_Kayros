@@ -82,4 +82,6 @@ export const NAME_REGEX = /^[a-zA-Zа-яА-ЯёЁ][a-zA-Zа-яА-ЯёЁ0-9]{1,19
 
 export const INVALID_NAME_CHAR_REGEX = /[^a-zA-Zа-яА-ЯёЁ0-9]/;
 
-export const YANDEX_API_KEY = 'f96d8d36-1d0a-4786-9140-1b350e8179e1';
+export const YANDEX_API_SUJESTS = 'f96d8d36-1d0a-4786-9140-1b350e8179e1';
+
+export const YANDEX_API_GEOCODER = '7e5782d5-d181-428b-a46d-5dcff8caa54d';

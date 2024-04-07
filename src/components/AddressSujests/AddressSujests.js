@@ -17,11 +17,13 @@ class AddressSujests {
 	 * @param {Element} parent - родительский элемент
 	 * @param {object} params - параметры компонента
 	 * @param {void} params.closeModal - метод для закрытия модалки
+	 * @param {void} params.goToPoint - переход по точке
 	 */
-	constructor(parent, { closeModal }) {
+	constructor(parent, { closeModal, goToPoint }) {
 		this.#parent = parent;
 		this.closeModal = closeModal;
 		this.address = '';
+		this.goToPoint = goToPoint;
 	}
 
 	/**
@@ -73,11 +75,15 @@ class AddressSujests {
 					return i === Number(id);
 				});
 
-				const address = currentItem.subtitle.text.split(' · ')[1] || currentItem.subtitle.text;
+				const address = currentItem.title?.text + ', ' + currentItem.subtitle?.text;
+
+				const street = currentItem.subtitle?.text.split(' · ')[1];
 
 				input.value = address;
 				input.blur();
 				this.address = address;
+
+				api.geoCoder(street || address, this.goToPoint);
 			},
 		});
 
@@ -123,8 +129,10 @@ class AddressSujests {
 
 		const clearIcon = searchContainer.querySelector('#clear-icon');
 
-		clearIcon.onclick = () => {
+		clearIcon.onclick = (event) => {
+			event.stopPropagation();
 			input.value = '';
+			input.focus();
 		};
 
 		input.onblur = () => {

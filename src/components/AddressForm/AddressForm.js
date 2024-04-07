@@ -9,6 +9,8 @@ import './AddressForm.scss';
  * Форма добавления адреса
  */
 class AddressForm {
+	coords;
+
 	/**
 	 * Конструктор класса
 	 */
@@ -30,6 +32,9 @@ class AddressForm {
 		const sujestsElement = new AddressSujests(modalContent.querySelector('#sujests-container'), {
 			closeModal: () => {
 				modal.close();
+			},
+			goToPoint: (coords) => {
+				map.goToPoint(coords);
 			},
 		});
 

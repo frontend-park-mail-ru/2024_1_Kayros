@@ -1,8 +1,9 @@
 import template from './Map.hbs';
 import './Map.scss';
 
+const EARTH_RADIUS = 6378137;
 const MAX_ZOOM = 2;
-
+const TILE_SIZE = 256;
 const ZOOM_PROPERTIES = {
 	11: {
 		startX: 1236,
@@ -46,6 +47,16 @@ const ZOOM_PROPERTIES = {
 		left: 0,
 		top: 0,
 	},
+};
+
+const MERCATOR_POINT_MIN = {
+	long: 4158142.3204450444,
+	lat: 7473308.595617202,
+};
+
+const MERCATOR_POINT_MAX = {
+	long: 4213015.037041773,
+	lat: 7541565.376326894,
 };
 
 /**
@@ -95,27 +106,66 @@ class Map {
 	 * @param {number} params.duration - длительность трансформации
 	 */
 	transform(map, { duration = 0 } = {}) {
-		if (this.indentLeft > 0) {
-			this.indentLeft = 0;
-		}
-
-		if (this.indentTop > 0) {
-			this.indentTop = 0;
-		}
-
-		if (this.indentLeft < -map.offsetWidth * this.scale + this.#container.offsetWidth) {
-			this.indentLeft = -map.offsetWidth * this.scale + this.#container.offsetWidth;
-		}
-
-		if (this.indentTop < -map.offsetHeight * this.scale + this.#container.offsetHeight) {
-			this.indentTop = -map.offsetHeight * this.scale + this.#container.offsetHeight;
-		}
-
 		map.animate([{ transform: `translate(${this.indentLeft}px, ${this.indentTop}px) scale(${this.scale})` }], {
 			fill: 'forwards',
 			easing: 'cubic-bezier(.05,.34,.45,1)',
 			duration,
 		});
+	}
+
+	/**
+	 * Конвертирует градусы в радианы
+	 * @param {number} degrees - градусы
+	 * @returns {number} - радианы
+	 */
+	degreesToRadians(degrees) {
+		return (degrees * Math.PI) / 180;
+	}
+
+	/**
+	 * Конвертирует координаты в пиксели
+	 * @param {Array} lonLat - [долгота, широта] в градусах
+	 * @returns {object} - координаты в пикселях
+	 */
+	convertCoords(lonLat) {
+		const mercX = EARTH_RADIUS * this.degreesToRadians(lonLat[0]);
+		const mercY =
+			(180 / Math.PI) * Math.log(Math.tan(Math.PI / 4 + (lonLat[1] * (Math.PI / 180)) / 2)) * (mercX / lonLat[0]);
+
+		const mercator = {
+			long: mercX,
+			lat: mercY,
+		};
+
+		const x =
+			(11500 / (MERCATOR_POINT_MAX.long - MERCATOR_POINT_MIN.long)) * (mercator.long - MERCATOR_POINT_MIN.long) -
+			this.#container.offsetWidth / 2;
+
+		const y =
+			14280 -
+			(14280 / (MERCATOR_POINT_MAX.lat - MERCATOR_POINT_MIN.lat)) * (mercator.lat - MERCATOR_POINT_MIN.lat) -
+			this.#container.offsetHeight / 2;
+
+		return { x, y };
+	}
+
+	/**
+	 * Переход по точке
+	 * @param {Array} coords - [долгота, широта] в градусах
+	 */
+	goToPoint(coords) {
+		const pixels = this.convertCoords(coords);
+
+		this.indentLeft = -pixels.x;
+		this.indentTop = -pixels.y;
+
+		this.scale = 1;
+		this.zoomLevel = 15;
+
+		const map = document.getElementById('canvas-map');
+
+		this.transform(map, { duration: 100 });
+		this.drawTiles(map);
 	}
 
 	/**
@@ -191,19 +241,17 @@ class Map {
 
 		this.dragTime = 0;
 
-		setTimeout(() => {
-			this.drawTiles(map);
+		this.drawTiles(map);
 
+		setTimeout(() => {
 			mapPinIcon?.classList.remove('move');
 		}, 200);
 	}
 
 	/**
-	 * Функция для приближения и удаления карты
-	 * @param {MouseEvent} event - mouse wheel событие
-	 * @param {HTMLElement} map - карта
+	 * Изменение уровня приближения в зависимости от текущего масштаба
 	 */
-	zoom(event, map) {
+	setZoomLevel() {
 		if (this.scale > 1.2) {
 			this.zoomLevel = 16;
 		}
@@ -227,6 +275,15 @@ class Map {
 		if (this.scale < 0.1) {
 			this.zoomLevel = 11;
 		}
+	}
+
+	/**
+	 * Функция для приближения и удаления карты
+	 * @param {MouseEvent} event - mouse wheel событие
+	 * @param {HTMLElement} map - карта
+	 */
+	zoom(event, map) {
+		this.setZoomLevel();
 
 		const rect = this.#parent.getBoundingClientRect();
 
@@ -258,6 +315,8 @@ class Map {
 	 * @param {'in' | 'out'} params.direction - направление
 	 */
 	buttonZoom(map, { direction }) {
+		this.setZoomLevel();
+
 		const currentX = (this.#container.offsetWidth / 2 - this.indentLeft) / this.scale;
 		const currentY = (this.#container.offsetHeight / 2 - this.indentTop) / this.scale;
 
@@ -274,6 +333,9 @@ class Map {
 		this.indentTop = this.#container.offsetHeight / 2 - currentY * this.scale;
 
 		this.transform(map, { duration: 100 });
+		setTimeout(() => {
+			this.drawTiles(map);
+		}, 110);
 	}
 
 	/**
@@ -283,7 +345,7 @@ class Map {
 	drawTiles(map) {
 		const ctx = map.getContext('2d');
 
-		const tileSize = 256 * ZOOM_PROPERTIES[this.zoomLevel].scale;
+		const tileSize = TILE_SIZE * ZOOM_PROPERTIES[this.zoomLevel].scale;
 
 		const startX = ZOOM_PROPERTIES[this.zoomLevel].startX + Math.floor(-this.indentLeft / tileSize / this.scale);
 		const endX = startX + Math.floor(this.#container.offsetWidth / tileSize / this.scale) + 1;
