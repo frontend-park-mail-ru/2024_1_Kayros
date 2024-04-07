@@ -50,14 +50,19 @@ const ZOOM_PROPERTIES = {
 };
 
 const MERCATOR_POINT_MIN = {
-	long: 4158142.3204450444,
-	lat: 7473308.595617202,
+	long: 4158142,
+	lat: 7473308,
 };
 
 const MERCATOR_POINT_MAX = {
-	long: 4213015.037041773,
-	lat: 7541565.376326894,
+	long: 4213015,
+	lat: 7541565,
 };
+
+// TODO: должно быть 11600 и 14300 (тогда будет лучшая точность)
+// однако нужно подобрать подходящие для этого MERCATOR_POINT_MIN и MERCATOR_POINT_MAX
+const MAP_WIDTH = 11480;
+const MAP_HEIGHT = 14280;
 
 /**
  * Карта
@@ -106,6 +111,22 @@ class Map {
 	 * @param {number} params.duration - длительность трансформации
 	 */
 	transform(map, { duration = 0 } = {}) {
+		if (this.indentLeft > 0) {
+			this.indentLeft = 0;
+		}
+
+		if (this.indentTop > 0) {
+			this.indentTop = 0;
+		}
+
+		if (this.indentLeft < -map.offsetWidth * this.scale + this.#container.offsetWidth) {
+			this.indentLeft = -map.offsetWidth * this.scale + this.#container.offsetWidth;
+		}
+
+		if (this.indentTop < -map.offsetHeight * this.scale + this.#container.offsetHeight) {
+			this.indentTop = -map.offsetHeight * this.scale + this.#container.offsetHeight;
+		}
+
 		map.animate([{ transform: `translate(${this.indentLeft}px, ${this.indentTop}px) scale(${this.scale})` }], {
 			fill: 'forwards',
 			easing: 'cubic-bezier(.05,.34,.45,1)',
@@ -138,12 +159,12 @@ class Map {
 		};
 
 		const x =
-			(11500 / (MERCATOR_POINT_MAX.long - MERCATOR_POINT_MIN.long)) * (mercator.long - MERCATOR_POINT_MIN.long) -
+			(MAP_WIDTH / (MERCATOR_POINT_MAX.long - MERCATOR_POINT_MIN.long)) * (mercator.long - MERCATOR_POINT_MIN.long) -
 			this.#container.offsetWidth / 2;
 
 		const y =
-			14280 -
-			(14280 / (MERCATOR_POINT_MAX.lat - MERCATOR_POINT_MIN.lat)) * (mercator.lat - MERCATOR_POINT_MIN.lat) -
+			MAP_HEIGHT -
+			(MAP_HEIGHT / (MERCATOR_POINT_MAX.lat - MERCATOR_POINT_MIN.lat)) * (mercator.lat - MERCATOR_POINT_MIN.lat) -
 			this.#container.offsetHeight / 2;
 
 		return { x, y };
