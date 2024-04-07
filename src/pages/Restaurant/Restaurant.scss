@@ -1,12 +1,12 @@
 #restaurant-container {
 	display: grid;
 	grid-template-columns: 240px 1fr;
+	margin-top: 16px;
 }
 
 #restaurant-sidebar {
 	display: flex;
 	flex-direction: column;
-	gap: 36px;
 }
 
 #restaurant-main {
@@ -18,10 +18,10 @@
 	}
 
 	#restaurant-food {
-		display: grid;
-		gap: 12px;
-		grid-template-columns: repeat(auto-fit, 260px);
-		justify-content: space-evenly;
-		margin-top: 36px;
+		display: flex;
+		flex-direction: column;
+		gap: 34px;
+		margin-top: 30px;
+		padding-bottom: 30px;
 	}
 }

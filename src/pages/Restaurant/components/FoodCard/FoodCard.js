@@ -24,7 +24,8 @@ class FoodCard {
 		this.parent.insertAdjacentHTML('beforeend', template(this.data));
 
 		const food = document.getElementById(`food-${this.data.id}`);
-		const counterButton = new CounterButton(food, { id: `food-button-${this.data.id}`, initCount: 0 });
+		const action = food.querySelector('#food-action');
+		const counterButton = new CounterButton(action, { id: `food-button-${this.data.id}`, initCount: 0 });
 		counterButton.render();
 	}
 }
