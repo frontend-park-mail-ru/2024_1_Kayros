@@ -20,7 +20,7 @@ class CounterButton {
 		this.#parent = parent;
 		this.#id = id;
 		this.count = initCount;
-		this.isNull = initCount === 0;
+		this.isNull = true;
 	}
 
 	/**

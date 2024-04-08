@@ -28,10 +28,21 @@ class Button {
 	 * @param {boolean} params.withLoader - лоадер
 	 * @param {Function} params.onClick - событие при клике
 	 * @param {string | undefined} params.icon - иконка
+	 * @param {'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend'} params.position - позиция в предке
 	 */
 	constructor(
 		parent,
-		{ id, content = '', type = 'button', disabled = false, onClick, icon, style = 'primary', withLoader = false },
+		{
+			id,
+			content = '',
+			type = 'button',
+			disabled = false,
+			onClick,
+			icon,
+			style = 'primary',
+			withLoader = false,
+			position = 'beforeend',
+		},
 	) {
 		this.#parent = parent;
 		this.#content = content;
@@ -42,6 +53,7 @@ class Button {
 		this.#withLoader = withLoader;
 		this.#style = style;
 		this.#id = id;
+		this.position = position;
 	}
 
 	/**
@@ -64,7 +76,7 @@ class Button {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
+		this.#parent.insertAdjacentHTML(this.position, this.getHTML());
 
 		const currentButton = this.#parent.querySelector(`#${this.#id}`);
 

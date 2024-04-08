@@ -1,4 +1,5 @@
 import AddressForm from '../components/AddressForm/AddressForm';
+import CartPage from '../pages/Cart';
 import NotFound from '../pages/NotFound';
 import RestaurantPage from '../pages/Restaurant';
 import RestaurantsPage from '../pages/Restaurants';
@@ -26,6 +27,10 @@ const routes = {
 	[urls.address]: {
 		title: 'Поиск адреса',
 		component: AddressForm,
+	},
+	[urls.cart]: {
+		title: 'Корзина',
+		component: CartPage,
 	},
 };
 

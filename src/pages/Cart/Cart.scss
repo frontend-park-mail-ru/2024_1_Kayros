@@ -1,0 +1,38 @@
+.cart {
+	display: flex;
+	margin-top: 16px;
+
+	&__dishes {
+		width: 60%;
+	}
+
+	&__pay-form {
+		width: 40%;
+	}
+
+	&__cutleries {
+		display: flex;
+		font-size: 18px;
+		font-weight: 600;
+		gap: 40px;
+		align-items: center;
+	}
+
+	#back-button {
+		background: var(--layout-bg-color);
+		color: var(--button-secondary-text-color);
+		font-weight: 600;
+		padding: 8px 18px;
+		transition: 0.3s;
+
+		&:hover {
+			background: var(--back-button-bg-hover);
+		}
+	}
+
+	#cutleries-counter {
+		width: 116px;
+		height: 31px;
+		margin: 30px 0;
+	}
+}

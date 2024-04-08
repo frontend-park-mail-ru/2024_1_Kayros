@@ -13,6 +13,7 @@
 	cursor: pointer;
 	gap: 10px;
 	font-family: Montserrat, sans-serif;
+	white-space: nowrap;
 
 	img {
 		float: left;
@@ -44,6 +45,10 @@
 		background: var(--button-secondary-bg);
 		color: var(--button-secondary-text-color);
 		transition: 0.3s;
+
+		img {
+			filter: invert(1);
+		}
 
 		&:hover {
 			outline: 1px solid var(--brand);

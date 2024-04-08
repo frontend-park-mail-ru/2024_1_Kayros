@@ -5,6 +5,7 @@ const urls = {
 	signIn: '/signin',
 	signUp: '/signup',
 	address: '/address',
+	cart: '/cart',
 };
 
 export default urls;

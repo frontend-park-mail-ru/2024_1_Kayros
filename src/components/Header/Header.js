@@ -81,16 +81,18 @@ class Header {
 
 		addressButton.render();
 
-		if (user?.cart && user.cart.total > 0) {
-			const cartBlock = document.getElementById('cart');
-			const cartButton = new Button(cartBlock, {
-				id: 'cart-button',
-				content: `${user.cart.total} ₽`,
-				icon: 'cart',
-			});
+		//if (user?.cart && user.cart.total > 0) {
+		const cartBlock = document.getElementById('cart');
+		const cartButton = new Button(cartBlock, {
+			id: 'cart-button',
+			content: '800 ₽',
+			icon: 'cart',
+			onClick: () => {
+				this.#navigate(urls.cart);
+			},
+		});
 
-			cartButton.render();
-		}
+		cartButton.render();
 
 		const profileBlock = document.getElementById('profile-block');
 

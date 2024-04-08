@@ -1,5 +1,6 @@
 import Notification from '../components/Notification/Notification';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../constants';
+import cartInfo from '../mocks/cartInfo';
 import restaurantInfo from '../mocks/restaurantInfo';
 import ajax from './ajax';
 
@@ -32,6 +33,20 @@ class Api {
 	 */
 	async getUserInfo(callback) {
 		const data = await ajax.get(`${this.#url}/user`, { showNotifyError: false });
+
+		callback(data);
+	}
+
+	/**
+	 * Метод для получения информации о корзине
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getCartInfo(callback) {
+		let data = await ajax.get(`${this.#url}/order`);
+
+		if (!data) {
+			data = cartInfo;
+		}
 
 		callback(data);
 	}
