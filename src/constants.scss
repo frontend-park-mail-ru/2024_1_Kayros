@@ -29,6 +29,7 @@
 	--input-box-shadow-focus: 0 0 0 1px #9c9c9c;
 	--input-placeholder-color: #545454;
 	--input-error-color: #ff0000;
+	--input-color-dynamic: #000;
 
 	--button-border-radius: 14px;
 	--button-bg-color: #2d2d2d;
@@ -85,5 +86,8 @@
 	--counter-add-bg-hover: #dfdfdf;
 
 	--food-card-bg-hover: #f4f4f4;
-	--food-weight-color: #545454;
+	--food-subtitle-color: #545454;
+
+	--cart-pay-method-color: #adadad;
+	--cart-pay-method-color-hover: #e1e1e1;
 }

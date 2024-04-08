@@ -21,14 +21,18 @@ class Input {
 	 * @param {string} params.placeholder - текстовая подсказка внутри поля
 	 * @param {string} params.type - тип инпута
 	 * @param {string | undefined} params.button - название кнопки
+	 * @param {'standart' | 'dynamic'} params.style - стиль
+	 * @param {string} params.value - начальное значение
 	 */
-	constructor(parent, { id, placeholder, type = 'text', button }) {
+	constructor(parent, { id, placeholder, type = 'text', button, style = 'standart', value = '' }) {
 		this.#parent = parent;
 		this.#placeholder = placeholder;
 		this.#button = button;
 		this.#type = type;
 		this.#id = id;
 		this.#isVisible = false;
+		this.style = style;
+		this.value = value;
 	}
 
 	/**
@@ -42,6 +46,8 @@ class Input {
 			type: this.#type,
 			isPassword: this.#type === 'password',
 			id: this.#id,
+			dynamic: this.style === 'dynamic',
+			value: this.value,
 		});
 	}
 

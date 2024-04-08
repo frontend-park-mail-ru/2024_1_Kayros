@@ -9,6 +9,11 @@
 		</button>
 	{{/if}}
 
-	<input id={{this.id}} type={{this.type}} placeholder="{{this.placeholder}}" />
+	{{#if this.dynamic}}
+		<input id={{this.id}} type={{this.type}} placeholder=" " class="dynamic" value="{{this.value}}" />
+		<span class="input__label">{{this.placeholder}}</span>
+	{{else}}
+		<input id={{this.id}} type={{this.type}} placeholder="{{this.placeholder}}" value="{{this.value}}"/>
+	{{/if}}
 
 </div>

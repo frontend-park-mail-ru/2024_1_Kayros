@@ -46,7 +46,7 @@ class Cart {
 		dishesListing.render();
 
 		const payForm = this.#parent.querySelector('.cart__pay-form');
-		const form = new PayForm(payForm);
+		const form = new PayForm(payForm, data);
 		form.render();
 	}
 

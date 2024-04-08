@@ -56,6 +56,29 @@ export const FIELDS_SIGN_UP = [
 	},
 ];
 
+export const FIELDS_ADRESS_FORM = [
+	{
+		id: 'main-address',
+		placeholder: 'Улица, номер дома',
+		style: 'dynamic',
+	},
+	{
+		id: 'apart-address',
+		placeholder: 'Квартира',
+		style: 'dynamic',
+	},
+	{
+		id: 'entrance-address',
+		placeholder: 'Подъезд',
+		style: 'dynamic',
+	},
+	{
+		id: 'floor-address',
+		placeholder: 'Этаж',
+		style: 'dynamic',
+	},
+];
+
 export const VALIDATION_ERRORS = {
 	emailFormat: 'Неверный формат электронной почты',
 	incorrectSymbol: 'Содержит некорректный символ',

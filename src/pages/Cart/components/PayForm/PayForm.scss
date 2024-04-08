@@ -1,4 +1,72 @@
 .pay-form {
-	border: 1px solid;
-	height: 500px;
+	display: flex;
+	flex-direction: column;
+	background: var(--layout-bg-color);
+	border-radius: var(--layout-border-radius);
+	margin-top: 50px;
+	padding: 30px;
+	position: sticky;
+	top: 100px;
+
+	&__title {
+		font-size: 22px;
+		font-weight: 600;
+	}
+
+	&__price {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__delivery-info {
+		margin-top: 10px;
+		color: var(--food-subtitle-color);
+		font-size: 18px;
+	}
+
+	&__address {
+		display: flex;
+		flex-direction: column;
+		margin: 34px 0;
+		gap: 14px;
+	}
+
+	&__inputs {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 14px;
+
+		& :first-child {
+			grid-column: 1 / -1;
+		}
+	}
+
+	&__methods {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 36px;
+	}
+
+	&__methods-item {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		border-radius: var(--layout-border-radius);
+		border: 1px solid var(--cart-pay-method-color);
+		padding: 8px 16px;
+		transition: 0.3s;
+		cursor: pointer;
+
+		&:hover {
+			border: 1px solid var(--cart-pay-method-color-hover);
+			background: var(--cart-pay-method-color-hover);
+		}
+	}
+
+	#pay-form-button {
+		height: 36px;
+		margin-top: auto;
+		width: 100%;
+	}
 }
