@@ -74,13 +74,13 @@ export const validateConfirmPassword = (
 
 	if (!isPasswordsMatch) {
 		confirmPasswordErrorElement.textContent = VALIDATION_ERRORS.passwordUnmatched;
-		confirmPasswordErrorElement.classList.add('input-error');
+		confirmPasswordElement.classList.add('input-error');
 	} else if (!confirmPasswordElement.value && hasConfirmPasswordInputStarted) {
 		confirmPasswordErrorElement.textContent = VALIDATION_ERRORS.fieldRequired;
-		confirmPasswordErrorElement.classList.add('input-error');
+		confirmPasswordElement.classList.add('input-error');
 	} else {
 		confirmPasswordErrorElement.textContent = '';
-		confirmPasswordErrorElement.classList.remove('input-error');
+		confirmPasswordElement.classList.remove('input-error');
 	}
 
 	return confirmPasswordElement.value && isPasswordsMatch;
