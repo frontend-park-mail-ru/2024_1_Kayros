@@ -62,6 +62,7 @@ class AuthForm {
 			title: this.#title,
 			redirectText: this.#redirectText,
 			signup: this.#type === 'signup',
+			signin: this.#type === 'signin', 
 		});
 	}
 
@@ -95,10 +96,25 @@ class AuthForm {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
+		const authPageContainer = this.#parent.querySelector('.auth-page-container');
+
+		if (authPageContainer) {
+			authPageContainer.classList.add(this.#type === 'signin' ? 'signin' : 'signup');
+		}
+
 		const logoContainer = document.querySelector('.logo-container-on-auth');
 
 		if (logoContainer) {
-			new Logo(logoContainer, { onClick: () => router.navigate(urls.restaurants) }).render();
+			const logoType = this.#type === 'signin' ? 'white' : 'default';
+ 
+			if (this.#type === 'signin') {
+				logoContainer.classList.add('signin');
+			}
+ 
+			new Logo(logoContainer, { 
+				onClick: () => router.navigate(urls.restaurants),	
+				logoType: logoType
+			}).render();
 		}
 
 		const linkBlock = document.getElementById('auth-redirect');
