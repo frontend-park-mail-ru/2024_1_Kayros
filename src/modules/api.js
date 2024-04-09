@@ -42,7 +42,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async getRestaurantInfo(id, callback) {
-		let data = await ajax.get(`${this.#url}/restaurant/${id}`);
+		let data = await ajax.get(`${this.#url}/restaurants/${id}`);
 
 		if (!data) {
 			data = restaurantInfo;
