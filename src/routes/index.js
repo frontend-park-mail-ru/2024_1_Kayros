@@ -1,6 +1,7 @@
 import AddressForm from '../components/AddressForm/AddressForm';
 import CartPage from '../pages/Cart';
 import NotFound from '../pages/NotFound';
+import ProfilePage from '../pages/Profile';
 import RestaurantPage from '../pages/Restaurant';
 import RestaurantsPage from '../pages/Restaurants';
 import SignInPage from '../pages/SignIn';
@@ -31,6 +32,10 @@ const routes = {
 	[urls.cart]: {
 		title: 'Корзина',
 		component: CartPage,
+	},
+	[urls.profile]: {
+		title: 'Профиль',
+		component: ProfilePage,
 	},
 };
 
