@@ -40,7 +40,7 @@ class AddressSujests {
 	 * Добавить адрес
 	 */
 	async setAddress() {
-		await api.saveAddress(this.address, this.handleAddressChange);
+		await api.saveAddress({ address: this.address }, this.handleAddressChange);
 	}
 
 	/**

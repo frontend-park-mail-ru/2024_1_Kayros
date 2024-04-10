@@ -12,7 +12,7 @@ class Api {
 	 * Конструктор класса
 	 */
 	constructor() {
-		this.#url = '/api';
+		this.#url = '/api/v1';
 	}
 
 	/**
@@ -158,7 +158,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async saveAddress(body, callback) {
-		const { data, error } = await ajax.post(`${this.#url}/address`, body);
+		const { data, error } = await ajax.post(`${this.#url}/order/update_address`, body);
 
 		if (data && !error) {
 			Notification.open({
