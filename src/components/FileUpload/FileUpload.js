@@ -26,6 +26,9 @@ class FileUpload {
 	 * @param {InputEvent} event - событие изменения инпута
 	 */
 	handleChange(event) {
+		event.preventDefault();
+		event.stopPropagation();
+
 		const image = this.#parent.querySelector('.file-upload__image');
 
 		let reader = new FileReader();
@@ -45,7 +48,7 @@ class FileUpload {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('beforeend', template());
+		this.#parent.insertAdjacentHTML('beforeend', template({ file: this.file }));
 
 		const form = this.#parent.querySelector('.file-upload__form');
 

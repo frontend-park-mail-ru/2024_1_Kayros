@@ -14,7 +14,7 @@ class Api {
 	 * Конструктор класса
 	 */
 	constructor() {
-		this.#url = '/api';
+		this.#url = '/api/v1';
 	}
 
 	/**
@@ -35,6 +35,34 @@ class Api {
 		const data = await ajax.get(`${this.#url}/user`, { showNotifyError: false });
 
 		callback(data);
+	}
+
+	/**
+	 * Метод для изменения информации пользователя
+	 * @param {object} body - объект, посылаемый в запросе
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async updateUserData(body, callback) {
+		const { data, error } = await ajax.put(`${this.#url}/user/image`, body);
+
+		if (data && !error) {
+			Notification.open({
+				duration: 3,
+				title: SUCCESS_MESSAGES.profileSave.title,
+				description: SUCCESS_MESSAGES.profileSave.description,
+				type: 'success',
+			});
+
+			callback(data);
+			return;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.PROFILE_SAVE,
+			description: error || ERROR_MESSAGES.PROFILE_SAVE,
+			type: 'error',
+		});
 	}
 
 	/**

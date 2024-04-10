@@ -1,4 +1,4 @@
-import defaultAvatar from '../../assets/default-avatar.png';
+import urls from '../../routes/urls';
 import template from './Profile.hbs';
 import './Profile.scss';
 
@@ -14,10 +14,12 @@ class Profile {
 	 * @param {Element} parent - родительский элемент
 	 * @param {object} params - параметры компонента
 	 * @param {object} params.user - объект пользователя
+	 * @param {void} params.navigate - функция навигации по страницам
 	 */
-	constructor(parent, { user }) {
+	constructor(parent, { user, navigate }) {
 		this.#parent = parent;
 		this.#user = user;
+		this.navigate = navigate;
 	}
 
 	/**
@@ -25,9 +27,9 @@ class Profile {
 	 * @returns {HTMLDivElement} - html
 	 */
 	getHTML() {
-		const avatar = this.#user.avatarUrl || defaultAvatar;
+		const avatar = this.#user.img_url;
 
-		return template({ name: this.#user.name, avatarUrl: avatar });
+		return template({ name: this.#user.name, avatarUrl: avatar, class: avatar.includes('default') ? 'default' : '' });
 	}
 
 	/**
@@ -35,6 +37,12 @@ class Profile {
 	 */
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML(this.#user));
+
+		const name = this.#parent.querySelector('#name');
+
+		name.onclick = () => {
+			this.navigate(urls.profile);
+		};
 	}
 }
 

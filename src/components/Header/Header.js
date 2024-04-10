@@ -2,7 +2,7 @@ import api from '../../modules/api';
 import urls from '../../routes/urls';
 import { localStorageHelper } from '../../utils';
 import Button from '../Button';
-import Dropdown from '../Dropdown/Dropdown';
+import Dropdown from '../Dropdown';
 import Input from '../Input';
 import Logo from '../Logo';
 import Profile from '../Profile';
@@ -116,9 +116,12 @@ class Header {
 		if (profile) {
 			const dropdown = new Dropdown(profile, {
 				id: 'dropdown-profile',
+				navigate: this.#navigate,
 				onExit: () => {
 					headerElement.remove();
 					this.render();
+
+					this.#navigate(urls.restaurants);
 				},
 			});
 
