@@ -1,3 +1,4 @@
+import api from '../../modules/api';
 import urls from '../../routes/urls';
 import template from './Dropdown.hbs';
 import './Dropdown.scss';
@@ -106,6 +107,10 @@ class Dropdown {
 
 			button.onclick = (event) => {
 				event.stopPropagation();
+
+				if (item.exit) {
+					api.signout(this.handleExit.bind(this));
+				}
 
 				this.navigate(item.url);
 				this.close(dropdown);

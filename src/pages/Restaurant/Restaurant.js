@@ -82,6 +82,7 @@ class Restaurant {
 				data: category,
 				setActiveCategory: this.setActiveCategory.bind(this),
 				activeCategory: this.activeCategory,
+				cart: this.cart,
 			});
 
 			categoryBlock.render();
@@ -110,17 +111,21 @@ class Restaurant {
 	/**
 	 * Получение информации о ресторане
 	 */
-	getData() {
+	async getData() {
+		await api.getCartInfo((data) => {
+			this.cart = data;
+		});
+
 		api.getRestaurantInfo(this.id, this.renderData.bind(this));
 	}
 
 	/**
 	 * Рендеринг страницы
 	 */
-	render() {
+	async render() {
 		this.#parent.innerHTML = template();
 
-		this.getData();
+		await this.getData();
 	}
 }
 

@@ -69,7 +69,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async getCartInfo(callback) {
-		let data = await ajax.get(`${this.#url}/order`);
+		let data = await ajax.get(`${this.#url}/order`, { showNotifyError: false });
 
 		callback(data);
 	}
@@ -175,6 +175,74 @@ class Api {
 		});
 
 		callback();
+	}
+
+	/**
+	 * Метод для добавления блюда в корзину
+	 * @param {number} foodId - id блюда
+	 * @returns {boolean} - результат запроса
+	 */
+	async addToCart(foodId) {
+		const { data, error } = await ajax.post(`${this.#url}/order/food/add/${foodId}`);
+
+		if (data && !error) {
+			return true;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CART_UPDATE,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return false;
+	}
+
+	/**
+	 * Метод для удаления блюда из корзины
+	 * @param {number} foodId - id блюда
+	 * @returns {boolean} - результат запроса
+	 */
+	async removeFromCart(foodId) {
+		const { error } = await ajax.delete(`${this.#url}/order/food/delete/${foodId}`);
+
+		if (!error) {
+			return true;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CART_UPDATE,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return false;
+	}
+
+	/**
+	 * Метод для обновления количества блюд в корзине
+	 * @param {object} body - объект
+	 * @param {object} body.food_id - id блюдп
+	 * @param {object} body.count - количество
+	 * @returns {boolean} - результат запроса
+	 */
+	async updateCartCount(body) {
+		const { error } = await ajax.put(`${this.#url}/order/food/update_count`, body);
+
+		if (!error) {
+			return true;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CART_UPDATE,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return false;
 	}
 }
 

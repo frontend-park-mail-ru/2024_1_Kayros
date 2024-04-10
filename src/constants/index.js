@@ -4,6 +4,7 @@ export const ERROR_MESSAGES = {
 	SIGNUP: 'Не удалось создать аккаунт',
 	SIGNOUT: 'Не удалось выйти из аккаунта',
 	PROFILE_SAVE: 'Не удалось сохранить информацию',
+	CART_UPDATE: 'Корзина в данный момент недоступна',
 };
 
 export const SUCCESS_MESSAGES = {

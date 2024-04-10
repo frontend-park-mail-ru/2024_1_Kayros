@@ -83,7 +83,39 @@ class Ajax {
 		try {
 			const response = await fetch(url, {
 				method: 'PUT',
-				body,
+				body: JSON.stringify(body),
+			});
+
+			result = await response.text();
+
+			if (response.ok) {
+				data = JSON.parse(result);
+			} else {
+				responseError = JSON.parse(result).detail;
+			}
+		} catch {
+			responseError = result;
+		}
+
+		const loaderButton = document.querySelector('#btn-loader');
+		loaderButton?.classList.remove('loading');
+
+		return { data, error: responseError };
+	}
+
+	/**
+	 * DELETE запрос
+	 * @param {string} url - адрес сервера для отправки запроса
+	 * @param {void} body - объект, посылаемый в запросе
+	 * @returns {object} - объект, содержащий полученные данные и ошибку, если произошла
+	 */
+	async delete(url, body) {
+		let data, responseError, result;
+
+		try {
+			const response = await fetch(url, {
+				method: 'DELETE',
+				body: JSON.stringify(body),
 			});
 
 			result = await response.text();
