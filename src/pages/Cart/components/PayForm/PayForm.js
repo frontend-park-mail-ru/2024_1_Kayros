@@ -42,6 +42,12 @@ class PayForm {
 
 		if (!data.detail) {
 			api.checkout();
+			const cart = document.getElementById('cart-button');
+			const sum = cart.querySelector('span');
+
+			sum.innerHTML = '';
+			cart.className = 'btn btn-secondary';
+
 			router.navigate(urls.restaurants);
 		}
 	}
