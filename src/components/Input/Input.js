@@ -23,8 +23,9 @@ class Input {
 	 * @param {string | undefined} params.button - название кнопки
 	 * @param {'standart' | 'dynamic'} params.style - стиль
 	 * @param {string} params.value - начальное значение
+	 * @param {void} params.onChange - обработчик события
 	 */
-	constructor(parent, { id, placeholder, type = 'text', button, style = 'standart', value = '' }) {
+	constructor(parent, { id, placeholder, type = 'text', button, style = 'standart', value = '', onChange = '' }) {
 		this.#parent = parent;
 		this.#placeholder = placeholder;
 		this.#button = button;
@@ -33,6 +34,7 @@ class Input {
 		this.#isVisible = false;
 		this.style = style;
 		this.value = value;
+		this.onChange = onChange;
 	}
 
 	/**
@@ -63,9 +65,14 @@ class Input {
 			searchButton.render();
 		}
 
+		const inputContainer = document.getElementById(`${this.#id}-container`);
+
+		const input = inputContainer.querySelector('input');
+
+		input.oninput = this.onChange;
+
 		if (this.#type !== 'password') return;
 
-		const inputContainer = document.getElementById(`${this.#id}-container`);
 		inputContainer.classList.add('password-input');
 		const eyeButton = inputContainer.querySelector('#btn-eye');
 		const password = inputContainer.getElementsByTagName('input')[0];

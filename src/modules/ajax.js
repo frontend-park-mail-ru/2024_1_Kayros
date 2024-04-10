@@ -83,7 +83,7 @@ class Ajax {
 		try {
 			const response = await fetch(url, {
 				method: 'PUT',
-				body: JSON.stringify(body),
+				body,
 			});
 
 			result = await response.text();

@@ -1,6 +1,7 @@
 import Button from '../../components/Button/Button';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import Input from '../../components/Input';
+import { FIELDS_PROFILE_FORM } from '../../constants';
 import api from '../../modules/api';
 import template from './Profile.hbs';
 import './Profile.scss';
@@ -18,6 +19,30 @@ class Profile {
 	constructor(parent) {
 		this.#parent = parent;
 		this.file = '';
+		this.name = '';
+		this.email = '';
+		this.phone = '';
+	}
+
+	/**
+	 *
+	 */
+	handleSubmit() {
+		const loaderBlock = this.#parent.querySelector('#btn-loader');
+		loaderBlock.classList.add('loading');
+
+		const formData = new FormData();
+		formData.append('img', this.file);
+		formData.append('name', this.name);
+		formData.append('email', this.email);
+		formData.append('phone', this.phone);
+
+		api.updateUserData(formData, (data) => {
+			localStorage.setItem('user-info', JSON.stringify(data));
+
+			const profile = document.querySelector('.header__profile-image');
+			profile.src = data.img_url;
+		});
 	}
 
 	/**
@@ -25,6 +50,11 @@ class Profile {
 	 * @param {Array} data - информация о пользователе
 	 */
 	renderData(data) {
+		this.file = data.img_src;
+		this.name = data.name;
+		this.email = data.email;
+		this.phone = data.phone;
+
 		this.#parent.innerHTML = template();
 
 		const profileImage = this.#parent.querySelector('.profile__image');
@@ -41,32 +71,23 @@ class Profile {
 		fileUpload.render();
 
 		const profileInfo = this.#parent.querySelector('.profile__info');
-		const nameInput = new Input(profileInfo, {
-			id: 'profile-name-input',
-			placeholder: 'Имя',
-			style: 'dynamic',
-			value: data?.name,
+
+		FIELDS_PROFILE_FORM.forEach((field) => {
+			const input = new Input(profileInfo, {
+				id: field.id,
+				placeholder: field.placeholder,
+				value: data[field.name],
+				style: 'dynamic',
+				onChange: (event) => {
+					this[field.name] = event.target.value;
+
+					const submitButton = this.#parent.querySelector('#profile-submit');
+					submitButton.disabled = false;
+				},
+			});
+
+			input.render();
 		});
-
-		nameInput.render();
-
-		const mailInput = new Input(profileInfo, {
-			id: 'profile-mail-input',
-			placeholder: 'Email',
-			style: 'dynamic',
-			value: data?.email,
-		});
-
-		mailInput.render();
-
-		const phoneInput = new Input(profileInfo, {
-			id: 'profile-phone-input',
-			placeholder: 'Номер телефона',
-			style: 'dynamic',
-			value: data?.phone,
-		});
-
-		phoneInput.render();
 
 		const submitButton = new Button(profileInfo, {
 			id: 'profile-submit',
@@ -74,18 +95,7 @@ class Profile {
 			withLoader: true,
 			disabled: true,
 			onClick: () => {
-				const loaderBlock = this.#parent.querySelector('#btn-loader');
-				loaderBlock.classList.add('loading');
-
-				const formData = new FormData();
-				formData.append('img', this.file);
-
-				api.updateUserData(formData, (data) => {
-					localStorage.setItem('user-info', JSON.stringify(data));
-
-					const profile = document.querySelector('.header__profile-image');
-					profile.src = data.img_url;
-				});
+				this.handleSubmit();
 			},
 		});
 

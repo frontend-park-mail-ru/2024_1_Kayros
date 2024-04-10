@@ -42,7 +42,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async updateUserData(body, callback) {
-		const { data, error } = await ajax.put(`${this.#url}/user/image`, body);
+		const { data, error } = await ajax.put(`${this.#url}/user`, body);
 
 		if (data && !error) {
 			Notification.open({

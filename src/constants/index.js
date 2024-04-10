@@ -85,6 +85,24 @@ export const FIELDS_ADRESS_FORM = [
 	},
 ];
 
+export const FIELDS_PROFILE_FORM = [
+	{
+		id: 'profile-name-input',
+		placeholder: 'Имя',
+		name: 'name',
+	},
+	{
+		id: 'profile-mail-input',
+		placeholder: 'Email',
+		name: 'email',
+	},
+	{
+		id: 'profile-phone-input',
+		placeholder: 'Номер телефона',
+		name: 'phone',
+	},
+];
+
 export const VALIDATION_ERRORS = {
 	emailFormat: 'Неверный формат электронной почты',
 	incorrectSymbol: 'Содержит некорректный символ',
