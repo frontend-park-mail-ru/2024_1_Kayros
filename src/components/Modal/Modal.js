@@ -119,11 +119,11 @@ class Modal {
 
 		window.addEventListener('keydown', closeOnEsc);
 
-		modalContent.addEventListener('click', (event) => {
+		modalContent.addEventListener('mousedown', (event) => {
 			event.stopPropagation();
 		});
 
-		modalWrapper.addEventListener('click', () => {
+		modalWrapper.addEventListener('mousedown', () => {
 			this.close();
 		});
 

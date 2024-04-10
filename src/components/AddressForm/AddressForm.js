@@ -1,5 +1,6 @@
 import urls from '../../routes/urls';
-import Input from '../Input/Input';
+import AddressSujests from '../AddressSujests/AddressSujests';
+import Map from '../Map';
 import Modal from '../Modal/Modal';
 import template from './AddressForm.hbs';
 import './AddressForm.scss';
@@ -8,6 +9,8 @@ import './AddressForm.scss';
  * Форма добавления адреса
  */
 class AddressForm {
+	coords;
+
 	/**
 	 * Конструктор класса
 	 */
@@ -17,18 +20,25 @@ class AddressForm {
 	 * Рендеринг компонента
 	 */
 	render() {
-		new Modal({ content: template(), url: urls.address, initiatorId: 'address' }).render();
+		const modal = new Modal({ content: template(), url: urls.address, initiatorId: 'address' });
+		modal.render();
 
 		const modalContent = document.getElementById('modal-content');
 
-		const addressInput = new Input(modalContent.querySelector('#search-container'), {
-			id: 'address-search',
-			placeholder: 'Введите улицу или дом',
-			type: 'text',
-			button: 'Сохранить',
+		const mapContainer = modalContent.querySelector('#address-map-container');
+		const map = new Map(mapContainer, { fullPage: false });
+		map.render();
+
+		const sujestsElement = new AddressSujests(modalContent.querySelector('#sujests-container'), {
+			closeModal: () => {
+				modal.close();
+			},
+			goToPoint: (coords) => {
+				map.goToPoint(coords);
+			},
 		});
 
-		addressInput.render();
+		sujestsElement.render();
 	}
 }
 

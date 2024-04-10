@@ -3,9 +3,9 @@ export const ERROR_MESSAGES = {
 	LOGIN: 'Не удалось войти',
 	SIGNUP: 'Не удалось создать аккаунт',
 	SIGNOUT: 'Не удалось выйти из аккаунта',
+	ADDRESS: 'Не удалось добавить адрес',
 	PROFILE_SAVE: 'Не удалось сохранить информацию',
 	CART_UPDATE: 'Корзина в данный момент недоступна',
-	ADDRESS_UPDATE: 'Не удалось сохранить адрес',
 	CHECKOUT: 'Не удалось оформить заказ',
 };
 
@@ -25,6 +25,10 @@ export const SUCCESS_MESSAGES = {
 	repeatLoginTry: {
 		title: 'Вы уже вошли в аккаунт',
 		description: 'Еще раз входить не требуется!',
+	},
+	address: {
+		title: 'Адрес успешно сохранен',
+		description: 'Осталось лишь заказать',
 	},
 	profileSave: {
 		title: 'Успешно',
@@ -133,3 +137,7 @@ export const INVALID_PASSWORD_CHAR_REGEX = /[^A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\
 export const NAME_REGEX = /^[a-zA-Zа-яА-ЯёЁ][a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/;
 
 export const INVALID_NAME_CHAR_REGEX = /[^a-zA-Zа-яА-ЯёЁ0-9]/;
+
+export const YANDEX_API_SUJESTS = 'f96d8d36-1d0a-4786-9140-1b350e8179e1';
+
+export const YANDEX_API_GEOCODER = '7e5782d5-d181-428b-a46d-5dcff8caa54d';

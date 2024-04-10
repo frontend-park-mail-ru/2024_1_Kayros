@@ -1,0 +1,14 @@
+<div class="dropdown">
+	{{#if items}}
+		{{#each items as |item itemId|}}
+			<div id="{{itemId}}" class="dropdown-item">
+				<div id="item-title">{{item.title.text}}</div>
+				<div id="item-subtitle">{{item.subtitle.text}}</div>
+			</div>
+		{{/each}}
+	{{else}}
+		<div class="address-not-found" >
+			<div id="item-title">В указанный адрес доставка недоступна :(</div>
+		</div>
+	{{/if}}
+</div>

@@ -1,6 +1,5 @@
 import Notification from '../components/Notification/Notification';
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../constants';
-import restaurantInfo from '../mocks/restaurantInfo';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SUJESTS } from '../constants';
 import ajax from './ajax';
 
 /**
@@ -82,10 +81,6 @@ class Api {
 	async getRestaurantInfo(id, callback) {
 		let data = await ajax.get(`${this.#url}/restaurants/${id}`);
 
-		if (!data) {
-			data = restaurantInfo;
-		}
-
 		callback(data);
 	}
 
@@ -154,9 +149,9 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async signout(callback) {
-		const { error } = await ajax.post(`${this.#url}/signout`);
+		const { data, error } = await ajax.post(`${this.#url}/signout`);
 
-		if (error) {
+		if (error || !data) {
 			Notification.open({
 				duration: 3,
 				title: ERROR_MESSAGES.SIGNOUT,
@@ -175,6 +170,67 @@ class Api {
 		});
 
 		callback();
+	}
+
+	/**
+	 * Метод для получения саджестов
+	 * @param {object} text - слово, по которому создаются саджесты
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getSujests(text, callback) {
+		const { results } = await ajax.get(
+			`https://suggest-maps.yandex.ru/v1/suggest?text=${text}&bbox=37.39,55.57~37.84,55.9&strict_bounds=1&apikey=${YANDEX_API_SUJESTS}&lang=ru`,
+		);
+
+		callback(results);
+	}
+
+	/**
+	 * Метод для получения координат объекта
+	 * @param {object} address - адрес, по которому находятся координаты
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async geoCoder(address, callback) {
+		const { response } = await ajax.get(
+			`https://geocode-maps.yandex.ru/1.x/?apikey=${YANDEX_API_GEOCODER}&geocode=${address}&format=json&&bbox=37.39,55.57~37.84,55.92&rspn=1`,
+		);
+
+		const [lon, lat] = response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ');
+
+		callback([Number(lon), Number(lat)]);
+	}
+
+	/**
+	 * Метод для обновления адреса
+	 * @param {object} body - объект
+	 * @param {object} body.address - основной
+	 * @param {object} body.extra_address - доп
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 * @returns {Promise<object>} - результат запроса
+	 */
+	async updateAddress(body, callback = () => {}) {
+		const { data, error } = await ajax.put(`${this.#url}/order/update_address`, body);
+
+		if (data && !error) {
+			Notification.open({
+				duration: 3,
+				title: SUCCESS_MESSAGES.address.title,
+				description: SUCCESS_MESSAGES.address.description,
+				type: 'success',
+			});
+
+			callback(data);
+			return data;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.ADDRESS,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return data;
 	}
 
 	/**
@@ -243,30 +299,6 @@ class Api {
 		});
 
 		return false;
-	}
-
-	/**
-	 * Метод для обновления адреса
-	 * @param {object} body - объект
-	 * @param {object} body.address - основной
-	 * @param {object} body.extra_address - доп
-	 * @returns {Promise<object>} - результат запроса
-	 */
-	async updateAddress(body) {
-		const { data, error } = await ajax.put(`${this.#url}/order/update_address`, body);
-
-		if (data && !error) {
-			return data;
-		}
-
-		Notification.open({
-			duration: 3,
-			title: ERROR_MESSAGES.ADDRESS_UPDATE,
-			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
-			type: 'error',
-		});
-
-		return data;
 	}
 
 	/**
