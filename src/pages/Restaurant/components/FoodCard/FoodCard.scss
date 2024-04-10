@@ -7,11 +7,11 @@
 	border-radius: 20px;
 	width: 90%;
 	min-width: 200px;
-	height: 90%;
+	height: 300px;
 
 	button {
 		width: 108px;
-		height: 100%;
+		height: 31px;
 	}
 
 	&:hover {
@@ -49,10 +49,11 @@
 	overflow: hidden;
 	background: var(--layout-bg-color);
 	border-radius: 10px;
+	height: 200px;
 
 	img {
-		width: 100%;
 		min-height: 100%;
+		width: 100%;
 		object-fit: cover;
 	}
 }
