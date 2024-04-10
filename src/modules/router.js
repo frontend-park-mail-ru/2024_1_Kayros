@@ -198,13 +198,13 @@ class Router {
 		const content = document.getElementById('content');
 
 		if (currentRoute) {
-      if (path === urls.address && content.children.length === 0) {
+			if (currentPath === urls.address && content.children.length === 0) {
 				const previousRoute = this.routes[this.previousState?.path || urls.restaurants];
 				const previousPage = new previousRoute.component(content);
 				previousPage.render();
 			}
-      
-			const page = new currentRoute.component(content);
+
+			const page = new currentRoute.component(content, params);
 			page.render();
 		}
 	}

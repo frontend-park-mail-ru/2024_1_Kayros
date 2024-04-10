@@ -30,7 +30,7 @@ class CategoryFood {
 		const category = document.getElementById(`category-${this.data.id}`);
 		const foodList = category.querySelector('.category-food');
 
-		this.data.items.forEach((item) => {
+		this.data.food?.forEach((item) => {
 			const foodCard = new FoodCard(foodList, item);
 			foodCard.render();
 		});
