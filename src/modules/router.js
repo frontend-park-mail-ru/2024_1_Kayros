@@ -206,7 +206,11 @@ class Router {
 
 			const page = new currentRoute.component(content, params);
 			page.render();
+			return;
 		}
+
+		const page = new this.routes[undefined].component(content, params);
+		page.render();
 	}
 }
 
