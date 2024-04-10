@@ -152,13 +152,15 @@ class Api {
 	}
 
 	/**
-	 * Метод для добавления адреса
-	 * @param {object} body - объект, посылаемый в запросе
-	 * @param {string} body.address - адрес пользователя
+	 * Метод для обновления адреса
+	 * @param {object} body - объект
+	 * @param {object} body.address - основной
+	 * @param {object} body.extra_address - доп
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 * @returns {Promise<object>} - результат запроса
 	 */
-	async saveAddress(body, callback) {
-		const { data, error } = await ajax.post(`${this.#url}/order/update_address`, body);
+	async updateAddress(body, callback = () => {}) {
+		const { data, error } = await ajax.put(`${this.#url}/order/update_address`, body);
 
 		if (data && !error) {
 			Notification.open({
@@ -169,7 +171,7 @@ class Api {
 			});
 
 			callback(data);
-			return;
+			return data;
 		}
 
 		Notification.open({
@@ -178,6 +180,8 @@ class Api {
 			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
 		});
+
+		return data;
 	}
 }
 

@@ -40,7 +40,7 @@ class AddressSujests {
 	 * Добавить адрес
 	 */
 	async setAddress() {
-		await api.saveAddress({ address: this.address }, this.handleAddressChange);
+		await api.updateAddress({ address: this.address, extra_address: 'Кв, подъезд, этаж' }, this.handleAddressChange);
 	}
 
 	/**
@@ -115,8 +115,9 @@ class AddressSujests {
 				const loaderBlock = searchContainer.querySelector('#btn-loader');
 				loaderBlock.classList.add('loading');
 
-				await this.setAddress();
-				this.closeModal();
+				const data = await this.setAddress();
+
+				if (data) this.closeModal();
 			},
 		});
 

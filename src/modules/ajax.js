@@ -70,6 +70,40 @@ class Ajax {
 
 		return { data, error: responseError };
 	}
+
+	/**
+	 * PUT запрос
+	 * @param {string} url - адрес сервера для отправки запроса
+	 * @param {void} body - объект, посылаемый в запросе
+	 * @param {object} params - доп параметры
+	 * @param {boolean} params.formData - является ли объект formData
+	 * @returns {object} - объект, содержащий полученные данные и ошибку, если произошла
+	 */
+	async put(url, body = {}, { formData = false } = {}) {
+		let data, responseError, result;
+
+		try {
+			const response = await fetch(url, {
+				method: 'PUT',
+				body: formData ? body : JSON.stringify(body),
+			});
+
+			result = await response.text();
+
+			if (response.ok) {
+				data = JSON.parse(result);
+			} else {
+				responseError = JSON.parse(result).detail;
+			}
+		} catch {
+			responseError = result;
+		}
+
+		const loaderButton = document.querySelector('#btn-loader');
+		loaderButton?.classList.remove('loading');
+
+		return { data, error: responseError };
+	}
 }
 
 export default new Ajax();
