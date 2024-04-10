@@ -1,5 +1,6 @@
 import api from '../../modules/api';
 import { router } from '../../modules/router';
+import { localStorageHelper } from '../../utils';
 import Button from '../Button/Button';
 import Header from '../Header/Header';
 import template from './AddressSujests.hbs';
@@ -32,7 +33,7 @@ class AddressSujests {
 	handleAddressChange() {
 		const header = document.getElementById('header');
 		header.remove();
-		const newHeader = new Header({ navigate: router.navigate });
+		const newHeader = new Header({ navigate: router.navigate.bind(router) });
 		newHeader.render();
 	}
 
@@ -40,7 +41,8 @@ class AddressSujests {
 	 * Добавить адрес
 	 */
 	async setAddress() {
-		await api.updateAddress({ address: this.address, extra_address: 'Кв, подъезд, этаж' }, this.handleAddressChange);
+		await api.updateAddressSujests({ address: this.address }, this.handleAddressChange);
+		this.closeModal();
 	}
 
 	/**
@@ -81,7 +83,7 @@ class AddressSujests {
 
 				input.value = address;
 				input.blur();
-				this.address = address;
+				this.address = street || currentItem.title?.text;
 
 				api.geoCoder(street || address, this.goToPoint);
 			},
@@ -125,6 +127,15 @@ class AddressSujests {
 
 		const input = searchContainer.querySelector('input');
 		const dropdown = sujestsContainer.querySelector('.dropdown-container');
+
+		const user = localStorageHelper.getItem('user-info');
+
+		if (user.address) {
+			input.value = user.address || '';
+			setTimeout(() => {
+				api.geoCoder(user.address, this.goToPoint);
+			}, 500);
+		}
 
 		let stopTyping;
 

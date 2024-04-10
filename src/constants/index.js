@@ -28,7 +28,7 @@ export const SUCCESS_MESSAGES = {
 	},
 	address: {
 		title: 'Адрес успешно сохранен',
-		description: 'Осталось лишь заказать',
+		description: '',
 	},
 	profileSave: {
 		title: 'Успешно',
@@ -36,7 +36,7 @@ export const SUCCESS_MESSAGES = {
 	},
 	checkout: {
 		title: 'Оплата прошла успешно',
-		description: 'Заказ скоро будет у вас!',
+		description: 'Передали заказ курьеру!',
 	},
 };
 
@@ -112,7 +112,7 @@ export const FIELDS_PROFILE_FORM = [
 	},
 	{
 		id: 'profile-phone-input',
-		placeholder: 'Номер телефона',
+		placeholder: 'Номер телефона (+7 (000) 000 00 00)',
 		name: 'phone',
 	},
 ];
@@ -137,6 +137,8 @@ export const INVALID_PASSWORD_CHAR_REGEX = /[^A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\
 export const NAME_REGEX = /^[a-zA-Zа-яА-ЯёЁ][a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/;
 
 export const INVALID_NAME_CHAR_REGEX = /[^a-zA-Zа-яА-ЯёЁ0-9]/;
+
+export const INVALID_PHONE = /^\+7 \(\d{3}\) \d{3} \d{2} \d{2}$/;
 
 export const YANDEX_API_SUJESTS = 'f96d8d36-1d0a-4786-9140-1b350e8179e1';
 

@@ -2,6 +2,9 @@ import Button from '../../../../components/Button';
 import Input from '../../../../components/Input/Input';
 import { FIELDS_ADRESS_FORM } from '../../../../constants';
 import api from '../../../../modules/api';
+import { router } from '../../../../modules/router';
+import urls from '../../../../routes/urls';
+import { localStorageHelper } from '../../../../utils';
 import template from './PayForm.hbs';
 import './PayForm.scss';
 
@@ -37,8 +40,9 @@ class PayForm {
 			extra_address: `${this.apart}, ${this.entrance}, ${this.floor}`,
 		});
 
-		if (data) {
+		if (!data.detail) {
 			api.checkout();
+			router.navigate(urls.restaurants);
 		}
 	}
 
@@ -46,6 +50,12 @@ class PayForm {
 	 * Рендер страницы
 	 */
 	render() {
+		const user = localStorageHelper.getItem('user-info');
+
+		if (user.address) {
+			this.main = user.address;
+		}
+
 		this.#parent.insertAdjacentHTML('beforeend', template(this.data));
 		const form = this.#parent.querySelector('.pay-form');
 		const addressBlock = form.querySelector('.pay-form__inputs');
@@ -65,7 +75,7 @@ class PayForm {
 		const checkoutButton = new Button(form, {
 			id: 'pay-form-button',
 			content: 'Оплатить',
-			disabled: this.main && this.data.sum !== 0 ? false : true,
+			disabled: this.data.sum !== 0 ? false : true,
 			withLoader: true,
 			onClick: () => {
 				this.handleSubmit();

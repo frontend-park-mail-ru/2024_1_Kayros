@@ -46,7 +46,7 @@ class DishCard {
 			},
 			removeCount: async (id) => {
 				const sum = await api.removeFromCart(id);
-				const submit = document.getElementsByClassName('pay-form-button');
+				const submit = document.getElementById('pay-form-button');
 
 				const cart = document.getElementById('cart-button');
 				const formSum = document.querySelector('#pay-form-sum');

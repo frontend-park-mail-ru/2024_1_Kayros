@@ -1,7 +1,7 @@
 import Button from '../../components/Button/Button';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import Input from '../../components/Input';
-import { FIELDS_PROFILE_FORM } from '../../constants';
+import { EMAIL_REGEX, FIELDS_PROFILE_FORM, INVALID_PHONE, NAME_REGEX } from '../../constants';
 import api from '../../modules/api';
 import template from './Profile.hbs';
 import './Profile.scss';
@@ -100,6 +100,49 @@ class Profile {
 		});
 
 		submitButton.render();
+
+		const name = this.#parent.querySelector('#profile-name-input');
+		const submit = this.#parent.querySelector('#profile-submit');
+
+		name.onblur = (event) => {
+			const isNameValid = NAME_REGEX.test(event.target.value);
+
+			if (!isNameValid || event.target.value === '') {
+				name.style.border = '1px solid #ff0000';
+				submit.disabled = true;
+			} else {
+				name.style.border = '';
+				submit.disabled = false;
+			}
+		};
+
+		const email = this.#parent.querySelector('#profile-mail-input');
+
+		email.onblur = (event) => {
+			const isEmailValid = EMAIL_REGEX.test(event.target.value);
+
+			if (!isEmailValid || event.target.value === '') {
+				email.style.border = '1px solid #ff0000';
+				submit.disabled = true;
+			} else {
+				email.style.border = '';
+				submit.disabled = false;
+			}
+		};
+
+		const phone = this.#parent.querySelector('#profile-phone-input');
+
+		phone.onblur = (event) => {
+			const isPhoneValid = INVALID_PHONE.test(event.target.value);
+
+			if (!isPhoneValid || event.target.value === '') {
+				phone.style.border = '1px solid #ff0000';
+				submit.disabled = true;
+			} else {
+				phone.style.border = '';
+				submit.disabled = false;
+			}
+		};
 	}
 
 	/**

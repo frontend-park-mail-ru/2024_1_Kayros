@@ -212,13 +212,6 @@ class Api {
 		const { data, error } = await ajax.put(`${this.#url}/order/update_address`, body);
 
 		if (data && !error && !data.detail) {
-			Notification.open({
-				duration: 3,
-				title: SUCCESS_MESSAGES.address.title,
-				description: SUCCESS_MESSAGES.address.description,
-				type: 'success',
-			});
-
 			callback(data);
 			return data;
 		}
@@ -342,7 +335,7 @@ class Api {
 
 		if (data && !error) {
 			Notification.open({
-				duration: 3,
+				duration: 6,
 				title: SUCCESS_MESSAGES.checkout.title,
 				description: SUCCESS_MESSAGES.checkout.description,
 				type: 'success',
