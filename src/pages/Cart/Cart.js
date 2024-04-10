@@ -1,5 +1,4 @@
 import Button from '../../components/Button/Button';
-import CounterButton from '../../components/CounterButton';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
 import template from './Cart.hbs';
@@ -38,11 +37,15 @@ class Cart {
 
 		backButton.render();
 
-		const cutleries = this.#parent.querySelector('.cart__cutleries');
-		const cutleriesCounter = new CounterButton(cutleries, { id: 'cutleries-counter', initCount: 1 });
-		cutleriesCounter.render();
+		if (!data) {
+			const empty = document.createElement('div');
+			empty.classList.add('cart__empty');
+			empty.innerHTML = 'Корзина пуста';
+			dishesBlock.insertAdjacentElement('beforeend', empty);
+			return;
+		}
 
-		const dishesListing = new Dishes(dishesBlock, data.food);
+		const dishesListing = new Dishes(dishesBlock, data?.food);
 		dishesListing.render();
 
 		const payForm = this.#parent.querySelector('.cart__pay-form');

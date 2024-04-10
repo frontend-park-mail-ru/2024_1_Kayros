@@ -40,10 +40,33 @@ class Header {
 	}
 
 	/**
+	 * Обработка полученных данных
+	 * @param {object} data - информация о корзине
+	 */
+	handleCartData(data) {
+		if (!data || data.sum === 0) {
+			return;
+		}
+
+		const cartBlock = document.getElementById('cart');
+		const cartButton = new Button(cartBlock, {
+			id: 'cart-button',
+			content: `${data?.sum} ₽`,
+			icon: 'cart',
+			onClick: () => {
+				this.#navigate(urls.cart);
+			},
+		});
+
+		cartButton.render();
+	}
+
+	/**
 	 * Получение данных пользователя
 	 */
 	async userData() {
 		await api.getUserInfo(this.handleUserData);
+		await api.getCartInfo(this.handleCartData);
 	}
 
 	/**
@@ -80,19 +103,6 @@ class Header {
 		});
 
 		addressButton.render();
-
-		//if (user?.cart && user.cart.total > 0) {
-		const cartBlock = document.getElementById('cart');
-		const cartButton = new Button(cartBlock, {
-			id: 'cart-button',
-			content: '800 ₽',
-			icon: 'cart',
-			onClick: () => {
-				this.#navigate(urls.cart);
-			},
-		});
-
-		cartButton.render();
 
 		const profileBlock = document.getElementById('profile-block');
 

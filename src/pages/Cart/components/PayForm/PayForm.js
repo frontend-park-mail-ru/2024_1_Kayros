@@ -37,7 +37,7 @@ class PayForm {
 				id: field.id,
 				placeholder: field.placeholder,
 				style: field.style,
-				value: field.id === 'main-address' ? this.data.address : '',
+				value: field.id === 'main-address' ? this.data?.address : '',
 			}).render();
 		});
 	}

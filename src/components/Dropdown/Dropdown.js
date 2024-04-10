@@ -1,12 +1,12 @@
-import api from '../../modules/api';
 import urls from '../../routes/urls';
 import template from './Dropdown.hbs';
 import './Dropdown.scss';
 import { OPEN_PROFILE_SLIDE_OPTIONS, CLOSE_PROFILE_SLIDE_OPTIONS } from './constants';
 
 const dropdownItems = [
-	{ id: 'profile-link', name: 'Профиль', exit: false },
-	{ id: 'exit-link', name: 'Выйти', exit: true },
+	{ id: 'profile-link', name: 'Профиль', exit: false, url: urls.profile },
+	{ id: 'cart-link', name: 'Корзина', exit: false, url: urls.cart },
+	{ id: 'exit-link', name: 'Выйти', exit: true, url: urls.restaurants },
 ];
 
 /**
@@ -101,23 +101,16 @@ class Dropdown {
 
 		const links = dropdown.querySelector('#items');
 
-		const profileButton = links.querySelector('#profile-link');
+		dropdownItems.forEach((item) => {
+			const button = links.querySelector(`#${item.id}`);
 
-		profileButton.onclick = (event) => {
-			event.stopPropagation();
+			button.onclick = (event) => {
+				event.stopPropagation();
 
-			this.navigate(urls.profile);
-			this.close(dropdown);
-		};
-
-		const exitButton = links.querySelector('#exit-link');
-
-		exitButton.onclick = (event) => {
-			event.stopPropagation();
-
-			api.signout(this.handleExit.bind(this));
-			this.close(dropdown);
-		};
+				this.navigate(item.url);
+				this.close(dropdown);
+			};
+		});
 
 		this.#parent.addEventListener('click', (event) => {
 			event.stopPropagation();

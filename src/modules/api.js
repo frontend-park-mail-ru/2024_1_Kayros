@@ -1,6 +1,5 @@
 import Notification from '../components/Notification/Notification';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../constants';
-import cartInfo from '../mocks/cartInfo';
 import restaurantInfo from '../mocks/restaurantInfo';
 import ajax from './ajax';
 
@@ -72,10 +71,6 @@ class Api {
 	async getCartInfo(callback) {
 		let data = await ajax.get(`${this.#url}/order`);
 
-		if (!data) {
-			data = cartInfo;
-		}
-
 		callback(data);
 	}
 
@@ -85,7 +80,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async getRestaurantInfo(id, callback) {
-		let data = await ajax.get(`${this.#url}/restaurant/${id}`);
+		let data = await ajax.get(`${this.#url}/restaurants/${id}`);
 
 		if (!data) {
 			data = restaurantInfo;

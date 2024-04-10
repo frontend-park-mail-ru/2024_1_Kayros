@@ -10,12 +10,10 @@
 		width: 40%;
 	}
 
-	&__cutleries {
-		display: flex;
-		font-size: 18px;
-		font-weight: 600;
-		gap: 40px;
-		align-items: center;
+	&__empty {
+		font-size: 22px;
+		margin: 10px 0;
+		text-align: end;
 	}
 
 	#back-button {
