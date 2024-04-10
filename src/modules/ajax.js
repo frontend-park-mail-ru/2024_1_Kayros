@@ -88,7 +88,7 @@ class Ajax {
 				body: formData ? body : JSON.stringify(body),
 			});
 
-			result = await response.text();
+			result = await response.json();
 
 			if (response.ok) {
 				data = JSON.parse(result);

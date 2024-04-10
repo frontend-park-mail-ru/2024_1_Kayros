@@ -43,10 +43,6 @@ class Header {
 	 * @param {object} data - информация о корзине
 	 */
 	handleCartData(data) {
-		if (!data || data.sum === 0) {
-			return;
-		}
-
 		const cartBlock = document.getElementById('cart');
 		const cartButton = new Button(cartBlock, {
 			id: 'cart-button',

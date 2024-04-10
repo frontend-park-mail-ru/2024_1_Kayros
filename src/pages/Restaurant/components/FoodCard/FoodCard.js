@@ -34,14 +34,32 @@ class FoodCard {
 			initCount: this.count,
 			addCount: async (id) => {
 				const res = await api.addToCart(id);
+				await api.getCartInfo((data) => {
+					const cart = document.getElementById('cart-button');
+					const sum = cart.querySelector('span');
+					sum.innerHTML = `${data.sum} ₽`;
+				});
+
 				return res;
 			},
 			removeCount: async (id) => {
 				const res = await api.removeFromCart(id);
+				await api.getCartInfo((data) => {
+					const cart = document.getElementById('cart-button');
+					const sum = cart.querySelector('span');
+					sum.innerHTML = `${data.sum} ₽`;
+				});
+
 				return res;
 			},
 			updateCount: async ({ id, count }) => {
 				const res = await api.updateCartCount({ food_id: id, count });
+				await api.getCartInfo((data) => {
+					const cart = document.getElementById('cart-button');
+					const sum = cart.querySelector('span');
+					sum.innerHTML = `${data.sum} ₽`;
+				});
+
 				return res;
 			},
 		});

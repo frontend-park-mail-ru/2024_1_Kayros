@@ -239,9 +239,9 @@ class Api {
 	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async addToCart(foodId) {
-		const { data, error } = await ajax.post(`${this.#url}/order/food/add/${foodId}`);
+		const { error } = await ajax.post(`${this.#url}/order/food/add/${foodId}`);
 
-		if (data && !error) {
+		if (!error) {
 			return true;
 		}
 
