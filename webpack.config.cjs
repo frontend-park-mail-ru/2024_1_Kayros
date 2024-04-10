@@ -71,7 +71,7 @@ module.exports = {
 		proxy: [
 			{
 				context: ['/api/v1'],
-				target: 'http://109.120.180.238:8000',
+				target: 'http://localhost:8000',
 			},
 			{
 				context: ['/minio-api'],
