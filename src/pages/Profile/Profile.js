@@ -42,6 +42,9 @@ class Profile {
 
 			const profile = document.querySelector('.header__profile-image');
 			profile.src = data.img_url;
+
+			const name = document.querySelector('#name');
+			name.innerHTML = this.name;
 		});
 	}
 
