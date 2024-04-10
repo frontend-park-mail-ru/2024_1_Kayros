@@ -59,7 +59,7 @@ class FoodCard {
 					sum.innerHTML = '';
 				} else {
 					cart.className = 'btn btn-primary';
-					sum.innerHTML = `${res} ₽`;
+					sum.innerHTML = `${res || 0} ₽`;
 				}
 
 				return res;
@@ -75,7 +75,7 @@ class FoodCard {
 					sum.innerHTML = '';
 				} else {
 					cart.className = 'btn btn-primary';
-					sum.innerHTML = `${res} ₽`;
+					sum.innerHTML = `${res || 0} ₽`;
 				}
 
 				return res;

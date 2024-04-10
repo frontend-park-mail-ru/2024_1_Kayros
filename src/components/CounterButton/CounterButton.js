@@ -82,13 +82,14 @@ class CounterButton {
 			countEl.innerHTML = this.count;
 		}
 
-		if (this.count === 0) {
+		if (count === 0) {
 			this.isNull = true;
 			currentButton?.remove();
 			addButton.render();
+			this.count = 0;
 		}
 
-		if (this.count > 0 && this.isNull) {
+		if (count > 0 && this.isNull) {
 			this.isNull = false;
 			currentButton?.remove();
 			this.renderCounter();

@@ -277,7 +277,7 @@ class Api {
 			type: 'error',
 		});
 
-		return 0;
+		return false;
 	}
 
 	/**
@@ -299,7 +299,7 @@ class Api {
 			type: 'error',
 		});
 
-		return 0;
+		return false;
 	}
 
 	/**
@@ -323,7 +323,7 @@ class Api {
 			type: 'error',
 		});
 
-		return 0;
+		return false;
 	}
 
 	/**
