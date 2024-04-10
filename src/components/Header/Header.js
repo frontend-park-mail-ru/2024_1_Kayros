@@ -14,7 +14,6 @@ import './Header.scss';
  */
 class Header {
 	#parent;
-	#navigate;
 
 	/**
 	 * Конструктор класса
@@ -22,7 +21,7 @@ class Header {
 	 * @param {void} params.navigate - функция навигации по страницам
 	 */
 	constructor({ navigate }) {
-		this.#navigate = navigate;
+		this.navigate = navigate;
 		this.#parent = document.getElementById('layout');
 	}
 
@@ -53,9 +52,7 @@ class Header {
 			id: 'cart-button',
 			content: `${data?.sum} ₽`,
 			icon: 'cart',
-			onClick: () => {
-				this.#navigate(urls.cart);
-			},
+			onClick: () => this.navigate(urls.cart),
 		});
 
 		cartButton.render();
@@ -66,7 +63,7 @@ class Header {
 	 */
 	async userData() {
 		await api.getUserInfo(this.handleUserData);
-		await api.getCartInfo(this.handleCartData);
+		api.getCartInfo(this.handleCartData.bind(this));
 	}
 
 	/**
@@ -76,7 +73,7 @@ class Header {
 		this.#parent.insertAdjacentHTML('afterbegin', template());
 
 		const logoBlock = document.getElementById('logo-container');
-		const logo = new Logo(logoBlock, { onClick: () => this.#navigate(urls.restaurants) });
+		const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
 		logo.render();
 
 		const searchBlock = document.getElementById('search-input');
@@ -95,7 +92,7 @@ class Header {
 		const addressButton = new Button(addressBlock, {
 			id: 'address-button',
 			onClick: () => {
-				this.#navigate(urls.address);
+				this.navigate(urls.address);
 			},
 			content: user?.address || 'Укажите адрес доставки',
 			icon: user?.address ? '' : 'address',
@@ -113,7 +110,7 @@ class Header {
 			const loginButton = new Button(profileBlock, {
 				id: 'header-login-button',
 				content: 'Войти',
-				onClick: () => this.#navigate(urls.signIn),
+				onClick: () => this.navigate(urls.signIn),
 			});
 
 			loginButton.render();
@@ -126,12 +123,12 @@ class Header {
 		if (profile) {
 			const dropdown = new Dropdown(profile, {
 				id: 'dropdown-profile',
-				navigate: this.#navigate,
+				navigate: this.navigate,
 				onExit: () => {
 					headerElement.remove();
 					this.render();
 
-					this.#navigate(urls.restaurants);
+					this.navigate(urls.restaurants);
 				},
 			});
 

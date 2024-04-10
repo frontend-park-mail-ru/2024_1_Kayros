@@ -42,7 +42,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async updateUserData(body, callback) {
-		const { data, error } = await ajax.put(`${this.#url}/user`, body);
+		const { data, error } = await ajax.put(`${this.#url}/user`, body, { formData: true });
 
 		if (data && !error) {
 			Notification.open({
@@ -180,7 +180,7 @@ class Api {
 	/**
 	 * Метод для добавления блюда в корзину
 	 * @param {number} foodId - id блюда
-	 * @returns {boolean} - результат запроса
+	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async addToCart(foodId) {
 		const { data, error } = await ajax.post(`${this.#url}/order/food/add/${foodId}`);
@@ -202,7 +202,7 @@ class Api {
 	/**
 	 * Метод для удаления блюда из корзины
 	 * @param {number} foodId - id блюда
-	 * @returns {boolean} - результат запроса
+	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async removeFromCart(foodId) {
 		const { error } = await ajax.delete(`${this.#url}/order/food/delete/${foodId}`);
@@ -226,7 +226,7 @@ class Api {
 	 * @param {object} body - объект
 	 * @param {object} body.food_id - id блюдп
 	 * @param {object} body.count - количество
-	 * @returns {boolean} - результат запроса
+	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async updateCartCount(body) {
 		const { error } = await ajax.put(`${this.#url}/order/food/update_count`, body);
@@ -238,6 +238,58 @@ class Api {
 		Notification.open({
 			duration: 3,
 			title: ERROR_MESSAGES.CART_UPDATE,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return false;
+	}
+
+	/**
+	 * Метод для обновления адреса
+	 * @param {object} body - объект
+	 * @param {object} body.address - основной
+	 * @param {object} body.extra_address - доп
+	 * @returns {Promise<object>} - результат запроса
+	 */
+	async updateAddress(body) {
+		const { data, error } = await ajax.put(`${this.#url}/order/update_address`, body);
+
+		if (data && !error) {
+			return data;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.ADDRESS_UPDATE,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return data;
+	}
+
+	/**
+	 * Метод для оформления заказа
+	 * @returns {boolean} - результат запроса
+	 */
+	async checkout() {
+		const { data, error } = await ajax.put(`${this.#url}/order/pay`);
+
+		if (data && !error) {
+			Notification.open({
+				duration: 3,
+				title: SUCCESS_MESSAGES.checkout.title,
+				description: SUCCESS_MESSAGES.checkout.description,
+				type: 'success',
+			});
+
+			return true;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CHECKOUT,
 			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
 		});

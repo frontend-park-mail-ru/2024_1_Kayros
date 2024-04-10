@@ -75,15 +75,17 @@ class Ajax {
 	 * PUT запрос
 	 * @param {string} url - адрес сервера для отправки запроса
 	 * @param {void} body - объект, посылаемый в запросе
+	 * @param {object} params - доп параметры
+	 * @param {boolean} params.formData - является ли объект formData
 	 * @returns {object} - объект, содержащий полученные данные и ошибку, если произошла
 	 */
-	async put(url, body) {
+	async put(url, body = {}, { formData = false } = {}) {
 		let data, responseError, result;
 
 		try {
 			const response = await fetch(url, {
 				method: 'PUT',
-				body,
+				body: formData ? body : JSON.stringify(body),
 			});
 
 			result = await response.text();

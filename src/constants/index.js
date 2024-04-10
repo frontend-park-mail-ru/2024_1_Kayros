@@ -5,6 +5,8 @@ export const ERROR_MESSAGES = {
 	SIGNOUT: 'Не удалось выйти из аккаунта',
 	PROFILE_SAVE: 'Не удалось сохранить информацию',
 	CART_UPDATE: 'Корзина в данный момент недоступна',
+	ADDRESS_UPDATE: 'Не удалось сохранить адрес',
+	CHECKOUT: 'Не удалось оформить заказ',
 };
 
 export const SUCCESS_MESSAGES = {
@@ -27,6 +29,10 @@ export const SUCCESS_MESSAGES = {
 	profileSave: {
 		title: 'Успешно',
 		description: 'Новая информация сохранена',
+	},
+	checkout: {
+		title: 'Оплата прошла успешно',
+		description: 'Заказ скоро будет у вас!',
 	},
 };
 
@@ -67,21 +73,25 @@ export const FIELDS_ADRESS_FORM = [
 		id: 'main-address',
 		placeholder: 'Улица, номер дома',
 		style: 'dynamic',
+		name: 'main',
 	},
 	{
 		id: 'apart-address',
 		placeholder: 'Квартира',
 		style: 'dynamic',
+		name: 'apart',
 	},
 	{
 		id: 'entrance-address',
 		placeholder: 'Подъезд',
 		style: 'dynamic',
+		name: 'entrance',
 	},
 	{
 		id: 'floor-address',
 		placeholder: 'Этаж',
 		style: 'dynamic',
+		name: 'floor',
 	},
 ];
 

@@ -20,7 +20,10 @@ class CounterButton {
 	 * @param {void} params.removeCount - удаление 1
 	 * @param {void} params.updateCount - обновление счета
 	 */
-	constructor(parent, { id, productId, initCount, addCount, removeCount, updateCount }) {
+	constructor(
+		parent,
+		{ id, productId, initCount, addCount = () => {}, removeCount = () => {}, updateCount = () => {} },
+	) {
 		this.#parent = parent;
 		this.#id = id;
 		this.count = initCount;

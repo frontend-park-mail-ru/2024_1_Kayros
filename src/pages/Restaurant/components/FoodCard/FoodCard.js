@@ -32,16 +32,16 @@ class FoodCard {
 			id: `food-button-${this.data.id}`,
 			productId: this.data.id,
 			initCount: this.count,
-			addCount: (id) => {
-				const res = api.addToCart(id);
+			addCount: async (id) => {
+				const res = await api.addToCart(id);
 				return res;
 			},
-			removeCount: (id) => {
-				const res = api.removeFromCart(id);
+			removeCount: async (id) => {
+				const res = await api.removeFromCart(id);
 				return res;
 			},
-			updateCount: ({ id, count }) => {
-				const res = api.updateCartCount({ food_id: id, count });
+			updateCount: async ({ id, count }) => {
+				const res = await api.updateCartCount({ food_id: id, count });
 				return res;
 			},
 		});
