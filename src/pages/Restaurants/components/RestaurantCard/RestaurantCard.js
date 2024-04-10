@@ -14,15 +14,15 @@ class RestaurantCard {
 	 * @param {number} params.id - идентификатор ресторана
 	 * @param {string} params.img_url - URL изображения
 	 * @param {string} params.name - название ресторана (заголовок карточки)
-	 * @param {string} params.description - описание ресторана
+	 * @param {string} params.short_description - описание ресторана
 	 * @param {string} params.rating - рейтинг ресторана
 	 */
-	constructor(parent, { id, img_url, name, description, rating }) {
+	constructor(parent, { id, img_url, name, short_description, rating }) {
 		this.parent = parent;
 		this.id = id;
 		this.image = img_url;
 		this.name = name;
-		this.description = description;
+		this.description = short_description;
 		this.rating = rating;
 	}
 
