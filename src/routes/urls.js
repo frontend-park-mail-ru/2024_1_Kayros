@@ -6,6 +6,7 @@ const urls = {
 	signUp: '/signup',
 	address: '/address',
 	cart: '/cart',
+	profile: '/profile',
 };
 
 export default urls;

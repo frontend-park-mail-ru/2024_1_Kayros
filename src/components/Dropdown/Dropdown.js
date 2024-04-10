@@ -1,10 +1,13 @@
 import api from '../../modules/api';
-import Button from '../Button/Button';
+import urls from '../../routes/urls';
 import template from './Dropdown.hbs';
 import './Dropdown.scss';
 import { OPEN_PROFILE_SLIDE_OPTIONS, CLOSE_PROFILE_SLIDE_OPTIONS } from './constants';
 
-const dropdownItems = [{ name: 'Выйти', exit: true }];
+const dropdownItems = [
+	{ id: 'profile-link', name: 'Профиль', exit: false },
+	{ id: 'exit-link', name: 'Выйти', exit: true },
+];
 
 /**
  * Раскрывающееся окошко
@@ -19,12 +22,14 @@ class Dropdown {
 	 * @param {Element} parent - родительский элемент
 	 * @param {object} params - параметры
 	 * @param {number} params.id - идентификатор
+	 * @param {void} params.navigate - функция навигации по страницам
 	 * @param {void} params.onExit - функция, выполняемая при выходе пользователя
 	 */
-	constructor(parent, { id = 'dropdown', onExit }) {
+	constructor(parent, { id = 'dropdown', navigate, onExit }) {
 		this.#parent = parent;
 		this.#id = id;
 		this.#onExit = onExit;
+		this.navigate = navigate;
 		this.isOpen = false;
 	}
 
@@ -94,16 +99,25 @@ class Dropdown {
 
 		const dropdown = document.getElementById(this.#id);
 
-		const link = dropdown.querySelector('.dropdown-item');
+		const links = dropdown.querySelector('#items');
 
-		const exitButton = new Button(link, {
-			id: 'exit-button',
-			content: 'Выйти',
-			style: 'clear',
-			onClick: () => api.signout(this.handleExit.bind(this)),
-		});
+		const profileButton = links.querySelector('#profile-link');
 
-		exitButton.render();
+		profileButton.onclick = (event) => {
+			event.stopPropagation();
+
+			this.navigate(urls.profile);
+			this.close(dropdown);
+		};
+
+		const exitButton = links.querySelector('#exit-link');
+
+		exitButton.onclick = (event) => {
+			event.stopPropagation();
+
+			api.signout(this.handleExit.bind(this));
+			this.close(dropdown);
+		};
 
 		this.#parent.addEventListener('click', (event) => {
 			event.stopPropagation();

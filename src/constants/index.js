@@ -3,6 +3,7 @@ export const ERROR_MESSAGES = {
 	LOGIN: 'Не удалось войти',
 	SIGNUP: 'Не удалось создать аккаунт',
 	SIGNOUT: 'Не удалось выйти из аккаунта',
+	PROFILE_SAVE: 'Не удалось сохранить информацию',
 };
 
 export const SUCCESS_MESSAGES = {
@@ -21,6 +22,10 @@ export const SUCCESS_MESSAGES = {
 	repeatLoginTry: {
 		title: 'Вы уже вошли в аккаунт',
 		description: 'Еще раз входить не требуется!',
+	},
+	profileSave: {
+		title: 'Успешно',
+		description: 'Новая информация сохранена',
 	},
 };
 

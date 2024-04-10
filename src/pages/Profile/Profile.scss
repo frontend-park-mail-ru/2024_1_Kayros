@@ -1,0 +1,32 @@
+.profile {
+	display: flex;
+	justify-content: center;
+	margin-top: 46px;
+	gap: 30px;
+
+	&__image {
+		height: 200px;
+		width: 200px;
+	}
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		width: 340px;
+
+		&-title {
+			font-size: 24px;
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+	}
+
+	.input__label {
+		background: inherit;
+	}
+
+	#profile-submit {
+		height: 40px;
+	}
+}

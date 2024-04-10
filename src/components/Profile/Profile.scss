@@ -39,16 +39,21 @@
 	height: 38px;
 	width: 38px;
 	overflow: hidden;
-	background: linear-gradient(
-		120deg,
-		var(--avatar-bg-linear-color-first) 10%,
-		var(--avatar-bg-linear-color-second) 140%
-	);
 	z-index: 11;
 	cursor: pointer;
 
 	img {
+		min-height: 100%;
+		object-fit: cover;
 		width: 100%;
 		margin: 0;
+	}
+
+	&.default {
+		background: linear-gradient(
+			120deg,
+			var(--avatar-bg-linear-color-first) 10%,
+			var(--avatar-bg-linear-color-second) 140%
+		);
 	}
 }
