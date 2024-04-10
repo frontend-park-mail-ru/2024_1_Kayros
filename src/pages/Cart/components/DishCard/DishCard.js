@@ -34,11 +34,26 @@ class DishCard {
 			productId: this.data.id,
 			addCount: async (id) => {
 				const res = await api.addToCart(id);
+
+				const cart = document.getElementById('cart-button');
+				const formSum = document.querySelector('#pay-form-sum');
+				const sum = cart.querySelector('span');
+
+				sum.innerHTML = `${res || 0} ₽`;
+				formSum.innerHTML = `${res || 0} ₽`;
+
 				return res;
 			},
 			removeCount: async (id) => {
-				const res = await api.removeFromCart(id);
+				const sum = await api.removeFromCart(id);
 				const submit = document.getElementsByClassName('pay-form-button');
+
+				const cart = document.getElementById('cart-button');
+				const formSum = document.querySelector('#pay-form-sum');
+				const sumBlock = cart.querySelector('span');
+
+				formSum.innerHTML = `${sum || 0} ₽`;
+				sumBlock.innerHTML = `${sum || 0} ₽`;
 
 				const cards = document.getElementsByClassName('dish-card');
 
@@ -48,11 +63,19 @@ class DishCard {
 
 				const element = this.#parent.querySelector(`#food-${this.data.id}`);
 				element.remove();
-				return res;
+				return sum;
 			},
 			updateCount: async ({ id, count }) => {
-				const res = await api.updateCartCount({ food_id: id, count });
-				return res;
+				const sum = await api.updateCartCount({ food_id: id, count });
+
+				const cart = document.getElementById('cart-button');
+				const formSum = document.querySelector('#pay-form-sum');
+				const sumBlock = cart.querySelector('span');
+
+				sumBlock.innerHTML = `${sum || 0} ₽`;
+				formSum.innerHTML = `${sum || 0} ₽`;
+
+				return sum;
 			},
 		});
 

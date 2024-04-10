@@ -46,8 +46,9 @@ class Header {
 		const cartBlock = document.getElementById('cart');
 		const cartButton = new Button(cartBlock, {
 			id: 'cart-button',
-			content: `${data?.sum} ₽`,
+			content: `${data?.sum || 0} ₽`,
 			icon: 'cart',
+			style: data?.sum === 0 ? 'secondary' : 'primary',
 			onClick: () => this.navigate(urls.cart),
 		});
 

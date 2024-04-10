@@ -1,4 +1,3 @@
-import CounterButton from '../../../../components/CounterButton';
 import DishCard from '../DishCard/DishCard';
 import template from './Dishes.hbs';
 import './Dishes.scss';
@@ -26,10 +25,6 @@ class Dishes {
 		this.#parent.insertAdjacentHTML('beforeend', template());
 
 		const foodList = this.#parent.querySelector('.dishes');
-
-		const cutleries = this.#parent.querySelector('.dishes__cutleries');
-		const cutleriesCounter = new CounterButton(cutleries, { id: 'cutleries-counter', initCount: 1 });
-		cutleriesCounter.render();
 
 		this.data?.forEach((item) => {
 			const foodCard = new DishCard(foodList, item);

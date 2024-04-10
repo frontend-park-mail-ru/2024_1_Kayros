@@ -43,7 +43,7 @@ class Api {
 	async updateUserData(body, callback) {
 		const { data, error } = await ajax.put(`${this.#url}/user`, body, { formData: true });
 
-		if (data && !error) {
+		if (data && !error && !data.detail) {
 			Notification.open({
 				duration: 3,
 				title: SUCCESS_MESSAGES.profileSave.title,
@@ -58,7 +58,7 @@ class Api {
 		Notification.open({
 			duration: 3,
 			title: ERROR_MESSAGES.PROFILE_SAVE,
-			description: error || ERROR_MESSAGES.PROFILE_SAVE,
+			description: error || data.detail,
 			type: 'error',
 		});
 	}
@@ -211,7 +211,7 @@ class Api {
 	async updateAddress(body, callback = () => {}) {
 		const { data, error } = await ajax.put(`${this.#url}/order/update_address`, body);
 
-		if (data && !error) {
+		if (data && !error && !data.detail) {
 			Notification.open({
 				duration: 3,
 				title: SUCCESS_MESSAGES.address.title,
@@ -226,7 +226,39 @@ class Api {
 		Notification.open({
 			duration: 3,
 			title: ERROR_MESSAGES.ADDRESS,
-			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			description: error || data.detail,
+			type: 'error',
+		});
+
+		return data;
+	}
+
+	/**
+	 *  Метод для обновления адреса
+	 * @param {object} body - объект
+	 * @param {object} body.address - основной
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 * @returns {Promise<object>} - результат запроса
+	 */
+	async updateAddressSujests(body, callback = () => {}) {
+		const { data, error } = await ajax.put(`${this.#url}/user/address`, body);
+
+		if (data && !error && !data.detail) {
+			Notification.open({
+				duration: 3,
+				title: SUCCESS_MESSAGES.address.title,
+				description: SUCCESS_MESSAGES.address.description,
+				type: 'success',
+			});
+
+			callback(data);
+			return data;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.ADDRESS,
+			description: error || data.detail,
 			type: 'error',
 		});
 
@@ -239,10 +271,10 @@ class Api {
 	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async addToCart(foodId) {
-		const { error } = await ajax.post(`${this.#url}/order/food/add/${foodId}`);
+		const { data, error } = await ajax.post(`${this.#url}/order/food/add/${foodId}`);
 
-		if (!error) {
-			return true;
+		if (data) {
+			return data.sum;
 		}
 
 		Notification.open({
@@ -252,7 +284,7 @@ class Api {
 			type: 'error',
 		});
 
-		return false;
+		return 0;
 	}
 
 	/**
@@ -261,10 +293,10 @@ class Api {
 	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async removeFromCart(foodId) {
-		const { error } = await ajax.delete(`${this.#url}/order/food/delete/${foodId}`);
+		const { data, error } = await ajax.delete(`${this.#url}/order/food/delete/${foodId}`);
 
-		if (!error) {
-			return true;
+		if (data) {
+			return data.sum;
 		}
 
 		Notification.open({
@@ -274,7 +306,7 @@ class Api {
 			type: 'error',
 		});
 
-		return false;
+		return 0;
 	}
 
 	/**
@@ -285,10 +317,10 @@ class Api {
 	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async updateCartCount(body) {
-		const { error } = await ajax.put(`${this.#url}/order/food/update_count`, body);
+		const { data, error } = await ajax.put(`${this.#url}/order/food/update_count`, body);
 
-		if (!error) {
-			return true;
+		if (data) {
+			return data.sum;
 		}
 
 		Notification.open({
@@ -298,7 +330,7 @@ class Api {
 			type: 'error',
 		});
 
-		return false;
+		return 0;
 	}
 
 	/**
