@@ -138,7 +138,7 @@ class Profile {
 		phone.onblur = (event) => {
 			const isPhoneValid = INVALID_PHONE.test(event.target.value);
 
-			if (!isPhoneValid || event.target.value === '') {
+			if (event.target.value && !isPhoneValid) {
 				phone.style.border = '1px solid #ff0000';
 				submit.disabled = true;
 			} else {
