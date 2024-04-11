@@ -62,7 +62,6 @@ class AuthForm {
 			title: this.#title,
 			redirectText: this.#redirectText,
 			signup: this.#type === 'signup',
-			signin: this.#type === 'signin',
 		});
 	}
 
