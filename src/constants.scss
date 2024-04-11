@@ -8,8 +8,6 @@
 	--text-color: #2d2d2d;
 	--text-in-signin: #ffffff;
 
-	--signin-bg-color: #f4f4f4;
-
 	--layout-border-radius: 30px;
 	--layout-bg-color: #f6f6f6;
 
@@ -32,10 +30,12 @@
 	--input-error-color: #ff0000;
 
 	--button-border-radius: 14px;
+	--button-signin-border-radius: 18px;
 	--button-bg-color: #2d2d2d;
 	--button-text-color: #fff;
 	--button-padding: 6px 18px;
 	--button-font-size: 16px;
+	--button-signin-padding: 9.5px 48.5px;
 
 	--button-bg-hover: #545454;
 	--button-bg-active: #3a3a3a;
@@ -73,6 +73,7 @@
 	--background-light: #eff4e7;
 
 	--auth-background: #fff;
+	--auth-bg-color: #f4f4f4;
 
 	--loader-secondary: #fff;
 

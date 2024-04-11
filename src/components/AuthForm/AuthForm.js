@@ -62,7 +62,7 @@ class AuthForm {
 			title: this.#title,
 			redirectText: this.#redirectText,
 			signup: this.#type === 'signup',
-			signin: this.#type === 'signin', 
+			signin: this.#type === 'signin',
 		});
 	}
 
@@ -98,22 +98,18 @@ class AuthForm {
 
 		const authPageContainer = this.#parent.querySelector('.auth-page-container');
 
-		if (authPageContainer) {
-			authPageContainer.classList.add(this.#type === 'signin' ? 'signin' : 'signup');
+		if (authPageContainer && this.#type === 'signup') {
+			authPageContainer.classList.add('signup');
 		}
 
 		const logoContainer = document.querySelector('.logo-container-on-auth');
 
 		if (logoContainer) {
-			const logoType = this.#type === 'signin' ? 'white' : 'default';
- 
-			if (this.#type === 'signin') {
-				logoContainer.classList.add('signin');
-			}
- 
-			new Logo(logoContainer, { 
-				onClick: () => router.navigate(urls.restaurants),	
-				logoType: logoType
+			const logoType = 'white';
+
+			new Logo(logoContainer, {
+				onClick: () => router.navigate(urls.restaurants),
+				logoType: logoType,
 			}).render();
 		}
 
@@ -144,6 +140,7 @@ class AuthForm {
 			type: 'submit',
 			disabled: true,
 			withLoader: true,
+			additionalClass: 'auth',
 			onClick: (event) => {
 				event.preventDefault();
 				this.handleSubmit();

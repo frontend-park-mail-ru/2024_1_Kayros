@@ -1,15 +1,19 @@
 .auth-container {
-	width: 350px;
-	margin-top: 30px;
+	width: 400px;
+	height: 356px;
+	margin-left: -10px;
 	padding: 50px;
 	background: var(--auth-background);
 	border-radius: 40px;
 	box-shadow: var(--dropdown-box-shadow);
 	text-align: center;
 	z-index: 6;
+	transform: scale(1.1);
 
-	.signin & {
-		margin-left: -50px;
+	.signup & {
+		margin-left: -10px;
+		height: 480px;
+		width: 338px;
 	}
 }
 
@@ -36,13 +40,16 @@
 	justify-content: center;
 }
 
-.signin-logo-and-background {
+.logo-and-background {
+	height: 560px;
+	width: 388px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	z-index: 5;
+	transform: scale(1.2);
 }
 
 .delivery-service-description {
@@ -61,19 +68,17 @@
 .logo-container-on-auth {
 	z-index: 5;
 	text-align: center;
-
-	&.signin {
-		position: absolute;
-		top: 15%;
-		left: 45%;
-		transform: translate(-50%, -50%);
-		width: 100%;
-	}
+	position: absolute;
+	top: 80px;
+	left: 45%;
+	transform: translate(-50%, 0);
+	width: 100%;
 }
 
 #mini-auth-background {
 	width: 100%;
 	height: auto;
+	height: 100%;
 }
 
 .auth-page-container {
@@ -83,30 +88,12 @@
 	height: 100vh;
 	width: 100vw;
 	overflow: hidden;
-
-	&.signup {
-		flex-direction: column;
-	}
-
-	&.signin {
-		flex-direction: row;
-	}
-
-	#auth-background {
-		position: absolute;
-		min-height: 100vh;
-		width: 100vw;
-		object-fit: cover;
-		filter: blur(2px);
-		top: 0;
-		left: 0;
-		z-index: 1;
-	}
+	flex-direction: row;
 }
 
 .signin-background {
-	background-color: var(--signin-bg-color);
-	position: absolute;
+	background-color: var(--auth-bg-color);
+	position: fixed;
 	min-height: 100vh;
 	width: 100vw;
 	top: 0;

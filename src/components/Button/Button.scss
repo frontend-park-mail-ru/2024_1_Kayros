@@ -17,6 +17,11 @@
 		float: left;
 	}
 
+	&.auth {
+		padding: var(--button-signin-padding);
+		border-radius: var(--button-signin-border-radius);
+	}
+
 	&:has(:only-child) {
 		justify-content: center;
 	}

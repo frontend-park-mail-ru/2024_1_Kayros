@@ -1,13 +1,9 @@
 	<div class="auth-page-container">
-		{{#if this.signup}}
-		<div class="logo-container-on-auth"></div>
-		{{else}}
-		<div class="signin-logo-and-background">
+		<div class="logo-and-background">
 			<div class="logo-container-on-auth"></div>
 			<img id="mini-auth-background" src="assets/mini-background.svg" alt="bg" />
 			<p class="delivery-service-description">Сервис доставки еды из ресторанов по Москве</p>
 		</div>
-		{{/if}}
 		<div class="auth-container">
 			<div id="back-button"></div>
 			<h1 class="auth-title">{{this.title}}</h1>
@@ -28,9 +24,5 @@
 			</form>
 			<div id="auth-redirect">{{this.redirectText}}</div>
 		</div>
-		{{#if this.signup}}
-    		<img id="auth-background" src="assets/background.jpeg" alt="bg" />
-		{{else}}
-			<div class=signin-background></div>
-		{{/if}}
+		<div class=signin-background></div>
 	</div>
