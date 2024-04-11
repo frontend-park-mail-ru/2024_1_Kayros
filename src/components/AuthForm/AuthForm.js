@@ -95,12 +95,6 @@ class AuthForm {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const authPageContainer = this.#parent.querySelector('.auth-page-container');
-
-		if (authPageContainer && this.#type === 'signup') {
-			authPageContainer.classList.add('signup');
-		}
-
 		const logoContainer = document.querySelector('.logo-container-on-auth');
 
 		if (logoContainer) {
