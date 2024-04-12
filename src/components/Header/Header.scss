@@ -1,4 +1,4 @@
-#header {
+.header {
 	display: flex;
 	align-items: center;
 	gap: 100px;
@@ -12,14 +12,41 @@
 		border-bottom: transparent;
 	}
 
-	#logo {
-		margin-left: 52px;
-		width: 120px;
+	&__content {
+		display: flex;
+		position: relative;
+		align-items: center;
+		gap: 27px;
+		padding: 14px 15px;
+		width: 100%;
+		height: 38px;
+		border-radius: var(--layout-border-radius);
+		background: var(--layout-bg-color);
+		margin-right: 34px;
 	}
 
-	& + #content {
-		padding-top: 10px;
+	&__cart {
+		width: 130px;
+
+		span {
+			font-size: 18px;
+			white-space: nowrap;
+		}
 	}
+
+	&__profile-block {
+		position: relative;
+		min-width: 30px;
+	}
+
+	&__search-input {
+		margin-right: auto;
+	}
+}
+
+.logo {
+	margin-left: 52px;
+	width: 120px;
 }
 
 .sticky {
@@ -40,39 +67,4 @@
 			color: var(--link-color-active);
 		}
 	}
-}
-
-#header-content {
-	display: flex;
-	position: relative;
-	align-items: center;
-	gap: 27px;
-	padding: 14px 15px;
-	width: 100%;
-	height: 38px;
-	border-radius: var(--layout-border-radius);
-	background: var(--layout-bg-color);
-	margin-right: 34px;
-
-	#cart {
-		width: 130;
-
-		&:has(span) {
-			width: 130px;
-		}
-
-		span {
-			font-size: 18px;
-			white-space: nowrap;
-		}
-	}
-}
-
-#profile-block {
-	position: relative;
-	min-width: 30px;
-}
-
-#search-input {
-	margin-right: auto;
 }

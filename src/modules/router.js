@@ -124,7 +124,7 @@ class Router {
 	 */
 	handleChangeInnerLayout() {
 		const layout = document.getElementById('layout');
-		const header = document.getElementById('header');
+		const header = document.querySelector('.header');
 		const oldContent = document.getElementById('content');
 
 		if (window.location.pathname !== urls.address) {

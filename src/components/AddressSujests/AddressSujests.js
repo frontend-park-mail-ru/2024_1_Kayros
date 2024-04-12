@@ -31,7 +31,7 @@ class AddressSujests {
 	 * Отобразить измение адреса в хэдере
 	 */
 	handleAddressChange() {
-		const header = document.getElementById('header');
+		const header = document.querySelector('.header');
 		header.remove();
 		const newHeader = new Header({ navigate: router.navigate.bind(router) });
 		newHeader.render();
