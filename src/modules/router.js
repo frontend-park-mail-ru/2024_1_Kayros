@@ -125,7 +125,7 @@ class Router {
 	handleChangeInnerLayout() {
 		const layout = document.getElementById('layout');
 		const header = document.querySelector('.header');
-		const oldContent = document.getElementById('content');
+		const oldContent = document.querySelector('.content');
 
 		if (window.location.pathname !== urls.address) {
 			oldContent?.remove();
@@ -146,7 +146,7 @@ class Router {
 			content = new Content(layout);
 		}
 
-		const currentContent = document.getElementById('content');
+		const currentContent = document.querySelector('.content');
 
 		if (!currentContent) {
 			content.render();
@@ -195,7 +195,7 @@ class Router {
 
 		this.handleChangeInnerLayout();
 
-		const content = document.getElementById('content');
+		const content = document.querySelector('.content');
 
 		if (currentRoute) {
 			if (currentPath === urls.address && content.children.length === 0) {
