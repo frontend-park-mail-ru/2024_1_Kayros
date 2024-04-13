@@ -22,7 +22,7 @@ class Header {
 	 */
 	constructor({ navigate }) {
 		this.navigate = navigate;
-		this.#parent = document.getElementById('layout');
+		this.#parent = document.querySelector('.layout');
 	}
 
 	/**

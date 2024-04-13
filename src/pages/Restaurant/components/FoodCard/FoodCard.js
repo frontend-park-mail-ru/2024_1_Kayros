@@ -39,10 +39,10 @@ class FoodCard {
 				const sum = cart.querySelector('span');
 
 				if (res === 0) {
-					cart.className = 'btn btn-secondary';
+					cart.className = 'btn btn--secondary';
 					sum.innerHTML = '';
 				} else {
-					cart.className = 'btn btn-primary';
+					cart.className = 'btn btn--primary';
 					sum.innerHTML = `${res || 0} ₽`;
 				}
 
@@ -55,10 +55,10 @@ class FoodCard {
 				const sum = cart.querySelector('span');
 
 				if (res === 0) {
-					cart.className = 'btn btn-secondary';
+					cart.className = 'btn btn--secondary';
 					sum.innerHTML = '';
 				} else {
-					cart.className = 'btn btn-primary';
+					cart.className = 'btn btn--primary';
 					sum.innerHTML = `${res || 0} ₽`;
 				}
 
@@ -71,10 +71,10 @@ class FoodCard {
 				const sum = cart.querySelector('span');
 
 				if (res === 0) {
-					cart.className = 'btn btn-secondary';
+					cart.className = 'btn btn--secondary';
 					sum.innerHTML = '';
 				} else {
-					cart.className = 'btn btn-primary';
+					cart.className = 'btn btn--primary';
 					sum.innerHTML = `${res || 0} ₽`;
 				}
 

@@ -24,20 +24,20 @@
 	span {
 		width: 30px;
 	}
-}
 
-#plus-button {
-	@include counter-control;
+	&__plus {
+		@include counter-control;
 
-	&:active {
-		background: var(--counter-add-bg-active);
+		&:active {
+			background: var(--counter-add-bg-active);
+		}
 	}
-}
 
-#minus-button {
-	@include counter-control;
+	&__minus {
+		@include counter-control;
 
-	&:active {
-		background: var(--counter-remove-bg-active);
+		&:active {
+			background: var(--counter-remove-bg-active);
+		}
 	}
 }

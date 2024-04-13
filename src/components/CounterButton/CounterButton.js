@@ -102,13 +102,13 @@ class CounterButton {
 	renderCounter() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const addButton = this.#parent.querySelector('#plus-button');
+		const addButton = this.#parent.querySelector('.counter-button__plus');
 
 		addButton.onclick = () => {
 			this.setCountState(this.count + 1);
 		};
 
-		const removeButton = this.#parent.querySelector('#minus-button');
+		const removeButton = this.#parent.querySelector('.counter-button__minus');
 
 		removeButton.onclick = () => {
 			this.setCountState(this.count - 1);

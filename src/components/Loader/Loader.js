@@ -29,10 +29,7 @@ class Loader {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML(
-			'beforeend',
-			template({ id: this.#id, class: `loader-${this.#size}`, style: `loader-${this.#style}` }),
-		);
+		this.#parent.insertAdjacentHTML('beforeend', template({ id: this.#id, size: this.#size, style: this.#style }));
 	}
 }
 

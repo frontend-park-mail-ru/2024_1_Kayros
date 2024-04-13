@@ -46,7 +46,7 @@ class PayForm {
 			const sum = cart.querySelector('span');
 
 			sum.innerHTML = '';
-			cart.className = 'btn btn-secondary';
+			cart.className = 'btn btn--secondary';
 
 			router.navigate(urls.restaurants);
 		}

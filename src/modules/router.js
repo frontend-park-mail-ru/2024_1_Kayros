@@ -123,7 +123,7 @@ class Router {
 	 * Очищает layout страницы
 	 */
 	handleChangeInnerLayout() {
-		const layout = document.getElementById('layout');
+		const layout = document.querySelector('.layout');
 		const header = document.querySelector('.header');
 		const oldContent = document.querySelector('.content');
 
