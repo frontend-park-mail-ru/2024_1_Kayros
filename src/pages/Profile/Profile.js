@@ -28,8 +28,8 @@ class Profile {
 	 *
 	 */
 	handleSubmit() {
-		const loaderBlock = this.#parent.querySelector('#btn-loader');
-		loaderBlock.classList.add('loading');
+		const loaderBlock = this.#parent.querySelector('.btn__loader');
+		loaderBlock.classList.add('btn__loader--loading');
 
 		const formData = new FormData();
 		formData.append('img', this.file);

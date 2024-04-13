@@ -114,8 +114,8 @@ class AddressSujests {
 			content: 'Сохранить',
 			withLoader: true,
 			onClick: async () => {
-				const loaderBlock = searchContainer.querySelector('#btn-loader');
-				loaderBlock.classList.add('loading');
+				const loaderBlock = searchContainer.querySelector('.btn__loader');
+				loaderBlock.classList.add('btn__loader--loading');
 
 				const data = await this.setAddress();
 

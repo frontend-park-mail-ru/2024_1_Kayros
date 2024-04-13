@@ -32,8 +32,8 @@ class PayForm {
 	 *
 	 */
 	async handleSubmit() {
-		const loaderBlock = this.#parent.querySelector('#btn-loader');
-		loaderBlock.classList.add('loading');
+		const loaderBlock = this.#parent.querySelector('.btn__loader');
+		loaderBlock.classList.add('btn__loader--loading');
 
 		const data = await api.updateAddress({
 			address: this.main,

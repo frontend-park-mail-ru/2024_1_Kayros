@@ -69,8 +69,7 @@ class Header {
 	async render() {
 		this.#parent.insertAdjacentHTML('afterbegin', template());
 
-		// const logoBlock = document.querySelector('.header__logo-container'); 
-		const logoBlock = document.querySelector('.logo'); 
+		const logoBlock = document.querySelector('.logo');
 		const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
 		logo.render();
 
@@ -114,7 +113,7 @@ class Header {
 			loginButton.render();
 		}
 
-		const headerElement = document.querySelector('.header'); 
+		const headerElement = document.querySelector('.header');
 
 		const profile = document.getElementById('profile');
 
@@ -135,9 +134,9 @@ class Header {
 
 		window.addEventListener('scroll', () => {
 			if (window.scrollY > 20) {
-				headerElement.className = 'sticky';
+				headerElement.classList.add('sticky');
 			} else {
-				headerElement.className = '';
+				headerElement.classList.remove('sticky');
 			}
 		});
 	}

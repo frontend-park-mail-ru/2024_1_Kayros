@@ -65,8 +65,8 @@ class Ajax {
 			responseError = result;
 		}
 
-		const loaderButton = document.querySelector('#btn-loader');
-		loaderButton?.classList.remove('loading');
+		const loaderButton = document.querySelector('.btn__loader');
+		loaderButton?.classList.remove('btn__loader--loading');
 
 		return { data, error: responseError };
 	}
@@ -93,8 +93,8 @@ class Ajax {
 			responseError = result;
 		}
 
-		const loaderButton = document.querySelector('#btn-loader');
-		loaderButton?.classList.remove('loading');
+		const loaderButton = document.querySelector('.btn__loader');
+		loaderButton?.classList.remove('btn__loader--loading');
 
 		return { data, error: responseError };
 	}
@@ -125,8 +125,8 @@ class Ajax {
 			responseError = result;
 		}
 
-		const loaderButton = document.querySelector('#btn-loader');
-		loaderButton?.classList.remove('loading');
+		const loaderButton = document.querySelector('.btn__loader');
+		loaderButton?.classList.remove('btn__loader--loading');
 
 		return { data, error: responseError };
 	}
