@@ -35,13 +35,16 @@ class PayForm {
 		const loaderBlock = this.#parent.querySelector('#btn-loader');
 		loaderBlock.classList.add('loading');
 
+		const mainInput = this.#parent.querySelector('#main-address');
+
 		const data = await api.updateAddress({
-			address: this.main,
+			address: mainInput.value || this.main,
 			extra_address: `${this.apart}, ${this.entrance}, ${this.floor}`,
 		});
 
 		if (!data.detail) {
-			api.checkout();
+			await api.checkout();
+
 			const cart = document.getElementById('cart-button');
 			const sum = cart.querySelector('span');
 

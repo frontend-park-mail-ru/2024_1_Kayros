@@ -360,7 +360,7 @@ class Api {
 
 	/**
 	 * Метод для оформления заказа
-	 * @returns {boolean} - результат запроса
+	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async checkout() {
 		const { data, error } = await ajax.put(`${this.#url}/order/pay`);
