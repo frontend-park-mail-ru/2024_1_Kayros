@@ -48,7 +48,7 @@ class Header {
 			id: 'cart-button',
 			content: data?.sum ? `${data.sum} ₽` : ' ',
 			icon: 'cart',
-			style: data?.sum === 0 ? 'secondary' : 'primary',
+			style: !data?.sum ? 'secondary' : 'primary',
 			onClick: () => this.navigate(urls.cart),
 		});
 
