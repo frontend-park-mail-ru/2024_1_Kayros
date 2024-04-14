@@ -24,7 +24,7 @@ class Restaurants {
 	 * @param {Array} items - массив ресторанов
 	 */
 	renderData(items) {
-		const restaurants = document.getElementById('restaurants');
+		const restaurants = document.querySelector('.restaurants');
 
 		if (!items) {
 			restaurants.innerText = 'Нет доступных ресторанов';
@@ -50,14 +50,14 @@ class Restaurants {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', template());
 
-		const currentHeader = document.getElementById('header');
+		const currentHeader = document.querySelector('.header');
 
 		if (!currentHeader) {
 			const header = new Header();
 			header.render();
 		}
 
-		const restaurants = document.getElementById('restaurants');
+		const restaurants = document.querySelector('.restaurants');
 		const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });
 		loader.render();
 

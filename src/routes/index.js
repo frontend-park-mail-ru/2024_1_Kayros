@@ -1,6 +1,9 @@
 import AddressForm from '../components/AddressForm/AddressForm';
 import Map from '../components/Map/Map';
+import CartPage from '../pages/Cart';
 import NotFound from '../pages/NotFound';
+import ProfilePage from '../pages/Profile';
+import RestaurantPage from '../pages/Restaurant';
 import RestaurantsPage from '../pages/Restaurants';
 import SignInPage from '../pages/SignIn';
 import SignUpPage from '../pages/SignUp';
@@ -10,6 +13,10 @@ const routes = {
 	[urls.restaurants]: {
 		title: 'Рестораны',
 		component: RestaurantsPage,
+	},
+	[urls.restaurant]: {
+		title: 'Ресторан',
+		component: RestaurantPage,
 	},
 	[urls.signIn]: {
 		title: 'Вход',
@@ -26,6 +33,14 @@ const routes = {
 	[urls.map]: {
 		title: 'Карта',
 		component: Map,
+	},
+	[urls.cart]: {
+		title: 'Корзина',
+		component: CartPage,
+	},
+	[urls.profile]: {
+		title: 'Профиль',
+		component: ProfilePage,
 	},
 };
 

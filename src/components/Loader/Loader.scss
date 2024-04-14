@@ -3,34 +3,32 @@
 	animation: animate 0.7s linear infinite;
 	cursor: pointer;
 
-	&.loader-primary {
-		&:not(.loader-xl) {
-			border: 2px solid var(--brand);
-			border-right: none;
-		}
+	&__style--primary:not(.loader__size--xl) {
+		border: 2px solid var(--brand);
+		border-right: none;
 	}
 
-	&.loader-secondary {
+	&__style--secondary {
 		border: 2px solid var(--loader-secondary);
 		border-right: none;
 	}
 
-	&.loader-s {
+	&__size--s {
 		width: 13px;
 		height: 12px;
 	}
 
-	&.loader-m {
+	&__size--m {
 		width: 32px;
 		height: 32px;
 	}
 
-	&.loader-l {
+	&__size--l {
 		width: 40px;
 		height: 40px;
 	}
 
-	&.loader-xl {
+	&__size--xl {
 		width: 92px;
 		height: 90px;
 		border: 3px solid var(--brand);

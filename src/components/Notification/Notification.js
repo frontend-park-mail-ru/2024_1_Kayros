@@ -35,7 +35,7 @@ class Notification {
 		return template({
 			id: `${this.#id}-${this.#count}`,
 			position: this.#position,
-			icon: type === 'success' ? 'success' : 'error',
+			icon: `${type === 'success' ? 'success' : 'error'}`,
 			...params,
 		});
 	}
@@ -148,7 +148,7 @@ class Notification {
 	 * @param {HTMLCollection} element - текущее уведомление
 	 */
 	close(element) {
-		const openNotifications = document.getElementsByClassName('notification-open');
+		const openNotifications = document.getElementsByClassName('notification--open');
 
 		if (openNotifications.length > MAX_LIST_ELEMENTS_COUNT) {
 			this.animateCompressOnOpen(openNotifications);
@@ -162,7 +162,7 @@ class Notification {
 			this.animateCompressOnClose(openNotifications);
 		}
 
-		element?.classList.remove('notification-open');
+		element?.classList.remove('notification--open');
 
 		if (this.#list) {
 			this.animateListOnClose(openNotifications);
@@ -193,7 +193,7 @@ class Notification {
 			this.#position = position;
 		}
 
-		const openNotifications = document.getElementsByClassName('notification-open');
+		const openNotifications = document.getElementsByClassName('notification--open');
 
 		if (openNotifications.length > MAX_LIST_ELEMENTS_COUNT - 1) {
 			this.animateCompressOnOpen(openNotifications);
@@ -206,7 +206,7 @@ class Notification {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML(params));
 
 		const element = document.getElementById(`root-notification-${this.#count}`);
-		const notificationTitle = element.getElementsByClassName('notification-title')[0];
+		const notificationTitle = element.getElementsByClassName('notification__title')[0];
 
 		const closeButton = new Button(notificationTitle, {
 			id: 'notification-close',
@@ -218,7 +218,7 @@ class Notification {
 		closeButton.render();
 
 		setTimeout(() => {
-			element.classList.add('notification-open');
+			element.classList.add('notification--open');
 		}, 20);
 
 		if (duration !== 0) {

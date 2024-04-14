@@ -1,8 +1,10 @@
 <div id="{{this.id}}" class="profile-dropdown {{this.open}}">
-	<div id="items">
+
+	<div class="profile-dropdown__items">
 		{{#each items}}
-			<div class="profile-dropdown-item">
-			</div>
+			<div class="profile-dropdown__item" id="{{this.id}}">
+        {{this.name}}
+      </div>
 		{{/each}}
 	</div>
 </div>

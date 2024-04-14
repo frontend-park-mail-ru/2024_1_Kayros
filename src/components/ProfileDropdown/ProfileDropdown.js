@@ -1,10 +1,14 @@
 import api from '../../modules/api';
-import Button from '../Button/Button';
+import urls from '../../routes/urls';
 import template from './ProfileDropdown.hbs';
 import './ProfileDropdown.scss';
 import { OPEN_PROFILE_SLIDE_OPTIONS, CLOSE_PROFILE_SLIDE_OPTIONS } from './constants';
 
-const dropdownItems = [{ name: 'Выйти', exit: true }];
+const dropdownItems = [
+	{ id: 'profile-link', name: 'Профиль', exit: false, url: urls.profile },
+	{ id: 'cart-link', name: 'Корзина', exit: false, url: urls.cart },
+	{ id: 'exit-link', name: 'Выйти', exit: true, url: urls.restaurants },
+];
 
 /**
  * Раскрывающееся окошко
@@ -19,12 +23,14 @@ class ProfileDropdown {
 	 * @param {Element} parent - родительский элемент
 	 * @param {object} params - параметры
 	 * @param {number} params.id - идентификатор
+	 * @param {void} params.navigate - функция навигации по страницам
 	 * @param {void} params.onExit - функция, выполняемая при выходе пользователя
 	 */
-	constructor(parent, { id = 'profile-dropdown', onExit }) {
+	constructor(parent, { id = 'profile-dropdown', navigate, onExit }) {
 		this.#parent = parent;
 		this.#id = id;
 		this.#onExit = onExit;
+		this.navigate = navigate;
 		this.isOpen = false;
 	}
 
@@ -35,12 +41,11 @@ class ProfileDropdown {
 	open(element) {
 		if (this.isOpen) return;
 
-		const name = document.getElementById('name');
+		const name = document.querySelector('.header__profile-name');
 		name.style.opacity = 1;
 		name.style.pointerEvents = 'all';
 
-		element.className = 'profile-dropdown profile-dropdown-open';
-
+		element.classList.add('profile-dropdown--open');
 		this.isOpen = true;
 		this.#parent.animate(...OPEN_PROFILE_SLIDE_OPTIONS);
 	}
@@ -52,11 +57,11 @@ class ProfileDropdown {
 	close(element) {
 		if (!this.isOpen) return;
 
-		const name = document.getElementById('name');
+		const name = document.querySelector('.header__profile-name');
 		name.style.opacity = 0;
 		name.style.pointerEvents = 'none';
 
-		element.className = 'profile-dropdown';
+		element.classList.remove('profile-dropdown--open');
 
 		this.isOpen = false;
 		this.#parent.animate(...CLOSE_PROFILE_SLIDE_OPTIONS);
@@ -80,8 +85,8 @@ class ProfileDropdown {
 	handleExit() {
 		localStorage.removeItem('user-info');
 
-		const profileDropdown = document.getElementById(this.#id);
-		this.close(profileDropdown);
+		const dropdown = document.getElementById(this.#id);
+		this.close(dropdown);
 
 		this.#onExit();
 	}
@@ -92,32 +97,38 @@ class ProfileDropdown {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const profileDropdown = document.getElementById(this.#id);
+		const dropdown = document.getElementById(this.#id);
 
-		const link = profileDropdown.querySelector('.profile-dropdown-item');
+		const links = dropdown.querySelector('.profile-dropdown__items');
 
-		const exitButton = new Button(link, {
-			id: 'exit-button',
-			content: 'Выйти',
-			style: 'clear',
-			onClick: () => api.signout(this.handleExit.bind(this)),
+		dropdownItems.forEach((item) => {
+			const button = links.querySelector(`#${item.id}`);
+
+			button.onclick = (event) => {
+				event.stopPropagation();
+
+				if (item.exit) {
+					api.signout(this.handleExit.bind(this));
+				}
+
+				this.navigate(item.url);
+				this.close(dropdown);
+			};
 		});
-
-		exitButton.render();
 
 		this.#parent.addEventListener('click', (event) => {
 			event.stopPropagation();
 
-			this.open(profileDropdown);
+			this.open(dropdown);
 		});
 
 		window.addEventListener('click', () => {
-			this.close(profileDropdown);
+			this.close(dropdown);
 		});
 
 		const closeOnEsc = (event) => {
 			if (event.key === 'Escape') {
-				this.close(profileDropdown);
+				this.close(dropdown);
 			}
 		};
 

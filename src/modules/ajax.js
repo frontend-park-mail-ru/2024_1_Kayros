@@ -65,8 +65,8 @@ class Ajax {
 			responseError = result;
 		}
 
-		const loaderButton = document.querySelector('#btn-loader');
-		loaderButton?.classList.remove('loading');
+		const loaderButton = document.querySelector('.btn__loader');
+		loaderButton?.classList.remove('btn__loader--loading');
 
 		return { data, error: responseError };
 	}
@@ -88,6 +88,32 @@ class Ajax {
 				body: formData ? body : JSON.stringify(body),
 			});
 
+			data = await response.json();
+		} catch {
+			responseError = result;
+		}
+
+		const loaderButton = document.querySelector('.btn__loader');
+		loaderButton?.classList.remove('btn__loader--loading');
+
+		return { data, error: responseError };
+	}
+
+	/**
+	 * DELETE запрос
+	 * @param {string} url - адрес сервера для отправки запроса
+	 * @param {void} body - объект, посылаемый в запросе
+	 * @returns {object} - объект, содержащий полученные данные и ошибку, если произошла
+	 */
+	async delete(url, body = {}) {
+		let data, responseError, result;
+
+		try {
+			const response = await fetch(url, {
+				method: 'DELETE',
+				body: JSON.stringify(body),
+			});
+
 			result = await response.text();
 
 			if (response.ok) {
@@ -99,8 +125,8 @@ class Ajax {
 			responseError = result;
 		}
 
-		const loaderButton = document.querySelector('#btn-loader');
-		loaderButton?.classList.remove('loading');
+		const loaderButton = document.querySelector('.btn__loader');
+		loaderButton?.classList.remove('btn__loader--loading');
 
 		return { data, error: responseError };
 	}

@@ -11,16 +11,20 @@ class Modal {
 	 * Конструктор класса
 	 * @param {object} params - параметры компонента
 	 * @param {string} params.content - html элемент внутри модалки
+	 * @param {string} params.className - дополнительный класс
 	 * @param {string} params.url - url, по которому открывается модалка
 	 * @param {string} params.initiatorId - id элемента, инициирующего открытие модалки
+	 * @param {string} params.closeButton - есть ли у модалки кнопка закрытия
 	 */
-	constructor({ content, url, initiatorId = '' }) {
+	constructor({ content, className = '', url = '', initiatorId = '', closeButton = true }) {
 		this.parent = document.querySelector('body');
 		this.isOpen = false;
 		this.rendered = false;
 		this.initiatorId = initiatorId;
 		this.content = content;
+		this.className = className;
 		this.url = url;
+		this.closeButton = closeButton;
 	}
 
 	/**
@@ -93,7 +97,9 @@ class Modal {
 			modalWrapper?.remove();
 		}, 100);
 
-		router.navigateFromModal();
+		if (this.url) {
+			router.navigateFromModal();
+		}
 	}
 
 	/**
@@ -101,7 +107,7 @@ class Modal {
 	 * @returns {HTMLElement} html
 	 */
 	getHTML() {
-		return template({ content: this.content, class: '' });
+		return template({ content: this.content, className: this.className });
 	}
 
 	/**
@@ -128,7 +134,7 @@ class Modal {
 		});
 
 		window.addEventListener('popstate', () => {
-			if (window.location.pathname !== this.url) {
+			if (this.url && window.location.pathname !== this.url) {
 				this.close();
 			}
 		});
@@ -143,16 +149,20 @@ class Modal {
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 		const modalContent = document.getElementById('modal-content');
 
-		const closeButton = new Button(modalContent, {
-			id: 'modal-close',
-			icon: 'close',
-			onClick: () => this.close(),
-			style: 'clear',
-		});
+		if (this.closeButton) {
+			const closeButton = new Button(modalContent, {
+				id: 'modal-close',
+				icon: 'close',
+				onClick: () => this.close(),
+				style: 'clear',
+			});
 
-		closeButton.render();
+			closeButton.render();
+		}
 
-		this.open();
+		setTimeout(() => {
+			this.open();
+		}, 50);
 
 		this.initListeners();
 	}

@@ -25,7 +25,7 @@ class Logo {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', template());
 
-		const logoBlock = document.getElementById('logo');
+		const logoBlock = this.#parent.querySelector('.logo');
 
 		/**
 		 * Обработка нажатия на лого
