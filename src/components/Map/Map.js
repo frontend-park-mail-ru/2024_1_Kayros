@@ -1,3 +1,4 @@
+import api from '../../modules/api';
 import template from './Map.hbs';
 import './Map.scss';
 
@@ -144,6 +145,15 @@ class Map {
 	}
 
 	/**
+	 * Конвертирует радианы в градусы
+	 * @param {number} radians - радианы
+	 * @returns {number} - градусы
+	 */
+	radiansToDegrees(radians) {
+		return (radians * 180) / Math.PI;
+	}
+
+	/**
 	 * Конвертирует координаты в пиксели
 	 * @param {Array} lonLat - [долгота, широта] в градусах
 	 * @returns {object} - координаты в пикселях
@@ -171,6 +181,31 @@ class Map {
 	}
 
 	/**
+	 * Конвертирует пиксели в координаты
+	 * @param {Array} lonLat - [долгота, широта] в пикселях
+	 * @returns {object} - координаты в пикселях
+	 */
+	convertPixels(lonLat) {
+		const mercatorLong =
+			(lonLat[0] + this.#container.offsetWidth / 2) /
+				((MAP_WIDTH * this.scale) / (MERCATOR_POINT_MAX.long - MERCATOR_POINT_MIN.long)) +
+			MERCATOR_POINT_MIN.long;
+
+		const mercatorLat =
+			-(lonLat[1] + this.#container.offsetHeight / 2 - MAP_HEIGHT * this.scale) /
+				((MAP_HEIGHT * this.scale) / (MERCATOR_POINT_MAX.lat - MERCATOR_POINT_MIN.lat)) +
+			MERCATOR_POINT_MIN.lat;
+
+		const x = this.radiansToDegrees(mercatorLong / EARTH_RADIUS);
+
+		const y =
+			((Math.atan(Math.pow(Math.E, (mercatorLat * Math.PI) / 180 / (mercatorLong / x))) - Math.PI / 4) * 2) /
+			(Math.PI / 180);
+
+		return { x, y };
+	}
+
+	/**
 	 * Переход по точке
 	 * @param {Array} coords - [долгота, широта] в градусах
 	 */
@@ -187,6 +222,29 @@ class Map {
 
 		this.transform(map, { duration: 100 });
 		this.drawTiles(map);
+	}
+
+	/**
+	 *
+	 */
+	async getAddressName() {
+		const coordX = -this.indentLeft;
+		const coordY = -this.indentTop;
+
+		const coords = this.convertPixels([coordX, coordY]);
+
+		await api.geoCoder(
+			`${coords.x.toFixed(12)},${coords.y.toFixed(12)}`,
+			(address) => {
+				const searchContainer = document.querySelector('.search-input-container');
+				const input = searchContainer?.querySelector('input');
+
+				if (address && input) {
+					input.value = address;
+				}
+			},
+			{ getCoords: false },
+		);
 	}
 
 	/**
@@ -231,6 +289,7 @@ class Map {
 			if (mouseStopped) {
 				this.drawTiles(map);
 				mapPinIcon?.classList.remove('move');
+				this.getAddressName();
 				return;
 			}
 
@@ -257,6 +316,8 @@ class Map {
 
 		this.indentLeft += scrollSpeedX * 0.3;
 		this.indentTop += scrollSpeedY * 0.3;
+
+		this.getAddressName();
 
 		this.transform(map, { duration: 200 });
 

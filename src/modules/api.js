@@ -189,15 +189,21 @@ class Api {
 	 * Метод для получения координат объекта
 	 * @param {object} address - адрес, по которому находятся координаты
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 * @param {object} params - параметры
+	 * @param {boolean} params.getCoords - получение координат, иначе - получение адреса
 	 */
-	async geoCoder(address, callback) {
+	async geoCoder(address, callback, { getCoords = true } = {}) {
 		const { response } = await ajax.get(
-			`https://geocode-maps.yandex.ru/1.x/?apikey=${YANDEX_API_GEOCODER}&geocode=${address}&format=json&&bbox=37.39,55.57~37.84,55.92&rspn=1`,
+			`https://geocode-maps.yandex.ru/1.x/?apikey=${YANDEX_API_GEOCODER}&geocode=${address}&format=json&bbox=37.39,55.57~37.84,55.92&rspn=${getCoords ? 1 : 0}`,
 		);
 
-		const [lon, lat] = response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ');
-
-		callback([Number(lon), Number(lat)]);
+		if (getCoords) {
+			const [lon, lat] = response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ');
+			callback([Number(lon), Number(lat)]);
+		} else {
+			const address = response.GeoObjectCollection.featureMember[0]?.GeoObject.name;
+			callback(address);
+		}
 	}
 
 	/**

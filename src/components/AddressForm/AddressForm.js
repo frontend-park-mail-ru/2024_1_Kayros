@@ -19,7 +19,7 @@ class AddressForm {
 	/**
 	 * Рендеринг компонента
 	 */
-	render() {
+	async render() {
 		const modal = new Modal({
 			content: template(),
 			className: 'address-modal',
