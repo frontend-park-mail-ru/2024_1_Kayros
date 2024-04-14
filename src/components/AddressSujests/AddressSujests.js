@@ -43,7 +43,11 @@ class AddressSujests {
 	async setAddress() {
 		await api.updateAddressSujests({ address: this.address }, this.handleAddressChange);
 		const cartAddress = document.querySelector('#main-address');
-		cartAddress.value = this.address;
+
+		if (cartAddress) {
+			cartAddress.value = this.address;
+		}
+
 		this.closeModal();
 	}
 
@@ -139,9 +143,6 @@ class AddressSujests {
 
 		if (user?.address) {
 			input.value = user.address || '';
-			setTimeout(() => {
-				api.geoCoder(user.address, this.goToPoint);
-			}, 500);
 		}
 
 		let stopTyping;
