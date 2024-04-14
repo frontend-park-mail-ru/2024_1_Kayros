@@ -69,7 +69,7 @@ class Header {
 	async render() {
 		this.#parent.insertAdjacentHTML('afterbegin', template());
 
-		const logoBlock = document.querySelector('.logo');
+		const logoBlock = document.querySelector('.header__logo-container');
 		const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
 		logo.render();
 

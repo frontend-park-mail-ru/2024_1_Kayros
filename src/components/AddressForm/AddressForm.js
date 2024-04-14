@@ -31,11 +31,11 @@ class AddressForm {
 
 		const modalContent = document.getElementById('modal-content');
 
-		const mapContainer = modalContent.querySelector('#address-map-container');
+		const mapContainer = modalContent.querySelector('.find-address__map-container');
 		const map = new Map(mapContainer, { fullPage: false });
 		map.render();
 
-		const sujestsElement = new AddressSujests(modalContent.querySelector('#sujests-container'), {
+		const sujestsElement = new AddressSujests(modalContent.querySelector('.find-address__sujests-container'), {
 			closeModal: () => {
 				modal.close();
 			},

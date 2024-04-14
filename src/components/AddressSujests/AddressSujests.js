@@ -58,10 +58,10 @@ class AddressSujests {
 	 * @param {object} items - саджесты
 	 */
 	renderItems(items) {
-		const dropdown = this.#parent.querySelector('.dropdown-container');
+		const dropdown = this.#parent.querySelector('.address-sujests__dropdown-container');
 		dropdown.innerHTML = '';
 
-		const searchContainer = this.#parent.querySelector('.search-container');
+		const searchContainer = this.#parent.querySelector('.address-sujests__search-container');
 		const input = searchContainer.querySelector('input');
 
 		if (!items) {
@@ -106,8 +106,8 @@ class AddressSujests {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const sujestsContainer = document.getElementById('address-sujests');
-		const searchContainer = sujestsContainer.querySelector('.search-container');
+		const sujestsContainer = document.querySelector('.address-sujests');
+		const searchContainer = sujestsContainer.querySelector('.address-sujests__search-container');
 
 		const searchButton = new Button(searchContainer, {
 			id: 'address-search-button',
@@ -126,7 +126,7 @@ class AddressSujests {
 		searchButton.render();
 
 		const input = searchContainer.querySelector('input');
-		const dropdown = sujestsContainer.querySelector('.dropdown-container');
+		const dropdown = sujestsContainer.querySelector('.address-sujests__dropdown-container');
 
 		const user = localStorageHelper.getItem('user-info');
 
@@ -139,7 +139,7 @@ class AddressSujests {
 
 		let stopTyping;
 
-		const clearIcon = searchContainer.querySelector('#clear-icon');
+		const clearIcon = searchContainer.querySelector('.address-sujests__clear-icon');
 
 		clearIcon.onclick = (event) => {
 			event.stopPropagation();
