@@ -1,3 +1,4 @@
+import api from '../../../../modules/api';
 import DishCard from '../DishCard/DishCard';
 import template from './Dishes.hbs';
 import './Dishes.scss';
@@ -21,8 +22,17 @@ class Dishes {
 	/**
 	 * Рендер страницы
 	 */
-	render() {
-		this.#parent.insertAdjacentHTML('beforeend', template());
+	async render() {
+		if (!this.data?.length) {
+			this.#parent.insertAdjacentHTML('beforeend', template());
+			return;
+		}
+
+		await api.getRestaurantInfo(this.data[0]?.restaurant_id, (data) => {
+			this.restaurant = data;
+		});
+
+		this.#parent.insertAdjacentHTML('beforeend', template({ restaurantName: this.restaurant?.name }));
 
 		const foodList = this.#parent.querySelector('.dishes');
 

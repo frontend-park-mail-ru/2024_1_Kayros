@@ -2,6 +2,7 @@
 	position: relative;
 	display: flex;
 	align-items: center;
+	background: inherit;
 
 	input {
 		height: var(--input-height);
@@ -34,6 +35,10 @@
 		border-color: var(--input-border-color);
 	}
 
+	input:disabled {
+		cursor: pointer;
+	}
+
 	input:focus {
 		border-color: var(--input-border-color-focus);
 		box-shadow: var(--input-box-shadow-focus);
@@ -42,7 +47,7 @@
 	input.dynamic {
 		height: 30px;
 		color: var(--input-color-dynamic);
-		background: transparent;
+		background: inherit;
 
 		& ~ .input__label {
 			padding: 0 2px;
@@ -56,6 +61,18 @@
 			top: 50%;
 			transform: translateY(-50%);
 			transition: 0.3s;
+			z-index: 5;
+		}
+
+		& ~ .input__label-holder {
+			position: absolute;
+			pointer-events: none;
+			left: 14px;
+			background: inherit;
+			width: 0;
+			height: 4px;
+			top: -1px;
+			transition: 0.2s;
 		}
 
 		&:not(:placeholder-shown),
@@ -63,7 +80,6 @@
 			& ~ .input__label {
 				top: -10px;
 				transform: scale(0.8);
-				background: var(--layout-bg-color);
 			}
 		}
 	}
@@ -74,6 +90,11 @@
 
 	&.password-input input {
 		padding: var(--input-password-padding);
+	}
+
+	input:not(:disabled):focus {
+		border-color: var(--input-border-color-focus);
+		box-shadow: var(--input-box-shadow-focus);
 	}
 
 	&__btn-eye {

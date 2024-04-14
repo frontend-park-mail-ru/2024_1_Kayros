@@ -70,21 +70,22 @@
 	}
 }
 
-.no-auth {
+.food-card-modal {
 	display: flex;
 	flex-direction: column;
 	padding: 30px;
+	width: 370px;
 
 	&__title {
 		font-size: 18px;
 		margin-bottom: 30px;
 	}
 
-	#no-auth-go-button {
+	#food-modal-accept-button {
 		height: 40px;
 	}
 
-	#no-auth-back-button {
+	#food-modal-back-button {
 		display: flex;
 		justify-content: center;
 		background: var(--layout-bg-color);
@@ -98,8 +99,4 @@
 			background: var(--back-button-bg-hover);
 		}
 	}
-}
-
-.food-card-modal {
-	width: 370px;
 }

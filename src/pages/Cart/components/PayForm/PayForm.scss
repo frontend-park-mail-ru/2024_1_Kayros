@@ -35,6 +35,7 @@
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 14px;
+		background: var(--layout-bg-color);
 
 		& :first-child {
 			grid-column: 1 / -1;

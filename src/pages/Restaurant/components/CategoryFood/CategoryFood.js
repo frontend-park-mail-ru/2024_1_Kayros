@@ -39,7 +39,7 @@ class CategoryFood {
 				if (dish.id === item.id) count = dish.count;
 			});
 
-			const foodCard = new FoodCard(foodList, item, count);
+			const foodCard = new FoodCard(foodList, item, count, this.cart);
 			foodCard.render();
 		});
 	}

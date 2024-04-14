@@ -27,6 +27,9 @@
 		border-radius: 14px;
 		height: 400px;
 		overflow: hidden;
+		background: var(--map-background-color);
+		background-image: radial-gradient(var(--map-background-dot-color) 1px, transparent 0);
+		background-size: 18px 18px;
 	}
 
 	&__map-pin {

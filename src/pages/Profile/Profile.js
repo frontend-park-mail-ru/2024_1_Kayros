@@ -76,7 +76,7 @@ class Profile {
 		const profileInfo = this.#parent.querySelector('.profile__info');
 
 		FIELDS_PROFILE_FORM.forEach((field) => {
-			const input = new Input(profileInfo, {
+			new Input(profileInfo, {
 				id: field.id,
 				placeholder: field.placeholder,
 				value: data[field.name],
@@ -87,9 +87,7 @@ class Profile {
 					const submitButton = this.#parent.querySelector('#profile-submit');
 					submitButton.disabled = false;
 				},
-			});
-
-			input.render();
+			}).render();
 		});
 
 		const submitButton = new Button(profileInfo, {
@@ -107,7 +105,14 @@ class Profile {
 		const name = this.#parent.querySelector('#profile-name-input');
 		const submit = this.#parent.querySelector('#profile-submit');
 
+		const nameContainer = this.#parent.querySelector('#profile-name-input-container');
+		const nameLabelHolder = nameContainer.querySelector('.input__label-holder');
+
 		name.onblur = (event) => {
+			if (!event.target.value) {
+				nameLabelHolder.style.width = 0;
+			}
+
 			const isNameValid = NAME_REGEX.test(event.target.value);
 
 			if (!isNameValid || event.target.value === '') {
@@ -120,8 +125,14 @@ class Profile {
 		};
 
 		const email = this.#parent.querySelector('#profile-mail-input');
+		const emailContainer = this.#parent.querySelector('#profile-mail-input-container');
+		const emailLabelHolder = emailContainer.querySelector('.input__label-holder');
 
 		email.onblur = (event) => {
+			if (!event.target.value) {
+				emailLabelHolder.style.width = 0;
+			}
+
 			const isEmailValid = EMAIL_REGEX.test(event.target.value);
 
 			if (!isEmailValid || event.target.value === '') {
@@ -134,8 +145,14 @@ class Profile {
 		};
 
 		const phone = this.#parent.querySelector('#profile-phone-input');
+		const phoneContainer = this.#parent.querySelector('#profile-phone-input-container');
+		const phoneLabelHolder = phoneContainer.querySelector('.input__label-holder');
 
 		phone.onblur = (event) => {
+			if (!event.target.value) {
+				phoneLabelHolder.style.width = 0;
+			}
+
 			const isPhoneValid = INVALID_PHONE.test(event.target.value);
 
 			if (event.target.value && !isPhoneValid) {

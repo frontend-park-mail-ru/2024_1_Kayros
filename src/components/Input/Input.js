@@ -24,8 +24,12 @@ class Input {
 	 * @param {'standart' | 'dynamic'} params.style - стиль
 	 * @param {string} params.value - начальное значение
 	 * @param {void} params.onChange - обработчик события
+	 * @param {boolean} params.disabled - блокировка
 	 */
-	constructor(parent, { id, placeholder, type = 'text', button, style = 'standart', value = '', onChange = '' }) {
+	constructor(
+		parent,
+		{ id, placeholder, type = 'text', button, style = 'standart', value = '', onChange = '', disabled = false },
+	) {
 		this.#parent = parent;
 		this.#placeholder = placeholder;
 		this.#button = button;
@@ -35,6 +39,7 @@ class Input {
 		this.style = style;
 		this.value = value;
 		this.onChange = onChange;
+		this.disabled = disabled;
 	}
 
 	/**
@@ -50,6 +55,7 @@ class Input {
 			id: this.#id,
 			dynamic: this.style === 'dynamic',
 			value: this.value,
+			attribute: this.disabled ? 'disabled' : '',
 		});
 	}
 
@@ -70,6 +76,25 @@ class Input {
 		const input = inputContainer.querySelector('input');
 
 		input.oninput = this.onChange;
+
+		if (this.style === 'dynamic') {
+			const holder = inputContainer.querySelector('.input__label-holder');
+			const label = inputContainer.querySelector('.input__label');
+
+			if (input.value && holder) {
+				holder.style.width = label.offsetWidth * 0.8 + 8 + 'px';
+			}
+
+			input.onfocus = () => {
+				holder.style.width = label.offsetWidth * 0.8 + 8 + 'px';
+			};
+
+			input.onblur = () => {
+				if (!input.value) {
+					holder.style.width = 0 + 'px';
+				}
+			};
+		}
 
 		if (this.#type !== 'password') return;
 

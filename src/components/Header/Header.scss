@@ -26,6 +26,7 @@
 	}
 
 	&__cart {
+		margin-left: auto;
 		width: 130px;
 
 		span {
@@ -37,10 +38,6 @@
 	&__profile-block {
 		position: relative;
 		min-width: 30px;
-	}
-
-	&__search-input {
-		margin-right: auto;
 	}
 
 	&__logo-container {
@@ -64,7 +61,7 @@
 
 	&.btn--secondary {
 		img {
-			margin-right: -5px;
+			margin-right: -10px;
 		}
 
 		span {

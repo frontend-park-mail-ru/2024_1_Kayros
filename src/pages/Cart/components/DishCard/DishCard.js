@@ -39,7 +39,9 @@ class DishCard {
 				const formSum = document.querySelector('#pay-form-sum');
 				const sum = cart.querySelector('span');
 
-				sum.innerHTML = `${res || 0} ₽`;
+				if (!sum) cart.className = 'btn btn-secondary';
+
+				sum.innerHTML = res ? `${res} ₽` : '';
 				formSum.innerHTML = `${res || 0} ₽`;
 
 				return res;
@@ -53,16 +55,22 @@ class DishCard {
 				const sumBlock = cart.querySelector('span');
 
 				formSum.innerHTML = `${sum || 0} ₽`;
-				sumBlock.innerHTML = `${sum || 0} ₽`;
+				sumBlock.innerHTML = sum ? `${sum} ₽` : '';
+
+				if (!sum) cart.className = 'btn btn-secondary';
 
 				const cards = document.getElementsByClassName('dish-card');
 
-				if (cards.length === 1) {
-					submit.disabled = true;
-				}
-
 				const element = this.#parent.querySelector(`#food-${this.data.id}`);
 				element.remove();
+
+				if (cards.length === 0) {
+					submit.disabled = true;
+
+					const dishes = document.querySelector('.dishes');
+					dishes.innerHTML = 'Корзина пуста';
+				}
+
 				return sum;
 			},
 			updateCount: async ({ id, count }) => {
@@ -72,8 +80,10 @@ class DishCard {
 				const formSum = document.querySelector('#pay-form-sum');
 				const sumBlock = cart.querySelector('span');
 
-				sumBlock.innerHTML = `${sum || 0} ₽`;
+				sumBlock.innerHTML = sum ? `${sum} ₽` : '';
 				formSum.innerHTML = `${sum || 0} ₽`;
+
+				if (!sum) cart.className = 'btn btn-secondary';
 
 				return sum;
 			},

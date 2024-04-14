@@ -5,8 +5,9 @@ import api from '../../../../modules/api';
 import { router } from '../../../../modules/router';
 import urls from '../../../../routes/urls';
 import { localStorageHelper } from '../../../../utils';
+import clearCartModalTemplate from './ClearCartModal.hbs';
 import template from './FoodCard.hbs';
-import modalTemplate from './NeedAuthModal.hbs';
+import authModalTemplate from './NeedAuthModal.hbs';
 import './FoodCard.scss';
 
 /**
@@ -18,25 +19,74 @@ class FoodCard {
 	 * @param {Element} parent - родительский элемент
 	 * @param {object} data - информация о еде
 	 * @param {number} count - количество блюд в корзине
+	 * @param {object} cart - информация о корзине
 	 */
-	constructor(parent, data, count) {
+	constructor(parent, data, count, cart) {
 		this.parent = parent;
 		this.data = data;
 		this.added = false;
 		this.count = count;
+		this.cart = cart;
+	}
+
+	/**
+	 * Открытие модалки с возможностью очистки корзины
+	 */
+	async openClearCartModal() {
+		return new Promise((resolve, reject) => {
+			const modal = new Modal({
+				content: clearCartModalTemplate(),
+				className: 'food-card-modal',
+				closeButton: false,
+			});
+
+			modal.render();
+
+			const modalContent = document.querySelector('.food-card-modal');
+
+			const authButton = new Button(modalContent, {
+				id: 'food-modal-accept-button',
+				content: 'Продолжить',
+				onClick: async () => {
+					modal.close();
+					const result = await api.clearCart();
+
+					this.cart.restaurant_id = 0;
+
+					if (result) {
+						resolve(true);
+					} else {
+						reject();
+					}
+				},
+			});
+
+			authButton.render();
+
+			const backButton = new Button(modalContent, {
+				id: 'food-modal-back-button',
+				content: 'Отменить',
+				onClick: () => {
+					modal.close();
+					reject();
+				},
+			});
+
+			backButton.render();
+		});
 	}
 
 	/**
 	 * Открытие модалки, если пользователь не авторизован
 	 */
-	openModal() {
-		const modal = new Modal({ content: modalTemplate(), className: 'food-card-modal', closeButton: false });
+	openAuthModal() {
+		const modal = new Modal({ content: authModalTemplate(), className: 'food-card-modal', closeButton: false });
 		modal.render();
 
-		const modalContent = document.querySelector('.no-auth');
+		const modalContent = document.querySelector('.food-card-modal');
 
 		const authButton = new Button(modalContent, {
-			id: 'no-auth-go-button',
+			id: 'food-modal-accept-button',
 			content: 'Войти',
 			onClick: () => {
 				modal.close();
@@ -47,9 +97,8 @@ class FoodCard {
 		authButton.render();
 
 		const backButton = new Button(modalContent, {
-			id: 'no-auth-back-button',
-			icon: 'back-arrow-full',
-			content: 'Назад',
+			id: 'food-modal-back-button',
+			content: 'Отменить',
 			onClick: () => modal.close(),
 		});
 
@@ -62,9 +111,10 @@ class FoodCard {
 	 * @returns {number} результат
 	 */
 	async addFood(id) {
+		const cart = document.getElementById('cart-button');
+
 		const res = await api.addToCart(id);
 
-		const cart = document.getElementById('cart-button');
 		const sum = cart.querySelector('span');
 
 		if (res === 0) {
@@ -72,7 +122,7 @@ class FoodCard {
 			sum.innerHTML = '';
 		} else {
 			cart.className = 'btn btn--primary';
-			sum.innerHTML = `${res || 0} ₽`;
+			sum.innerHTML = res ? `${res} ₽` : '';
 		}
 
 		return res;
@@ -140,9 +190,59 @@ class FoodCard {
 			id: `food-button-${this.data.id}`,
 			productId: this.data.id,
 			initCount: this.count,
-			addCount: user ? this.addFood : this.openModal,
-			removeCount: user ? this.removeCount : this.openModal,
-			updateCount: user ? this.updateCartCount : this.openModal,
+			addCount: async (id) => {
+				const user = localStorageHelper.getItem('user-info');
+
+				if (!user) {
+					this.openAuthModal();
+					return;
+				}
+
+				if (!user.address) {
+					router.navigate(urls.address);
+					return;
+				}
+
+				if (this.cart?.restaurant_id > 0 && this.data.restaurant !== this.cart?.restaurant_id) {
+					try {
+						const res = await this.openClearCartModal(id);
+
+						if (!res) {
+							return;
+						}
+					} catch {
+						return;
+					}
+				}
+
+				return this.addFood(id);
+			},
+			removeCount: (id) => {
+				if (!user) {
+					this.openAuthModal();
+					return;
+				}
+
+				if (!user.address) {
+					router.navigate(urls.address);
+					return;
+				}
+
+				return this.removeCount(id);
+			},
+			updateCount: (data) => {
+				if (!user) {
+					this.openAuthModal();
+					return;
+				}
+
+				if (!user.address) {
+					router.navigate(urls.address);
+					return;
+				}
+
+				return this.updateCartCount(data);
+			},
 		});
 
 		counterButton.render();

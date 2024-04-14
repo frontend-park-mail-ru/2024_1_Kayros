@@ -23,9 +23,9 @@ class PayForm {
 		this.#parent = parent;
 		this.data = data;
 		this.main = data.address || '';
-		this.apart = data.extra_address.split(', ')[0] || '';
-		this.entrance = data.extra_address.split(', ')[1] || '';
-		this.floor = data.extra_address.split(', ')[2] || '';
+		this.apart = data.extra_address?.split(', ')[0] || '';
+		this.entrance = data.extra_address?.split(', ')[1] || '';
+		this.floor = data.extra_address?.split(', ')[2] || '';
 	}
 
 	/**
@@ -35,13 +35,16 @@ class PayForm {
 		const loaderBlock = this.#parent.querySelector('.btn__loader');
 		loaderBlock.classList.add('btn__loader--loading');
 
+		const mainInput = this.#parent.querySelector('#main-address');
+
 		const data = await api.updateAddress({
-			address: this.main,
+			address: mainInput.value || this.main,
 			extra_address: `${this.apart}, ${this.entrance}, ${this.floor}`,
 		});
 
 		if (!data.detail) {
-			api.checkout();
+			await api.checkout();
+
 			const cart = document.getElementById('cart-button');
 			const sum = cart.querySelector('span');
 
@@ -75,8 +78,15 @@ class PayForm {
 				onChange: (event) => {
 					this[field.name] = event.target.value;
 				},
+				disabled: field.name === 'main',
 			}).render();
 		});
+
+		const mainInput = this.#parent.querySelector('#main-address-container');
+
+		mainInput.onclick = () => {
+			router.navigate(urls.address);
+		};
 
 		const checkoutButton = new Button(form, {
 			id: 'pay-form-button',
