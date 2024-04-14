@@ -37,14 +37,6 @@ class Cart {
 
 		backButton.render();
 
-		if (!data) {
-			const empty = document.createElement('div');
-			empty.classList.add('cart__empty');
-			empty.innerHTML = 'Корзина пуста';
-			dishesBlock.insertAdjacentElement('beforeend', empty);
-			return;
-		}
-
 		const dishesListing = new Dishes(dishesBlock, data?.food);
 		dishesListing.render();
 

@@ -38,7 +38,7 @@ class Dropdown {
 
 		Array.from(itemElements).forEach((item) => {
 			item.onmousedown = () => {
-				this.onClick(item.id);
+				this.onClick(item.getAttribute('data-id'));
 			};
 		});
 
@@ -48,6 +48,7 @@ class Dropdown {
 				content: 'Предложить адрес',
 				style: 'secondary',
 				icon: 'add-icon',
+				onClick: () => {},
 			});
 
 			button.render();

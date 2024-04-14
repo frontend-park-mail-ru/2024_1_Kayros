@@ -15,8 +15,9 @@ class Modal {
 	 * @param {string} params.url - url, по которому открывается модалка
 	 * @param {string} params.initiatorId - id элемента, инициирующего открытие модалки
 	 * @param {string} params.closeButton - есть ли у модалки кнопка закрытия
+	 * @param {boolean} params.closeOnClick - закрыть при клике вне контента
 	 */
-	constructor({ content, className = '', url = '', initiatorId = '', closeButton = true }) {
+	constructor({ content, closeOnClick = true, className = '', url = '', initiatorId = '', closeButton = true }) {
 		this.parent = document.querySelector('body');
 		this.isOpen = false;
 		this.rendered = false;
@@ -25,6 +26,7 @@ class Modal {
 		this.className = className;
 		this.url = url;
 		this.closeButton = closeButton;
+		this.closeOnClick = closeOnClick;
 	}
 
 	/**
@@ -130,7 +132,7 @@ class Modal {
 		});
 
 		modalWrapper.addEventListener('mousedown', () => {
-			this.close();
+			if (this.closeOnClick) this.close();
 		});
 
 		window.addEventListener('popstate', () => {

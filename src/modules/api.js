@@ -1,5 +1,5 @@
 import Notification from '../components/Notification/Notification';
-import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SUJESTS } from '../constants';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SAGESTS } from '../constants';
 import ajax from './ajax';
 
 /**
@@ -177,9 +177,9 @@ class Api {
 	 * @param {object} text - слово, по которому создаются саджесты
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
-	async getSujests(text, callback) {
+	async getSagests(text, callback) {
 		const { results } = await ajax.get(
-			`https://suggest-maps.yandex.ru/v1/suggest?text=${text}&bbox=37.39,55.57~37.84,55.9&strict_bounds=1&apikey=${YANDEX_API_SUJESTS}&lang=ru`,
+			`https://suggest-maps.yandex.ru/v1/suggest?text=${text}&bbox=37.39,55.57~37.84,55.9&strict_bounds=1&apikey=${YANDEX_API_SAGESTS}&lang=ru`,
 		);
 
 		callback(results);
@@ -244,7 +244,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 * @returns {Promise<object>} - результат запроса
 	 */
-	async updateAddressSujests(body, callback = () => {}) {
+	async updateAddressSagests(body, callback = () => {}) {
 		const { data, error } = await ajax.put(`${this.#url}/user/address`, body);
 
 		if (data && !error && !data.detail) {

@@ -3,14 +3,14 @@ import { router } from '../../modules/router';
 import { localStorageHelper } from '../../utils';
 import Button from '../Button/Button';
 import Header from '../Header/Header';
-import template from './AddressSujests.hbs';
+import template from './AddressSagests.hbs';
 import Dropdown from './Dropdown/Dropdown';
-import './AddressSujests.scss';
+import './AddressSagests.scss';
 
 /**
  * Саджесты для адреса
  */
-class AddressSujests {
+class AddressSagests {
 	#parent;
 
 	/**
@@ -45,7 +45,7 @@ class AddressSujests {
 
 		this.address = searchInput.value.split(' · ')[1] || searchInput.value;
 
-		await api.updateAddressSujests({ address: this.address }, this.handleAddressChange);
+		await api.updateAddressSagests({ address: this.address }, this.handleAddressChange);
 		const cartAddress = document.querySelector('#main-address');
 
 		if (cartAddress) {
@@ -68,10 +68,10 @@ class AddressSujests {
 	 * @param {object} items - саджесты
 	 */
 	renderItems(items) {
-		const dropdown = this.#parent.querySelector('.address-sujests__dropdown-container');
+		const dropdown = this.#parent.querySelector('.address-sagests__dropdown-container');
 		dropdown.innerHTML = '';
 
-		const searchContainer = this.#parent.querySelector('.address-sujests__search-container');
+		const searchContainer = this.#parent.querySelector('.address-sagests__search-container');
 		const input = searchContainer.querySelector('input');
 
 		if (!items) {
@@ -110,7 +110,7 @@ class AddressSujests {
 	 * @param {*} text - вводимый текст
 	 */
 	async getData(text) {
-		await api.getSujests(text, this.renderItems.bind(this));
+		await api.getSagests(text, this.renderItems.bind(this));
 	}
 
 	/**
@@ -119,8 +119,8 @@ class AddressSujests {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const sujestsContainer = document.querySelector('.address-sujests');
-		const searchContainer = sujestsContainer.querySelector('.address-sujests__search-container');
+		const sagestsContainer = document.querySelector('.address-sagests');
+		const searchContainer = sagestsContainer.querySelector('.address-sagests__search-container');
 
 		const input = searchContainer.querySelector('input');
 
@@ -141,7 +141,7 @@ class AddressSujests {
 
 		searchButton.render();
 
-		const dropdown = sujestsContainer.querySelector('.address-sujests__dropdown-container');
+		const dropdown = sagestsContainer.querySelector('.address-sagests__dropdown-container');
 
 		const user = localStorageHelper.getItem('user-info');
 
@@ -151,7 +151,7 @@ class AddressSujests {
 
 		let stopTyping;
 
-		const clearIcon = searchContainer.querySelector('.address-sujests__clear-icon');
+		const clearIcon = searchContainer.querySelector('.address-sagests__clear-icon');
 
 		clearIcon.onclick = (event) => {
 			event.stopPropagation();
@@ -216,4 +216,4 @@ class AddressSujests {
 	}
 }
 
-export default AddressSujests;
+export default AddressSagests;

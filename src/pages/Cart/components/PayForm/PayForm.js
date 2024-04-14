@@ -20,14 +20,14 @@ class PayForm {
 	 * @param {object} data - информация о корзине
 	 */
 	constructor(parent, data) {
-		const extraAddressParts = data.extra_address.split(', ');
+		const extraAddressParts = data?.extra_address?.split(', ');
 
 		this.#parent = parent;
 		this.data = data;
 		this.main = data.address || '';
-		this.apart = extraAddressParts[0] || '';
-		this.entrance = extraAddressParts[1] || '';
-		this.floor = extraAddressParts[2] || '';
+		this.apart = extraAddressParts?.[0] || '';
+		this.entrance = extraAddressParts?.[1] || '';
+		this.floor = extraAddressParts?.[2] || '';
 	}
 
 	/**

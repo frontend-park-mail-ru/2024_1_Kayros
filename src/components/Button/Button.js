@@ -37,7 +37,7 @@ class Button {
 			content = '',
 			type = 'button',
 			disabled = false,
-			onClick,
+			onClick = () => {},
 			icon,
 			style = 'primary',
 			withLoader = false,

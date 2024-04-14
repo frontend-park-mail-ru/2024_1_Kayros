@@ -38,6 +38,7 @@ class FoodCard {
 				content: clearCartModalTemplate(),
 				className: 'food-card-modal',
 				closeButton: false,
+				closeOnClick: false,
 			});
 
 			modal.render();

@@ -14,22 +14,22 @@
 
 		&-subtitle {
 			font-size: 14px;
-			color: var(--sujests-dropdown-subtitle-color);
+			color: var(--sagests-dropdown-subtitle-color);
 		}
 
 		&:hover {
 			.dropdown__item-title {
-				color: var(--sujests-dropdown-title-color-hover);
+				color: var(--sagests-dropdown-title-color-hover);
 			}
 
 			.dropdown__item-subtitle {
-				color: var(--sujests-dropdown-subtitle-color-hover);
+				color: var(--sagests-dropdown-subtitle-color-hover);
 			}
 		}
 	}
 
 	& > .dropdown__item + .dropdown__item {
-		border-top: 1px solid var(--sujests-dropdown-border);
+		border-top: 1px solid var(--sagests-dropdown-border);
 	}
 }
 

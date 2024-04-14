@@ -1,7 +1,7 @@
 import api from '../../modules/api';
 import urls from '../../routes/urls';
 import { localStorageHelper } from '../../utils';
-import AddressSujests from '../AddressSujests/AddressSujests';
+import AddressSagests from '../AddressSagests';
 import Map from '../Map';
 import Modal from '../Modal/Modal';
 import template from './AddressForm.hbs';
@@ -47,7 +47,7 @@ class AddressForm {
 			api.geoCoder(user.address, map.goToPoint.bind(map));
 		}
 
-		const sujestsElement = new AddressSujests(modalContent.querySelector('.find-address__sujests-container'), {
+		const sagestsElement = new AddressSagests(modalContent.querySelector('.find-address__sagests-container'), {
 			closeModal: () => {
 				modal.close();
 			},
@@ -56,7 +56,7 @@ class AddressForm {
 			},
 		});
 
-		sujestsElement.render();
+		sagestsElement.render();
 	}
 }
 

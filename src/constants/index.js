@@ -140,6 +140,6 @@ export const INVALID_NAME_CHAR_REGEX = /[^a-zA-Zа-яА-ЯёЁ0-9]/;
 
 export const PHONE_REGEX = /^\+7 \(\d{3}\) \d{3} \d{2} \d{2}$/;
 
-export const YANDEX_API_SUJESTS = 'f96d8d36-1d0a-4786-9140-1b350e8179e1';
+export const YANDEX_API_SAGESTS = 'f96d8d36-1d0a-4786-9140-1b350e8179e1';
 
 export const YANDEX_API_GEOCODER = '0b04a1cd-dc01-4c43-b44a-3efac84fa9f6';
