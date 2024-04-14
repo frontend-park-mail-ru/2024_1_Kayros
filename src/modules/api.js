@@ -194,12 +194,17 @@ class Api {
 	 */
 	async geoCoder(address, callback, { getCoords = true } = {}) {
 		const { response } = await ajax.get(
-			`https://geocode-maps.yandex.ru/1.x/?apikey=${YANDEX_API_GEOCODER}&geocode=${address}&format=json&bbox=37.39,55.57~37.84,55.92&rspn=${getCoords ? 1 : 0}`,
+			`https://geocode-maps.yandex.ru/1.x/?apikey=${YANDEX_API_GEOCODER}&geocode=${address}&format=json&bbox=37.39,55.57~37.84,55.92&rspn=${
+				getCoords ? 1 : 0
+			}`,
 		);
 
 		if (getCoords) {
 			const coords = response.GeoObjectCollection.featureMember[0]?.GeoObject.Point.pos.split(' ');
-			callback([Number(coords[0]), Number(coords[1])]);
+
+			if (coords) {
+				callback([Number(coords[0]), Number(coords[1])]);
+			}
 		} else {
 			const address = response.GeoObjectCollection.featureMember[0]?.GeoObject.name;
 			callback(address);

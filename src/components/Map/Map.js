@@ -225,7 +225,7 @@ class Map {
 	}
 
 	/**
-	 *
+	 * Получение адреса по координатам
 	 */
 	async getAddressName() {
 		const coordX = -this.indentLeft;
@@ -266,6 +266,7 @@ class Map {
 		}, 100);
 
 		document.onmousemove = (event) => {
+			this.drag = true;
 			mapPinIcon?.classList.add('move');
 			clearTimeout(mouseMoveTimer);
 			mouseMoveTimer = setTimeout(() => {
@@ -289,7 +290,8 @@ class Map {
 			if (mouseStopped) {
 				this.drawTiles(map);
 				mapPinIcon?.classList.remove('move');
-				this.getAddressName();
+				if (this.drag) this.getAddressName();
+				this.drag = false;
 				return;
 			}
 
@@ -317,7 +319,11 @@ class Map {
 		this.indentLeft += scrollSpeedX * 0.3;
 		this.indentTop += scrollSpeedY * 0.3;
 
-		this.getAddressName();
+		if (this.drag) {
+			this.getAddressName();
+		}
+
+		this.drag = false;
 
 		this.transform(map, { duration: 200 });
 
