@@ -238,8 +238,7 @@ class Map {
 		await api.geoCoder(
 			`${coords.x.toFixed(12)},${coords.y.toFixed(12)}`,
 			(address) => {
-				const searchContainer = document.querySelector('.search-input-container');
-				const input = searchContainer?.querySelector('input');
+				const input = document.querySelector('#address-search-input');
 
 				if (address && input) {
 					input.value = address;
@@ -258,7 +257,7 @@ class Map {
 	 * @param {HTMLElement} map - карты
 	 */
 	dragDrop(event, map) {
-		const mapPinIcon = document.querySelector('#address-map-pin');
+		const mapPinIcon = document.querySelector('.find-address__map-pin');
 
 		const dragStartX = event.clientX - this.indentLeft;
 		const dragStartY = event.clientY - this.indentTop;
@@ -311,7 +310,7 @@ class Map {
 	 * @param {number} scrollDistanceY - длина скролла по оси Y в пикселях
 	 */
 	afterDragScroll(map, scrollDistanceX, scrollDistanceY) {
-		const mapPinIcon = document.querySelector('#address-map-pin');
+		const mapPinIcon = document.querySelector('.find-address__map-pin');
 
 		if ((!scrollDistanceX && !scrollDistanceY) || this.dragTime < 0.1) {
 			mapPinIcon?.classList.remove('move');

@@ -32,6 +32,7 @@ class DishCard {
 			id: `dish-card__counter-${this.data.id}`,
 			initCount: this.data.count,
 			productId: this.data.id,
+			withAddButton: false,
 			addCount: async (id) => {
 				const res = await api.addToCart(id);
 
@@ -39,7 +40,7 @@ class DishCard {
 				const formSum = document.querySelector('#pay-form-sum');
 				const sum = cart.querySelector('span');
 
-				if (!sum) cart.className = 'btn btn-secondary';
+				if (!sum) cart.remove();
 
 				sum.innerHTML = res ? `${res} ₽` : '';
 				formSum.innerHTML = `${res || 0} ₽`;
@@ -51,18 +52,20 @@ class DishCard {
 				const submit = document.getElementById('pay-form-button');
 
 				const cart = document.getElementById('cart-button');
+				if (!cart) return;
+
 				const formSum = document.querySelector('#pay-form-sum');
 				const sumBlock = cart.querySelector('span');
 
 				formSum.innerHTML = `${sum || 0} ₽`;
 				sumBlock.innerHTML = sum ? `${sum} ₽` : '';
 
-				if (!sum) cart.className = 'btn btn-secondary';
+				if (!sum) cart.remove();
 
 				const cards = document.getElementsByClassName('dish-card');
 
 				const element = this.#parent.querySelector(`#food-${this.data.id}`);
-				element.remove();
+				element?.remove();
 
 				if (cards.length === 0) {
 					submit.disabled = true;
@@ -83,7 +86,7 @@ class DishCard {
 				sumBlock.innerHTML = sum ? `${sum} ₽` : '';
 				formSum.innerHTML = `${sum || 0} ₽`;
 
-				if (!sum) cart.className = 'btn btn-secondary';
+				if (!sum) cart.remove();
 
 				return sum;
 			},

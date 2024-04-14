@@ -112,6 +112,7 @@ class FoodCard {
 	 */
 	async addFood(id) {
 		const cart = document.getElementById('cart-button');
+		if (!cart) return;
 
 		const res = await api.addToCart(id);
 
@@ -137,11 +138,12 @@ class FoodCard {
 		const res = await api.removeFromCart(id);
 
 		const cart = document.getElementById('cart-button');
+		if (!cart) return;
+
 		const sum = cart.querySelector('span');
 
-		if (res === 0) {
+		if (!res) {
 			cart.className = 'btn btn--secondary';
-			sum.innerHTML = '';
 		} else {
 			cart.className = 'btn btn--primary';
 			sum.innerHTML = `${res || 0} ₽`;
@@ -161,11 +163,12 @@ class FoodCard {
 		const res = await api.updateCartCount({ food_id: id, count });
 
 		const cart = document.getElementById('cart-button');
+		if (!cart) return;
+
 		const sum = cart.querySelector('span');
 
-		if (res === 0) {
+		if (!res) {
 			cart.className = 'btn btn--secondary';
-			sum.innerHTML = '';
 		} else {
 			cart.className = 'btn btn--primary';
 			sum.innerHTML = `${res || 0} ₽`;

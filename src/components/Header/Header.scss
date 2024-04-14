@@ -58,14 +58,9 @@
 
 #cart-button {
 	margin-left: auto;
+	transition: 0.3s;
 
 	&.btn--secondary {
-		img {
-			margin-right: -10px;
-		}
-
-		span {
-			color: var(--link-color-active);
-		}
+		opacity: 0;
 	}
 }

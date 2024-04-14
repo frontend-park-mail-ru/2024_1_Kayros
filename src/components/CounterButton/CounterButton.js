@@ -6,7 +6,7 @@ import './CounterButton.scss';
  * Кнопка счетчик
  */
 class CounterButton {
-	#parent;
+	parent;
 	#id;
 
 	/**
@@ -15,6 +15,7 @@ class CounterButton {
 	 * @param {object} params - параметр компонента
 	 * @param {number} params.id - id элемента
 	 * @param {number} params.productId - id продукта
+	 * @param {boolean} params.withAddButton - отображать кнопку добавления
 	 * @param {number} params.initCount - начальное количество
 	 * @param {void} params.addCount - добавление 1
 	 * @param {void} params.removeCount - удаление 1
@@ -22,9 +23,17 @@ class CounterButton {
 	 */
 	constructor(
 		parent,
-		{ id, productId, initCount, addCount = () => {}, removeCount = () => {}, updateCount = () => {} },
+		{
+			id,
+			productId,
+			initCount,
+			withAddButton = true,
+			addCount = () => {},
+			removeCount = () => {},
+			updateCount = () => {},
+		},
 	) {
-		this.#parent = parent;
+		this.parent = parent;
 		this.#id = id;
 		this.count = initCount;
 		this.isNull = true;
@@ -32,6 +41,9 @@ class CounterButton {
 		this.removeCount = removeCount;
 		this.updateCount = updateCount;
 		this.productId = productId;
+		this.frontCount = initCount;
+		this.timer;
+		this.withAddButton = withAddButton;
 	}
 
 	/**
@@ -41,55 +53,42 @@ class CounterButton {
 	getHTML() {
 		return template({
 			id: this.#id,
-			count: this.count,
+			count: this.frontCount,
 		});
 	}
 
 	/**
-	 * Изменение состояния кнопки добавления
-	 * @param {number} count - количество блюд
-	 * @param {boolean} init - стартовый рендер
+	 * Функция для отрисовки нужной кнопки
 	 */
-	async setCountState(count, init) {
-		const countEl = this.#parent.querySelector('span');
-
-		let res;
-
-		if (this.count === 0 && !init) {
-			res = await this.addCount(this.productId);
-		}
-
-		if (this.count > 0 && count !== 0 && !init) {
-			res = await this.updateCount({ id: this.productId, count: count });
-		}
-
-		if (count === 0 && !init) {
-			res = await this.removeCount(this.productId);
-		}
-
+	rerenderCounter() {
 		const currentButton = document.getElementById(this.#id);
 
-		const addButton = new Button(this.#parent, {
+		const addButton = new Button(this.parent, {
 			id: this.#id,
 			content: 'Добавить',
 			onClick: () => {
-				this.setCountState(this.count + 1);
+				this.frontCount++;
+
+				this.rerenderCounter();
+
+				if (this.timer) {
+					clearTimeout(this.timer);
+				}
+
+				this.timer = setTimeout(() => this.setCountState(), 300);
 			},
 		});
 
-		if (res) {
-			this.count = count;
-			countEl.innerHTML = this.count;
-		}
-
-		if (count === 0) {
+		if (this.frontCount === 0) {
 			this.isNull = true;
-			currentButton?.remove();
-			addButton.render();
-			this.count = 0;
+
+			if (this.withAddButton) {
+				currentButton?.remove();
+				addButton.render();
+			}
 		}
 
-		if (count > 0 && this.isNull && (res || init)) {
+		if (this.frontCount > 0) {
 			this.isNull = false;
 			currentButton?.remove();
 			this.renderCounter();
@@ -97,21 +96,75 @@ class CounterButton {
 	}
 
 	/**
+	 * Изменение состояния кнопки добавления
+	 * @param {boolean} init - стартовый рендер
+	 */
+	async setCountState(init = false) {
+		const countEl = this.parent.querySelector('span');
+
+		let res;
+
+		if (this.count === 0 && !init && this.frontCount > 0) {
+			res = await this.addCount({ food_id: this.productId, count: this.frontCount });
+		}
+
+		if (this.count > 0 && this.frontCount > 0 && !init) {
+			res = await this.updateCount({ id: this.productId, count: this.frontCount });
+		}
+
+		if (this.frontCount === 0 && !init) {
+			res = await this.removeCount(this.productId);
+		}
+
+		if (!res && res !== 0) {
+			const countDifference = Math.abs(this.frontCount - this.count);
+
+			if (this.frontCount > this.count) {
+				this.frontCount -= countDifference;
+			} else {
+				this.frontCount += countDifference;
+			}
+		}
+
+		this.count = this.frontCount;
+
+		countEl.innerHTML = this.count;
+
+		this.rerenderCounter();
+	}
+
+	/**
 	 * Рендеринг счетчика
 	 */
 	renderCounter() {
-		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
+		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const addButton = this.#parent.querySelector('.counter-button__plus');
+		const addButton = this.parent.querySelector('.counter-button__plus');
 
 		addButton.onclick = () => {
-			this.setCountState(this.count + 1);
+			this.frontCount++;
+
+			if (this.timer) {
+				clearTimeout(this.timer);
+			}
+
+			this.rerenderCounter();
+
+			this.timer = setTimeout(() => this.setCountState(), 300);
 		};
 
-		const removeButton = this.#parent.querySelector('.counter-button__minus');
+		const removeButton = this.parent.querySelector('.counter-button__minus');
 
 		removeButton.onclick = () => {
-			this.setCountState(this.count - 1);
+			this.frontCount--;
+
+			if (this.timer) {
+				clearTimeout(this.timer);
+			}
+
+			this.rerenderCounter();
+
+			this.timer = setTimeout(() => this.setCountState(), 300);
 		};
 	}
 
@@ -119,7 +172,7 @@ class CounterButton {
 	 * Рендер компонента в зависимости от количества
 	 */
 	render() {
-		this.setCountState(this.count, true);
+		this.rerenderCounter();
 	}
 }
 

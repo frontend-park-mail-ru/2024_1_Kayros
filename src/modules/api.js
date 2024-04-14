@@ -271,11 +271,13 @@ class Api {
 
 	/**
 	 * Метод для добавления блюда в корзину
-	 * @param {number} foodId - id блюда
+	 * @param {object} body - объект
+	 * @param {object} body.food_id - id блюдп
+	 * @param {object} body.count - количество
 	 * @returns {Promise<boolean>} - результат запроса
 	 */
-	async addToCart(foodId) {
-		const { data, error } = await ajax.post(`${this.#url}/order/food/add`, { food_id: foodId, count: 1 });
+	async addToCart(body) {
+		const { data, error } = await ajax.post(`${this.#url}/order/food/add`, body);
 
 		if (data) {
 			return data.sum;
@@ -297,18 +299,11 @@ class Api {
 	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async removeFromCart(foodId) {
-		const { data, error } = await ajax.delete(`${this.#url}/order/food/delete/${foodId}`);
+		const { data } = await ajax.delete(`${this.#url}/order/food/delete/${foodId}`);
 
 		if (data) {
 			return data.sum;
 		}
-
-		Notification.open({
-			duration: 3,
-			title: ERROR_MESSAGES.CART_UPDATE,
-			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
-			type: 'error',
-		});
 
 		return false;
 	}
