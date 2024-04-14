@@ -13,6 +13,7 @@ class Button {
 	#disabled;
 	#icon;
 	#withLoader;
+	#size;
 	#style;
 	#id;
 	#additionalClass;
@@ -29,6 +30,7 @@ class Button {
 	 * @param {boolean} params.withLoader - лоадер
 	 * @param {Function} params.onClick - событие при клике
 	 * @param {string | undefined} params.icon - иконка
+	 * @param {'xs' | 's'} params.size - размер кнопки
 	 * @param {string} params.additionalClass - дополнительные классы для стилизации
 	 */
 	constructor(
@@ -42,6 +44,7 @@ class Button {
 			icon,
 			style = 'primary',
 			withLoader = false,
+			size = 'xs',
 			additionalClass = '',
 		},
 	) {
@@ -54,6 +57,7 @@ class Button {
 		this.#withLoader = withLoader;
 		this.#style = style;
 		this.#id = id;
+		this.#size = size;
 		this.#additionalClass = additionalClass;
 	}
 
@@ -62,7 +66,7 @@ class Button {
 	 * @returns {HTMLElement} html
 	 */
 	getHTML() {
-		const combinedClasses = `btn-${this.#style} ${this.#additionalClass}`.trim();
+		const combinedClasses = `btn-${this.#style} size-${this.#size} ${this.#additionalClass}`.trim();
 		return template({
 			id: this.#id,
 			content: this.#content,

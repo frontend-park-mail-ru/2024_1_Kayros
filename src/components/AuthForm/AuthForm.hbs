@@ -1,28 +1,31 @@
-	<div class="auth-page-container">
-		<div class="logo-and-background">
-			<div class="logo-container-on-auth"></div>
-			<img id="mini-auth-background" src="assets/mini-background.svg" alt="bg" />
-			<p class="delivery-service-description">Сервис доставки еды из ресторанов по Москве</p>
-		</div>
-		<div class="auth-container">
-			<div id="back-button"></div>
-			<h1 class="auth-title">{{this.title}}</h1>
-			<form id="auth-form" class="auth-form">
-				<div id="email-input-container" class="input-container"></div>
-				<div class="error-message" id="email-error"></div>
-				{{#if this.signup}}
-					<div id="name-input-container" class="input-container"></div>
-					<div class="error-name" id="name-error"></div>
-				{{/if}}
-				<div id="password-input-container" class="input-container"></div>
-				<div class="error-message" id="password-error"></div>
-				{{#if this.signup}}
-					<div id="confirm-password-input-container" class="input-container"></div>
-					<div class="error-message" id="confirm-password-error"></div>
-				{{/if}}
-				<div id="auth-button-container" class="button-container"></div>
-			</form>
-			<div id="auth-redirect">{{this.redirectText}}</div>
-		</div>
-		<div class=signin-background></div>
+<div class="auth-container">
+
+	<div class="auth-container__logo-and-background">
+		<div class="auth-container__logo"></div>
+		<img class="auth-container__mini-background" src="assets/mini-background.svg" alt="bg" />
+		<p class="auth-container__description">Сервис доставки еды из ресторанов по Москве</p>
 	</div>
+
+	<div class="auth-container__form-container">
+		<div class="auth-container__back-button"></div>
+		<h1 class="auth-container__title">{{this.title}}</h1>
+		<form id="auth-form" class="auth-form">
+			<div id="email-input-container" class="input-container"></div>
+			<div class="auth-container__error-message" id="email-error"></div>
+			{{#if this.signup}}
+				<div id="name-input-container" class="input-container"></div>
+				<div class="auth-container__error-message" id="name-error"></div>
+			{{/if}}
+			<div id="password-input-container" class="input-container"></div>
+			<div class="auth-container__error-message" id="password-error"></div>
+			{{#if this.signup}}
+				<div id="confirm-password-input-container" class="input-container"></div>
+				<div class="auth-container__error-message" id="confirm-password-error"></div>
+			{{/if}}
+			<div class="auth-container__button-container"></div>
+		</form>
+		<div class="auth-container__redirect">{{this.redirectText}}</div>
+	</div>
+
+	<div class="auth-container__background"></div>
+</div>

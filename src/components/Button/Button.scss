@@ -6,7 +6,6 @@
 	border: none;
 	outline: 1px solid transparent;
 	border-radius: var(--button-border-radius);
-	padding: var(--button-padding);
 	transition:
 		background 0.3s,
 		transform 0.1s;
@@ -15,11 +14,6 @@
 
 	img {
 		float: left;
-	}
-
-	&.auth {
-		padding: var(--button-signin-padding);
-		border-radius: var(--button-signin-border-radius);
 	}
 
 	&:has(:only-child) {
@@ -37,11 +31,6 @@
 		&:active {
 			background: var(--button-bg-active);
 		}
-	}
-
-	&.btn-clear {
-		background: transparent;
-		padding: 0;
 	}
 
 	&.btn-secondary {
@@ -62,6 +51,19 @@
 
 	&:has(#btn-loader) {
 		gap: 10px;
+	}
+
+	&.size-s {
+		padding: var(--button-s-padding);
+	}
+
+	&.size-xs {
+		padding: var(--button-xs-padding);
+	}
+
+	&.btn-clear {
+		background: transparent;
+		padding: 0;
 	}
 }
 

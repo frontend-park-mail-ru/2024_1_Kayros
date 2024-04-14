@@ -98,15 +98,13 @@ class AuthForm {
 		const logoContainer = document.querySelector('.logo-container-on-auth');
 
 		if (logoContainer) {
-			const logoType = 'white';
-
 			new Logo(logoContainer, {
 				onClick: () => router.navigate(urls.restaurants),
-				logoType: logoType,
+				logoType: 'white',
 			}).render();
 		}
 
-		const linkBlock = document.getElementById('auth-redirect');
+		const linkBlock = document.querySelector('.auth-container__redirect');
 		const link = new Link(linkBlock, {
 			id: `${this.#type}-link`,
 			href: this.#config.redirectLinkHref,
@@ -115,7 +113,7 @@ class AuthForm {
 
 		link.render();
 
-		const backButtonBlock = document.getElementById('back-button');
+		const backButtonBlock = document.querySelector('.auth-container__back-button');
 		const backButton = new BackButton(backButtonBlock, { id: `${this.#type}-back-button` });
 		backButton.render();
 
@@ -127,13 +125,13 @@ class AuthForm {
 			}).render();
 		});
 
-		new Button(this.#parent.querySelector('#auth-button-container'), {
+		new Button(this.#parent.querySelector('.auth-container__button-container'), {
 			id: `${this.#type}-button`,
 			content: this.#config.submitButtonText,
 			type: 'submit',
 			disabled: true,
 			withLoader: true,
-			additionalClass: 'auth',
+			size: 's',
 			onClick: (event) => {
 				event.preventDefault();
 				this.handleSubmit();
