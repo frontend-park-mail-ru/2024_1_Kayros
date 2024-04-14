@@ -105,7 +105,7 @@ class Ajax {
 	 * @param {void} body - объект, посылаемый в запросе
 	 * @returns {object} - объект, содержащий полученные данные и ошибку, если произошла
 	 */
-	async delete(url, body) {
+	async delete(url, body = {}) {
 		let data, responseError, result;
 
 		try {

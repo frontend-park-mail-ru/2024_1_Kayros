@@ -53,7 +53,7 @@ class CounterButton {
 	async setCountState(count, init) {
 		const countEl = this.#parent.querySelector('span');
 
-		let res = 0;
+		let res;
 
 		if (this.count === 0 && !init) {
 			res = await this.addCount(this.productId);
@@ -89,7 +89,7 @@ class CounterButton {
 			this.count = 0;
 		}
 
-		if (count > 0 && this.isNull) {
+		if (count > 0 && this.isNull && (res || init)) {
 			this.isNull = false;
 			currentButton?.remove();
 			this.renderCounter();

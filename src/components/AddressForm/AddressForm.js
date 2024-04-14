@@ -20,7 +20,13 @@ class AddressForm {
 	 * Рендеринг компонента
 	 */
 	render() {
-		const modal = new Modal({ content: template(), url: urls.address, initiatorId: 'address' });
+		const modal = new Modal({
+			content: template(),
+			className: 'address-modal',
+			url: urls.address,
+			initiatorId: 'address',
+		});
+
 		modal.render();
 
 		const modalContent = document.getElementById('modal-content');

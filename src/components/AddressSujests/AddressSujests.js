@@ -130,7 +130,7 @@ class AddressSujests {
 
 		const user = localStorageHelper.getItem('user-info');
 
-		if (user.address) {
+		if (user?.address) {
 			input.value = user.address || '';
 			setTimeout(() => {
 				api.geoCoder(user.address, this.goToPoint);

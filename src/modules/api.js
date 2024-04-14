@@ -327,6 +327,27 @@ class Api {
 	}
 
 	/**
+	 * Метод для очистки корзины
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async clearCart() {
+		const { data, error } = await ajax.delete(`${this.#url}/order/clean`);
+
+		if (data) {
+			return data.sum;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CART_UPDATE,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return false;
+	}
+
+	/**
 	 * Метод для оформления заказа
 	 * @returns {boolean} - результат запроса
 	 */
