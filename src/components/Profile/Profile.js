@@ -28,8 +28,8 @@ class Profile {
 	 */
 	getHTML() {
 		const avatar = this.#user.img_url;
-
-		return template({ name: this.#user.name, avatarUrl: avatar, class: avatar.includes('default') ? 'default' : '' });
+		const classList = `avatar-container ${avatar.includes('default') ? 'avatar-container--default' : ''}`;
+		return template({ name: this.#user.name, avatarUrl: avatar, class: classList });
 	}
 
 	/**
@@ -38,7 +38,7 @@ class Profile {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML(this.#user));
 
-		const name = this.#parent.querySelector('#name');
+		const name = this.#parent.querySelector('.header__profile-name');
 
 		name.onclick = () => {
 			this.navigate(urls.profile);

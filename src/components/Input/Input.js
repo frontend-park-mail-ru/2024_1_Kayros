@@ -60,7 +60,7 @@ class Input {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
 		if (this.#button) {
-			const buttonBlock = this.#parent.querySelector('#search-button');
+			const buttonBlock = this.#parent.querySelector('.input__search-button');
 			const searchButton = new Button(buttonBlock, { id: `${this.#id}-search-button`, content: this.#button });
 			searchButton.render();
 		}
@@ -74,17 +74,19 @@ class Input {
 		if (this.#type !== 'password') return;
 
 		inputContainer.classList.add('password-input');
-		const eyeButton = inputContainer.querySelector('#btn-eye');
+		const eyeButton = inputContainer.querySelector('.input__btn-eye');
 		const password = inputContainer.getElementsByTagName('input')[0];
 
 		eyeButton.addEventListener('click', () => {
 			this.#isVisible = !this.#isVisible;
 
 			if (this.#isVisible) {
-				eyeButton.className = 'visible';
+				eyeButton.classList.remove('hidden');
+				eyeButton.classList.add('visible');
 				password.type = 'text';
 			} else {
-				eyeButton.className = 'hidden';
+				eyeButton.classList.remove('visible');
+				eyeButton.classList.add('hidden');
 				password.type = 'password';
 			}
 		});

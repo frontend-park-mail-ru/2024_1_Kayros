@@ -43,7 +43,7 @@ class Profile {
 			const profile = document.querySelector('.header__profile-image');
 			profile.src = data.img_url;
 
-			const name = document.querySelector('#name');
+			const name = document.querySelector('.header__profile-name');
 			name.innerHTML = this.name;
 		});
 	}
@@ -65,7 +65,7 @@ class Profile {
 			handleFile: (file) => {
 				this.file = file;
 
-				const submitButton = this.#parent.querySelector('#profile-submit');
+				const submitButton = this.#parent.querySelector('.profile-submit');
 				submitButton.disabled = false;
 			},
 			file: data?.img_url,
@@ -84,7 +84,7 @@ class Profile {
 				onChange: (event) => {
 					this[field.name] = event.target.value;
 
-					const submitButton = this.#parent.querySelector('#profile-submit');
+					const submitButton = this.#parent.querySelector('.profile-submit');
 					submitButton.disabled = false;
 				},
 			});
@@ -105,7 +105,7 @@ class Profile {
 		submitButton.render();
 
 		const name = this.#parent.querySelector('#profile-name-input');
-		const submit = this.#parent.querySelector('#profile-submit');
+		const submit = this.#parent.querySelector('.profile-submit');
 
 		name.onblur = (event) => {
 			const isNameValid = NAME_REGEX.test(event.target.value);
