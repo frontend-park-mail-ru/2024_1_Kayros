@@ -1,23 +1,23 @@
-#restaurant-container {
+.restaurant__container {
 	display: grid;
 	grid-template-columns: 240px 1fr;
 	margin-top: 16px;
 }
 
-#restaurant-sidebar {
+.restaurant__sidebar {
 	display: flex;
 	flex-direction: column;
 }
 
-#restaurant-main {
-	#restaurant-banner-container {
+.restaurant__main {
+	.restaurant__banner-container {
 		background: var(--layout-bg-color);
 		border-radius: 10px;
 		width: 100%;
 		min-height: 278px;
 	}
 
-	#restaurant-food {
+	.restaurant__food {
 		display: flex;
 		flex-direction: column;
 		gap: 34px;

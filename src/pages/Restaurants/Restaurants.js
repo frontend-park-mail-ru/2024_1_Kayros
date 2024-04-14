@@ -24,7 +24,7 @@ class Restaurants {
 	 * @param {Array} items - массив ресторанов
 	 */
 	renderData(items) {
-		const restaurants = document.getElementById('restaurants');
+		const restaurants = document.querySelector('.restaurants');
 
 		if (!items) {
 			restaurants.innerText = 'Нет доступных ресторанов';
@@ -58,7 +58,7 @@ class Restaurants {
 			header.render();
 		}
 
-		const restaurants = document.getElementById('restaurants');
+		const restaurants = document.querySelector('.restaurants');
 		const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });
 		loader.render();
 

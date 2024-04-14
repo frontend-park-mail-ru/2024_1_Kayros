@@ -30,7 +30,7 @@ class CategoryFood {
 		this.parent.insertAdjacentHTML('beforeend', template({ name: this.data.name, id: this.data.id }));
 
 		const category = document.getElementById(`category-${this.data.id}`);
-		const foodList = category.querySelector('.category-food');
+		const foodList = category.querySelector('.category__food');
 
 		this.data.food?.forEach((item) => {
 			let count = 0;

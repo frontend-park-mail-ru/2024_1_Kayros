@@ -134,7 +134,7 @@ class FoodCard {
 
 		const food = document.getElementById(`food-${this.data.id}`);
 
-		const action = food.querySelector('#food-action');
+		const action = food.querySelector('.food-card__action');
 
 		const counterButton = new CounterButton(action, {
 			id: `food-button-${this.data.id}`,
