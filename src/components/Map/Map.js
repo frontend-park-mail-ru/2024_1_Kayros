@@ -220,6 +220,8 @@ class Map {
 
 		const map = document.getElementById('canvas-map');
 
+		if (!map) return;
+
 		this.transform(map, { duration: 100 });
 		this.drawTiles(map);
 	}
@@ -241,6 +243,9 @@ class Map {
 
 				if (address && input) {
 					input.value = address;
+
+					const submit = document.querySelector('#address-search-button');
+					if (submit) submit.disabled = false;
 				}
 			},
 			{ getCoords: false },

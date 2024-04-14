@@ -41,7 +41,9 @@ class AddressSujests {
 	 * Добавить адрес
 	 */
 	async setAddress() {
-		await api.updateAddressSujests({ address: this.address }, this.handleAddressChange);
+		const searchInput = this.#parent.querySelector('#address-search-input');
+
+		await api.updateAddressSujests({ address: searchInput.value }, this.handleAddressChange);
 		const cartAddress = document.querySelector('#main-address');
 
 		if (cartAddress) {
