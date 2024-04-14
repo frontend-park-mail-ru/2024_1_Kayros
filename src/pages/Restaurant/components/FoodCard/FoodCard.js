@@ -191,6 +191,8 @@ class FoodCard {
 			productId: this.data.id,
 			initCount: this.count,
 			addCount: async (id) => {
+				const user = localStorageHelper.getItem('user-info');
+
 				if (!user) {
 					this.openAuthModal();
 					return;
