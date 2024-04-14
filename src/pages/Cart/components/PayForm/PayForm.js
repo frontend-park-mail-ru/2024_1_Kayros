@@ -75,8 +75,15 @@ class PayForm {
 				onChange: (event) => {
 					this[field.name] = event.target.value;
 				},
+				disabled: field.name === 'main',
 			}).render();
 		});
+
+		const mainInput = this.#parent.querySelector('#main-address-container');
+
+		mainInput.onclick = () => {
+			router.navigate(urls.address);
+		};
 
 		const checkoutButton = new Button(form, {
 			id: 'pay-form-button',

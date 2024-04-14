@@ -48,8 +48,7 @@ class FoodCard {
 
 		const backButton = new Button(modalContent, {
 			id: 'no-auth-back-button',
-			icon: 'back-arrow-full',
-			content: 'Назад',
+			content: 'Отменить',
 			onClick: () => modal.close(),
 		});
 
@@ -140,9 +139,45 @@ class FoodCard {
 			id: `food-button-${this.data.id}`,
 			productId: this.data.id,
 			initCount: this.count,
-			addCount: user ? this.addFood : this.openModal,
-			removeCount: user ? this.removeCount : this.openModal,
-			updateCount: user ? this.updateCartCount : this.openModal,
+			addCount: (id) => {
+				if (!user) {
+					this.openModal();
+					return;
+				}
+
+				if (!user.address) {
+					router.navigate(urls.address);
+					return;
+				}
+
+				return this.addFood(id);
+			},
+			removeCount: (id) => {
+				if (!user) {
+					this.openModal();
+					return;
+				}
+
+				if (!user.address) {
+					router.navigate(urls.address);
+					return;
+				}
+
+				return this.removeCount(id);
+			},
+			updateCount: (data) => {
+				if (!user) {
+					this.openModal();
+					return;
+				}
+
+				if (!user.address) {
+					router.navigate(urls.address);
+					return;
+				}
+
+				return this.updateCartCount(data);
+			},
 		});
 
 		counterButton.render();

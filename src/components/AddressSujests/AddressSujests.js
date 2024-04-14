@@ -42,6 +42,8 @@ class AddressSujests {
 	 */
 	async setAddress() {
 		await api.updateAddressSujests({ address: this.address }, this.handleAddressChange);
+		const cartAddress = document.querySelector('#main-address');
+		cartAddress.value = this.address;
 		this.closeModal();
 	}
 
@@ -81,6 +83,9 @@ class AddressSujests {
 
 				const street = currentItem.subtitle?.text.split(' · ')[1];
 
+				const button = this.#parent.querySelector('#address-search-button');
+				button.disabled = false;
+
 				input.value = address;
 				input.blur();
 				this.address = street || currentItem.title?.text;
@@ -109,6 +114,8 @@ class AddressSujests {
 		const sujestsContainer = document.getElementById('address-sujests');
 		const searchContainer = sujestsContainer.querySelector('.search-container');
 
+		const input = searchContainer.querySelector('input');
+
 		const searchButton = new Button(searchContainer, {
 			id: 'address-search-button',
 			content: 'Сохранить',
@@ -121,11 +128,11 @@ class AddressSujests {
 
 				if (data) this.closeModal();
 			},
+			disabled: input.value ? false : true,
 		});
 
 		searchButton.render();
 
-		const input = searchContainer.querySelector('input');
 		const dropdown = sujestsContainer.querySelector('.dropdown-container');
 
 		const user = localStorageHelper.getItem('user-info');
@@ -144,6 +151,10 @@ class AddressSujests {
 		clearIcon.onclick = (event) => {
 			event.stopPropagation();
 			input.value = '';
+
+			const button = this.#parent.querySelector('#address-search-button');
+			button.disabled = true;
+
 			input.focus();
 		};
 
