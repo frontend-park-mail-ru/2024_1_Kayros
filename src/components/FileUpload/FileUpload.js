@@ -38,7 +38,7 @@ class FileUpload {
 			image.src = event.target?.result;
 		};
 
-		if (event.target.files && event.target.files[0]) {
+		if (event.target.files?.[0]) {
 			this.handleFile(event.target.files[0]);
 			reader.readAsDataURL(event.target.files[0]);
 		}

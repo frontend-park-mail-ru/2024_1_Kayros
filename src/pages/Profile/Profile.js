@@ -1,7 +1,7 @@
 import Button from '../../components/Button/Button';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import Input from '../../components/Input';
-import { EMAIL_REGEX, FIELDS_PROFILE_FORM, INVALID_PHONE, NAME_REGEX } from '../../constants';
+import { EMAIL_REGEX, FIELDS_PROFILE_FORM, NAME_REGEX, PHONE_REGEX } from '../../constants';
 import api from '../../modules/api';
 import template from './Profile.hbs';
 import './Profile.scss';
@@ -153,7 +153,7 @@ class Profile {
 				phoneLabelHolder.style.width = 0;
 			}
 
-			const isPhoneValid = INVALID_PHONE.test(event.target.value);
+			const isPhoneValid = PHONE_REGEX.test(event.target.value);
 
 			if (event.target.value && !isPhoneValid) {
 				phone.style.border = '1px solid #ff0000';

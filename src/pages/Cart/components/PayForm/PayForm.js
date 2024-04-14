@@ -20,12 +20,14 @@ class PayForm {
 	 * @param {object} data - информация о корзине
 	 */
 	constructor(parent, data) {
+		const extraAddressParts = data.extra_address.split(', ');
+
 		this.#parent = parent;
 		this.data = data;
 		this.main = data.address || '';
-		this.apart = data.extra_address?.split(', ')[0] || '';
-		this.entrance = data.extra_address?.split(', ')[1] || '';
-		this.floor = data.extra_address?.split(', ')[2] || '';
+		this.apart = extraAddressParts[0] || '';
+		this.entrance = extraAddressParts[1] || '';
+		this.floor = extraAddressParts[2] || '';
 	}
 
 	/**
@@ -91,7 +93,7 @@ class PayForm {
 		const checkoutButton = new Button(form, {
 			id: 'pay-form-button',
 			content: 'Оплатить',
-			disabled: this.data.sum !== 0 ? false : true,
+			disabled: !this.data.sum,
 			withLoader: true,
 			onClick: () => {
 				this.handleSubmit();

@@ -55,12 +55,10 @@ class DishCard {
 				if (!cart) return;
 
 				const formSum = document.querySelector('#pay-form-sum');
-				const sumBlock = cart.querySelector('span');
 
 				formSum.innerHTML = `${sum || 0} ₽`;
-				sumBlock.innerHTML = sum ? `${sum} ₽` : '';
 
-				if (!sum) cart.remove();
+				if (!sum) cart.className = 'btn btn--secondary';
 
 				const cards = document.getElementsByClassName('dish-card');
 
