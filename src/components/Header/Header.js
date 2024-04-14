@@ -115,7 +115,7 @@ class Header {
 
 		const headerElement = document.querySelector('.header');
 
-		const profile = document.getElementById('profile');
+		const profile = document.querySelector('.header__profile');
 
 		if (profile) {
 			const profileDropdown = new ProfileDropdown(profile, {

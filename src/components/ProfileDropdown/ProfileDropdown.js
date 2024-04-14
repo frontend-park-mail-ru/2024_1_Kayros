@@ -41,7 +41,7 @@ class ProfileDropdown {
 	open(element) {
 		if (this.isOpen) return;
 
-		const name = document.getElementById('name');
+		const name = document.querySelector('.header__profile-name');
 		name.style.opacity = 1;
 		name.style.pointerEvents = 'all';
 
@@ -57,7 +57,7 @@ class ProfileDropdown {
 	close(element) {
 		if (!this.isOpen) return;
 
-		const name = document.getElementById('name');
+		const name = document.querySelector('.header__profile-name');
 		name.style.opacity = 0;
 		name.style.pointerEvents = 'none';
 
