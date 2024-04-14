@@ -29,7 +29,7 @@ class Sidebar {
 	async render() {
 		this.parent.insertAdjacentHTML('beforeend', template({ categories: this.categories }));
 
-		const buttonContainer = this.parent.querySelector('#button-container');
+		const buttonContainer = this.parent.querySelector('.restaurant-categories__button-container');
 		const backButton = new Button(buttonContainer, {
 			id: 'restaurant-back-button',
 			icon: 'back-arrow-full',
@@ -39,8 +39,8 @@ class Sidebar {
 
 		backButton.render();
 
-		const categories = this.parent.querySelector('#category-items');
-		const items = document.querySelectorAll('.category-item');
+		const categories = this.parent.querySelector('.restaurant-categories__items');
+		const items = document.querySelectorAll('.restaurant-categories__item');
 
 		items.forEach((item, i) => {
 			if (i === this.activeCategory) {

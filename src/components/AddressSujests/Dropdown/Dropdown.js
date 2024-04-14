@@ -20,7 +20,6 @@ class Dropdown {
 		this.#parent = parent;
 		this.onClick = onClick;
 	}
-
 	/**
 	 * Получение html компонента
 	 * @returns {HTMLElement} html
@@ -35,7 +34,7 @@ class Dropdown {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const itemElements = this.#parent.getElementsByClassName('dropdown-item');
+		const itemElements = this.#parent.getElementsByClassName('dropdown__item');
 
 		Array.from(itemElements).forEach((item) => {
 			item.onmousedown = () => {
@@ -44,9 +43,8 @@ class Dropdown {
 		});
 
 		if (!this.items) {
-			const notFound = this.#parent.querySelector('.address-not-found');
+			const notFound = this.#parent.querySelector('.dropdown__address-not-found');
 			const button = new Button(notFound, {
-				id: 'add-missing-address-btn',
 				content: 'Предложить адрес',
 				style: 'secondary',
 				icon: 'add-icon',

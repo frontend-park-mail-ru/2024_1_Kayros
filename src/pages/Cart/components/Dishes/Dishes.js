@@ -23,7 +23,7 @@ class Dishes {
 	 * Рендер страницы
 	 */
 	async render() {
-		if (!this.data[0]) {
+		if (!this.data?.length) {
 			this.#parent.insertAdjacentHTML('beforeend', template());
 			return;
 		}

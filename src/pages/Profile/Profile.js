@@ -28,8 +28,8 @@ class Profile {
 	 *
 	 */
 	handleSubmit() {
-		const loaderBlock = this.#parent.querySelector('#btn-loader');
-		loaderBlock.classList.add('loading');
+		const loaderBlock = this.#parent.querySelector('.btn__loader');
+		loaderBlock.classList.add('btn__loader--loading');
 
 		const formData = new FormData();
 		formData.append('img', this.file);
@@ -43,7 +43,7 @@ class Profile {
 			const profile = document.querySelector('.header__profile-image');
 			profile.src = data.img_url;
 
-			const name = document.querySelector('#name');
+			const name = document.querySelector('.header__profile-name');
 			name.innerHTML = this.name;
 		});
 	}

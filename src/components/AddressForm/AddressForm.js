@@ -28,14 +28,14 @@ class AddressForm {
 			content: template(),
 			className: 'address-modal',
 			url: urls.address,
-			initiatorId: 'address',
+			initiatorId: 'address-button',
 		});
 
 		modal.render();
 
 		const modalContent = document.getElementById('modal-content');
 
-		const mapContainer = modalContent.querySelector('#address-map-container');
+		const mapContainer = modalContent.querySelector('.find-address__map-container');
 		const map = new Map(mapContainer, { fullPage: false, startX: 6000, startY: 6500 });
 		map.render();
 
@@ -43,7 +43,11 @@ class AddressForm {
 			api.geoCoder(user.address, map.goToPoint.bind(map));
 		}
 
-		const sujestsElement = new AddressSujests(modalContent.querySelector('#sujests-container'), {
+		if (user?.address) {
+			api.geoCoder(user.address, map.goToPoint.bind(map));
+		}
+
+		const sujestsElement = new AddressSujests(modalContent.querySelector('.find-address__sujests-container'), {
 			closeModal: () => {
 				modal.close();
 			},

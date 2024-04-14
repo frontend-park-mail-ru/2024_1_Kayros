@@ -1,8 +1,8 @@
-#restaurant-banner {
+.restaurant-banner {
 	display: grid;
 	grid-template-columns: 45% 55%;
 
-	#info {
+	&__info {
 		display: flex;
 		font-family: Montserrat, sans-serif;
 		flex-direction: column;
@@ -10,22 +10,22 @@
 		padding: 20px 26px;
 		gap: 8px;
 		font-size: 14px;
+	}
 
-		#rating-container {
-			display: flex;
-			align-items: flex-start;
-			gap: 8px;
-			font-weight: 600;
-			font-size: 16px;
-			margin-top: auto;
+	&__rating {
+		display: flex;
+		align-items: flex-start;
+		gap: 8px;
+		font-weight: 600;
+		font-size: 16px;
+		margin-top: auto;
 
-			#rating-value {
-				margin-right: 16px;
-			}
+		&--rating-value {
+			margin-right: 16px;
 		}
 	}
 
-	#banner-image {
+	&__image {
 		display: flex;
 		align-items: center;
 		justify-content: center;

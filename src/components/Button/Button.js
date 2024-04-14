@@ -64,7 +64,7 @@ class Button {
 		return template({
 			id: this.#id,
 			content: this.#content,
-			class: 'btn-' + this.#style,
+			class: 'btn--' + this.#style,
 			icon: this.#icon,
 			loader: this.#withLoader,
 			type: this.#type,
@@ -83,7 +83,7 @@ class Button {
 		currentButton.onclick = this.#onClick;
 
 		if (this.#withLoader) {
-			const loaderBlock = currentButton.querySelector('#btn-loader');
+			const loaderBlock = currentButton.querySelector('.btn__loader');
 			const loader = new Loader(loaderBlock, { size: 's', style: 'secondary' });
 			loader.render();
 		}

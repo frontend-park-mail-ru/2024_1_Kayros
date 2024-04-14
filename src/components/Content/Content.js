@@ -24,10 +24,10 @@ class Content {
 	 */
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', template());
-		const content = document.getElementById('content');
+		const content = document.querySelector('.content');
 
 		if (this.#withoutPadding) {
-			content.style.padding = '0';
+			content.classList.add('content--no-padding');
 		}
 	}
 }

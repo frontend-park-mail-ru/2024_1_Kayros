@@ -23,17 +23,17 @@ class PayForm {
 		this.#parent = parent;
 		this.data = data;
 		this.main = data.address || '';
-		this.apart = data.extra_address.split(', ')[0] || '';
-		this.entrance = data.extra_address.split(', ')[1] || '';
-		this.floor = data.extra_address.split(', ')[2] || '';
+		this.apart = data.extra_address?.split(', ')[0] || '';
+		this.entrance = data.extra_address?.split(', ')[1] || '';
+		this.floor = data.extra_address?.split(', ')[2] || '';
 	}
 
 	/**
 	 *
 	 */
 	async handleSubmit() {
-		const loaderBlock = this.#parent.querySelector('#btn-loader');
-		loaderBlock.classList.add('loading');
+		const loaderBlock = this.#parent.querySelector('.btn__loader');
+		loaderBlock.classList.add('btn__loader--loading');
 
 		const mainInput = this.#parent.querySelector('#main-address');
 
@@ -49,7 +49,7 @@ class PayForm {
 			const sum = cart.querySelector('span');
 
 			sum.innerHTML = '';
-			cart.className = 'btn btn-secondary';
+			cart.className = 'btn btn--secondary';
 
 			router.navigate(urls.restaurants);
 		}

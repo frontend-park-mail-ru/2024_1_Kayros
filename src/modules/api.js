@@ -275,7 +275,7 @@ class Api {
 	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async addToCart(foodId) {
-		const { data, error } = await ajax.post(`${this.#url}/order/food/add/${foodId}`);
+		const { data, error } = await ajax.post(`${this.#url}/order/food/add`, { food_id: foodId, count: 1 });
 
 		if (data) {
 			return data.sum;

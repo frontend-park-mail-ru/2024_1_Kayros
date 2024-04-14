@@ -14,69 +14,9 @@
 		outline: none;
 		transition: all 0.3s;
 		width: 100%;
-
-		&:hover {
-			border-color: var(--input-border-color);
-		}
-
-		&:disabled {
-			cursor: pointer;
-		}
-
-		&.dynamic {
-			height: 30px;
-			color: var(--input-color-dynamic);
-			background: inherit;
-
-			& ~ .input__label {
-				font-size: 16px;
-				position: absolute;
-				color: var(--input-placeholder-color);
-				pointer-events: none;
-				left: 14px;
-				background-color: transparent;
-				transform-origin: 14px;
-				top: 50%;
-				transform: translateY(-50%);
-				transition: 0.3s;
-				z-index: 5;
-			}
-
-			& ~ .input__label-holder {
-				position: absolute;
-				pointer-events: none;
-				left: 14px;
-				background: inherit;
-				width: 0;
-				height: 4px;
-				top: -1px;
-				transition: 0.2s;
-			}
-
-			&:not(:placeholder-shown),
-			&:focus {
-				& ~ .input__label {
-					top: -10px;
-					transform: scale(0.8);
-				}
-			}
-		}
-
-		&.input-error {
-			border-color: var(--input-error-color);
-		}
 	}
 
-	&.password-input input {
-		padding: var(--input-password-padding);
-	}
-
-	input:not(:disabled):focus {
-		border-color: var(--input-border-color-focus);
-		box-shadow: var(--input-box-shadow-focus);
-	}
-
-	#search-button {
+	&__search-button {
 		position: absolute;
 		right: 4px;
 		border-radius: var(--button-border-radius);
@@ -91,7 +31,73 @@
 		}
 	}
 
-	#btn-eye {
+	input:hover {
+		border-color: var(--input-border-color);
+	}
+
+	input:disabled {
+		cursor: pointer;
+	}
+
+	input:focus {
+		border-color: var(--input-border-color-focus);
+		box-shadow: var(--input-box-shadow-focus);
+	}
+
+	input.dynamic {
+		height: 30px;
+		color: var(--input-color-dynamic);
+		background: inherit;
+
+		& ~ .input__label {
+			padding: 0 2px;
+			font-size: 16px;
+			position: absolute;
+			color: var(--input-placeholder-color);
+			pointer-events: none;
+			left: 14px;
+			background-color: transparent;
+			transform-origin: 14px;
+			top: 50%;
+			transform: translateY(-50%);
+			transition: 0.3s;
+			z-index: 5;
+		}
+
+		& ~ .input__label-holder {
+			position: absolute;
+			pointer-events: none;
+			left: 14px;
+			background: inherit;
+			width: 0;
+			height: 4px;
+			top: -1px;
+			transition: 0.2s;
+		}
+
+		&:not(:placeholder-shown),
+		&:focus {
+			& ~ .input__label {
+				top: -10px;
+				transform: scale(0.8);
+			}
+		}
+	}
+
+	input.input-error {
+		border-color: var(--input-error-color);
+	}
+
+	&.password-input input {
+		padding: var(--input-password-padding);
+	}
+
+	input:not(:disabled):focus {
+		border-color: var(--input-border-color-focus);
+		box-shadow: var(--input-box-shadow-focus);
+	}
+
+	&__btn-eye {
 		display: flex;
 		position: absolute;
 		border: none;
@@ -100,38 +106,38 @@
 		cursor: pointer;
 		transition: all 0.3s;
 	}
-}
 
-#eye-open {
-	transition:
-		opacity 0.2s,
-		transform 0.3s;
+	&__eye-open {
+		transition:
+			opacity 0.2s,
+			transform 0.3s;
 
-	.visible & {
-		transform: scale(1);
-		opacity: 1;
+		.visible & {
+			transform: scale(1);
+			opacity: 1;
+		}
+
+		.hidden & {
+			transform: scale(0);
+			opacity: 0;
+		}
 	}
 
-	.hidden & {
-		transform: scale(0);
-		opacity: 0;
-	}
-}
+	&__eye-close {
+		transition:
+			opacity 0.2s,
+			transform 0.3s;
 
-#eye-close {
-	transition:
-		opacity 0.2s,
-		transform 0.3s;
+		.visible & {
+			position: absolute;
+			transform: scale(0);
+			opacity: 0;
+		}
 
-	.visible & {
-		position: absolute;
-		transform: scale(0);
-		opacity: 0;
-	}
-
-	.hidden & {
-		position: absolute;
-		transform: scale(1);
-		opacity: 1;
+		.hidden & {
+			position: absolute;
+			transform: scale(1);
+			opacity: 1;
+		}
 	}
 }

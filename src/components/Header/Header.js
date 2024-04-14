@@ -22,7 +22,7 @@ class Header {
 	 */
 	constructor({ navigate }) {
 		this.navigate = navigate;
-		this.#parent = document.getElementById('layout');
+		this.#parent = document.querySelector('.layout');
 	}
 
 	/**
@@ -43,7 +43,7 @@ class Header {
 	 * @param {object} data - информация о корзине
 	 */
 	handleCartData(data) {
-		const cartBlock = document.getElementById('cart');
+		const cartBlock = document.querySelector('.header__cart');
 		const cartButton = new Button(cartBlock, {
 			id: 'cart-button',
 			content: data?.sum ? `${data.sum} ₽` : ' ',
@@ -69,11 +69,11 @@ class Header {
 	async render() {
 		this.#parent.insertAdjacentHTML('afterbegin', template());
 
-		const logoBlock = document.getElementById('logo-container');
+		const logoBlock = document.querySelector('.header__logo-container');
 		const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
 		logo.render();
 
-		const searchBlock = document.getElementById('search-input');
+		const searchBlock = this.#parent.querySelector('.header__search-input');
 		const searchInput = new Input(searchBlock, {
 			id: 'restaurants-search',
 			placeholder: 'Рестораны, еда',
@@ -85,7 +85,7 @@ class Header {
 		await this.userData();
 		const user = localStorageHelper.getItem('user-info');
 
-		const addressBlock = document.getElementById('address');
+		const addressBlock = document.querySelector('.header__address');
 		const addressButton = new Button(addressBlock, {
 			id: 'address-button',
 			onClick: () => {
@@ -98,7 +98,7 @@ class Header {
 
 		addressButton.render();
 
-		const profileBlock = document.getElementById('profile-block');
+		const profileBlock = document.querySelector('.header__profile-block');
 
 		if (user) {
 			const profile = new Profile(profileBlock, { user });
@@ -113,9 +113,9 @@ class Header {
 			loginButton.render();
 		}
 
-		const headerElement = document.getElementById('header');
+		const headerElement = document.querySelector('.header');
 
-		const profile = document.getElementById('profile');
+		const profile = document.querySelector('.header__profile');
 
 		if (profile) {
 			const profileDropdown = new ProfileDropdown(profile, {
@@ -134,9 +134,9 @@ class Header {
 
 		window.addEventListener('scroll', () => {
 			if (window.scrollY > 20) {
-				headerElement.className = 'sticky';
+				headerElement.classList.add('sticky');
 			} else {
-				headerElement.className = '';
+				headerElement.classList.remove('sticky');
 			}
 		});
 	}

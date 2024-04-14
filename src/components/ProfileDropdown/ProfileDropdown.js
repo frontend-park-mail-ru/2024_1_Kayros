@@ -41,12 +41,11 @@ class ProfileDropdown {
 	open(element) {
 		if (this.isOpen) return;
 
-		const name = document.getElementById('name');
+		const name = document.querySelector('.header__profile-name');
 		name.style.opacity = 1;
 		name.style.pointerEvents = 'all';
 
-		element.className = 'profile-dropdown profile-dropdown-open';
-
+		element.classList.add('profile-dropdown--open');
 		this.isOpen = true;
 		this.#parent.animate(...OPEN_PROFILE_SLIDE_OPTIONS);
 	}
@@ -58,11 +57,11 @@ class ProfileDropdown {
 	close(element) {
 		if (!this.isOpen) return;
 
-		const name = document.getElementById('name');
+		const name = document.querySelector('.header__profile-name');
 		name.style.opacity = 0;
 		name.style.pointerEvents = 'none';
 
-		element.className = 'profile-dropdown';
+		element.classList.remove('profile-dropdown--open');
 
 		this.isOpen = false;
 		this.#parent.animate(...CLOSE_PROFILE_SLIDE_OPTIONS);
@@ -100,7 +99,7 @@ class ProfileDropdown {
 
 		const dropdown = document.getElementById(this.#id);
 
-		const links = dropdown.querySelector('#items');
+		const links = dropdown.querySelector('.profile-dropdown__items');
 
 		dropdownItems.forEach((item) => {
 			const button = links.querySelector(`#${item.id}`);

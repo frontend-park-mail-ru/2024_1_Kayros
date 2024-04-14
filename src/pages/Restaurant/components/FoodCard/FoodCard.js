@@ -118,10 +118,10 @@ class FoodCard {
 		const sum = cart.querySelector('span');
 
 		if (res === 0) {
-			cart.className = 'btn btn-secondary';
+			cart.className = 'btn btn--secondary';
 			sum.innerHTML = '';
 		} else {
-			cart.className = 'btn btn-primary';
+			cart.className = 'btn btn--primary';
 			sum.innerHTML = res ? `${res} ₽` : '';
 		}
 
@@ -140,10 +140,10 @@ class FoodCard {
 		const sum = cart.querySelector('span');
 
 		if (res === 0) {
-			cart.className = 'btn btn-secondary';
+			cart.className = 'btn btn--secondary';
 			sum.innerHTML = '';
 		} else {
-			cart.className = 'btn btn-primary';
+			cart.className = 'btn btn--primary';
 			sum.innerHTML = `${res || 0} ₽`;
 		}
 
@@ -164,10 +164,10 @@ class FoodCard {
 		const sum = cart.querySelector('span');
 
 		if (res === 0) {
-			cart.className = 'btn btn-secondary';
+			cart.className = 'btn btn--secondary';
 			sum.innerHTML = '';
 		} else {
-			cart.className = 'btn btn-primary';
+			cart.className = 'btn btn--primary';
 			sum.innerHTML = `${res || 0} ₽`;
 		}
 
@@ -184,7 +184,7 @@ class FoodCard {
 
 		const food = document.getElementById(`food-${this.data.id}`);
 
-		const action = food.querySelector('#food-action');
+		const action = food.querySelector('.food-card__action');
 
 		const counterButton = new CounterButton(action, {
 			id: `food-button-${this.data.id}`,

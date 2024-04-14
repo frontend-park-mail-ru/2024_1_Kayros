@@ -31,7 +31,7 @@ class AddressSujests {
 	 * Отобразить измение адреса в хэдере
 	 */
 	handleAddressChange() {
-		const header = document.getElementById('header');
+		const header = document.querySelector('.header');
 		header.remove();
 		const newHeader = new Header({ navigate: router.navigate.bind(router) });
 		newHeader.render();
@@ -43,7 +43,9 @@ class AddressSujests {
 	async setAddress() {
 		const searchInput = this.#parent.querySelector('#address-search-input');
 
-		await api.updateAddressSujests({ address: searchInput.value }, this.handleAddressChange);
+		this.address = searchInput.value.split(' · ')[1] || searchInput.value;
+
+		await api.updateAddressSujests({ address: this.address }, this.handleAddressChange);
 		const cartAddress = document.querySelector('#main-address');
 
 		if (cartAddress) {
@@ -66,10 +68,10 @@ class AddressSujests {
 	 * @param {object} items - саджесты
 	 */
 	renderItems(items) {
-		const dropdown = this.#parent.querySelector('.dropdown-container');
+		const dropdown = this.#parent.querySelector('.address-sujests__dropdown-container');
 		dropdown.innerHTML = '';
 
-		const searchContainer = this.#parent.querySelector('.search-container');
+		const searchContainer = this.#parent.querySelector('.address-sujests__search-container');
 		const input = searchContainer.querySelector('input');
 
 		if (!items) {
@@ -117,8 +119,8 @@ class AddressSujests {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const sujestsContainer = document.getElementById('address-sujests');
-		const searchContainer = sujestsContainer.querySelector('.search-container');
+		const sujestsContainer = document.querySelector('.address-sujests');
+		const searchContainer = sujestsContainer.querySelector('.address-sujests__search-container');
 
 		const input = searchContainer.querySelector('input');
 
@@ -127,8 +129,8 @@ class AddressSujests {
 			content: 'Сохранить',
 			withLoader: true,
 			onClick: async () => {
-				const loaderBlock = searchContainer.querySelector('#btn-loader');
-				loaderBlock.classList.add('loading');
+				const loaderBlock = searchContainer.querySelector('.btn__loader');
+				loaderBlock.classList.add('btn__loader--loading');
 
 				const data = await this.setAddress();
 
@@ -139,7 +141,7 @@ class AddressSujests {
 
 		searchButton.render();
 
-		const dropdown = sujestsContainer.querySelector('.dropdown-container');
+		const dropdown = sujestsContainer.querySelector('.address-sujests__dropdown-container');
 
 		const user = localStorageHelper.getItem('user-info');
 
@@ -149,7 +151,7 @@ class AddressSujests {
 
 		let stopTyping;
 
-		const clearIcon = searchContainer.querySelector('#clear-icon');
+		const clearIcon = searchContainer.querySelector('.address-sujests__clear-icon');
 
 		clearIcon.onclick = (event) => {
 			event.stopPropagation();

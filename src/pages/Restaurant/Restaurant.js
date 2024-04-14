@@ -39,7 +39,7 @@ class Restaurant {
 	setActiveCategory(id) {
 		const activeItem = document.querySelector(`#item-${id}`);
 
-		const items = document.querySelectorAll('.category-item');
+		const items = document.querySelectorAll('.restaurant-categories__item');
 
 		items.forEach((item) => {
 			item.classList.remove('category-active');
@@ -54,7 +54,7 @@ class Restaurant {
 	 * @param {object} data - информация о ресторане
 	 */
 	renderData(data) {
-		const restaurant = document.getElementById('restaurant-container');
+		const restaurant = document.querySelector('.restaurant__container');
 
 		if (!data) {
 			restaurant.innerText = 'Ресторан не найден';
@@ -63,7 +63,7 @@ class Restaurant {
 
 		this.#parent.innerHTML = this.getHTML(data);
 
-		const sidebarContainer = document.getElementById('restaurant-sidebar');
+		const sidebarContainer = document.querySelector('.restaurant__sidebar');
 		const sidebar = new Sidebar(sidebarContainer, {
 			categories: data.categories,
 			setActiveCategory: this.setActiveCategory.bind(this),
@@ -72,11 +72,11 @@ class Restaurant {
 
 		sidebar.render();
 
-		const bannerContainer = document.getElementById('restaurant-banner-container');
+		const bannerContainer = document.querySelector('.restaurant__banner-container');
 		const banner = new Banner(bannerContainer, data);
 		banner.render();
 
-		const foodList = document.getElementById('restaurant-food');
+		const foodList = document.querySelector('.restaurant__food');
 		data.categories.forEach((category) => {
 			const categoryBlock = new CategoryFood(foodList, {
 				data: category,
@@ -88,7 +88,7 @@ class Restaurant {
 			categoryBlock.render();
 		});
 
-		const categories = document.querySelectorAll('.category-title');
+		const categories = document.querySelectorAll('.category__title');
 
 		const observerCallback = (entries) => {
 			entries.forEach((entry) => {
