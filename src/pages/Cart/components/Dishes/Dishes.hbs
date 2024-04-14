@@ -1,3 +1,8 @@
 <div class="dishes">
-  <div class="dishes__title">Выбранные блюда</div>
+	{{#if this.restaurantName}}
+		<div class="dishes__title">Ресторан: "{{this.restaurantName}}"</div>
+		<div class="dishes__subtitle">Выбранные блюда:</div>
+	{{else}}
+		<div class="dishes__title">Корзина пуста</div>
+	{{/if}}
 </div>

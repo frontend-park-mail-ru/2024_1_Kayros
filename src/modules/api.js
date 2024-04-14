@@ -198,8 +198,8 @@ class Api {
 		);
 
 		if (getCoords) {
-			const [lon, lat] = response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ');
-			callback([Number(lon), Number(lat)]);
+			const coords = response.GeoObjectCollection.featureMember[0]?.GeoObject.Point.pos.split(' ');
+			callback([Number(coords[0]), Number(coords[1])]);
 		} else {
 			const address = response.GeoObjectCollection.featureMember[0]?.GeoObject.name;
 			callback(address);
@@ -340,7 +340,7 @@ class Api {
 		const { data, error } = await ajax.delete(`${this.#url}/order/clean`);
 
 		if (data) {
-			return data.sum;
+			return true;
 		}
 
 		Notification.open({

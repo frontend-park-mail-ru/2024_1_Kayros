@@ -2,6 +2,8 @@
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	margin-left: 15px;
+	margin-top: 20px;
 
 	&__cutleries {
 		display: flex;
@@ -13,9 +15,13 @@
 
 	&__title {
 		display: flex;
-		margin-top: 20px;
-		margin-left: 15px;
-		font-size: 24px;
+		font-size: 26px;
+		font-weight: 600;
+	}
+
+	&__subtitle {
+		display: flex;
+		font-size: 20px;
 		font-weight: 600;
 	}
 }
