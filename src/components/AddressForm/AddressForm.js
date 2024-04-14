@@ -24,7 +24,7 @@ class AddressForm {
 			content: template(),
 			className: 'address-modal',
 			url: urls.address,
-			initiatorId: 'address',
+			initiatorId: 'address-button',
 		});
 
 		modal.render();

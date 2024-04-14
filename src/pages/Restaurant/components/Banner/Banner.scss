@@ -10,18 +10,18 @@
 		padding: 20px 26px;
 		gap: 8px;
 		font-size: 14px;
+	}
 
-		&__rating {
-			display: flex;
-			align-items: flex-start;
-			gap: 8px;
-			font-weight: 600;
-			font-size: 16px;
-			margin-top: auto;
+	&__rating {
+		display: flex;
+		align-items: flex-start;
+		gap: 8px;
+		font-weight: 600;
+		font-size: 16px;
+		margin-top: auto;
 
-			&--rating-value {
-				margin-right: 16px;
-			}
+		&--rating-value {
+			margin-right: 16px;
 		}
 	}
 

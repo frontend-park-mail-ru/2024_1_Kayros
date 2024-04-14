@@ -18,45 +18,27 @@
 	&__position--top-right {
 		top: 20px;
 		right: -500px;
-
-		&--open {
-			opacity: 1;
-			pointer-events: all;
-			right: 20px;
-		}
 	}
 
 	&__position--top-left {
 		top: 20px;
 		left: -500px;
-
-		&--open {
-			opacity: 1;
-			pointer-events: all;
-			left: 20px;
-		}
 	}
 
 	&__position--bottom-left {
 		bottom: 20px;
 		left: -500px;
-
-		&--open {
-			opacity: 1;
-			pointer-events: all;
-			left: 20px;
-		}
 	}
 
 	&__position--bottom-right {
 		bottom: 20px;
 		right: -500px;
+	}
 
-		&--open {
-			opacity: 1;
-			pointer-events: all;
-			right: 20px;
-		}
+	&--open {
+		opacity: 1;
+		pointer-events: all;
+		right: 20px;
 	}
 }
 

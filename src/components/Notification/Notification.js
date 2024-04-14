@@ -20,7 +20,7 @@ class Notification {
 	constructor() {
 		this.#parent = document.querySelector('body');
 		this.#id = 'root-notification';
-		this.#position = 'notification__position--top-right';
+		this.#position = 'top-right';
 		this.#count = 0;
 		this.#list = true;
 	}
@@ -34,7 +34,8 @@ class Notification {
 	getHTML({ type, ...params }) {
 		return template({
 			id: `${this.#id}-${this.#count}`,
-			class: `notification__style--${type === 'success' ? 'success' : 'error'}`,
+			position: this.#position,
+			icon: `${type === 'success' ? 'success' : 'error'}`,
 			...params,
 		});
 	}
@@ -189,7 +190,7 @@ class Notification {
 		this.#count++;
 
 		if (position) {
-			this.#position = `notification__position--${position.replace(/-/g, '_')}`;
+			this.#position = position;
 		}
 
 		const openNotifications = document.getElementsByClassName('notification--open');

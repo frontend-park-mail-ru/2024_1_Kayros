@@ -50,7 +50,6 @@ class Restaurants {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', template());
 
-		// const currentHeader = document.getElementById('header');
 		const currentHeader = document.querySelector('.header');
 
 		if (!currentHeader) {

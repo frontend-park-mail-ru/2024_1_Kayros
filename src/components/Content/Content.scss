@@ -1,7 +1,7 @@
 .content {
 	padding: 34px;
 
-	&:has(.content__loader) {
+	&:has(#content-loader) {
 		opacity: 0.5;
 		pointer-events: none;
 

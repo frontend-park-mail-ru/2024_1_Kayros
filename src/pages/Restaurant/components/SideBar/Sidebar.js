@@ -29,7 +29,7 @@ class Sidebar {
 	async render() {
 		this.parent.insertAdjacentHTML('beforeend', template({ categories: this.categories }));
 
-		const buttonContainer = this.parent.querySelector('.button-container');
+		const buttonContainer = this.parent.querySelector('.restaurant-categories__button-container');
 		const backButton = new Button(buttonContainer, {
 			id: 'restaurant-back-button',
 			icon: 'back-arrow-full',

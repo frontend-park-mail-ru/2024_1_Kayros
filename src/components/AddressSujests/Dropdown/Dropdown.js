@@ -36,7 +36,7 @@ class Dropdown {
 
 		const itemElements = this.#parent.getElementsByClassName('dropdown__item');
 
-		itemElements.forEach((item) => {
+		Array.from(itemElements).forEach((item) => {
 			item.onmousedown = () => {
 				this.onClick(item.id);
 			};

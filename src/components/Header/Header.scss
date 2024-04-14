@@ -47,6 +47,10 @@
 		margin-left: 52px;
 		width: 120px;
 	}
+
+	& + .content {
+		padding-top: 10px;
+	}
 }
 
 .sticky {

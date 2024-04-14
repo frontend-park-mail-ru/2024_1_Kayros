@@ -35,7 +35,7 @@ class CategoryFood {
 		this.data.food?.forEach((item) => {
 			let count = 0;
 
-			this.cart?.food.forEach((dish) => {
+			this.cart?.food?.forEach((dish) => {
 				if (dish.id === item.id) count = dish.count;
 			});
 
