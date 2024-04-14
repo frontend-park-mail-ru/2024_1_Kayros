@@ -1,3 +1,4 @@
+import api from '../../modules/api';
 import template from './Map.hbs';
 import './Map.scss';
 
@@ -144,6 +145,15 @@ class Map {
 	}
 
 	/**
+	 * Конвертирует радианы в градусы
+	 * @param {number} radians - радианы
+	 * @returns {number} - градусы
+	 */
+	radiansToDegrees(radians) {
+		return (radians * 180) / Math.PI;
+	}
+
+	/**
 	 * Конвертирует координаты в пиксели
 	 * @param {Array} lonLat - [долгота, широта] в градусах
 	 * @returns {object} - координаты в пикселях
@@ -171,6 +181,31 @@ class Map {
 	}
 
 	/**
+	 * Конвертирует пиксели в координаты
+	 * @param {Array} lonLat - [долгота, широта] в пикселях
+	 * @returns {object} - координаты в пикселях
+	 */
+	convertPixels(lonLat) {
+		const mercatorLong =
+			(lonLat[0] + this.#container.offsetWidth / 2) /
+				((MAP_WIDTH * this.scale) / (MERCATOR_POINT_MAX.long - MERCATOR_POINT_MIN.long)) +
+			MERCATOR_POINT_MIN.long;
+
+		const mercatorLat =
+			-(lonLat[1] + this.#container.offsetHeight / 2 - MAP_HEIGHT * this.scale) /
+				((MAP_HEIGHT * this.scale) / (MERCATOR_POINT_MAX.lat - MERCATOR_POINT_MIN.lat)) +
+			MERCATOR_POINT_MIN.lat;
+
+		const x = this.radiansToDegrees(mercatorLong / EARTH_RADIUS);
+
+		const y =
+			((Math.atan(Math.pow(Math.E, (mercatorLat * Math.PI) / 180 / (mercatorLong / x))) - Math.PI / 4) * 2) /
+			(Math.PI / 180);
+
+		return { x, y };
+	}
+
+	/**
 	 * Переход по точке
 	 * @param {Array} coords - [долгота, широта] в градусах
 	 */
@@ -185,8 +220,35 @@ class Map {
 
 		const map = document.getElementById('canvas-map');
 
+		if (!map) return;
+
 		this.transform(map, { duration: 100 });
 		this.drawTiles(map);
+	}
+
+	/**
+	 * Получение адреса по координатам
+	 */
+	async getAddressName() {
+		const coordX = -this.indentLeft;
+		const coordY = -this.indentTop;
+
+		const coords = this.convertPixels([coordX, coordY]);
+
+		await api.geoCoder(
+			`${coords.x.toFixed(12)},${coords.y.toFixed(12)}`,
+			(address) => {
+				const input = document.querySelector('#address-search-input');
+
+				if (address && input) {
+					input.value = address;
+
+					const submit = document.querySelector('#address-search-button');
+					if (submit) submit.disabled = false;
+				}
+			},
+			{ getCoords: false },
+		);
 	}
 
 	/**
@@ -195,7 +257,7 @@ class Map {
 	 * @param {HTMLElement} map - карты
 	 */
 	dragDrop(event, map) {
-		const mapPinIcon = document.querySelector('#address-map-pin');
+		const mapPinIcon = document.querySelector('.find-address__map-pin');
 
 		const dragStartX = event.clientX - this.indentLeft;
 		const dragStartY = event.clientY - this.indentTop;
@@ -208,6 +270,7 @@ class Map {
 		}, 100);
 
 		document.onmousemove = (event) => {
+			this.drag = true;
 			mapPinIcon?.classList.add('move');
 			clearTimeout(mouseMoveTimer);
 			mouseMoveTimer = setTimeout(() => {
@@ -231,6 +294,8 @@ class Map {
 			if (mouseStopped) {
 				this.drawTiles(map);
 				mapPinIcon?.classList.remove('move');
+				if (this.drag) this.getAddressName();
+				this.drag = false;
 				return;
 			}
 
@@ -245,7 +310,7 @@ class Map {
 	 * @param {number} scrollDistanceY - длина скролла по оси Y в пикселях
 	 */
 	afterDragScroll(map, scrollDistanceX, scrollDistanceY) {
-		const mapPinIcon = document.querySelector('#address-map-pin');
+		const mapPinIcon = document.querySelector('.find-address__map-pin');
 
 		if ((!scrollDistanceX && !scrollDistanceY) || this.dragTime < 0.1) {
 			mapPinIcon?.classList.remove('move');
@@ -257,6 +322,12 @@ class Map {
 
 		this.indentLeft += scrollSpeedX * 0.3;
 		this.indentTop += scrollSpeedY * 0.3;
+
+		if (this.drag) {
+			this.getAddressName();
+		}
+
+		this.drag = false;
 
 		this.transform(map, { duration: 200 });
 

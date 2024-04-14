@@ -1,6 +1,5 @@
 import Notification from '../components/Notification/Notification';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SUJESTS } from '../constants';
-import restaurantInfo from '../mocks/restaurantInfo';
 import ajax from './ajax';
 
 /**
@@ -37,16 +36,50 @@ class Api {
 	}
 
 	/**
+	 * Метод для изменения информации пользователя
+	 * @param {object} body - объект, посылаемый в запросе
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async updateUserData(body, callback) {
+		const { data, error } = await ajax.put(`${this.#url}/user`, body, { formData: true });
+
+		if (data && !error && !data.detail) {
+			Notification.open({
+				duration: 3,
+				title: SUCCESS_MESSAGES.profileSave.title,
+				description: SUCCESS_MESSAGES.profileSave.description,
+				type: 'success',
+			});
+
+			callback(data);
+			return;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.PROFILE_SAVE,
+			description: error || data.detail,
+			type: 'error',
+		});
+	}
+
+	/**
+	 * Метод для получения информации о корзине
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getCartInfo(callback) {
+		let data = await ajax.get(`${this.#url}/order`, { showNotifyError: false });
+
+		callback(data);
+	}
+
+	/**
 	 * Метод для получения информации о ресторане
 	 * @param {number} id - id ресторана
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async getRestaurantInfo(id, callback) {
 		let data = await ajax.get(`${this.#url}/restaurants/${id}`);
-
-		if (!data) {
-			data = restaurantInfo;
-		}
 
 		callback(data);
 	}
@@ -156,15 +189,26 @@ class Api {
 	 * Метод для получения координат объекта
 	 * @param {object} address - адрес, по которому находятся координаты
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 * @param {object} params - параметры
+	 * @param {boolean} params.getCoords - получение координат, иначе - получение адреса
 	 */
-	async geoCoder(address, callback) {
+	async geoCoder(address, callback, { getCoords = true } = {}) {
 		const { response } = await ajax.get(
-			`https://geocode-maps.yandex.ru/1.x/?apikey=${YANDEX_API_GEOCODER}&geocode=${address}&format=json&&bbox=37.39,55.57~37.84,55.92&rspn=1`,
+			`https://geocode-maps.yandex.ru/1.x/?apikey=${YANDEX_API_GEOCODER}&geocode=${address}&format=json&bbox=37.39,55.57~37.84,55.92&rspn=${
+				getCoords ? 1 : 0
+			}`,
 		);
 
-		const [lon, lat] = response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ');
+		if (getCoords) {
+			const coords = response.GeoObjectCollection.featureMember[0]?.GeoObject.Point.pos.split(' ');
 
-		callback([Number(lon), Number(lat)]);
+			if (coords) {
+				callback([Number(coords[0]), Number(coords[1])]);
+			}
+		} else {
+			const address = response.GeoObjectCollection.featureMember[0]?.GeoObject.name;
+			callback(address);
+		}
 	}
 
 	/**
@@ -178,7 +222,32 @@ class Api {
 	async updateAddress(body, callback = () => {}) {
 		const { data, error } = await ajax.put(`${this.#url}/order/update_address`, body);
 
-		if (data && !error) {
+		if (data && !error && !data.detail) {
+			callback(data);
+			return data;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.ADDRESS,
+			description: error || data.detail,
+			type: 'error',
+		});
+
+		return data;
+	}
+
+	/**
+	 *  Метод для обновления адреса
+	 * @param {object} body - объект
+	 * @param {object} body.address - основной
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 * @returns {Promise<object>} - результат запроса
+	 */
+	async updateAddressSujests(body, callback = () => {}) {
+		const { data, error } = await ajax.put(`${this.#url}/user/address`, body);
+
+		if (data && !error && !data.detail) {
 			Notification.open({
 				duration: 3,
 				title: SUCCESS_MESSAGES.address.title,
@@ -193,11 +262,123 @@ class Api {
 		Notification.open({
 			duration: 3,
 			title: ERROR_MESSAGES.ADDRESS,
-			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			description: error || data.detail,
 			type: 'error',
 		});
 
 		return data;
+	}
+
+	/**
+	 * Метод для добавления блюда в корзину
+	 * @param {object} body - объект
+	 * @param {object} body.food_id - id блюдп
+	 * @param {object} body.count - количество
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async addToCart(body) {
+		const { data, error } = await ajax.post(`${this.#url}/order/food/add`, body);
+
+		if (data) {
+			return data.sum;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CART_UPDATE,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return false;
+	}
+
+	/**
+	 * Метод для удаления блюда из корзины
+	 * @param {number} foodId - id блюда
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async removeFromCart(foodId) {
+		const { data } = await ajax.delete(`${this.#url}/order/food/delete/${foodId}`);
+
+		if (data) {
+			return data.sum;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Метод для обновления количества блюд в корзине
+	 * @param {object} body - объект
+	 * @param {object} body.food_id - id блюдп
+	 * @param {object} body.count - количество
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async updateCartCount(body) {
+		const { data, error } = await ajax.put(`${this.#url}/order/food/update_count`, body);
+
+		if (data) {
+			return data.sum;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CART_UPDATE,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return false;
+	}
+
+	/**
+	 * Метод для очистки корзины
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async clearCart() {
+		const { data, error } = await ajax.delete(`${this.#url}/order/clean`);
+
+		if (data) {
+			return true;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CART_UPDATE,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return false;
+	}
+
+	/**
+	 * Метод для оформления заказа
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async checkout() {
+		const { data, error } = await ajax.put(`${this.#url}/order/pay`);
+
+		if (data && !error) {
+			Notification.open({
+				duration: 6,
+				title: SUCCESS_MESSAGES.checkout.title,
+				description: SUCCESS_MESSAGES.checkout.description,
+				type: 'success',
+			});
+
+			return true;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CHECKOUT,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return false;
 	}
 }
 

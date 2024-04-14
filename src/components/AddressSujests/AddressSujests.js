@@ -1,5 +1,6 @@
 import api from '../../modules/api';
 import { router } from '../../modules/router';
+import { localStorageHelper } from '../../utils';
 import Button from '../Button/Button';
 import Header from '../Header/Header';
 import template from './AddressSujests.hbs';
@@ -30,9 +31,9 @@ class AddressSujests {
 	 * Отобразить измение адреса в хэдере
 	 */
 	handleAddressChange() {
-		const header = document.getElementById('header');
+		const header = document.querySelector('.header');
 		header.remove();
-		const newHeader = new Header({ navigate: router.navigate });
+		const newHeader = new Header({ navigate: router.navigate.bind(router) });
 		newHeader.render();
 	}
 
@@ -40,7 +41,18 @@ class AddressSujests {
 	 * Добавить адрес
 	 */
 	async setAddress() {
-		await api.updateAddress({ address: this.address, extra_address: 'Кв, подъезд, этаж' }, this.handleAddressChange);
+		const searchInput = this.#parent.querySelector('#address-search-input');
+
+		this.address = searchInput.value.split(' · ')[1] || searchInput.value;
+
+		await api.updateAddressSujests({ address: this.address }, this.handleAddressChange);
+		const cartAddress = document.querySelector('#main-address');
+
+		if (cartAddress) {
+			cartAddress.value = this.address;
+		}
+
+		this.closeModal();
 	}
 
 	/**
@@ -56,10 +68,10 @@ class AddressSujests {
 	 * @param {object} items - саджесты
 	 */
 	renderItems(items) {
-		const dropdown = this.#parent.querySelector('.dropdown-container');
+		const dropdown = this.#parent.querySelector('.address-sujests__dropdown-container');
 		dropdown.innerHTML = '';
 
-		const searchContainer = this.#parent.querySelector('.search-container');
+		const searchContainer = this.#parent.querySelector('.address-sujests__search-container');
 		const input = searchContainer.querySelector('input');
 
 		if (!items) {
@@ -79,9 +91,12 @@ class AddressSujests {
 
 				const street = currentItem.subtitle?.text.split(' · ')[1];
 
+				const button = this.#parent.querySelector('#address-search-button');
+				button.disabled = false;
+
 				input.value = address;
 				input.blur();
-				this.address = address;
+				this.address = street || currentItem.title?.text;
 
 				api.geoCoder(street || address, this.goToPoint);
 			},
@@ -104,35 +119,47 @@ class AddressSujests {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const sujestsContainer = document.getElementById('address-sujests');
-		const searchContainer = sujestsContainer.querySelector('.search-container');
+		const sujestsContainer = document.querySelector('.address-sujests');
+		const searchContainer = sujestsContainer.querySelector('.address-sujests__search-container');
+
+		const input = searchContainer.querySelector('input');
 
 		const searchButton = new Button(searchContainer, {
 			id: 'address-search-button',
 			content: 'Сохранить',
 			withLoader: true,
 			onClick: async () => {
-				const loaderBlock = searchContainer.querySelector('#btn-loader');
-				loaderBlock.classList.add('loading');
+				const loaderBlock = searchContainer.querySelector('.btn__loader');
+				loaderBlock.classList.add('btn__loader--loading');
 
 				const data = await this.setAddress();
 
 				if (data) this.closeModal();
 			},
+			disabled: input.value ? false : true,
 		});
 
 		searchButton.render();
 
-		const input = searchContainer.querySelector('input');
-		const dropdown = sujestsContainer.querySelector('.dropdown-container');
+		const dropdown = sujestsContainer.querySelector('.address-sujests__dropdown-container');
+
+		const user = localStorageHelper.getItem('user-info');
+
+		if (user?.address) {
+			input.value = user.address || '';
+		}
 
 		let stopTyping;
 
-		const clearIcon = searchContainer.querySelector('#clear-icon');
+		const clearIcon = searchContainer.querySelector('.address-sujests__clear-icon');
 
 		clearIcon.onclick = (event) => {
 			event.stopPropagation();
 			input.value = '';
+
+			const button = this.#parent.querySelector('#address-search-button');
+			button.disabled = true;
+
 			input.focus();
 		};
 

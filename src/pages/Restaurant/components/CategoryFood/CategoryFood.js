@@ -13,12 +13,14 @@ class CategoryFood {
 	 * @param {object} params.data - информация о еде
 	 * @param {number} params.activeCategory - активная категория
 	 * @param {void} params.setActiveCategory - обновить активную категорию
+	 * @param {object} params.cart - информация о корзине
 	 */
-	constructor(parent, { data, activeCategory, setActiveCategory }) {
+	constructor(parent, { data, activeCategory, setActiveCategory, cart }) {
 		this.parent = parent;
 		this.data = data;
 		this.activeCategory = activeCategory;
 		this.setActiveCategory = setActiveCategory;
+		this.cart = cart;
 	}
 
 	/**
@@ -28,10 +30,16 @@ class CategoryFood {
 		this.parent.insertAdjacentHTML('beforeend', template({ name: this.data.name, id: this.data.id }));
 
 		const category = document.getElementById(`category-${this.data.id}`);
-		const foodList = category.querySelector('.category-food');
+		const foodList = category.querySelector('.category__food');
 
 		this.data.food?.forEach((item) => {
-			const foodCard = new FoodCard(foodList, item);
+			let count = 0;
+
+			this.cart?.food?.forEach((dish) => {
+				if (dish.id === item.id) count = dish.count;
+			});
+
+			const foodCard = new FoodCard(foodList, item, count, this.cart);
 			foodCard.render();
 		});
 	}

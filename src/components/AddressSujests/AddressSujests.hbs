@@ -1,11 +1,16 @@
-<div id="address-sujests">
-	<div class="search-container">
-		<div class="search-input-container">
-			<img id="search-icon" src="assets/search-icon.svg" alt="search" />
-			<input type="text" value="{{this.value}}" placeholder="Введите улицу или дом" />
-			<img id="clear-icon" src="assets/close.svg" alt="close" />
+<div class="address-sujests">
+	<div class="address-sujests__search-container">
+		<div class="address-sujests__input-container">
+			<img class="address-sujests__search-icon" src="assets/search-icon.svg" alt="search" />
+			<input
+				type="text"
+				value="{{this.value}}"
+				placeholder="Введите улицу или дом"
+				id="address-search-input"
+			/>
+			<img class="address-sujests__clear-icon" src="assets/close.svg" alt="close" />
 		</div>
 	</div>
 
-	<div class="dropdown-container"></div>
+	<div class="address-sujests__dropdown-container"></div>
 </div>

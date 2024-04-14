@@ -1,4 +1,6 @@
+import api from '../../modules/api';
 import urls from '../../routes/urls';
+import { localStorageHelper } from '../../utils';
 import AddressSujests from '../AddressSujests/AddressSujests';
 import Map from '../Map';
 import Modal from '../Modal/Modal';
@@ -19,17 +21,33 @@ class AddressForm {
 	/**
 	 * Рендеринг компонента
 	 */
-	render() {
-		const modal = new Modal({ content: template(), url: urls.address, initiatorId: 'address' });
+	async render() {
+		const user = localStorageHelper.getItem('user-info');
+
+		const modal = new Modal({
+			content: template(),
+			className: 'address-modal',
+			url: urls.address,
+			initiatorId: 'address-button',
+		});
+
 		modal.render();
 
 		const modalContent = document.getElementById('modal-content');
 
-		const mapContainer = modalContent.querySelector('#address-map-container');
-		const map = new Map(mapContainer, { fullPage: false });
+		const mapContainer = modalContent.querySelector('.find-address__map-container');
+		const map = new Map(mapContainer, { fullPage: false, startX: 6000, startY: 6500 });
 		map.render();
 
-		const sujestsElement = new AddressSujests(modalContent.querySelector('#sujests-container'), {
+		if (user?.address) {
+			api.geoCoder(user.address, map.goToPoint.bind(map));
+		}
+
+		if (user?.address) {
+			api.geoCoder(user.address, map.goToPoint.bind(map));
+		}
+
+		const sujestsElement = new AddressSujests(modalContent.querySelector('.find-address__sujests-container'), {
 			closeModal: () => {
 				modal.close();
 			},

@@ -14,7 +14,6 @@ import './Header.scss';
  */
 class Header {
 	#parent;
-	#navigate;
 
 	/**
 	 * Конструктор класса
@@ -22,8 +21,8 @@ class Header {
 	 * @param {void} params.navigate - функция навигации по страницам
 	 */
 	constructor({ navigate }) {
-		this.#navigate = navigate;
-		this.#parent = document.getElementById('layout');
+		this.navigate = navigate;
+		this.#parent = document.querySelector('.layout');
 	}
 
 	/**
@@ -40,10 +39,28 @@ class Header {
 	}
 
 	/**
+	 * Обработка полученных данных
+	 * @param {object} data - информация о корзине
+	 */
+	handleCartData(data) {
+		const cartBlock = document.querySelector('.header__cart');
+		const cartButton = new Button(cartBlock, {
+			id: 'cart-button',
+			content: data?.sum ? `${data.sum} ₽` : ' ',
+			icon: 'cart',
+			style: !data?.sum ? 'secondary' : 'primary',
+			onClick: () => this.navigate(urls.cart),
+		});
+
+		cartButton.render();
+	}
+
+	/**
 	 * Получение данных пользователя
 	 */
 	async userData() {
 		await api.getUserInfo(this.handleUserData);
+		api.getCartInfo(this.handleCartData.bind(this));
 	}
 
 	/**
@@ -52,11 +69,11 @@ class Header {
 	async render() {
 		this.#parent.insertAdjacentHTML('afterbegin', template());
 
-		const logoBlock = document.getElementById('logo-container');
-		const logo = new Logo(logoBlock, { onClick: () => this.#navigate(urls.restaurants) });
+		const logoBlock = document.querySelector('.header__logo-container');
+		const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
 		logo.render();
 
-		const searchBlock = document.getElementById('search-input');
+		const searchBlock = this.#parent.querySelector('.header__search-input');
 		const searchInput = new Input(searchBlock, {
 			id: 'restaurants-search',
 			placeholder: 'Рестораны, еда',
@@ -68,11 +85,11 @@ class Header {
 		await this.userData();
 		const user = localStorageHelper.getItem('user-info');
 
-		const addressBlock = document.getElementById('address');
+		const addressBlock = document.querySelector('.header__address');
 		const addressButton = new Button(addressBlock, {
 			id: 'address-button',
 			onClick: () => {
-				this.#navigate(urls.address);
+				this.navigate(urls.address);
 			},
 			content: user?.address || 'Укажите адрес доставки',
 			icon: user?.address ? '' : 'address',
@@ -81,18 +98,7 @@ class Header {
 
 		addressButton.render();
 
-		if (user?.cart && user.cart.total > 0) {
-			const cartBlock = document.getElementById('cart');
-			const cartButton = new Button(cartBlock, {
-				id: 'cart-button',
-				content: `${user.cart.total} ₽`,
-				icon: 'cart',
-			});
-
-			cartButton.render();
-		}
-
-		const profileBlock = document.getElementById('profile-block');
+		const profileBlock = document.querySelector('.header__profile-block');
 
 		if (user) {
 			const profile = new Profile(profileBlock, { user });
@@ -101,22 +107,25 @@ class Header {
 			const loginButton = new Button(profileBlock, {
 				id: 'header-login-button',
 				content: 'Войти',
-				onClick: () => this.#navigate(urls.signIn),
+				onClick: () => this.navigate(urls.signIn),
 			});
 
 			loginButton.render();
 		}
 
-		const headerElement = document.getElementById('header');
+		const headerElement = document.querySelector('.header');
 
-		const profile = document.getElementById('profile');
+		const profile = document.querySelector('.header__profile');
 
 		if (profile) {
 			const profileDropdown = new ProfileDropdown(profile, {
 				id: 'profile-dropdown-profile',
+				navigate: this.navigate,
 				onExit: () => {
 					headerElement.remove();
 					this.render();
+
+					this.navigate(urls.restaurants);
 				},
 			});
 
@@ -125,9 +134,9 @@ class Header {
 
 		window.addEventListener('scroll', () => {
 			if (window.scrollY > 20) {
-				headerElement.className = 'sticky';
+				headerElement.classList.add('sticky');
 			} else {
-				headerElement.className = '';
+				headerElement.classList.remove('sticky');
 			}
 		});
 	}

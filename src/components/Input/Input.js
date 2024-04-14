@@ -21,14 +21,25 @@ class Input {
 	 * @param {string} params.placeholder - текстовая подсказка внутри поля
 	 * @param {string} params.type - тип инпута
 	 * @param {string | undefined} params.button - название кнопки
+	 * @param {'standart' | 'dynamic'} params.style - стиль
+	 * @param {string} params.value - начальное значение
+	 * @param {void} params.onChange - обработчик события
+	 * @param {boolean} params.disabled - блокировка
 	 */
-	constructor(parent, { id, placeholder, type = 'text', button }) {
+	constructor(
+		parent,
+		{ id, placeholder, type = 'text', button, style = 'standart', value = '', onChange = '', disabled = false },
+	) {
 		this.#parent = parent;
 		this.#placeholder = placeholder;
 		this.#button = button;
 		this.#type = type;
 		this.#id = id;
 		this.#isVisible = false;
+		this.style = style;
+		this.value = value;
+		this.onChange = onChange;
+		this.disabled = disabled;
 	}
 
 	/**
@@ -42,6 +53,9 @@ class Input {
 			type: this.#type,
 			isPassword: this.#type === 'password',
 			id: this.#id,
+			dynamic: this.style === 'dynamic',
+			value: this.value,
+			attribute: this.disabled ? 'disabled' : '',
 		});
 	}
 
@@ -52,26 +66,52 @@ class Input {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
 		if (this.#button) {
-			const buttonBlock = this.#parent.querySelector('#search-button');
+			const buttonBlock = this.#parent.querySelector('.input__search-button');
 			const searchButton = new Button(buttonBlock, { id: `${this.#id}-search-button`, content: this.#button });
 			searchButton.render();
 		}
 
+		const inputContainer = document.getElementById(`${this.#id}-container`);
+
+		const input = inputContainer.querySelector('input');
+
+		input.oninput = this.onChange;
+
+		if (this.style === 'dynamic') {
+			const holder = inputContainer.querySelector('.input__label-holder');
+			const label = inputContainer.querySelector('.input__label');
+
+			if (input.value && holder) {
+				holder.style.width = label.offsetWidth * 0.8 + 8 + 'px';
+			}
+
+			input.onfocus = () => {
+				holder.style.width = label.offsetWidth * 0.8 + 8 + 'px';
+			};
+
+			input.onblur = () => {
+				if (!input.value) {
+					holder.style.width = 0 + 'px';
+				}
+			};
+		}
+
 		if (this.#type !== 'password') return;
 
-		const inputContainer = document.getElementById(`${this.#id}-container`);
 		inputContainer.classList.add('password-input');
-		const eyeButton = inputContainer.querySelector('#btn-eye');
+		const eyeButton = inputContainer.querySelector('.input__btn-eye');
 		const password = inputContainer.getElementsByTagName('input')[0];
 
 		eyeButton.addEventListener('click', () => {
 			this.#isVisible = !this.#isVisible;
 
 			if (this.#isVisible) {
-				eyeButton.className = 'visible';
+				eyeButton.classList.remove('hidden');
+				eyeButton.classList.add('visible');
 				password.type = 'text';
 			} else {
-				eyeButton.className = 'hidden';
+				eyeButton.classList.remove('visible');
+				eyeButton.classList.add('hidden');
 				password.type = 'password';
 			}
 		});
