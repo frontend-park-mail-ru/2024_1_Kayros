@@ -204,9 +204,13 @@ class FoodCard {
 				}
 
 				if (this.cart?.restaurant_id > 0 && this.data.restaurant !== this.cart?.restaurant_id) {
-					const res = await this.openClearCartModal(id);
+					try {
+						const res = await this.openClearCartModal(id);
 
-					if (!res) {
+						if (!res) {
+							return;
+						}
+					} catch {
 						return;
 					}
 				}

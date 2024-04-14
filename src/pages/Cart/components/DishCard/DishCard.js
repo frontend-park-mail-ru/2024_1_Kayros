@@ -61,12 +61,16 @@ class DishCard {
 
 				const cards = document.getElementsByClassName('dish-card');
 
-				if (cards.length === 1) {
-					submit.disabled = true;
-				}
-
 				const element = this.#parent.querySelector(`#food-${this.data.id}`);
 				element.remove();
+
+				if (cards.length === 0) {
+					submit.disabled = true;
+
+					const dishes = document.querySelector('.dishes');
+					dishes.innerHTML = 'Корзина пуста';
+				}
+
 				return sum;
 			},
 			updateCount: async ({ id, count }) => {
