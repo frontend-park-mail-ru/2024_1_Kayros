@@ -20,6 +20,7 @@ class CounterButton {
 	 * @param {void} params.addCount - добавление 1
 	 * @param {void} params.removeCount - удаление 1
 	 * @param {void} params.updateCount - обновление счета
+	 * @param {void} params.prevCount - обновление счета
 	 */
 	constructor(
 		parent,
@@ -31,6 +32,7 @@ class CounterButton {
 			addCount = () => {},
 			removeCount = () => {},
 			updateCount = () => {},
+			prevCount = () => true,
 		},
 	) {
 		this.parent = parent;
@@ -44,6 +46,7 @@ class CounterButton {
 		this.frontCount = initCount;
 		this.timer;
 		this.withAddButton = withAddButton;
+		this.prevCount = prevCount;
 	}
 
 	/**
@@ -67,6 +70,12 @@ class CounterButton {
 			id: this.#id,
 			content: 'Добавить',
 			onClick: () => {
+				const isContinue = this.prevCount();
+
+				if (!isContinue) {
+					return;
+				}
+
 				this.frontCount++;
 
 				this.rerenderCounter();
@@ -142,6 +151,12 @@ class CounterButton {
 		const addButton = this.parent.querySelector('.counter-button__plus');
 
 		addButton.onclick = () => {
+			const isContinue = this.prevCount();
+
+			if (!isContinue) {
+				return;
+			}
+
 			this.frontCount++;
 
 			if (this.timer) {
@@ -156,6 +171,12 @@ class CounterButton {
 		const removeButton = this.parent.querySelector('.counter-button__minus');
 
 		removeButton.onclick = () => {
+			const isContinue = this.prevCount();
+
+			if (!isContinue) {
+				return;
+			}
+
 			this.frontCount--;
 
 			if (this.timer) {

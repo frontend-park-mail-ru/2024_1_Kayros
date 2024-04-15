@@ -120,10 +120,10 @@ class FoodCard {
 		const sum = cart.querySelector('span');
 
 		if (res === 0) {
-			cart.className = 'btn btn--secondary';
+			cart.className = 'btn btn--secondary size-xs';
 			sum.innerHTML = '';
 		} else {
-			cart.className = 'btn btn--primary';
+			cart.className = 'btn btn--primary size-xs';
 			sum.innerHTML = res ? `${res} ₽` : '';
 		}
 
@@ -144,9 +144,9 @@ class FoodCard {
 		const sum = cart.querySelector('span');
 
 		if (!res) {
-			cart.className = 'btn btn--secondary';
+			cart.className = 'btn btn--secondary size-xs';
 		} else {
-			cart.className = 'btn btn--primary';
+			cart.className = 'btn btn--primary size-xs';
 			sum.innerHTML = `${res || 0} ₽`;
 		}
 
@@ -192,7 +192,7 @@ class FoodCard {
 			id: `food-button-${this.data.id}`,
 			productId: this.data.id,
 			initCount: this.count,
-			addCount: async (id) => {
+			prevCount: () => {
 				const user = localStorageHelper.getItem('user-info');
 
 				if (!user) {
@@ -205,6 +205,9 @@ class FoodCard {
 					return;
 				}
 
+				return true;
+			},
+			addCount: async (id) => {
 				if (this.cart?.restaurant_id > 0 && this.data.restaurant !== this.cart?.restaurant_id) {
 					try {
 						const res = await this.openClearCartModal(id);
@@ -220,33 +223,9 @@ class FoodCard {
 				return this.addFood(id);
 			},
 			removeCount: (id) => {
-				const user = localStorageHelper.getItem('user-info');
-
-				if (!user) {
-					this.openAuthModal();
-					return;
-				}
-
-				if (!user.address) {
-					router.navigate(urls.address);
-					return;
-				}
-
 				return this.removeCount(id);
 			},
 			updateCount: (data) => {
-				const user = localStorageHelper.getItem('user-info');
-
-				if (!user) {
-					this.openAuthModal();
-					return;
-				}
-
-				if (!user.address) {
-					router.navigate(urls.address);
-					return;
-				}
-
 				return this.updateCartCount(data);
 			},
 		});

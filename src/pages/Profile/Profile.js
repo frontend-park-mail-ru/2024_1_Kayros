@@ -1,17 +1,14 @@
 import Button from '../../components/Button/Button';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import Input from '../../components/Input';
-import {
-	FIELDS_PROFILE_FORM,
-	FIELDS_PROFILE_PASSWORD_CHANGE,
-} from '../../constants';
+import { FIELDS_PROFILE_FORM, FIELDS_PROFILE_PASSWORD_CHANGE } from '../../constants';
 import {
 	validateConfirmPassword,
 	validateEmail,
 	validateName,
 	validatePassword,
-	validatePhone
-} from "../../helpers/validation.js";
+	validatePhone,
+} from '../../helpers/validation.js';
 import api from '../../modules/api';
 import { getPhoneMask } from '../../utils';
 import template from './Profile.hbs';
@@ -62,15 +59,14 @@ class Profile {
 		});
 	}
 
+	/**
+	 *
+	 */
 	handlePasswordSubmit() {
 		const loaderBlock = this.#parent.querySelector('.btn__loader');
 		loaderBlock.classList.add('btn__loader--loading');
 
-		const formData = new FormData();
-		formData.append('password', this.oldPassword);
-		formData.append('new_password', this.newPassword);
-
-		api.changeUserPassword(formData, () => {
+		api.changeUserPassword({ password: this.oldPassword, new_password: this.newPassword }, () => {
 			const oldPassword = this.#parent.querySelector('#profile-old-password-input');
 			const newPassword = this.#parent.querySelector('#profile-new-password-input');
 			const confirmPassword = this.#parent.querySelector('#profile-confirm-password-input');
@@ -256,7 +252,8 @@ class Profile {
 				newPassword,
 				confirmPassword,
 				confirmPasswordErrorContainer,
-				true,);
+				true,
+			);
 
 			const isNewPasswordValid = isPasswordFormatValid && isPasswordsMatch;
 
@@ -268,11 +265,15 @@ class Profile {
 				confirmPasswordLabelHolder.style.width = 0;
 			}
 
-			const isPasswordsMatch = validateConfirmPassword(newPassword, confirmPassword, confirmPasswordErrorContainer, true);
+			const isPasswordsMatch = validateConfirmPassword(
+				newPassword,
+				confirmPassword,
+				confirmPasswordErrorContainer,
+				true,
+			);
 
 			submitPassword.disabled = !isPasswordsMatch;
 		};
-
 
 		phone.oninput = () => {
 			this.phone = getPhoneMask(phone);
