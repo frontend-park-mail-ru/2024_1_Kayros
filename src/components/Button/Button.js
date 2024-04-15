@@ -47,7 +47,7 @@ class Button {
 			withLoader = false,
 			size = 'xs',
 			additionalClass = '',
-            position = 'beforeend',
+			position = 'beforeend',
 		},
 	) {
 		this.#parent = parent;

@@ -7,7 +7,8 @@ import {
 	PASSWORD_REGEX,
 	INVALID_PASSWORD_CHAR_REGEX,
 	NAME_REGEX,
-	INVALID_NAME_CHAR_REGEX, PHONE_REGEX,
+	INVALID_NAME_CHAR_REGEX,
+	PHONE_REGEX,
 } from '../constants';
 
 export const validatePhone = (phoneElement, phoneErrorElement) => {
@@ -21,7 +22,7 @@ export const validatePhone = (phoneElement, phoneErrorElement) => {
 		phoneElement.classList.remove('input-error');
 	}
 
-	return !phoneElement.value || phoneElement.value && isPhoneValid;
+	return !phoneElement.value || (phoneElement.value && isPhoneValid);
 };
 
 export const validateEmail = (emailElement, emailErrorElement, hasEmailInputStarted) => {

@@ -65,13 +65,13 @@
 		}
 	}
 
-  &__loader {
-    display: none;
+	&__loader {
+		display: none;
 
-    &--loading {
-      display: block;
-    }
-  }
+		&--loading {
+			display: block;
+		}
+	}
 
 	&.size-s {
 		padding: var(--button-s-padding);
