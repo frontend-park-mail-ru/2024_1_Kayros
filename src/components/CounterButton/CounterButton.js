@@ -32,7 +32,7 @@ class CounterButton {
 			addCount = () => {},
 			removeCount = () => {},
 			updateCount = () => {},
-			prevCount = () => {},
+			prevCount = () => true,
 		},
 	) {
 		this.parent = parent;

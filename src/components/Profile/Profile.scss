@@ -11,6 +11,14 @@
 	transition: all 0.3s;
 	right: 0;
 
+	&-image {
+		background: linear-gradient(
+			120deg,
+			var(--avatar-bg-linear-color-first) 10%,
+			var(--avatar-bg-linear-color-second) 140%
+		);
+	}
+
 	button {
 		height: 100%;
 		width: 114px;
