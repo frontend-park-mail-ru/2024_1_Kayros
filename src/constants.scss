@@ -3,15 +3,20 @@
 
 	--red: #ff0000;
 
+	--subtitle: #818181;
+
 	--text-color: #2d2d2d;
+	--text-in-signin: #ffffff;
 
 	--layout-border-radius: 30px;
 	--layout-bg-color: #f6f6f6;
 
-	--dropdown-item-color: #818181;
-	--dropdown-item-color-hover: #4b4b4b;
+	--profile-dropdown-item-color: #818181;
+	--profile-dropdown-item-color-hover: #4b4b4b;
 
+	--link-color: #aeaeae;
 	--link-color-hover: #575757;
+	--link-color-active: #000;
 
 	--input-border-radius: 18px;
 	--input-height: 16px;
@@ -25,11 +30,14 @@
 	--input-box-shadow-focus: 0 0 0 1px #9c9c9c;
 	--input-placeholder-color: #545454;
 	--input-error-color: #ff0000;
+	--input-color-dynamic: #000;
 
 	--button-border-radius: 14px;
 	--button-bg-color: #2d2d2d;
 	--button-text-color: #fff;
-	--button-padding: 6px 18px;
+	--button-xs-padding: 6px 18px;
+	--button-s-padding: 9.5px 48.5px;
+
 	--button-font-size: 16px;
 
 	--button-bg-hover: #545454;
@@ -37,6 +45,11 @@
 	--button-bg-disabled: #ddd;
 	--button-bg-disabled-hover: #cbcbcb;
 	--button-color-disabled: #9e9e9e;
+
+	--button-secondary-text-color: #000;
+	--button-secondary-bg: #fff;
+
+	--back-button-bg-hover: #dbdbdb;
 
 	--cart-button-color: #e3e3e3;
 
@@ -50,9 +63,11 @@
 	--header-box-shadow: 0 7px 15px -5px #9c9c9c;
 	--header-sticky-border-color: #d1d1d1;
 
-	--dropdown-width: 300px;
-	--dropdown-bg-color: #fff;
-	--dropdown-box-shadow: 0px 6px 10px 0px #b9b9b9;
+	--profile-dropdown-width: 300px;
+	--profile-dropdown-bg-color: #fff;
+	--profile-dropdown-box-shadow: 0px 6px 10px 0px #2a2a2aa3;
+
+	--address-dropdown-box-shadow: 0px 6px 10px 0px #9e9e9ea3;
 
 	--restaurant-card-rating-color: #4b4b4b;
 
@@ -65,6 +80,51 @@
 	--background-light: #eff4e7;
 
 	--auth-background: #fff;
+	--auth-bg-color: #f4f4f4;
 
 	--loader-secondary: #fff;
+
+	--modal-wrapper-background: #00000078;
+	--modal-content-background: #fff;
+
+	--address-pin-box-shadow: 0px 10px 6px -7px #00000057;
+
+	--map-controls-border-color: #ddd;
+	--map-controls-bg: #fff;
+	--map-controls-box-shadow: 0px 4px 15px -2px #928181;
+	--map-controls-bg-hover: #efefef;
+	--map-background-color: #f5f5f5a6;
+	--map-background-dot-color: #ccc;
+
+	--sagests-input-bg-color: #e7e7e7;
+	--sagests-dropdown-bg-color: #fff;
+	--sagests-dropdown-subtitle-color: #939393;
+	--sagests-dropdown-subtitle-color-hover: #a7a7a7;
+	--sagests-dropdown-title-color-hover: #5a5a5a;
+	--sagests-dropdown-border: #e0e0e0;
+
+	--custom-scrollbar-bg-color: #a8a8a8;
+	--custom-scrollbar-bg-color-hover: #7a7a7a;
+	--custom-scrollbar-color: #dfe0e0;
+
+	--counter-add-bg-active: linear-gradient(-90deg, #b9b9b9, 40%, transparent);
+	--counter-remove-bg-active: linear-gradient(90deg, #b9b9b9, 40%, transparent);
+	--counter-add-bg-hover: #dfdfdf;
+
+	--food-card-bg-hover: #f4f4f4;
+
+	--counter-add-bg-active: linear-gradient(-90deg, #b9b9b9, 40%, transparent);
+	--counter-remove-bg-active: linear-gradient(90deg, #b9b9b9, 40%, transparent);
+	--counter-add-bg-hover: #dfdfdf;
+
+	--food-card-bg-hover: #f4f4f4;
+	--food-subtitle-color: #545454;
+
+	--cart-pay-method-color: #adadad;
+	--cart-pay-method-color-hover: #e1e1e1;
+
+	--file-upload-border-color: #e9e9e9;
+	--file-upload-box-shadow: 0px 0px 15px -5px #cacaca;
+
+	--profile-bg-color: #fff;
 }

@@ -7,8 +7,22 @@ import {
 	PASSWORD_REGEX,
 	INVALID_PASSWORD_CHAR_REGEX,
 	NAME_REGEX,
-	INVALID_NAME_CHAR_REGEX,
+	INVALID_NAME_CHAR_REGEX, PHONE_REGEX,
 } from '../constants';
+
+export const validatePhone = (phoneElement, phoneErrorElement) => {
+	const isPhoneValid = PHONE_REGEX.test(phoneElement.value);
+
+	if (phoneElement.value) {
+		phoneErrorElement.textContent = isPhoneValid ? '' : VALIDATION_ERRORS.phoneFormat;
+		phoneElement.classList.toggle('input-error', !isPhoneValid);
+	} else {
+		phoneErrorElement.textContent = '';
+		phoneElement.classList.remove('input-error');
+	}
+
+	return !phoneElement.value || phoneElement.value && isPhoneValid;
+};
 
 export const validateEmail = (emailElement, emailErrorElement, hasEmailInputStarted) => {
 	const isEmailValid = EMAIL_REGEX.test(emailElement.value);
@@ -74,13 +88,13 @@ export const validateConfirmPassword = (
 
 	if (!isPasswordsMatch) {
 		confirmPasswordErrorElement.textContent = VALIDATION_ERRORS.passwordUnmatched;
-		confirmPasswordErrorElement.classList.add('input-error');
+		confirmPasswordElement.classList.add('input-error');
 	} else if (!confirmPasswordElement.value && hasConfirmPasswordInputStarted) {
 		confirmPasswordErrorElement.textContent = VALIDATION_ERRORS.fieldRequired;
-		confirmPasswordErrorElement.classList.add('input-error');
+		confirmPasswordElement.classList.add('input-error');
 	} else {
 		confirmPasswordErrorElement.textContent = '';
-		confirmPasswordErrorElement.classList.remove('input-error');
+		confirmPasswordElement.classList.remove('input-error');
 	}
 
 	return confirmPasswordElement.value && isPasswordsMatch;

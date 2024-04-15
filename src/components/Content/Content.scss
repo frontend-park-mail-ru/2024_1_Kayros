@@ -1,4 +1,4 @@
-#content {
+.content {
 	padding: 34px;
 
 	&:has(#content-loader) {
@@ -12,5 +12,9 @@
 			top: calc(50vh - 85px);
 			z-index: 15;
 		}
+	}
+
+	&--no-padding {
+		padding: 0;
 	}
 }

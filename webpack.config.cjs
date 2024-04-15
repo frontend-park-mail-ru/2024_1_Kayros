@@ -1,8 +1,11 @@
+const fs = require('fs');
 const path = require('path');
+const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CreateFilePlugin = require('create-file-webpack');
 
 const buildPath = path.resolve(__dirname, 'dist');
 
@@ -10,12 +13,21 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 Dotenv.config({ path: './.env.development' });
 
+const cacheEnable = !isDevelopment || process.env.CACHE_ENABLE;
+
+const assets = fs.readdirSync('src/assets/').map((filename) => {
+	return `"/assets/${filename}"`;
+});
+
 module.exports = {
-	entry: path.resolve(__dirname, './src/index.js'),
+	entry: {
+		app: path.resolve(__dirname, './src/index.js'),
+		...(cacheEnable && { 'service-worker': './src/service-worker.js' }),
+	},
 	target: isDevelopment ? 'web' : 'browserslist',
 	output: {
 		path: buildPath,
-		filename: 'bundle.js',
+		filename: '[name].js',
 	},
 
 	module: {
@@ -58,22 +70,35 @@ module.exports = {
 		},
 		proxy: [
 			{
-				context: ['/api'],
+				context: ['/api/v1'],
 				target: 'http://109.120.180.238:8000',
-				pathRewrite: { '^/api': '' },
+			},
+			{
+				context: ['/minio-api'],
+				target: 'http://109.120.180.238',
 			},
 		],
 	},
 
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: path.join(__dirname, './public/index.html'),
+			title: 'Resto',
+			favicon: './src/assets/favicon.png',
+			base: '/',
 		}),
 		new MiniCssExtractPlugin({
-			filename: '[name]-[hash].css',
+			filename: 'styles.css',
 		}),
 		new CopyWebpackPlugin({ patterns: [{ from: 'src/assets', to: 'assets' }] }),
-	].filter(Boolean),
+		new CreateFilePlugin({
+			path: buildPath,
+			fileName: 'assets_filenames.txt',
+			content: `[${assets}]`,
+		}),
+		new webpack.DefinePlugin({
+			'process.env.CACHE_ENABLE': cacheEnable,
+		}),
+	],
 
 	resolve: {
 		extensions: ['.js'],

@@ -1,29 +1,49 @@
-import '@fontsource/roboto';
 import '@fontsource/montserrat';
 import Layout from './components/Layout';
+import Notification from './components/Notification/Notification';
 import { router } from './modules/router';
-import NotFoundPage from './pages/NotFound/NotFound';
-import { routes } from './routes';
-import urls from './routes/urls.js';
+import routes from './routes';
+import urls from './routes/urls';
 import './global.scss';
 
-const root = document.getElementById('root');
+const root = document.createElement('div');
+root.id = 'root';
+document.body.appendChild(root);
+
 const layout = new Layout(root);
 layout.render();
 
 router.addRoutes(routes);
+router.navigate(window.location.pathname);
 
-let initialPath;
+if (process.env.CACHE_ENABLE) {
+	const registerServiceWorker = async () => {
+		if ('serviceWorker' in navigator) {
+			try {
+				await navigator.serviceWorker.register('service-worker.js', { scope: urls.base });
+			} catch (error) {
+				console.error(`ServiceWorker registration failed with ${error}`);
+			}
+		}
+	};
 
-if (window.location.pathname === urls.base) {
-	initialPath = urls.restaurants;
-} else {
-	initialPath = window.location.pathname;
+	registerServiceWorker();
 }
 
-router.navigate(initialPath);
+window.addEventListener('online', () =>
+	Notification.open({
+		duration: 6,
+		title: 'Соединение восстановлено!',
+		description: 'С возвращением в интернет',
+		type: 'success',
+	}),
+);
 
-if (Object.values(urls).indexOf(window.location.pathname) === -1) {
-	const notFoundPage = new NotFoundPage();
-	notFoundPage.render();
-}
+window.addEventListener('offline', () =>
+	Notification.open({
+		duration: 6,
+		title: 'Упс... соединение потеряно!',
+		description: 'Сайт работает в офлайн режиме',
+		type: 'error',
+	}),
+);

@@ -1,9 +1,12 @@
-#restaurants {
+.restaurants {
 	display: grid;
-	gap: 50px;
-	grid-template-columns: repeat(auto-fit, 300px);
-	justify-content: space-evenly;
+	grid-template-columns: repeat(4, 1fr);
+	justify-items: center;
 	color: var(--brand);
 	font-size: 18px;
 	transition: all 0.5s;
+
+	@media (width <= 1400px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
 }

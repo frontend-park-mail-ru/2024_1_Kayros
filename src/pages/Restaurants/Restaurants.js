@@ -24,20 +24,15 @@ class Restaurants {
 	 * @param {Array} items - массив ресторанов
 	 */
 	renderData(items) {
-		const restaurantsElement = document.getElementById('restaurants');
-		restaurantsElement?.remove();
-
-		this.#parent.insertAdjacentHTML('beforeend', template());
-
-		const newRestaurants = document.getElementById('restaurants');
+		const restaurants = document.querySelector('.restaurants');
 
 		if (!items) {
-			newRestaurants.innerText = 'Нет доступных ресторанов';
+			restaurants.innerText = 'Нет доступных ресторанов';
 			return;
 		}
 
 		items.forEach((item) => {
-			const restaurantCard = new RestaurantCard(newRestaurants, item);
+			const restaurantCard = new RestaurantCard(restaurants, item);
 			restaurantCard.render();
 		});
 	}
@@ -53,20 +48,16 @@ class Restaurants {
 	 * Рендеринг страницы
 	 */
 	render() {
-		const restaurantsElement = document.getElementById('restaurants');
+		this.#parent.insertAdjacentHTML('beforeend', template());
 
-		if (!restaurantsElement) {
-			this.#parent.insertAdjacentHTML('beforeend', template());
-		}
-
-		const currentHeader = document.getElementById('header');
+		const currentHeader = document.querySelector('.header');
 
 		if (!currentHeader) {
 			const header = new Header();
 			header.render();
 		}
 
-		const restaurants = document.getElementById('restaurants');
+		const restaurants = document.querySelector('.restaurants');
 		const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });
 		loader.render();
 

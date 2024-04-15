@@ -12,9 +12,10 @@ class NotFound {
 
 	/**
 	 * Создает экземпляр страницы NotFound.
+	 * @param {HTMLDivElement} parent - родительский элемент
 	 */
-	constructor() {
-		this.#parent = document.getElementById('content');
+	constructor(parent) {
+		this.#parent = parent;
 	}
 	/**
 	 * Рендер страницы.
@@ -22,7 +23,7 @@ class NotFound {
 	render() {
 		const html = template();
 		this.#parent.insertAdjacentHTML('beforeend', html);
-		new Button(document.getElementById('return-button'), {
+		new Button(document.querySelector('.not-found__return-button'), {
 			id: 'return-to-home',
 			content: 'Вернуться на главную',
 			onClick: () => {

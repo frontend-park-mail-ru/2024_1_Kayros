@@ -1,9 +1,9 @@
-<div id="{{this.id}}" class="notification {{this.position}}">
-	<img id="message-icon" src={{this.icon}} alt="error-icon" />
-	<div id="notification-content">
-		<div class="notification-title">
-			{{this.title}}
-		</div>
-		<div id="notification-description">{{this.description}}</div>
-	</div>
+<div id="{{this.id}}" class="notification notification__position--{{this.position}}">
+    <img class="notification__icon" src="assets/{{this.icon}}.svg" alt="{{this.icon}}-icon"/>
+    <div class="notification__content">
+        <div class="notification__title">{{this.title}}</div>
+        {{#if this.description}}
+            <div class="notification__description">{{this.description}}</div>
+        {{/if}}
+    </div>
 </div>

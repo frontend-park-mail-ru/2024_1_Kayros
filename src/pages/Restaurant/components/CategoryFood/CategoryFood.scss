@@ -1,0 +1,22 @@
+.category__block {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	.category__title {
+		font-size: 32px;
+		margin-left: 14px;
+		font-weight: 600;
+	}
+
+	.category__food {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		justify-items: center;
+		gap: 14px;
+
+		@media (width <= 1286px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+}

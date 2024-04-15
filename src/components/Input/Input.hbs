@@ -1,14 +1,20 @@
 <div class="input" id="{{this.id}}-container">
 
 	{{#if this.button}}
-		<div id="search-button"></div>
+		<div class="input__search-button"></div>
 	{{else if this.isPassword}}
-		<button id="btn-eye" type="button" class="hidden">
-			<img id="eye-open" src="assets/eye-open.svg" alt="eye-open" />
-			<img id="eye-close" src="assets/eye-close.svg" alt="eye-close" />
+		<button class="input__btn-eye hidden" type="button">
+			<img class="input__eye-open" src="assets/eye-open.svg" alt="eye-open" />
+			<img class="input__eye-close" src="assets/eye-close.svg" alt="eye-close" />
 		</button>
 	{{/if}}
 
-	<input id={{this.id}} type={{this.type}} placeholder="{{this.placeholder}}" />
+	{{#if this.dynamic}}
+		<input id={{this.id}} type={{this.type}} placeholder=" " class="dynamic" value="{{this.value}}" {{this.attribute}}/>
+		<span class="input__label">{{this.placeholder}}</span>
+    <span class="input__label-holder"></span>
+	{{else}}
+		<input id={{this.id}} type={{this.type}} placeholder="{{this.placeholder}}" value="{{this.value}}"/>
+	{{/if}}
 
 </div>
