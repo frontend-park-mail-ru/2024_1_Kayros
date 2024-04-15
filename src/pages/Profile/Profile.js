@@ -66,7 +66,7 @@ class Profile {
 			handleFile: (file) => {
 				this.file = file;
 
-				const submitButton = this.#parent.querySelector('#profile-submit');
+				const submitButton = this.#parent.querySelector('#profile-submit-button');
 				submitButton.disabled = false;
 			},
 			file: data?.img_url,
@@ -85,7 +85,7 @@ class Profile {
 				onChange: (event) => {
 					this[field.name] = event.target.value;
 
-					const submitButton = this.#parent.querySelector('#profile-submit');
+					const submitButton = this.#parent.querySelector('#profile-submit-button');
 					submitButton.disabled = false;
 				},
 			}).render();

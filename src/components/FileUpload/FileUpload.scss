@@ -63,6 +63,18 @@
 		height: 60px;
 	}
 
+	&__delete {
+		position: absolute;
+		opacity: 0;
+		bottom: 10px;
+		height: 30px;
+		transition: 0.3s;
+
+		&:hover {
+			height: 34px;
+		}
+	}
+
 	&:hover {
 		box-shadow: var(--file-upload-box-shadow);
 		border: 1px solid transparent;
@@ -72,6 +84,10 @@
 		}
 
 		.file-upload__icon {
+			opacity: 1;
+		}
+
+		.file-upload__delete {
 			opacity: 1;
 		}
 	}

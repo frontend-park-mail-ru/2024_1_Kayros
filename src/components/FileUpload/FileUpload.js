@@ -67,6 +67,22 @@ class FileUpload {
 		fileUpload.onclick = () => {
 			input.click();
 		};
+
+		const image = this.#parent.querySelector('.file-upload__image');
+
+		const deleteButton = this.#parent.querySelector('.file-upload__delete');
+
+		deleteButton.onclick = async (event) => {
+			event.stopPropagation();
+
+			image.src = '/minio-api/users/default.jpg';
+
+			const res = await fetch('/minio-api/users/default.jpg');
+			const blob = await res.blob();
+			const file = new File([blob], 'image.png', blob);
+
+			this.handleFile(file);
+		};
 	}
 }
 
