@@ -1,0 +1,55 @@
+.restaurant-categories {
+	font-size: 20px;
+	position: fixed;
+	top: 116px;
+
+	#restaurant-back-button {
+		background: var(--layout-bg-color);
+		color: var(--button-secondary-text-color);
+		font-weight: 600;
+		padding: 8px 18px;
+		transition: 0.3s;
+
+		&:hover {
+			background: var(--back-button-bg-hover);
+		}
+	}
+
+	&__items {
+		height: calc(100vh - 180px);
+		overflow: scroll;
+		margin-top: 16px;
+		padding-top: 14px;
+		padding-bottom: 80px;
+		margin-left: 22px;
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
+	&__item {
+		opacity: 1;
+		color: var(--link-color);
+		transition:
+			opacity 0.2s,
+			color 0.2s;
+		cursor: pointer;
+
+		&.category-active {
+			color: var(--link-color-active);
+			font-weight: 600;
+		}
+
+		&.hide {
+			opacity: 0;
+		}
+
+		&:not(.category-active):hover {
+			color: var(--link-color-hover);
+		}
+	}
+}

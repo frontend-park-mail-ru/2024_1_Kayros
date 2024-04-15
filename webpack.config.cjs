@@ -70,9 +70,12 @@ module.exports = {
 		},
 		proxy: [
 			{
-				context: ['/api'],
+				context: ['/api/v1'],
 				target: 'http://109.120.180.238:8000',
-				pathRewrite: { '^/api': '' },
+			},
+			{
+				context: ['/minio-api'],
+				target: 'http://109.120.180.238',
 			},
 		],
 	},

@@ -1,5 +1,8 @@
+import api from '../../modules/api';
 import urls from '../../routes/urls';
-import Input from '../Input/Input';
+import { localStorageHelper } from '../../utils';
+import AddressSagests from '../AddressSagests';
+import Map from '../Map';
 import Modal from '../Modal/Modal';
 import template from './AddressForm.hbs';
 import './AddressForm.scss';
@@ -8,6 +11,8 @@ import './AddressForm.scss';
  * Форма добавления адреса
  */
 class AddressForm {
+	coords;
+
 	/**
 	 * Конструктор класса
 	 */
@@ -16,19 +21,42 @@ class AddressForm {
 	/**
 	 * Рендеринг компонента
 	 */
-	render() {
-		new Modal({ content: template(), url: urls.address, initiatorId: 'address' }).render();
+	async render() {
+		const user = localStorageHelper.getItem('user-info');
+
+		const modal = new Modal({
+			content: template(),
+			className: 'address-modal',
+			url: urls.address,
+			initiatorId: 'address-button',
+		});
+
+		modal.render();
 
 		const modalContent = document.getElementById('modal-content');
 
-		const addressInput = new Input(modalContent.querySelector('#search-container'), {
-			id: 'address-search',
-			placeholder: 'Введите улицу или дом',
-			type: 'text',
-			button: 'Сохранить',
+		const mapContainer = modalContent.querySelector('.find-address__map-container');
+		const map = new Map(mapContainer, { fullPage: false, startX: 6000, startY: 6500 });
+		map.render();
+
+		if (user?.address) {
+			api.geoCoder(user.address, map.goToPoint.bind(map));
+		}
+
+		if (user?.address) {
+			api.geoCoder(user.address, map.goToPoint.bind(map));
+		}
+
+		const sagestsElement = new AddressSagests(modalContent.querySelector('.find-address__sagests-container'), {
+			closeModal: () => {
+				modal.close();
+			},
+			goToPoint: (coords) => {
+				map.goToPoint(coords);
+			},
 		});
 
-		addressInput.render();
+		sagestsElement.render();
 	}
 }
 

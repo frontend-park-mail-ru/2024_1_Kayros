@@ -1,0 +1,43 @@
+@mixin counter-control {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 50%;
+	padding: 5px 0;
+	transition: 0.3s;
+	background: transparent;
+}
+
+.counter-button {
+	display: flex;
+	align-items: center;
+	font-size: var(--button-font-size);
+	font-weight: 600;
+	border: 1px solid transparent;
+	border-radius: var(--button-border-radius);
+	padding: 0;
+	overflow: hidden;
+	transition: 0.3s;
+	cursor: pointer;
+	font-family: Montserrat, sans-serif;
+
+	span {
+		width: 30px;
+	}
+
+	&__plus {
+		@include counter-control;
+
+		&:active {
+			background: var(--counter-add-bg-active);
+		}
+	}
+
+	&__minus {
+		@include counter-control;
+
+		&:active {
+			background: var(--counter-remove-bg-active);
+		}
+	}
+}

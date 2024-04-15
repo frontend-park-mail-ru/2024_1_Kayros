@@ -29,7 +29,7 @@ class Logo {
 		const logoSrc = this.#logoType === 'white' ? '/assets/logo-white.svg' : '/assets/logo.svg';
 		this.#parent.insertAdjacentHTML('beforeend', template({ logoSrc }));
 
-		const logoBlock = document.getElementById('logo');
+		const logoBlock = this.#parent.querySelector('.logo');
 
 		/**
 		 * Обработка нажатия на лого

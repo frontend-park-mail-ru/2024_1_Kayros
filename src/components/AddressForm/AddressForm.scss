@@ -1,9 +1,9 @@
-#find-address {
+.find-address {
 	display: flex;
 	flex-direction: column;
 	padding: 30px;
 
-	#title {
+	&__title {
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
@@ -12,19 +12,42 @@
 		margin-bottom: 10px;
 	}
 
-	#subtitle {
+	&__subtitle {
 		font-size: 16px;
 		color: var(--subtitle);
 		margin-bottom: 30px;
 	}
 
-	#search-container {
+	&__sagests-container {
 		margin-bottom: 24px;
 	}
 
-	#map-container {
-		border: 1px solid var(--subtitle);
+	&__map-container {
+		position: relative;
 		border-radius: 14px;
 		height: 400px;
+		overflow: hidden;
+		background: var(--map-background-color);
+		background-image: radial-gradient(var(--map-background-dot-color) 1px, transparent 0);
+		background-size: 18px 18px;
 	}
+
+	&__map-pin {
+		position: absolute;
+		pointer-events: none;
+		transition: 0.2s;
+		left: 50%;
+		top: 50%;
+		transform: translateX(-50%) translateY(-100%);
+		z-index: 10;
+
+		&.move {
+			padding-bottom: 20px;
+			box-shadow: var(--address-pin-box-shadow);
+		}
+	}
+}
+
+.address-modal {
+	width: 900px;
 }

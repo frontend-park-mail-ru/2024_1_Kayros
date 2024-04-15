@@ -1,11 +1,14 @@
 .auth-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	width: 100vw;
-	overflow: hidden;
-	flex-direction: row;
+  width: 350px;
+  margin-top: 30px;
+  padding: 50px;
+  background: var(--auth-background);
+  border-radius: 40px;
+  box-shadow: var(--profile-dropdown-box-shadow);
+  text-align: center;
+  top: -20px;
+  transform: translateY(-100px);
+  z-index: 3;
 
 	&__logo-and-background {
 		height: 560px;

@@ -32,6 +32,7 @@ class Button {
 	 * @param {string | undefined} params.icon - иконка
 	 * @param {'xs' | 's'} params.size - размер кнопки
 	 * @param {string} params.additionalClass - дополнительные классы для стилизации
+	 * @param {'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend'} params.position - позиция в предке
 	 */
 	constructor(
 		parent,
@@ -46,6 +47,7 @@ class Button {
 			withLoader = false,
 			size = 'xs',
 			additionalClass = '',
+            position = 'beforeend',
 		},
 	) {
 		this.#parent = parent;
@@ -59,6 +61,7 @@ class Button {
 		this.#id = id;
 		this.#size = size;
 		this.#additionalClass = additionalClass;
+		this.position = position;
 	}
 
 	/**
@@ -82,14 +85,14 @@ class Button {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
+		this.#parent.insertAdjacentHTML(this.position, this.getHTML());
 
 		const currentButton = this.#parent.querySelector(`#${this.#id}`);
 
 		currentButton.onclick = this.#onClick;
 
 		if (this.#withLoader) {
-			const loaderBlock = currentButton.querySelector('#btn-loader');
+			const loaderBlock = currentButton.querySelector('.btn__loader');
 			const loader = new Loader(loaderBlock, { size: 's', style: 'secondary' });
 			loader.render();
 		}

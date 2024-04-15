@@ -42,10 +42,12 @@ class Router {
 		return noRepeatSlashes !== '/' ? noRepeatSlashes.replace(/\/+$/, '') : '/';
 	}
 	/**
-	 * Выполняет навигацию по указанному пути.
-	 * @param {string} path - Путь для навигации.
+	 * Выполняет навигацию по указанному пути
+	 * @param {string} path - Путь для навигации
+	 * @param {object} params - Параметры навигации
+	 * @param {string} params.pageTitle - Заголовок страницы
 	 */
-	navigate(path) {
+	navigate(path, { pageTitle = '' } = {}) {
 		const currentPath = window.history.state?.path;
 		path = this.normalizePath(path);
 
@@ -69,7 +71,7 @@ class Router {
 			return;
 		}
 
-		document.title = `Resto - ${this.routes[path]?.title || 'Страница не найдена'}`;
+		document.title = `Resto - ${pageTitle || this.routes[path]?.title || 'Страница не найдена'}`;
 
 		if (currentPath === path) {
 			this.handleLocationChange();
@@ -121,9 +123,9 @@ class Router {
 	 * Очищает layout страницы
 	 */
 	handleChangeInnerLayout() {
-		const layout = document.getElementById('layout');
-		const header = document.getElementById('header');
-		const oldContent = document.getElementById('content');
+		const layout = document.querySelector('.layout');
+		const header = document.querySelector('.header');
+		const oldContent = document.querySelector('.content');
 
 		if (window.location.pathname !== urls.address) {
 			oldContent?.remove();
@@ -131,7 +133,7 @@ class Router {
 
 		let content;
 
-		if ([urls.signIn, urls.signUp].includes(window.location.pathname)) {
+		if ([urls.signIn, urls.signUp, urls.map].includes(window.location.pathname)) {
 			header?.remove();
 
 			content = new Content(layout, { withoutPadding: true });
@@ -144,7 +146,7 @@ class Router {
 			content = new Content(layout);
 		}
 
-		const currentContent = document.getElementById('content');
+		const currentContent = document.querySelector('.content');
 
 		if (!currentContent) {
 			content.render();
@@ -155,27 +157,60 @@ class Router {
 	 * Обрабатывает изменение местоположения, отображая соответствующий маршрут.
 	 */
 	handleLocationChange() {
-		const path = window.location.pathname;
-		let currentRoute = this.routes[path];
+		const params = {};
 
-		if (path === urls.base) {
+		const currentPath = window.location.pathname;
+		const urlSegments = currentPath.split('/').slice(1);
+
+		let currentRoute = Object.entries(this.routes).find((route) => {
+			const routeSegments = route[0].split('/').slice(1);
+
+			if (routeSegments.length !== urlSegments.length) {
+				return false;
+			}
+
+			const found = routeSegments.every((pathSegment, i) => {
+				return pathSegment === urlSegments[i] || pathSegment[0] === ':';
+			});
+
+			if (found) {
+				routeSegments.forEach((segment, i) => {
+					if (segment[0] === ':') {
+						const paramName = segment.slice(1);
+						params[paramName] = urlSegments[i];
+					}
+				});
+			}
+
+			return found;
+		});
+
+		if (currentRoute) {
+			currentRoute = currentRoute[1];
+		}
+
+		if (currentPath === urls.base) {
 			currentRoute = this.routes[urls.restaurants];
 		}
 
 		this.handleChangeInnerLayout();
 
-		const content = document.getElementById('content');
+		const content = document.querySelector('.content');
 
 		if (currentRoute) {
-			if (path === urls.address && content.children.length === 0) {
+			if (currentPath === urls.address && content.children.length === 0) {
 				const previousRoute = this.routes[this.previousState?.path || urls.restaurants];
 				const previousPage = new previousRoute.component(content);
 				previousPage.render();
 			}
 
-			const page = new currentRoute.component(content);
+			const page = new currentRoute.component(content, params);
 			page.render();
+			return;
 		}
+
+		const page = new this.routes[undefined].component(content, params);
+		page.render();
 	}
 }
 

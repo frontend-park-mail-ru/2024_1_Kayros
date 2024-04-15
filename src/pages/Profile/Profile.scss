@@ -1,0 +1,53 @@
+.profile {
+	display: flex;
+	justify-content: center;
+	margin-top: 46px;
+	gap: 30px;
+
+	.error-message {
+		color: var(--red);
+		font-size: 14px;
+		margin: 0;
+		margin-top: -7px;
+		text-align: left;
+		height: auto;
+	}
+
+	&__image {
+		height: 200px;
+		width: 200px;
+	}
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		width: 340px;
+		background: var(--profile-bg-color);
+
+		&-title {
+			font-size: 24px;
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+	}
+
+	&__password-change {
+		margin-top: 50px;
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		width: 340px;
+		background: var(--profile-bg-color);
+
+		&-title {
+			font-size: 24px;
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+	}
+
+	.input__label {
+		background: inherit;
+	}
+}

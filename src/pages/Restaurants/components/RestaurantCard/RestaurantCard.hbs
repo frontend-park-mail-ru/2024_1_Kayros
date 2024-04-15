@@ -1,18 +1,14 @@
-<div id="restaurant-card">
+<div class="restaurant-card" id="restaurant-{{this.id}}">
 
-	<div id="image-container">
-	  <img alt="card-img" src={{this.image}} />
+	<div class="restaurant-card__image-container">
+		<img alt="card-img" src={{this.image}} />
 	</div>
 
-	<div id="card-content">
-		<div id="card-title">
-			{{this.title}}
-		</div>
+	<div class="restaurant-card__content">
+		<div class="restaurant-card__title"> {{this.title}}</div>
 
 		{{#if this.subtitle}}
-			<span id="card-subtitle">
-				{{this.subtitle}}
-			</span>
+			<span class="restaurant-card__subtitle">{{this.subtitle}}</span>
 		{{/if}}
 	</div>
 
