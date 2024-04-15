@@ -169,9 +169,9 @@ class FoodCard {
 		const sum = cart.querySelector('span');
 
 		if (!res) {
-			cart.className = 'btn btn--secondary';
+			cart.className = 'btn btn--secondary size-xs';
 		} else {
-			cart.className = 'btn btn--primary';
+			cart.className = 'btn btn--primary size-xs';
 			sum.innerHTML = `${res || 0} ₽`;
 		}
 
