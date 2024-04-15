@@ -227,15 +227,23 @@ class Profile {
 		};
 
 		const oldPassword = this.#parent.querySelector('#profile-old-password-input');
+		const oldPasswordContainer = this.#parent.querySelector('#profile-old-password-input-container');
+		const oldPasswordLabelHolder = oldPasswordContainer.querySelector('.input__label-holder');
 		const oldPasswordErrorContainer = profilePasswordChange.querySelector('#oldPassword-error');
 
-		oldPassword.onblur = () => {
+		oldPassword.onblur = (event) => {
+			if (!event.target.value) {
+				oldPasswordLabelHolder.style.width = 0;
+			}
+
 			const isPasswordValid = validatePassword(oldPassword, oldPasswordErrorContainer, true);
 
 			submitPassword.disabled = !isPasswordValid;
 		};
 
 		const newPassword = this.#parent.querySelector('#profile-new-password-input');
+		const newPasswordContainer = this.#parent.querySelector('#profile-new-password-input-container');
+		const newPasswordLabelHolder = newPasswordContainer.querySelector('.input__label-holder');
 		const newPasswordErrorContainer = profilePasswordChange.querySelector('#newPassword-error');
 
 		const confirmPassword = this.#parent.querySelector('#profile-confirm-password-input');
@@ -243,7 +251,11 @@ class Profile {
 		const confirmPasswordLabelHolder = confirmPasswordContainer.querySelector('.input__label-holder');
 		const confirmPasswordErrorContainer = profilePasswordChange.querySelector('#confirmPassword-error');
 
-		newPassword.onblur = () => {
+		newPassword.onblur = (event) => {
+			if (!event.target.value) {
+				newPasswordLabelHolder.style.width = 0;
+			}
+
 			const isPasswordFormatValid = validatePassword(newPassword, newPasswordErrorContainer, true);
 			const isPasswordsMatch = validateConfirmPassword(
 				newPassword,
