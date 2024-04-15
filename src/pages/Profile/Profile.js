@@ -59,6 +59,9 @@ class Profile {
 
 			const name = document.querySelector('.header__profile-name');
 			name.innerHTML = this.name;
+
+			const submitButton = this.#parent.querySelector('#profile-submit-button');
+			submitButton.disabled = true;
 		});
 	}
 
