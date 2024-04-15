@@ -61,6 +61,8 @@ class Restaurant {
 			return;
 		}
 
+		document.title = `Resto - ${data.name}`;
+
 		this.#parent.innerHTML = this.getHTML(data);
 
 		const sidebarContainer = document.querySelector('.restaurant__sidebar');
