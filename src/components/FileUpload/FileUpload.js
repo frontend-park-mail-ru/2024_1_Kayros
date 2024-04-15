@@ -1,5 +1,9 @@
+import Notification from '../Notification/Notification.js';
 import template from './FileUpload.hbs';
 import './FileUpload.scss';
+
+// это 10Мб
+const MAX_FILE_SIZE = 1000000;
 
 /**
  * Загрузка файла
@@ -33,14 +37,31 @@ class FileUpload {
 
 		let reader = new FileReader();
 
+		const [file] = event.target.files || [];
+
+		if (file) {
+			const size = file.size;
+
+			if (size > MAX_FILE_SIZE) {
+				Notification.open({
+					duration: 3,
+					title: 'Превышен размер файла',
+					description: 'Размер файла должен быть меньше 10Мб',
+					type: 'error',
+				});
+
+				return;
+			}
+		}
+
 		reader.onload = (event) => {
 			this.imageSrc = event.target?.result;
 			image.src = event.target?.result;
 		};
 
-		if (event.target.files?.[0]) {
-			this.handleFile(event.target.files[0]);
-			reader.readAsDataURL(event.target.files[0]);
+		if (file) {
+			this.handleFile(file);
+			reader.readAsDataURL(file);
 		}
 	}
 
