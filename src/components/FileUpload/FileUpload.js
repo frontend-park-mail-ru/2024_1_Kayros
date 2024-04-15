@@ -42,7 +42,7 @@ class FileUpload {
 		if (file) {
 			const size = file.size;
 
-			if (size > MAX_FILE_SIZE) {
+			if (size >= MAX_FILE_SIZE) {
 				Notification.open({
 					duration: 3,
 					title: 'Превышен размер файла',
