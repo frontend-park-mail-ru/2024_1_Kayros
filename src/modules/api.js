@@ -68,7 +68,6 @@ class Api {
 	 * @param {object} body - объект, посылаемый в запросе
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
-
 	async changeUserPassword(body, callback) {
 		const { data, error } = await ajax.put(`${this.#url}/user/new_password`, body, { formData: true });
 

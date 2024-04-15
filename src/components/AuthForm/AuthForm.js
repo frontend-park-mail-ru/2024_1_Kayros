@@ -71,8 +71,8 @@ class AuthForm {
 	handleSubmit() {
 		const signinButton = this.#parent.querySelector(`#${this.#type}-button`);
 
-		const loaderBlock = signinButton.querySelector('.btn__loader');
-		loaderBlock.classList.add('btn__loader--loading');
+		const loaderBlock = signinButton.querySelector('#btn-loader');
+		loaderBlock.classList.add('loading');
 
 		const userData = {
 			email: document.getElementById('email').value,
