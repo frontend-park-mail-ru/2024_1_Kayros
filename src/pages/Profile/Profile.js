@@ -33,6 +33,9 @@ class Profile {
 		this.oldPassword = '';
 		this.newPassword = '';
 		this.confirmPassword = '';
+		this.isEmailValid = false;
+		this.isPhoneValid = false;
+		this.isNameValid = false;
 	}
 
 	/**
@@ -95,7 +98,10 @@ class Profile {
 				this.file = file;
 
 				const submitButton = this.#parent.querySelector('#profile-submit-button');
-				submitButton.disabled = false;
+
+				if (this.isEmailValid && this.isNameValid && this.isPhoneValid) {
+					submitButton.disabled = false;
+				}
 			},
 			file: data?.img_url,
 		});
@@ -113,9 +119,6 @@ class Profile {
 				style: 'dynamic',
 				onChange: (event) => {
 					this[field.name] = event.target.value;
-
-					const submitButton = this.#parent.querySelector('#profile-submit-button');
-					submitButton.disabled = false;
 				},
 			}).render();
 
@@ -134,9 +137,6 @@ class Profile {
 				type: 'password',
 				onChange: (event) => {
 					this[field.name] = event.target.value;
-
-					const submitButton = this.#parent.querySelector('#profile-submit-password-button');
-					submitButton.disabled = false;
 				},
 			}).render();
 
@@ -184,7 +184,9 @@ class Profile {
 
 			const isNameValid = validateName(name, nameErrorContainer, true);
 
-			submit.disabled = !isNameValid;
+			this.isNameValid = isNameValid;
+
+			submit.disabled = !this.isNameValid && !this.isEmailValid && !this.isPhoneValid;
 		};
 
 		const email = this.#parent.querySelector('#profile-mail-input');
@@ -199,7 +201,9 @@ class Profile {
 
 			const isEmailValid = validateEmail(email, emailErrorContainer, true);
 
-			submit.disabled = !isEmailValid;
+			this.isEmailValid = isEmailValid;
+
+			submit.disabled = !this.isNameValid && !this.isEmailValid && !this.isPhoneValid;
 		};
 
 		const phone = this.#parent.querySelector('#profile-phone-input');
@@ -214,7 +218,9 @@ class Profile {
 
 			const isPhoneValid = validatePhone(phone, phoneErrorContainer);
 
-			submit.disabled = !isPhoneValid;
+			this.isPhoneValid = isPhoneValid;
+
+			submit.disabled = !this.isNameValid && !this.isEmailValid && !this.isPhoneValid;
 		};
 
 		const oldPassword = this.#parent.querySelector('#profile-old-password-input');
