@@ -95,7 +95,7 @@ class AuthForm {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const logoContainer = document.querySelector('.logo-container-on-auth');
+		const logoContainer = document.querySelector('.auth-container__logo');
 
 		if (logoContainer) {
 			new Logo(logoContainer, {

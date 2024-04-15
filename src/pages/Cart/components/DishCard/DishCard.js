@@ -58,7 +58,7 @@ class DishCard {
 
 				formSum.innerHTML = `${sum || 0} ₽`;
 
-				if (!sum) cart.className = 'btn btn--secondary';
+				if (!sum) cart.className = 'btn btn--secondary size-xs';
 
 				const cards = document.getElementsByClassName('dish-card');
 
