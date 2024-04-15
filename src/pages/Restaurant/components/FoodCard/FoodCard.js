@@ -182,8 +182,6 @@ class FoodCard {
 	 * Рендеринг компонента
 	 */
 	render() {
-		const user = localStorageHelper.getItem('user-info');
-
 		this.parent.insertAdjacentHTML('beforeend', template(this.data));
 
 		const food = document.getElementById(`food-${this.data.id}`);
@@ -222,6 +220,8 @@ class FoodCard {
 				return this.addFood(id);
 			},
 			removeCount: (id) => {
+				const user = localStorageHelper.getItem('user-info');
+
 				if (!user) {
 					this.openAuthModal();
 					return;
@@ -235,6 +235,8 @@ class FoodCard {
 				return this.removeCount(id);
 			},
 			updateCount: (data) => {
+				const user = localStorageHelper.getItem('user-info');
+
 				if (!user) {
 					this.openAuthModal();
 					return;
