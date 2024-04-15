@@ -69,7 +69,7 @@ class Button {
 	 * @returns {HTMLElement} html
 	 */
 	getHTML() {
-		const combinedClasses = `btn-${this.#style} size-${this.#size} ${this.#additionalClass}`.trim();
+		const combinedClasses = `btn--${this.#style} size-${this.#size} ${this.#additionalClass}`.trim();
 		return template({
 			id: this.#id,
 			content: this.#content,
