@@ -112,7 +112,7 @@ export const FIELDS_PROFILE_FORM = [
 	},
 	{
 		id: 'profile-phone-input',
-		placeholder: 'Номер телефона (+7 (000) 000 00 00)',
+		placeholder: 'Номер телефона',
 		name: 'phone',
 	},
 ];

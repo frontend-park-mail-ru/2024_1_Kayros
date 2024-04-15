@@ -3,6 +3,7 @@ import FileUpload from '../../components/FileUpload/FileUpload';
 import Input from '../../components/Input';
 import { EMAIL_REGEX, FIELDS_PROFILE_FORM, NAME_REGEX, PHONE_REGEX } from '../../constants';
 import api from '../../modules/api';
+import { getPhoneMask } from '../../utils';
 import template from './Profile.hbs';
 import './Profile.scss';
 
@@ -91,7 +92,7 @@ class Profile {
 		});
 
 		const submitButton = new Button(profileInfo, {
-			id: 'profile-submit',
+			id: 'profile-submit-button',
 			content: 'Сохранить',
 			withLoader: true,
 			disabled: true,
@@ -103,7 +104,7 @@ class Profile {
 		submitButton.render();
 
 		const name = this.#parent.querySelector('#profile-name-input');
-		const submit = this.#parent.querySelector('#profile-submit');
+		const submit = this.#parent.querySelector('#profile-submit-button');
 
 		const nameContainer = this.#parent.querySelector('#profile-name-input-container');
 		const nameLabelHolder = nameContainer.querySelector('.input__label-holder');
@@ -162,6 +163,10 @@ class Profile {
 				phone.style.border = '';
 				submit.disabled = false;
 			}
+		};
+
+		phone.oninput = () => {
+			this.phone = getPhoneMask(phone);
 		};
 	}
 
