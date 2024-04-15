@@ -77,6 +77,18 @@ class Profile {
 			oldPassword.value = '';
 			newPassword.value = '';
 			confirmPassword.value = '';
+
+			const newPasswordContainer = this.#parent.querySelector('#profile-new-password-input-container');
+			const newPasswordLabelHolder = newPasswordContainer.querySelector('.input__label-holder');
+			newPasswordLabelHolder.style.width = 0;
+
+			const oldPasswordContainer = this.#parent.querySelector('#profile-old-password-input-container');
+			const oldPasswordLabelHolder = oldPasswordContainer.querySelector('.input__label-holder');
+			oldPasswordLabelHolder.style.width = 0;
+
+			const confirmPasswordContainer = this.#parent.querySelector('#profile-confirm-password-input-container');
+			const confirmPasswordLabelHolder = confirmPasswordContainer.querySelector('.input__label-holder');
+			confirmPasswordLabelHolder.style.width = 0;
 		});
 	}
 
