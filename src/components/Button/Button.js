@@ -13,8 +13,10 @@ class Button {
 	#disabled;
 	#icon;
 	#withLoader;
+	#size;
 	#style;
 	#id;
+	#additionalClass;
 
 	/**
 	 * Конструктор класса
@@ -28,6 +30,8 @@ class Button {
 	 * @param {boolean} params.withLoader - лоадер
 	 * @param {Function} params.onClick - событие при клике
 	 * @param {string | undefined} params.icon - иконка
+	 * @param {'xs' | 's'} params.size - размер кнопки
+	 * @param {string} params.additionalClass - дополнительные классы для стилизации
 	 * @param {'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend'} params.position - позиция в предке
 	 */
 	constructor(
@@ -37,11 +41,13 @@ class Button {
 			content = '',
 			type = 'button',
 			disabled = false,
-			onClick = () => {},
+			onClick,
 			icon,
 			style = 'primary',
 			withLoader = false,
-			position = 'beforeend',
+			size = 'xs',
+			additionalClass = '',
+            position = 'beforeend',
 		},
 	) {
 		this.#parent = parent;
@@ -53,6 +59,8 @@ class Button {
 		this.#withLoader = withLoader;
 		this.#style = style;
 		this.#id = id;
+		this.#size = size;
+		this.#additionalClass = additionalClass;
 		this.position = position;
 	}
 
@@ -61,10 +69,11 @@ class Button {
 	 * @returns {HTMLElement} html
 	 */
 	getHTML() {
+		const combinedClasses = `btn-${this.#style} size-${this.#size} ${this.#additionalClass}`.trim();
 		return template({
 			id: this.#id,
 			content: this.#content,
-			class: 'btn--' + this.#style,
+			class: combinedClasses,
 			icon: this.#icon,
 			loader: this.#withLoader,
 			type: this.#type,
