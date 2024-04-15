@@ -69,9 +69,9 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async changeUserPassword(body, callback) {
-		const { data, error } = await ajax.put(`${this.#url}/user/new_password`, body, { formData: true });
+		const { data, error } = await ajax.put(`${this.#url}/user/new_password`, body, { formData: false });
 
-		if (data && !error && !data.detail) {
+		if (data && !error) {
 			Notification.open({
 				duration: 3,
 				title: SUCCESS_MESSAGES.passwordChange.title,
