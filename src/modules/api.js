@@ -64,6 +64,35 @@ class Api {
 	}
 
 	/**
+	 * Метод для изменения пароля пользователя
+	 * @param {object} body - объект, посылаемый в запросе
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+
+	async changeUserPassword(body, callback) {
+		const { data, error } = await ajax.put(`${this.#url}/user/new_password`, body, { formData: true });
+
+		if (data && !error && !data.detail) {
+			Notification.open({
+				duration: 3,
+				title: SUCCESS_MESSAGES.passwordChange.title,
+				description: SUCCESS_MESSAGES.passwordChange.description,
+				type: 'success',
+			});
+
+			callback(data);
+			return;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.PASSWORD_CHANGE,
+			description: error || data.detail,
+			type: 'error',
+		});
+	}
+
+	/**
 	 * Метод для получения информации о корзине
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */

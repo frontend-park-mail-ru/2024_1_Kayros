@@ -5,6 +5,7 @@ export const ERROR_MESSAGES = {
 	SIGNOUT: 'Не удалось выйти из аккаунта',
 	ADDRESS: 'Не удалось добавить адрес',
 	PROFILE_SAVE: 'Не удалось сохранить информацию',
+	PASSWORD_CHANGE: 'Не удалось изменить пароль',
 	CART_UPDATE: 'Корзина в данный момент недоступна',
 	CHECKOUT: 'Не удалось оформить заказ',
 };
@@ -33,6 +34,10 @@ export const SUCCESS_MESSAGES = {
 	profileSave: {
 		title: 'Успешно',
 		description: 'Новая информация сохранена',
+	},
+	passwordChange: {
+		title: 'Успешно',
+		description: 'Пароль изменен',
 	},
 	checkout: {
 		title: 'Оплата прошла успешно',
@@ -117,7 +122,26 @@ export const FIELDS_PROFILE_FORM = [
 	},
 ];
 
+export const FIELDS_PROFILE_PASSWORD_CHANGE = [
+	{
+		id: 'profile-old-password-input',
+		placeholder: 'Старый пароль',
+		name: 'oldPassword',
+	},
+	{
+		id: 'profile-new-password-input',
+		placeholder: 'Новый пароль',
+		name: 'newPassword',
+	},
+	{
+		id: 'profile-confirm-password-input',
+		placeholder: 'Повторите пароль',
+		name: 'confirmPassword',
+	},
+];
+
 export const VALIDATION_ERRORS = {
+	phoneFormat: 'Неверный формат телефона',
 	emailFormat: 'Неверный формат электронной почты',
 	incorrectSymbol: 'Содержит некорректный символ',
 	passwordRequirements: 'Пароль должен содержать минимум 8 символов, включая число и букву',
