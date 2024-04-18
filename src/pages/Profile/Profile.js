@@ -37,7 +37,6 @@ class Profile {
 		this.isEmailValid = false;
 		this.isPhoneValid = false;
 		this.isNameValid = false;
-		// this.isNewPasswordMatchValid = false;
 	}
 
 	/**
@@ -245,39 +244,49 @@ class Profile {
 		const newPassword = this.#parent.querySelector('#profile-new-password-input');
 		const confirmPassword = this.#parent.querySelector('#profile-confirm-password-input');
 		const submitPasswordButton = this.#parent.querySelector('#profile-submit-password-button');
-	
+
 		const oldPasswordErrorContainer = this.#parent.querySelector('#oldPassword-error');
 		const newPasswordErrorContainer = this.#parent.querySelector('#newPassword-error');
 		const confirmPasswordErrorContainer = this.#parent.querySelector('#confirmPassword-error');
-	
+
 		let hasPasswordInputStarted = false;
 		let hasConfirmPasswordInputStarted = false;
 
 		oldPassword.addEventListener('input', () => {
 			this.isPasswordValid = validatePassword(oldPassword, oldPasswordErrorContainer, true);
 
-			if (hasPasswordInputStarted){
+			if (hasPasswordInputStarted) {
 				this.isNewPasswordValid = validateMatchNewPassword(newPassword, oldPassword, newPasswordErrorContainer);
 				submitPasswordButton.disabled = !(this.isPasswordValid && this.isNewPasswordValid && this.isPasswordsMatch);
 			}
 		});
-	
+
 		newPassword.addEventListener('input', () => {
 			hasPasswordInputStarted = true;
 			this.isNewPasswordValid = validateMatchNewPassword(newPassword, oldPassword, newPasswordErrorContainer);
 
-			if (hasConfirmPasswordInputStarted){
-				this.isPasswordsMatch = validateConfirmPassword(newPassword, confirmPassword, confirmPasswordErrorContainer, hasConfirmPasswordInputStarted);
+			if (hasConfirmPasswordInputStarted) {
+				this.isPasswordsMatch = validateConfirmPassword(
+					newPassword,
+					confirmPassword,
+					confirmPasswordErrorContainer,
+					hasConfirmPasswordInputStarted,
+				);
 				submitPasswordButton.disabled = !(this.isPasswordValid && this.isNewPasswordValid && this.isPasswordsMatch);
 			}
 		});
-		
+
 		confirmPassword.addEventListener('input', () => {
 			hasConfirmPasswordInputStarted = true;
-			this.isPasswordsMatch = validateConfirmPassword(newPassword, confirmPassword, confirmPasswordErrorContainer, hasConfirmPasswordInputStarted);
+			this.isPasswordsMatch = validateConfirmPassword(
+				newPassword,
+				confirmPassword,
+				confirmPasswordErrorContainer,
+				hasConfirmPasswordInputStarted,
+			);
 			submitPasswordButton.disabled = !(this.isPasswordValid && this.isNewPasswordValid && this.isPasswordsMatch);
 		});
-			
+
 		phone.oninput = () => {
 			this.phone = getPhoneMask(phone);
 		};

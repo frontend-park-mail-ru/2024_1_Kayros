@@ -145,7 +145,7 @@ export const VALIDATION_ERRORS = {
 	emailFormat: 'Неверный формат электронной почты',
 	incorrectSymbol: 'Содержит некорректный символ',
 	passwordRequirements: 'Пароль должен содержать минимум 8 символов, включая число и букву',
-	newPasswordmathedWithOld: 'Новый пароль не должен совпадать со старым паролем',
+	newPasswordMathedWithOld: 'Новый пароль не должен совпадать со старым паролем',
 	fieldRequired: 'Поле не может быть пустым',
 	passwordUnmatched: 'Пароли не совпадают',
 	nameFormat: 'Имя должно начинаться с буквы и содержать от 2 до 19 символов',

@@ -102,21 +102,20 @@ export const validateConfirmPassword = (
 	return confirmPasswordElement.value && isPasswordsMatch;
 };
 
-export const validateMatchNewPassword = (newPassword, oldPassword, errorContainer)=>{
+export const validateMatchNewPassword = (newPassword, oldPassword, errorContainer) => {
 	if (newPassword.value === oldPassword.value) {
-		errorContainer.textContent = VALIDATION_ERRORS.newPasswordmathedWithOld;
+		errorContainer.textContent = VALIDATION_ERRORS.newPasswordMathedWithOld;
 		return false;
 	}
 
 	errorContainer.textContent = '';
-	return validatePassword(newPassword, errorContainer, true); 
+	return validatePassword(newPassword, errorContainer, true);
 };
 
-export const validateApart = (apart)=>{
+export const validateApart = (apart) => {
 	if (apart === APART_REGEX) {
 		return true;
 	}
 
-	return false; 
+	return false;
 };
-

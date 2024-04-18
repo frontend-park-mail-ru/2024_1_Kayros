@@ -27,7 +27,8 @@
 
 	&__cart {
 		margin-left: auto;
-		width: 130px;
+
+		// width: 130px;
 
 		span {
 			font-size: 18px;
@@ -37,8 +38,7 @@
 
 	&__profile-block {
 		position: relative;
-		min-width: 50px;
-		margin-right: 10px;
+		min-width: 30px;
 	}
 
 	&__logo-container {
