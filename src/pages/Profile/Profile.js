@@ -8,6 +8,7 @@ import {
 	validateName,
 	validatePassword,
 	validatePhone,
+	validateMatchNewPassword,
 } from '../../helpers/validation.js';
 import api from '../../modules/api';
 import { getPhoneMask } from '../../utils';
@@ -36,6 +37,7 @@ class Profile {
 		this.isEmailValid = false;
 		this.isPhoneValid = false;
 		this.isNameValid = false;
+		// this.isNewPasswordMatchValid = false;
 	}
 
 	/**
@@ -185,8 +187,6 @@ class Profile {
 		passwordSubmitButton.render();
 
 		const submit = this.#parent.querySelector('#profile-submit-button');
-		const submitPassword = this.#parent.querySelector('#profile-submit-password-button');
-
 		const name = this.#parent.querySelector('#profile-name-input');
 		const nameContainer = this.#parent.querySelector('#profile-name-input-container');
 		const nameLabelHolder = nameContainer.querySelector('.input__label-holder');
@@ -242,63 +242,42 @@ class Profile {
 		};
 
 		const oldPassword = this.#parent.querySelector('#profile-old-password-input');
-		const oldPasswordContainer = this.#parent.querySelector('#profile-old-password-input-container');
-		const oldPasswordLabelHolder = oldPasswordContainer.querySelector('.input__label-holder');
-		const oldPasswordErrorContainer = profilePasswordChange.querySelector('#oldPassword-error');
-
-		oldPassword.onblur = (event) => {
-			if (!event.target.value) {
-				oldPasswordLabelHolder.style.width = 0;
-			}
-
-			const isPasswordValid = validatePassword(oldPassword, oldPasswordErrorContainer, true);
-
-			submitPassword.disabled = !isPasswordValid;
-		};
-
 		const newPassword = this.#parent.querySelector('#profile-new-password-input');
-		const newPasswordContainer = this.#parent.querySelector('#profile-new-password-input-container');
-		const newPasswordLabelHolder = newPasswordContainer.querySelector('.input__label-holder');
-		const newPasswordErrorContainer = profilePasswordChange.querySelector('#newPassword-error');
-
 		const confirmPassword = this.#parent.querySelector('#profile-confirm-password-input');
-		const confirmPasswordContainer = this.#parent.querySelector('#profile-confirm-password-input-container');
-		const confirmPasswordLabelHolder = confirmPasswordContainer.querySelector('.input__label-holder');
-		const confirmPasswordErrorContainer = profilePasswordChange.querySelector('#confirmPassword-error');
+		const submitPasswordButton = this.#parent.querySelector('#profile-submit-password-button');
+	
+		const oldPasswordErrorContainer = this.#parent.querySelector('#oldPassword-error');
+		const newPasswordErrorContainer = this.#parent.querySelector('#newPassword-error');
+		const confirmPasswordErrorContainer = this.#parent.querySelector('#confirmPassword-error');
+	
+		let hasPasswordInputStarted = false;
+		let hasConfirmPasswordInputStarted = false;
 
-		newPassword.onblur = (event) => {
-			if (!event.target.value) {
-				newPasswordLabelHolder.style.width = 0;
+		oldPassword.addEventListener('input', () => {
+			this.isPasswordValid = validatePassword(oldPassword, oldPasswordErrorContainer, true);
+
+			if (hasPasswordInputStarted){
+				this.isNewPasswordValid = validateMatchNewPassword(newPassword, oldPassword, newPasswordErrorContainer);
+				submitPasswordButton.disabled = !(this.isPasswordValid && this.isNewPasswordValid && this.isPasswordsMatch);
 			}
+		});
+	
+		newPassword.addEventListener('input', () => {
+			hasPasswordInputStarted = true;
+			this.isNewPasswordValid = validateMatchNewPassword(newPassword, oldPassword, newPasswordErrorContainer);
 
-			const isPasswordFormatValid = validatePassword(newPassword, newPasswordErrorContainer, true);
-			const isPasswordsMatch = validateConfirmPassword(
-				newPassword,
-				confirmPassword,
-				confirmPasswordErrorContainer,
-				true,
-			);
-
-			const isNewPasswordValid = isPasswordFormatValid && isPasswordsMatch;
-
-			submitPassword.disabled = !isNewPasswordValid;
-		};
-
-		confirmPassword.onblur = (event) => {
-			if (!event.target.value) {
-				confirmPasswordLabelHolder.style.width = 0;
+			if (hasConfirmPasswordInputStarted){
+				this.isPasswordsMatch = validateConfirmPassword(newPassword, confirmPassword, confirmPasswordErrorContainer, hasConfirmPasswordInputStarted);
+				submitPasswordButton.disabled = !(this.isPasswordValid && this.isNewPasswordValid && this.isPasswordsMatch);
 			}
-
-			const isPasswordsMatch = validateConfirmPassword(
-				newPassword,
-				confirmPassword,
-				confirmPasswordErrorContainer,
-				true,
-			);
-
-			submitPassword.disabled = !isPasswordsMatch;
-		};
-
+		});
+		
+		confirmPassword.addEventListener('input', () => {
+			hasConfirmPasswordInputStarted = true;
+			this.isPasswordsMatch = validateConfirmPassword(newPassword, confirmPassword, confirmPasswordErrorContainer, hasConfirmPasswordInputStarted);
+			submitPasswordButton.disabled = !(this.isPasswordValid && this.isNewPasswordValid && this.isPasswordsMatch);
+		});
+			
 		phone.oninput = () => {
 			this.phone = getPhoneMask(phone);
 		};
