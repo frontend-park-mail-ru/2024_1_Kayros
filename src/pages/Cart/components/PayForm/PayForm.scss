@@ -42,6 +42,10 @@
 		}
 	}
 
+	&__input-container {
+		background: inherit;
+	}
+
 	&__methods {
 		display: flex;
 		align-items: center;
@@ -70,4 +74,11 @@
 		margin-top: auto;
 		width: 100%;
 	}
+}
+
+.error-message {
+	color: var(--red);
+	font-size: 14px;
+	margin: 5px;
+	z-index: 1000;
 }
