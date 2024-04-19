@@ -94,9 +94,9 @@ class PayForm {
 
 		FIELDS_ADRESS_FORM.forEach((field) => {
 			const inputContainer = document.createElement('div');
-			inputContainer.classList.add('input-container');
+			inputContainer.classList.add('pay-form__input-container');
 			addressBlock.appendChild(inputContainer);
-		
+
 			new Input(inputContainer, {
 				id: field.id,
 				placeholder: field.placeholder,
@@ -107,7 +107,7 @@ class PayForm {
 				},
 				disabled: field.name === 'main',
 			}).render();
-		
+
 			if (field.id !== 'main-address') {
 				const errorMessage = document.createElement('div');
 				errorMessage.classList.add('error-message');
@@ -115,7 +115,7 @@ class PayForm {
 				inputContainer.appendChild(errorMessage);
 			}
 		});
-		
+
 		const mainInput = this.#parent.querySelector('#main-address-container');
 
 		mainInput.onclick = () => {

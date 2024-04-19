@@ -42,6 +42,10 @@
 		}
 	}
 
+	&__input-container {
+		background: inherit;
+	}
+
 	&__methods {
 		display: flex;
 		align-items: center;
@@ -77,8 +81,4 @@
 	font-size: 14px;
 	margin: 5px;
 	z-index: 1000;
-}
-
-.input-container {
-	background: inherit;
 }
