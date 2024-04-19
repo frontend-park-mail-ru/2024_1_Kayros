@@ -106,7 +106,7 @@ export const validateConfirmPassword = (
 
 export const validateMatchNewPassword = (newPassword, oldPassword, errorContainer)=>{
 	if (newPassword.value === oldPassword.value) {
-		errorContainer.textContent = VALIDATION_ERRORS.newPasswordmathedWithOld;
+		errorContainer.textContent = VALIDATION_ERRORS.newPasswordMatchedWithOld;
 		return false;
 	}
 
@@ -114,14 +114,20 @@ export const validateMatchNewPassword = (newPassword, oldPassword, errorContaine
 	return validatePassword(newPassword, errorContainer, true); 
 };
 
-export const validateApartNumber = (apartValue) => {
-	return APART_REGEX.test(apartValue);
+export const validateApartNumber = (apartValue, errorContainer) => {
+	const isApartlValid = APART_REGEX.test(apartValue);
+	errorContainer.textContent = isApartlValid ? '' : 'Введите корректное значение';
+	return isApartlValid;
 };
 
-export const validateFloorNumber = (floorValue) => {
-	return FLOOR_REGEX.test(floorValue);
+export const validateFloorNumber = (floorValue, errorContainer) => {
+	const isFloorValid = FLOOR_REGEX.test(floorValue);
+	errorContainer.textContent = isFloorValid ? '' : 'Введите корректное значение';
+	return isFloorValid;
 };
 
-export const validateEntranceNumber = (entranceValue) => {
-	return ENTRANCE_REGEX.test(entranceValue);
+export const validateEntranceNumber = (entranceValue, errorContainer) => { 
+	const isEntranceValid = ENTRANCE_REGEX.test(entranceValue);
+	errorContainer.textContent = isEntranceValid ? '' : 'Введите корректное значение';
+	return isEntranceValid;
 };

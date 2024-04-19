@@ -83,8 +83,15 @@ class PayForm {
 				},
 				disabled: field.name === 'main',
 			}).render();
-		});
 
+			if (field.id !== 'main-address') {
+				const errorMessage = document.createElement('div');
+				errorMessage.classList.add('error-message');
+				errorMessage.id = `${field.name}-error`;
+				addressBlock.appendChild(errorMessage);
+			}
+		});
+		
 		const mainInput = this.#parent.querySelector('#main-address-container');
 
 		mainInput.onclick = () => {
@@ -105,22 +112,25 @@ class PayForm {
 		const submit = this.#parent.querySelector('#pay-form-button');
 
 		const apartInput = document.getElementById('apart-address');
+		const apartInputdErrorContainer = this.#parent.querySelector('#apart-error');
 		apartInput.addEventListener('input', () => {
-			const isApartValid = validateApartNumber(apartInput.value);
+			const isApartValid = validateApartNumber(apartInput.value, apartInputdErrorContainer);
 			this.isApartValid = isApartValid;
 			submit.disabled = !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
 		});
 
 		const entranceInput = document.getElementById('entrance-address');
+		const entranceInputErrorContainer = this.#parent.querySelector('#entrance-error');
 		entranceInput.addEventListener('input', () => {
-			const isEntranceValid = validateEntranceNumber(entranceInput.value);
+			const isEntranceValid = validateEntranceNumber(entranceInput.value, entranceInputErrorContainer);
 			this.isEntranceValid = isEntranceValid;
 			submit.disabled = !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
 		});
 
 		const floorInput = document.getElementById('floor-address');
+		const floorInputErrorContainer = this.#parent.querySelector('#floor-error');
 		floorInput.addEventListener('input', () => {
-			const isFloorValid = validateFloorNumber(floorInput.value);
+			const isFloorValid = validateFloorNumber(floorInput.value, floorInputErrorContainer);
 			this.isFloorValid = isFloorValid;
 			submit.disabled = !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
 		});
