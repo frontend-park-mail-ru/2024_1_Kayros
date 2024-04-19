@@ -1,4 +1,3 @@
-import urls from '../../routes/urls';
 import template from './Profile.hbs';
 import './Profile.scss';
 
@@ -14,12 +13,10 @@ class Profile {
 	 * @param {Element} parent - родительский элемент
 	 * @param {object} params - параметры компонента
 	 * @param {object} params.user - объект пользователя
-	 * @param {void} params.navigate - функция навигации по страницам
 	 */
-	constructor(parent, { user, navigate }) {
+	constructor(parent, { user }) {
 		this.#parent = parent;
 		this.#user = user;
-		this.navigate = navigate;
 	}
 
 	/**
@@ -37,12 +34,6 @@ class Profile {
 	 */
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML(this.#user));
-
-		const name = this.#parent.querySelector('.header__profile-name');
-
-		name.onclick = () => {
-			this.navigate(urls.profile);
-		};
 	}
 }
 

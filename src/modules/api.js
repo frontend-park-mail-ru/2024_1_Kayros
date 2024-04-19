@@ -43,7 +43,7 @@ class Api {
 	async updateUserData(body, callback) {
 		const { data, error } = await ajax.put(`${this.#url}/user`, body, { formData: true });
 
-		if (data && !error && !data.detail) {
+		if (data && !error && !data?.detail) {
 			Notification.open({
 				duration: 3,
 				title: SUCCESS_MESSAGES.profileSave.title,
@@ -58,7 +58,7 @@ class Api {
 		Notification.open({
 			duration: 3,
 			title: ERROR_MESSAGES.PROFILE_SAVE,
-			description: error || data.detail,
+			description: error || data?.detail,
 			type: 'error',
 		});
 	}
@@ -250,19 +250,19 @@ class Api {
 	async updateAddress(body, callback = () => {}) {
 		const { data, error } = await ajax.put(`${this.#url}/order/update_address`, body);
 
-		if (data && !error && !data.detail) {
+		if (!error) {
 			callback(data);
-			return data;
+			return true;
 		}
 
 		Notification.open({
 			duration: 3,
 			title: ERROR_MESSAGES.ADDRESS,
-			description: error || data.detail,
+			description: error || data?.detail,
 			type: 'error',
 		});
 
-		return data;
+		return false;
 	}
 
 	/**

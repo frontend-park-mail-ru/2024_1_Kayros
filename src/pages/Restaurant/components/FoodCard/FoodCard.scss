@@ -1,13 +1,12 @@
 .food-card {
 	display: inline-flex;
 	flex-direction: column;
-	cursor: pointer;
+	justify-content: space-between;
 	transition: 0.2s;
 	padding: 14px;
 	border-radius: 20px;
 	width: 90%;
 	min-width: 200px;
-	height: 300px;
 
 	button {
 		width: 108px;
@@ -29,6 +28,7 @@
 		background: var(--layout-bg-color);
 		border-radius: 10px;
 		height: 200px;
+		flex-shrink: 0;
 
 		img {
 			min-height: 100%;

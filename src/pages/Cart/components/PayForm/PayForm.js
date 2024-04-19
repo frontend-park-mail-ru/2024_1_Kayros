@@ -45,7 +45,7 @@ class PayForm {
 			extra_address: `${this.apart}, ${this.entrance}, ${this.floor}`,
 		});
 
-		if (!data.detail) {
+		if (data) {
 			await api.checkout();
 
 			const cart = document.getElementById('cart-button');
@@ -105,7 +105,7 @@ class PayForm {
 		const checkoutButton = new Button(form, {
 			id: 'pay-form-button',
 			content: 'Оплатить',
-			disabled: true,
+			disabled: !this.data.sum || !this.entrance || !this.floor || !this.apart,
 			withLoader: true,
 			onClick: () => {
 				this.handleSubmit();
