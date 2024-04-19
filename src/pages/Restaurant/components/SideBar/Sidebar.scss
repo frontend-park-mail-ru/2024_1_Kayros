@@ -1,7 +1,7 @@
 .restaurant-categories {
 	font-size: 20px;
-	position: fixed;
-	top: 116px;
+	position: sticky;
+	top: 96px;
 
 	#restaurant-back-button {
 		background: var(--layout-bg-color);
@@ -16,7 +16,6 @@
 	}
 
 	&__items {
-		height: calc(100vh - 180px);
 		overflow: scroll;
 		margin-top: 16px;
 		padding-top: 14px;
