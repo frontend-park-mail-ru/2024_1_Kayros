@@ -1,4 +1,4 @@
-import Notification from '../Notification/Notification.js';
+import { Notification } from 'resto-ui';
 import template from './FileUpload.hbs';
 import './FileUpload.scss';
 
