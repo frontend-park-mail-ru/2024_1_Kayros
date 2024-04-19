@@ -44,7 +44,7 @@ class PayForm {
 			extra_address: `${this.apart}, ${this.entrance}, ${this.floor}`,
 		});
 
-		if (!data.detail) {
+		if (data) {
 			await api.checkout();
 
 			const cart = document.getElementById('cart-button');
