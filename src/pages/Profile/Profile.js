@@ -191,7 +191,6 @@ class Profile {
 		this.isNameValid = validateName(name, nameErrorContainer, true);
 
 		name.addEventListener('input', () => {
-		
 			const isNameValid = validateName(name, nameErrorContainer, true);
 
 			this.isNameValid = isNameValid;
@@ -204,7 +203,6 @@ class Profile {
 		this.isEmailValid = validateEmail(email, emailErrorContainer, true);
 
 		email.addEventListener('input', () => {
-		
 			const isEmailValid = validateEmail(email, emailErrorContainer, true);
 
 			this.isEmailValid = isEmailValid;

@@ -72,8 +72,32 @@ class PayForm {
 		const form = this.#parent.querySelector('.pay-form');
 		const addressBlock = form.querySelector('.pay-form__inputs');
 
+		// FIELDS_ADRESS_FORM.forEach((field) => {
+		// 	new Input(addressBlock, {
+		// 		id: field.id,
+		// 		placeholder: field.placeholder,
+		// 		style: field.style,
+		// 		value: this[field.name],
+		// 		onChange: (event) => {
+		// 			this[field.name] = event.target.value;
+		// 		},
+		// 		disabled: field.name === 'main',
+		// 	}).render();
+
+		// 	if (field.id !== 'main-address') {
+		//         const errorMessage = document.createElement('div');
+		//         errorMessage.classList.add('error-message');
+		//         errorMessage.id = `${field.name}-error`;
+		//         addressBlock.appendChild(errorMessage);
+		//     }
+		// });
+
 		FIELDS_ADRESS_FORM.forEach((field) => {
-			new Input(addressBlock, {
+			const inputContainer = document.createElement('div');
+			inputContainer.classList.add('input-container');
+			addressBlock.appendChild(inputContainer);
+		
+			new Input(inputContainer, {
 				id: field.id,
 				placeholder: field.placeholder,
 				style: field.style,
@@ -83,12 +107,12 @@ class PayForm {
 				},
 				disabled: field.name === 'main',
 			}).render();
-
+		
 			if (field.id !== 'main-address') {
 				const errorMessage = document.createElement('div');
 				errorMessage.classList.add('error-message');
 				errorMessage.id = `${field.name}-error`;
-				addressBlock.appendChild(errorMessage);
+				inputContainer.appendChild(errorMessage);
 			}
 		});
 		
