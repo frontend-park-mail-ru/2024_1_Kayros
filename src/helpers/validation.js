@@ -104,14 +104,14 @@ export const validateConfirmPassword = (
 	return confirmPasswordElement.value && isPasswordsMatch;
 };
 
-export const validateMatchNewPassword = (newPassword, oldPassword, errorContainer)=>{
+export const validateMatchNewPassword = (newPassword, oldPassword, errorContainer) => {
 	if (newPassword.value === oldPassword.value) {
 		errorContainer.textContent = VALIDATION_ERRORS.newPasswordMatchedWithOld;
 		return false;
 	}
 
 	errorContainer.textContent = '';
-	return validatePassword(newPassword, errorContainer, true); 
+	return validatePassword(newPassword, errorContainer, true);
 };
 
 export const validateApartNumber = (apartValue, errorContainer) => {
@@ -126,7 +126,7 @@ export const validateFloorNumber = (floorValue, errorContainer) => {
 	return isFloorValid;
 };
 
-export const validateEntranceNumber = (entranceValue, errorContainer) => { 
+export const validateEntranceNumber = (entranceValue, errorContainer) => {
 	const isEntranceValid = ENTRANCE_REGEX.test(entranceValue);
 	errorContainer.textContent = isEntranceValid ? '' : 'Введите корректное значение';
 	return isEntranceValid;

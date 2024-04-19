@@ -1,7 +1,7 @@
 import Button from '../../../../components/Button';
 import Input from '../../../../components/Input/Input';
 import { FIELDS_ADRESS_FORM } from '../../../../constants';
-import { validateApartNumber, validateEntranceNumber, validateFloorNumber } from '../../../../helpers/validation'; ///////////////
+import { validateApartNumber, validateEntranceNumber, validateFloorNumber } from '../../../../helpers/validation';
 import api from '../../../../modules/api';
 import { router } from '../../../../modules/router';
 import urls from '../../../../routes/urls';
@@ -71,26 +71,6 @@ class PayForm {
 		this.#parent.insertAdjacentHTML('beforeend', template(this.data));
 		const form = this.#parent.querySelector('.pay-form');
 		const addressBlock = form.querySelector('.pay-form__inputs');
-
-		// FIELDS_ADRESS_FORM.forEach((field) => {
-		// 	new Input(addressBlock, {
-		// 		id: field.id,
-		// 		placeholder: field.placeholder,
-		// 		style: field.style,
-		// 		value: this[field.name],
-		// 		onChange: (event) => {
-		// 			this[field.name] = event.target.value;
-		// 		},
-		// 		disabled: field.name === 'main',
-		// 	}).render();
-
-		// 	if (field.id !== 'main-address') {
-		//         const errorMessage = document.createElement('div');
-		//         errorMessage.classList.add('error-message');
-		//         errorMessage.id = `${field.name}-error`;
-		//         addressBlock.appendChild(errorMessage);
-		//     }
-		// });
 
 		FIELDS_ADRESS_FORM.forEach((field) => {
 			const inputContainer = document.createElement('div');
