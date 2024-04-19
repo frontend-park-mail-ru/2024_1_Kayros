@@ -10,6 +10,8 @@ import {
 	INVALID_NAME_CHAR_REGEX,
 	PHONE_REGEX,
 	APART_REGEX,
+	FLOOR_REGEX,
+	ENTRANCE_REGEX,
 } from '../constants';
 
 export const validatePhone = (phoneElement, phoneErrorElement) => {
@@ -102,20 +104,24 @@ export const validateConfirmPassword = (
 	return confirmPasswordElement.value && isPasswordsMatch;
 };
 
-export const validateMatchNewPassword = (newPassword, oldPassword, errorContainer) => {
+export const validateMatchNewPassword = (newPassword, oldPassword, errorContainer)=>{
 	if (newPassword.value === oldPassword.value) {
-		errorContainer.textContent = VALIDATION_ERRORS.newPasswordMathedWithOld;
+		errorContainer.textContent = VALIDATION_ERRORS.newPasswordmathedWithOld;
 		return false;
 	}
 
 	errorContainer.textContent = '';
-	return validatePassword(newPassword, errorContainer, true);
+	return validatePassword(newPassword, errorContainer, true); 
 };
 
-export const validateApart = (apart) => {
-	if (apart === APART_REGEX) {
-		return true;
-	}
+export const validateApartNumber = (apartValue) => {
+	return APART_REGEX.test(apartValue);
+};
 
-	return false;
+export const validateFloorNumber = (floorValue) => {
+	return FLOOR_REGEX.test(floorValue);
+};
+
+export const validateEntranceNumber = (entranceValue) => {
+	return ENTRANCE_REGEX.test(entranceValue);
 };

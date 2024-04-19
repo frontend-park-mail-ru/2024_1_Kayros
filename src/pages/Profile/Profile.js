@@ -187,58 +187,42 @@ class Profile {
 
 		const submit = this.#parent.querySelector('#profile-submit-button');
 		const name = this.#parent.querySelector('#profile-name-input');
-		const nameContainer = this.#parent.querySelector('#profile-name-input-container');
-		const nameLabelHolder = nameContainer.querySelector('.input__label-holder');
 		const nameErrorContainer = profileInfo.querySelector('#name-error');
 		this.isNameValid = validateName(name, nameErrorContainer, true);
 
-		name.onblur = (event) => {
-			if (!event.target.value) {
-				nameLabelHolder.style.width = 0;
-			}
-
+		name.addEventListener('input', () => {
+		
 			const isNameValid = validateName(name, nameErrorContainer, true);
 
 			this.isNameValid = isNameValid;
 
 			submit.disabled = !this.isNameValid || !this.isEmailValid || !this.isPhoneValid;
-		};
+		});
 
 		const email = this.#parent.querySelector('#profile-mail-input');
-		const emailContainer = this.#parent.querySelector('#profile-mail-input-container');
-		const emailLabelHolder = emailContainer.querySelector('.input__label-holder');
 		const emailErrorContainer = profileInfo.querySelector('#email-error');
 		this.isEmailValid = validateEmail(email, emailErrorContainer, true);
 
-		email.onblur = (event) => {
-			if (!event.target.value) {
-				emailLabelHolder.style.width = 0;
-			}
-
+		email.addEventListener('input', () => {
+		
 			const isEmailValid = validateEmail(email, emailErrorContainer, true);
 
 			this.isEmailValid = isEmailValid;
 
 			submit.disabled = !this.isNameValid || !this.isEmailValid || !this.isPhoneValid;
-		};
+		});
 
 		const phone = this.#parent.querySelector('#profile-phone-input');
-		const phoneContainer = this.#parent.querySelector('#profile-phone-input-container');
-		const phoneLabelHolder = phoneContainer.querySelector('.input__label-holder');
 		const phoneErrorContainer = profileInfo.querySelector('#phone-error');
 		this.isPhoneValid = validatePhone(phone, phoneErrorContainer);
 
-		phone.onblur = (event) => {
-			if (!event.target.value) {
-				phoneLabelHolder.style.width = 0;
-			}
-
+		phone.addEventListener('input', () => {
 			const isPhoneValid = validatePhone(phone, phoneErrorContainer);
 
 			this.isPhoneValid = isPhoneValid;
 
 			submit.disabled = !this.isNameValid || !this.isEmailValid || !this.isPhoneValid;
-		};
+		});
 
 		const oldPassword = this.#parent.querySelector('#profile-old-password-input');
 		const newPassword = this.#parent.querySelector('#profile-new-password-input');
@@ -272,6 +256,7 @@ class Profile {
 					confirmPasswordErrorContainer,
 					hasConfirmPasswordInputStarted,
 				);
+
 				submitPasswordButton.disabled = !(this.isPasswordValid && this.isNewPasswordValid && this.isPasswordsMatch);
 			}
 		});
@@ -284,6 +269,7 @@ class Profile {
 				confirmPasswordErrorContainer,
 				hasConfirmPasswordInputStarted,
 			);
+
 			submitPasswordButton.disabled = !(this.isPasswordValid && this.isNewPasswordValid && this.isPasswordsMatch);
 		});
 

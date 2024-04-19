@@ -1,6 +1,7 @@
 import Button from '../../../../components/Button';
 import Input from '../../../../components/Input/Input';
 import { FIELDS_ADRESS_FORM } from '../../../../constants';
+import { validateApartNumber, validateEntranceNumber, validateFloorNumber } from '../../../../helpers/validation'; ///////////////
 import api from '../../../../modules/api';
 import { router } from '../../../../modules/router';
 import urls from '../../../../routes/urls';
@@ -93,7 +94,7 @@ class PayForm {
 		const checkoutButton = new Button(form, {
 			id: 'pay-form-button',
 			content: 'Оплатить',
-			disabled: !this.data.sum,
+			disabled: true,
 			withLoader: true,
 			onClick: () => {
 				this.handleSubmit();
@@ -101,6 +102,28 @@ class PayForm {
 		});
 
 		checkoutButton.render();
+		const submit = this.#parent.querySelector('#pay-form-button');
+
+		const apartInput = document.getElementById('apart-address');
+		apartInput.addEventListener('input', () => {
+			const isApartValid = validateApartNumber(apartInput.value);
+			this.isApartValid = isApartValid;
+			submit.disabled = !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
+		});
+
+		const entranceInput = document.getElementById('entrance-address');
+		entranceInput.addEventListener('input', () => {
+			const isEntranceValid = validateEntranceNumber(entranceInput.value);
+			this.isEntranceValid = isEntranceValid;
+			submit.disabled = !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
+		});
+
+		const floorInput = document.getElementById('floor-address');
+		floorInput.addEventListener('input', () => {
+			const isFloorValid = validateFloorNumber(floorInput.value);
+			this.isFloorValid = isFloorValid;
+			submit.disabled = !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
+		});
 	}
 }
 
