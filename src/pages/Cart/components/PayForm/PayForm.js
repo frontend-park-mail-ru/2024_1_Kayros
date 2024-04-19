@@ -105,7 +105,7 @@ class PayForm {
 		const checkoutButton = new Button(form, {
 			id: 'pay-form-button',
 			content: 'Оплатить',
-			disabled: true,
+			disabled: !this.data.sum || !this.entrance || !this.floor || !this.apart,
 			withLoader: true,
 			onClick: () => {
 				this.handleSubmit();
