@@ -4,15 +4,6 @@
 	margin-top: 46px;
 	gap: 30px;
 
-	.error-message {
-		color: var(--red);
-		font-size: 14px;
-		margin: 0;
-		margin-top: -7px;
-		text-align: left;
-		height: auto;
-	}
-
 	&__image {
 		height: 200px;
 		width: 200px;
@@ -45,6 +36,14 @@
 			font-weight: 600;
 			margin-bottom: 10px;
 		}
+	}
+
+	.error-message {
+		color: var(--red);
+		font-size: 14px;
+		margin: -12px 4px 16px;
+		text-align: left;
+		height: 15px;
 	}
 
 	.input__label {

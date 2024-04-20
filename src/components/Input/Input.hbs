@@ -10,11 +10,18 @@
 	{{/if}}
 
 	{{#if this.dynamic}}
-		<input id={{this.id}} type={{this.type}} placeholder=" " class="dynamic" value="{{this.value}}" {{this.attribute}}/>
+		<input
+			id={{this.id}}
+			type={{this.type}}
+			placeholder=" "
+			class="dynamic"
+			value="{{this.value}}"
+			{{this.attribute}}
+		/>
 		<span class="input__label">{{this.placeholder}}</span>
-    <span class="input__label-holder"></span>
+		<span class="input__label-holder"></span>
 	{{else}}
-		<input id={{this.id}} type={{this.type}} placeholder="{{this.placeholder}}" value="{{this.value}}"/>
+		<input id={{this.id}} type={{this.type}} placeholder="{{this.placeholder}}" value="{{this.value}}" />
 	{{/if}}
 
 </div>

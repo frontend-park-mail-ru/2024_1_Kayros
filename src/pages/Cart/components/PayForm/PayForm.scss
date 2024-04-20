@@ -42,6 +42,10 @@
 		}
 	}
 
+	&__input-container {
+		background: inherit;
+	}
+
 	&__methods {
 		display: flex;
 		align-items: center;
@@ -57,7 +61,6 @@
 		border: 1px solid var(--cart-pay-method-color);
 		padding: 8px 16px;
 		transition: 0.3s;
-		cursor: pointer;
 
 		&:hover {
 			border: 1px solid var(--cart-pay-method-color-hover);
@@ -70,4 +73,11 @@
 		margin-top: auto;
 		width: 100%;
 	}
+}
+
+.error-message {
+	color: var(--red);
+	font-size: 14px;
+	margin: 5px;
+	z-index: 1000;
 }
