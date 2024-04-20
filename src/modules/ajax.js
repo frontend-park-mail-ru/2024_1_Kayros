@@ -1,4 +1,4 @@
-import Notification from '../components/Notification/Notification';
+import { Notification } from 'resto-ui';
 import { ERROR_MESSAGES } from '../constants';
 
 /**

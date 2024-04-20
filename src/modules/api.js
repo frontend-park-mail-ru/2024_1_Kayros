@@ -1,4 +1,4 @@
-import Notification from '../components/Notification/Notification';
+import { Notification } from 'resto-ui';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SAGESTS } from '../constants';
 import ajax from './ajax';
 
@@ -135,7 +135,7 @@ class Api {
 		}
 
 		Notification.open({
-			duration: 3,
+			duration: 0,
 			title: ERROR_MESSAGES.LOGIN,
 			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
