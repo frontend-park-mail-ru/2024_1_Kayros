@@ -327,10 +327,10 @@ class Api {
 	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async removeFromCart(foodId) {
-		const { data } = await ajax.delete(`${this.#url}/order/food/delete/${foodId}`);
+		const { data, error } = await ajax.delete(`${this.#url}/order/food/delete/${foodId}`);
 
-		if (data) {
-			return data.sum;
+		if (data && !error) {
+			return data.sum || 0;
 		}
 
 		return false;
@@ -388,7 +388,7 @@ class Api {
 	async checkout() {
 		const { data, error } = await ajax.put(`${this.#url}/order/pay`);
 
-		if (data && !error) {
+		if (data && !error && !data.detail) {
 			Notification.open({
 				duration: 6,
 				title: SUCCESS_MESSAGES.checkout.title,
@@ -402,7 +402,7 @@ class Api {
 		Notification.open({
 			duration: 3,
 			title: ERROR_MESSAGES.CHECKOUT,
-			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			description: error || data.detail || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
 		});
 

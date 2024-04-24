@@ -80,7 +80,7 @@ class FoodCard {
 	/**
 	 * Открытие модалки, если пользователь не авторизован
 	 */
-	openAuthModal() {
+	openAddressModal() {
 		const modal = new Modal({ content: authModalTemplate(), className: 'food-card-modal', closeButton: false });
 		modal.render();
 
@@ -88,10 +88,10 @@ class FoodCard {
 
 		const authButton = new Button(modalContent, {
 			id: 'food-modal-accept-button',
-			content: 'Войти',
+			content: 'Указать адрес',
 			onClick: () => {
 				modal.close();
-				router.navigate(urls.signIn);
+				router.navigate(urls.address);
 			},
 		});
 
@@ -195,14 +195,11 @@ class FoodCard {
 			maxCount: 99,
 			prevCount: () => {
 				const user = localStorageHelper.getItem('user-info');
+				const unauthInfo = localStorageHelper.getItem('unauth-info');
+				const currentAddress = user?.address || unauthInfo?.address;
 
-				if (!user) {
-					this.openAuthModal();
-					return;
-				}
-
-				if (!user.address) {
-					router.navigate(urls.address);
+				if (!currentAddress) {
+					this.openAddressModal();
 					return;
 				}
 

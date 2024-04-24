@@ -29,6 +29,7 @@ class PayForm {
 		this.apart = extraAddressParts?.[0] || '';
 		this.entrance = extraAddressParts?.[1] || '';
 		this.floor = extraAddressParts?.[2] || '';
+		this.user = '';
 	}
 
 	/**
@@ -45,8 +46,17 @@ class PayForm {
 			extra_address: `${this.apart}, ${this.entrance}, ${this.floor}`,
 		});
 
+		if (!this.user) {
+			router.navigate(urls.signIn);
+			return;
+		}
+
 		if (data) {
-			await api.checkout();
+			const res = await api.checkout();
+
+			if (!res) {
+				return;
+			}
 
 			const cart = document.getElementById('cart-button');
 			const sum = cart.querySelector('span');
@@ -63,9 +73,11 @@ class PayForm {
 	 */
 	render() {
 		const user = localStorageHelper.getItem('user-info');
+		this.user = user;
+		const unauthInfo = localStorageHelper.getItem('unauth-info');
 
-		if (user.address) {
-			this.main = user.address;
+		if (user?.address || unauthInfo?.address) {
+			this.main = user?.address || unauthInfo?.address;
 		}
 
 		this.#parent.insertAdjacentHTML('beforeend', template(this.data));
@@ -120,7 +132,7 @@ class PayForm {
 		apartInput.addEventListener('input', () => {
 			const isApartValid = validateApartNumber(apartInput.value, apartInputdErrorContainer);
 			this.isApartValid = isApartValid;
-			submit.disabled = !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
+			submit.disabled = !this.data.sum || !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
 		});
 
 		const entranceInput = document.getElementById('entrance-address');
@@ -128,7 +140,7 @@ class PayForm {
 		entranceInput.addEventListener('input', () => {
 			const isEntranceValid = validateEntranceNumber(entranceInput.value, entranceInputErrorContainer);
 			this.isEntranceValid = isEntranceValid;
-			submit.disabled = !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
+			submit.disabled = !this.data.sum || !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
 		});
 
 		const floorInput = document.getElementById('floor-address');
@@ -136,7 +148,7 @@ class PayForm {
 		floorInput.addEventListener('input', () => {
 			const isFloorValid = validateFloorNumber(floorInput.value, floorInputErrorContainer);
 			this.isFloorValid = isFloorValid;
-			submit.disabled = !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
+			submit.disabled = !this.data.sum || !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
 		});
 	}
 }
