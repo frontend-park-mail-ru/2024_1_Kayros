@@ -74,11 +74,14 @@ class PayForm {
 	render() {
 		const user = localStorageHelper.getItem('user-info');
 		this.user = user;
-		const unauthInfo = localStorageHelper.getItem('unauth-info');
+		let currentAddress = user?.address;
 
-		if (user?.address || unauthInfo?.address) {
-			this.main = user?.address || unauthInfo?.address;
+		if (!user) {
+			const unauthInfo = localStorageHelper.getItem('unauth-info');
+			currentAddress = unauthInfo?.address;
 		}
+
+		this.main = currentAddress || '';
 
 		this.#parent.insertAdjacentHTML('beforeend', template(this.data));
 		const form = this.#parent.querySelector('.pay-form');
