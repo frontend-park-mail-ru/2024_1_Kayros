@@ -31,6 +31,7 @@ class DishCard {
 		const counter = new CounterButton(counterBlock, {
 			id: `dish-card__counter-${this.data.id}`,
 			initCount: this.data.count,
+			maxCount: 99,
 			productId: this.data.id,
 			withAddButton: false,
 			addCount: async (id) => {

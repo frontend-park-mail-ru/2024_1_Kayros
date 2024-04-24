@@ -192,6 +192,7 @@ class FoodCard {
 			id: `food-button-${this.data.id}`,
 			productId: this.data.id,
 			initCount: this.count,
+			maxCount: 99,
 			prevCount: () => {
 				const user = localStorageHelper.getItem('user-info');
 
