@@ -42,7 +42,7 @@ class FoodCard {
 		const cookieExists = document.cookie.includes('unauth_token=');
 
 		if (!cookieExists) {
-			document.cookie = `unauth_token=${crypto.randomUUID()}`;
+			document.cookie = `unauth_token=${crypto.randomUUID()}; path=/`;
 		}
 	}
 

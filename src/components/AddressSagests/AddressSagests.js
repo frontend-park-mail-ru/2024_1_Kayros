@@ -53,7 +53,7 @@ class AddressSagests {
 		const cookieExists = document.cookie.includes('unauth_token=');
 
 		if (!cookieExists) {
-			document.cookie = `unauth_token=${crypto.randomUUID()}`;
+			document.cookie = `unauth_token=${crypto.randomUUID()}; path=/`;
 		}
 
 		await api.updateAddressSagests({ address: this.address }, this.handleAddressChange.bind(this));
