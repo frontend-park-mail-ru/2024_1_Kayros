@@ -30,6 +30,23 @@ class FoodCard {
 	}
 
 	/**
+	 * Проверка и установка токена для неавторизованного пользователя
+	 */
+	checkUserToken() {
+		const user = localStorageHelper.getItem('user-info');
+
+		if (user) {
+			return;
+		}
+
+		const cookieExists = document.cookie.includes('unauth_token=');
+
+		if (!cookieExists) {
+			document.cookie = `unauth_token=${crypto.randomUUID()}`;
+		}
+	}
+
+	/**
 	 * Открытие модалки с возможностью очистки корзины
 	 */
 	async openClearCartModal() {
@@ -91,7 +108,9 @@ class FoodCard {
 			content: 'Указать адрес',
 			onClick: () => {
 				modal.close();
-				router.navigate(urls.address);
+				setTimeout(() => {
+					router.navigate(urls.address);
+				}, 100);
 			},
 		});
 
@@ -112,6 +131,8 @@ class FoodCard {
 	 * @returns {number} результат
 	 */
 	async addFood(id) {
+		this.checkUserToken();
+
 		const cart = document.getElementById('cart-button');
 		if (!cart) return;
 
@@ -136,6 +157,8 @@ class FoodCard {
 	 * @returns {number} результат
 	 */
 	async removeCount(id) {
+		this.checkUserToken();
+
 		const res = await api.removeFromCart(id);
 
 		const cart = document.getElementById('cart-button');
@@ -161,6 +184,8 @@ class FoodCard {
 	 * @returns {number} результат
 	 */
 	async updateCartCount({ id, count }) {
+		this.checkUserToken();
+
 		const res = await api.updateCartCount({ food_id: id, count });
 
 		const cart = document.getElementById('cart-button');

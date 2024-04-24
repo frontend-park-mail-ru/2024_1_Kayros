@@ -50,12 +50,10 @@ class AddressSagests {
 
 		this.address = searchInput.value.split(' · ')[1] || searchInput.value;
 
-		if (!this.user) {
-			const cookieExists = document.cookie.includes('unauth_token=');
+		const cookieExists = document.cookie.includes('unauth_token=');
 
-			if (!cookieExists) {
-				document.cookie = `unauth_token=${crypto.randomUUID()}`;
-			}
+		if (!cookieExists) {
+			document.cookie = `unauth_token=${crypto.randomUUID()}`;
 		}
 
 		await api.updateAddressSagests({ address: this.address }, this.handleAddressChange.bind(this));
