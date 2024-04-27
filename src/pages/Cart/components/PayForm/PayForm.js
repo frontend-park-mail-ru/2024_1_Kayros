@@ -25,7 +25,7 @@ class PayForm {
 
 		this.#parent = parent;
 		this.data = data;
-		this.main = data.address || '';
+		this.main = data?.address || '';
 		this.apart = extraAddressParts?.[0] || '';
 		this.entrance = extraAddressParts?.[1] || '';
 		this.floor = extraAddressParts?.[2] || '';
@@ -120,7 +120,7 @@ class PayForm {
 		const checkoutButton = new Button(form, {
 			id: 'pay-form-button',
 			content: 'Оплатить',
-			disabled: !this.data.sum || !this.entrance || !this.floor || !this.apart,
+			disabled: !this.data?.sum || !this.entrance || !this.floor || !this.apart,
 			withLoader: true,
 			onClick: () => {
 				this.handleSubmit();
@@ -135,7 +135,7 @@ class PayForm {
 		apartInput.addEventListener('input', () => {
 			const isApartValid = validateApartNumber(apartInput.value, apartInputdErrorContainer);
 			this.isApartValid = isApartValid;
-			submit.disabled = !this.data.sum || !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
+			submit.disabled = !this.data?.sum || !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
 		});
 
 		const entranceInput = document.getElementById('entrance-address');
@@ -143,7 +143,7 @@ class PayForm {
 		entranceInput.addEventListener('input', () => {
 			const isEntranceValid = validateEntranceNumber(entranceInput.value, entranceInputErrorContainer);
 			this.isEntranceValid = isEntranceValid;
-			submit.disabled = !this.data.sum || !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
+			submit.disabled = !this.data?.sum || !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
 		});
 
 		const floorInput = document.getElementById('floor-address');
@@ -151,7 +151,7 @@ class PayForm {
 		floorInput.addEventListener('input', () => {
 			const isFloorValid = validateFloorNumber(floorInput.value, floorInputErrorContainer);
 			this.isFloorValid = isFloorValid;
-			submit.disabled = !this.data.sum || !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
+			submit.disabled = !this.data?.sum || !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
 		});
 	}
 }
