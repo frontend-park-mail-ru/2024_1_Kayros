@@ -1,4 +1,5 @@
 import { Notification } from 'resto-ui';
+import form from '../components/CSATForm';
 import Content from '../components/Content/index.js';
 import Header from '../components/Header/index.js';
 import { SUCCESS_MESSAGES } from '../constants/index.js';
@@ -15,6 +16,7 @@ class Router {
 	constructor() {
 		this.previousState = null;
 		this.routes = {};
+		this.csatTimeout = '';
 		window.addEventListener('popstate', this.handleLocationChange.bind(this));
 	}
 
@@ -158,6 +160,11 @@ class Router {
 	 * Обрабатывает изменение местоположения, отображая соответствующий маршрут.
 	 */
 	handleLocationChange() {
+		clearTimeout(this.csatTimeout);
+		this.csatTimeout = setTimeout(() => {
+			form.render();
+		}, 4000);
+
 		const params = {};
 
 		const currentPath = window.location.pathname;

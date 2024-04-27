@@ -43,6 +43,10 @@ export const SUCCESS_MESSAGES = {
 		title: 'Оплата прошла успешно',
 		description: 'Передали заказ курьеру!',
 	},
+	csat: {
+		title: 'Успешно отправлено',
+		description: 'Спасибо за уделенное время!',
+	},
 };
 
 export const FIELDS_SIGN_IN = [

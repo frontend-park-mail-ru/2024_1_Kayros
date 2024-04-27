@@ -1,19 +1,83 @@
-.csat-modal {
+@mixin form-button {
+	background: var(--csat-form-button-bg);
+	border-radius: 10px;
+
+	&:hover {
+		background: var(--csat-form-button-bg-hover);
+	}
+}
+
+.question__buttons {
 	display: flex;
-	flex-direction: column;
-	padding: 30px;
-	overflow: hidden;
+	gap: 5px;
+	width: 100%;
+	margin-top: 20px;
+	justify-content: center;
+
+	button {
+		width: 34px;
+
+		&.active {
+			background: var(--button-bg-color) !important;
+			color: var(--csat-form-bg);
+		}
+	}
 }
 
 .csat-form {
-	width: 400px;
-	height: 300px;
+	width: 440px;
+	position: fixed;
+	bottom: 50px;
+	right: 50px;
+	overflow: hidden;
+	background: var(--csat-form-bg);
+	border-radius: 20px;
+	padding: 20px;
+	box-shadow: var(--profile-dropdown-box-shadow);
+	z-index: 100;
+
+	button:not(#csat-close-button) {
+		@include form-button;
+
+		transition: 0.3s;
+	}
+}
+
+#form-back-button {
+	@include form-button;
 }
 
 #form-next-button {
+	@include form-button;
+}
+
+.question__title {
+	font-size: 20px;
+	font-weight: 400;
+	margin-bottom: 30px;
+	padding-right: 20px;
+}
+
+.question__buttons_q {
+	display: flex;
+	justify-content: space-between;
+	gap: 5px;
+	width: 100%;
+	margin-top: 20px;
+
+	img {
+		width: 24px;
+	}
+}
+
+#csat-close-button {
 	position: absolute;
-	bottom: 0;
-	right: 0;
-	width: 40px;
-	height: 40px;
+	right: 18px;
+	top: 18px;
+	width: 34px;
+	height: 34px;
+
+	&:hover {
+		background: var(--csat-form-button-bg-hover);
+	}
 }

@@ -1,5 +1,10 @@
 <div class="slider">
 	{{#each items}}
-		<div class="slider__item">{{{this}}}</div>
+		<div class="slider__item">{{{this.content}}}
+			<div class="slider__description">
+				<span>Плохо</span>
+				<span>Отлично</span>
+			</div>
+		</div>
 	{{/each}}
 </div>

@@ -6,7 +6,7 @@ import './Button.scss';
  * Кнопка
  */
 class Button {
-	#parent;
+	parent;
 	#content;
 	#type;
 	#onClick;
@@ -50,7 +50,7 @@ class Button {
 			position = 'beforeend',
 		},
 	) {
-		this.#parent = parent;
+		this.parent = parent;
 		this.#content = content;
 		this.#type = type;
 		this.#onClick = onClick;
@@ -85,9 +85,9 @@ class Button {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML(this.position, this.getHTML());
+		this.parent.insertAdjacentHTML(this.position, this.getHTML());
 
-		const currentButton = this.#parent.querySelector(`#${this.#id}`);
+		const currentButton = this.parent.querySelector(`#${this.#id}`);
 
 		currentButton.onclick = this.#onClick;
 
