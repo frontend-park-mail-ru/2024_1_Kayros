@@ -4,19 +4,16 @@
         <thead>
             <tr>
                 <th>Вопрос</th>
-                <th>Рейтинг за день</th>
-                <th>Рейтинг за месяц</th>
-                <th>Рейтинг за год</th>
+                <th>NPS</th>
+                <th>CSAT</th>
             </tr>
         </thead>
         <tbody>
             {{#each data}}
             <tr>
-                {{!-- <td>{{name}}</td> --}}
                  <td>{{id}} ) {{name}}</td>
-                <td>{{rating_for_day}}</td>
-                <td>{{rating_for_month}}</td>
-                <td>{{rating_for_year}}</td>
+                <td>{{nps}}</td>
+                <td>{{CSAT}}</td>
             </tr>
             {{/each}}
         </tbody>
