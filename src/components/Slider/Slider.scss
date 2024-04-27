@@ -1,0 +1,8 @@
+.slider {
+	display: flex;
+	width: 1300px;
+
+	&__item {
+		width: inherit;
+	}
+}

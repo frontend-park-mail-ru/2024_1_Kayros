@@ -81,9 +81,10 @@ class Router {
 		if (
 			(currentPath === urls.signIn && path === urls.signUp) ||
 			(currentPath === urls.signUp && path === urls.signIn) ||
-			path === urls.address
+			path === urls.address ||
+			path === urls.csatForm
 		) {
-			if (path === urls.address) {
+			if (path === urls.address || path === urls.csatForm) {
 				this.previousState = window.history?.state;
 			}
 
@@ -127,7 +128,7 @@ class Router {
 		const header = document.querySelector('.header');
 		const oldContent = document.querySelector('.content');
 
-		if (window.location.pathname !== urls.address) {
+		if (window.location.pathname !== urls.address && window.location.pathname !== urls.csatForm) {
 			oldContent?.remove();
 		}
 
@@ -198,7 +199,7 @@ class Router {
 		const content = document.querySelector('.content');
 
 		if (currentRoute) {
-			if (currentPath === urls.address && content.children.length === 0) {
+			if ((currentPath === urls.address || currentPath === urls.csatForm) && content.children.length === 0) {
 				const previousRoute = this.routes[this.previousState?.path || urls.restaurants];
 				const previousPage = new previousRoute.component(content);
 				previousPage.render();

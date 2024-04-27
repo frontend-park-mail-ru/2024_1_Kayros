@@ -1,0 +1,19 @@
+.csat-modal {
+	display: flex;
+	flex-direction: column;
+	padding: 30px;
+	overflow: hidden;
+}
+
+.csat-form {
+	width: 400px;
+	height: 300px;
+}
+
+#form-next-button {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 40px;
+	height: 40px;
+}

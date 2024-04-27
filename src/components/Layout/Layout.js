@@ -1,3 +1,6 @@
+import { router } from '../../modules/router';
+import urls from '../../routes/urls';
+import Button from '../Button';
 import template from './Layout.hbs';
 import './Layout.scss';
 
@@ -20,6 +23,16 @@ class Layout {
 	 */
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', template());
+
+		const formButton = new Button(this.#parent, {
+			id: 'csat-form-button',
+			content: 'Пройдите опрос',
+			onClick: () => {
+				router.navigate(urls.csatForm);
+			},
+		});
+
+		formButton.render();
 	}
 }
 

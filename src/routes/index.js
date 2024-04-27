@@ -1,4 +1,5 @@
 import AddressForm from '../components/AddressForm/AddressForm';
+import CSATForm from '../components/CSATForm/CSATForm';
 import Map from '../components/Map/Map';
 import CartPage from '../pages/Cart';
 import NotFound from '../pages/NotFound';
@@ -41,6 +42,10 @@ const routes = {
 	[urls.profile]: {
 		title: 'Профиль',
 		component: ProfilePage,
+	},
+	[urls.csatForm]: {
+		title: 'Форма',
+		component: CSATForm,
 	},
 };
 

@@ -1,5 +1,6 @@
 import { Notification } from 'resto-ui';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SAGESTS } from '../constants';
+import csatQuestions from '../mocks/csat-questions';
 import ajax from './ajax';
 
 /**
@@ -407,6 +408,18 @@ class Api {
 		});
 
 		return false;
+	}
+
+	/**
+	 *
+	 * @param {*} callback - коллбэк
+	 */
+	async getCSATQuestions(callback) {
+		const data = await ajax.get(`${this.#url}/questions`);
+
+		if (!data) {
+			callback(csatQuestions);
+		}
 	}
 }
 

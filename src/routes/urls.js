@@ -8,6 +8,7 @@ const urls = {
 	map: '/map',
 	cart: '/cart',
 	profile: '/profile',
+	csatForm: '/form',
 };
 
 export default urls;
