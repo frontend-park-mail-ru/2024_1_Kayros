@@ -43,10 +43,6 @@ class AddressForm {
 			api.geoCoder(user.address, map.goToPoint.bind(map));
 		}
 
-		if (user?.address) {
-			api.geoCoder(user.address, map.goToPoint.bind(map));
-		}
-
 		const sagestsElement = new AddressSagests(modalContent.querySelector('.find-address__sagests-container'), {
 			closeModal: () => {
 				modal.close();
