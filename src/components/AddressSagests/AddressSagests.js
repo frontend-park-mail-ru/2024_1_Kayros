@@ -58,9 +58,12 @@ class AddressSagests {
 
 		await api.updateAddressSagests({ address: this.address }, this.handleAddressChange.bind(this));
 		const cartAddress = document.querySelector('#main-address');
+		const cartContainer = document.querySelector('#main-address-container');
 
 		if (cartAddress) {
 			cartAddress.value = this.address;
+			const holder = cartContainer.querySelector('.input__label-holder');
+			holder.style.width = 20 * 8 + 'px';
 		}
 
 		this.closeModal();
