@@ -415,13 +415,13 @@ class Api {
 	 * @param {Function} callback -Результат запроса
 	 */	
 	async getCSATAnswers(callback) {
-		const data = await ajax.get(`${this.#url}/statistic`);
+		// const data = await ajax.get(`${this.#url}/statistic`);
 
-		if (!data){
-			callback(csatAnswers);
-		}
+		// if (!data){
+		callback(csatAnswers);
+		// }
 
-		callback(data);
+		// callback(data);
 	}
 
 }

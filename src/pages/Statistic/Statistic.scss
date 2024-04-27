@@ -1,4 +1,4 @@
-.not-found {
+.statistic {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -7,27 +7,30 @@
 	text-align: center;
 
 	h1 {
-		margin-bottom: 20px;
-	}
-
-	p {
-		margin-bottom: 30px;
+		margin: 50px;
 	}
 
 	table {
 		border-collapse: collapse;
-		width: 80%; // Ширина таблицы по отношению к контейнеру
-		margin-bottom: 20px; // Добавлено место под таблицей
+		width: 80%;
+		margin-bottom: 100px;
+		font-family: Arial, sans-serif;
+		font-size: 20px;
 
 		th,
 		td {
-			border: 1px solid rgb(204 204 204); // Границы ячеек
-			padding: 8px; // Отступы внутри ячеек
-			text-align: left; // Выравнивание текста в ячейках
+			padding: 20px;
+			text-align: left;
+			vertical-align: middle;
 		}
 
 		th {
-			background-color: rgb(244 244 244); // Цвет фона заголовков
+			background-color: rgb(244 244 244);
+			font-weight: bold;
+		}
+
+		tr:hover {
+			background-color: rgb(167 139 139 / 10%);
 		}
 	}
 }

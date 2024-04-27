@@ -23,8 +23,10 @@ class Statistic {
 	/**
 	 * Получение данных о ресторанах
 	 */
-	async getData() { 
-		await api.getCSATAnswers((data) => {this.data = data;});
+	async getData() {
+		await api.getCSATAnswers((data) => {
+			this.data = data;
+		});
 	}
 
 	/**
@@ -34,7 +36,7 @@ class Statistic {
 		await this.getData();
 		const html = template({ data: this.data });
 		this.#parent.insertAdjacentHTML('beforeend', html);
-		new Button(document.querySelector('.not-found__return-button'), {
+		new Button(document.querySelector('.statistic__return-button'), {
 			id: 'return-to-home',
 			content: 'Вернуться на главную',
 			onClick: () => {
