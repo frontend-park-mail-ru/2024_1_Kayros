@@ -30,6 +30,23 @@ class FoodCard {
 	}
 
 	/**
+	 * Проверка и установка токена для неавторизованного пользователя
+	 */
+	checkUserToken() {
+		const user = localStorageHelper.getItem('user-info');
+
+		if (user) {
+			return;
+		}
+
+		const cookieExists = document.cookie.includes('unauth_token=');
+
+		if (!cookieExists) {
+			document.cookie = `unauth_token=${crypto.randomUUID()}; path=/`;
+		}
+	}
+
+	/**
 	 * Открытие модалки с возможностью очистки корзины
 	 */
 	async openClearCartModal() {
@@ -80,7 +97,7 @@ class FoodCard {
 	/**
 	 * Открытие модалки, если пользователь не авторизован
 	 */
-	openAuthModal() {
+	openAddressModal() {
 		const modal = new Modal({ content: authModalTemplate(), className: 'food-card-modal', closeButton: false });
 		modal.render();
 
@@ -88,10 +105,12 @@ class FoodCard {
 
 		const authButton = new Button(modalContent, {
 			id: 'food-modal-accept-button',
-			content: 'Войти',
+			content: 'Указать адрес',
 			onClick: () => {
 				modal.close();
-				router.navigate(urls.signIn);
+				setTimeout(() => {
+					router.navigate(urls.address);
+				}, 100);
 			},
 		});
 
@@ -112,6 +131,8 @@ class FoodCard {
 	 * @returns {number} результат
 	 */
 	async addFood(id) {
+		this.checkUserToken();
+
 		const cart = document.getElementById('cart-button');
 		if (!cart) return;
 
@@ -136,6 +157,8 @@ class FoodCard {
 	 * @returns {number} результат
 	 */
 	async removeCount(id) {
+		this.checkUserToken();
+
 		const res = await api.removeFromCart(id);
 
 		const cart = document.getElementById('cart-button');
@@ -161,6 +184,8 @@ class FoodCard {
 	 * @returns {number} результат
 	 */
 	async updateCartCount({ id, count }) {
+		this.checkUserToken();
+
 		const res = await api.updateCartCount({ food_id: id, count });
 
 		const cart = document.getElementById('cart-button');
@@ -192,16 +217,14 @@ class FoodCard {
 			id: `food-button-${this.data.id}`,
 			productId: this.data.id,
 			initCount: this.count,
+			maxCount: 99,
 			prevCount: () => {
 				const user = localStorageHelper.getItem('user-info');
+				const unauthInfo = localStorageHelper.getItem('unauth-info');
+				const currentAddress = user?.address || unauthInfo?.address;
 
-				if (!user) {
-					this.openAuthModal();
-					return;
-				}
-
-				if (!user.address) {
-					router.navigate(urls.address);
+				if (!currentAddress) {
+					this.openAddressModal();
 					return;
 				}
 
