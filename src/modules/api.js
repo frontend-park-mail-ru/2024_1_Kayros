@@ -1,5 +1,6 @@
 import { Notification } from 'resto-ui';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SAGESTS } from '../constants';
+import csatAnswers from '../mocks/csat-answers';
 import ajax from './ajax';
 
 /**
@@ -408,6 +409,21 @@ class Api {
 
 		return false;
 	}
+
+	/**
+	 * Метод для получения статистики ответов.
+	 * @param {Function} callback -Результат запроса
+	 */	
+	async getCSATAnswers(callback) {
+		const data = await ajax.get(`${this.#url}/statistic`);
+
+		if (!data){
+			callback(csatAnswers);
+		}
+
+		callback(data);
+	}
+
 }
 
 export default new Api();

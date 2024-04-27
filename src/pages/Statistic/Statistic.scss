@@ -1,0 +1,33 @@
+.not-found {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: auto;
+	text-align: center;
+
+	h1 {
+		margin-bottom: 20px;
+	}
+
+	p {
+		margin-bottom: 30px;
+	}
+
+	table {
+		border-collapse: collapse;
+		width: 80%; // Ширина таблицы по отношению к контейнеру
+		margin-bottom: 20px; // Добавлено место под таблицей
+
+		th,
+		td {
+			border: 1px solid rgb(204 204 204); // Границы ячеек
+			padding: 8px; // Отступы внутри ячеек
+			text-align: left; // Выравнивание текста в ячейках
+		}
+
+		th {
+			background-color: rgb(244 244 244); // Цвет фона заголовков
+		}
+	}
+}

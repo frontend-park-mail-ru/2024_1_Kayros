@@ -1,0 +1,33 @@
+{{!-- <div class="not-found">
+    <h1>Статистика ответов:</h1>
+        {{#each data}}
+        <div class="statistic">  
+            {{name}}  {{rating_for_day}} {{rating_for_month}} {{rating_for_year}}
+        </div>
+        {{/each}}
+    <div class="not-found__return-button"> </div>
+</div> --}}
+<div class="not-found">
+    <h1>Статистика ответов:</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Рейтинг за день</th>
+                <th>Рейтинг за месяц</th>
+                <th>Рейтинг за год</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr class="statistic">
+                <td>{{name}}</td>
+                <td>{{rating_for_day}}</td>
+                <td>{{rating_for_month}}</td>
+                <td>{{rating_for_year}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <div class="not-found__return-button"> </div>
+</div>
