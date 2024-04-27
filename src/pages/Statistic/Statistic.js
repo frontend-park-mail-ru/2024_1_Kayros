@@ -34,6 +34,7 @@ class Statistic {
 	 */
 	async render() {
 		await this.getData();
+
 		const html = template({ data: this.data });
 		this.#parent.insertAdjacentHTML('beforeend', html);
 		new Button(document.querySelector('.statistic__return-button'), {
