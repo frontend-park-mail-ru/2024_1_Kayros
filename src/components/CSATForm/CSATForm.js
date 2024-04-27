@@ -19,7 +19,7 @@ class CSATForm {
 	}
 
 	/**
-	 *
+	 * Получение вопросов
 	 */
 	async getData() {
 		await api.getCSATQuestions((data) => {
@@ -62,7 +62,7 @@ class CSATForm {
 			const div = document.createElement('div');
 			div.innerHTML = questionTemplate(item);
 
-			this.items.push({ content: div.innerHTML, id: item.id });
+			this.items.push({ content: div.innerHTML, ...item });
 		});
 
 		Object.entries(this.questions.focusQuestions).forEach(([focusId, items]) => {
@@ -86,7 +86,7 @@ class CSATForm {
 				const div = document.createElement('div');
 				div.innerHTML = questionTemplate(item);
 
-				questions.push({ content: div.innerHTML, id: item.id });
+				questions.push({ content: div.innerHTML, ...item });
 			});
 
 			const mapFrame = map.querySelector('iframe');
@@ -100,7 +100,7 @@ class CSATForm {
 
 				form.style.zIndex = 101;
 
-				map.parentElement.style.boxShadow = 'rgb(37 255 0 / 28%) 0px 15px 20px 0px';
+				map.parentElement.style.boxShadow = 'rgb(0 0 0 / 28%) 0px 0px 30px 15px';
 
 				form.style.left = '10px';
 				form.style.bottom = '10px';

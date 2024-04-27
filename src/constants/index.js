@@ -8,6 +8,7 @@ export const ERROR_MESSAGES = {
 	PASSWORD_CHANGE: 'Не удалось изменить пароль',
 	CART_UPDATE: 'Корзина в данный момент недоступна',
 	CHECKOUT: 'Не удалось оформить заказ',
+	CSAT: 'Не удалось отправить',
 };
 
 export const SUCCESS_MESSAGES = {
@@ -44,7 +45,7 @@ export const SUCCESS_MESSAGES = {
 		description: 'Передали заказ курьеру!',
 	},
 	csat: {
-		title: 'Успешно отправлено',
+		title: 'Ответ успешно отправлен',
 		description: 'Спасибо за уделенное время!',
 	},
 };

@@ -410,9 +410,9 @@ class Api {
 	}
 
 	/**
-	 *
-	 * @param {*} callback - коллбэк
-	 * @param {*} url - адрес страницы, с которой идет запрос
+	 * Функция для получения вопросов
+	 * @param {void} callback - коллбэк
+	 * @param {string} url - адрес страницы, с которой идет запрос
 	 */
 	async getCSATQuestions(callback, url) {
 		const data = await ajax.get(`${this.#url}/quiz/questions?url=${url}`);
@@ -421,9 +421,9 @@ class Api {
 	}
 
 	/**
-	 *
-	 * @param {*} callback - коллбэк
-	 * @param {*} body - body
+	 * Функция для отправки формы
+	 * @param {void} callback - коллбэк
+	 * @param {object} body - body
 	 */
 	async sendCSATQuestions(callback, body) {
 		const { data, error } = await ajax.post(`${this.#url}/quiz/question/rating`, body);
@@ -435,9 +435,17 @@ class Api {
 				description: SUCCESS_MESSAGES.csat.description,
 				type: 'success',
 			});
+
+			callback(data);
+			return;
 		}
 
-		callback(data);
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CSAT,
+			description: error || data.detail || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
 	}
 }
 

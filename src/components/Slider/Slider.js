@@ -102,6 +102,14 @@ class Slider {
 		this.items.forEach((question) => {
 			const max = question.param_type === 'CSAT' ? 5 : 10;
 
+			if (max === 5) {
+				const description = this.parent.querySelector(`#slider__description-${question.id}`);
+				description.style.width = '50%';
+			} else {
+				const description = this.parent.querySelector(`#slider__description-${question.id}`);
+				description.style.width = '100%';
+			}
+
 			for (let rating = 1; rating <= max; rating++) {
 				const action = this.parent.querySelector(`.question__buttons_${question.id}`);
 				const button = new Button(action, {
