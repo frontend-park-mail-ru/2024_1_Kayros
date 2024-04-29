@@ -1,4 +1,5 @@
 import { Notification } from 'resto-ui';
+import form from '../components/CSATForm';
 import Content from '../components/Content/index.js';
 import Header from '../components/Header/index.js';
 import { SUCCESS_MESSAGES } from '../constants/index.js';
@@ -15,6 +16,7 @@ class Router {
 	constructor() {
 		this.previousState = null;
 		this.routes = {};
+		this.csatTimeout = '';
 		window.addEventListener('popstate', this.handleLocationChange.bind(this));
 	}
 
@@ -81,9 +83,10 @@ class Router {
 		if (
 			(currentPath === urls.signIn && path === urls.signUp) ||
 			(currentPath === urls.signUp && path === urls.signIn) ||
-			path === urls.address
+			path === urls.address ||
+			path === urls.csatForm
 		) {
-			if (path === urls.address) {
+			if (path === urls.address || path === urls.csatForm) {
 				this.previousState = window.history?.state;
 			}
 
@@ -127,7 +130,7 @@ class Router {
 		const header = document.querySelector('.header');
 		const oldContent = document.querySelector('.content');
 
-		if (window.location.pathname !== urls.address) {
+		if (window.location.pathname !== urls.address && window.location.pathname !== urls.csatForm) {
 			oldContent?.remove();
 		}
 
@@ -157,6 +160,11 @@ class Router {
 	 * Обрабатывает изменение местоположения, отображая соответствующий маршрут.
 	 */
 	handleLocationChange() {
+		clearTimeout(this.csatTimeout);
+		this.csatTimeout = setTimeout(() => {
+			form.render();
+		}, 4000);
+
 		const params = {};
 
 		const currentPath = window.location.pathname;
@@ -198,7 +206,7 @@ class Router {
 		const content = document.querySelector('.content');
 
 		if (currentRoute) {
-			if (currentPath === urls.address && content.children.length === 0) {
+			if ((currentPath === urls.address || currentPath === urls.csatForm) && content.children.length === 0) {
 				const previousRoute = this.routes[this.previousState?.path || urls.restaurants];
 				const previousPage = new previousRoute.component(content);
 				previousPage.render();

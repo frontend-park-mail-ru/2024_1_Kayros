@@ -408,6 +408,45 @@ class Api {
 
 		return false;
 	}
+
+	/**
+	 * Функция для получения вопросов
+	 * @param {void} callback - коллбэк
+	 * @param {string} url - адрес страницы, с которой идет запрос
+	 */
+	async getCSATQuestions(callback, url) {
+		const data = await ajax.get(`${this.#url}/quiz/questions?url=${url}`);
+
+		callback(data);
+	}
+
+	/**
+	 * Функция для отправки формы
+	 * @param {void} callback - коллбэк
+	 * @param {object} body - body
+	 */
+	async sendCSATQuestions(callback, body) {
+		const { data, error } = await ajax.post(`${this.#url}/quiz/question/rating`, body);
+
+		if (!error) {
+			Notification.open({
+				duration: 3,
+				title: SUCCESS_MESSAGES.csat.title,
+				description: SUCCESS_MESSAGES.csat.description,
+				type: 'success',
+			});
+
+			callback(data);
+			return;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CSAT,
+			description: error || data.detail || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+	}
 }
 
 export default new Api();
