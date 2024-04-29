@@ -79,7 +79,7 @@ class CSATForm {
 
 			const form = frame.contentDocument.querySelector('.csat-form');
 
-			const slider = new Slider(form, { formData: this.formData, items: this.items });
+			const slider = new Slider(form, { frame, formData: this.formData, items: this.items });
 			slider.render();
 
 			const action = document.createElement('div');
@@ -116,8 +116,9 @@ class CSATForm {
 				onClick: () => {
 					frame.style.opacity = 0;
 					frame.style.bottom = '-60px';
-					form.remove();
-					form.style.opacity = 0;
+					setTimeout(() => {
+						form.remove();
+					}, 300);
 				},
 			});
 
@@ -225,8 +226,10 @@ class CSATForm {
 					style: 'clear',
 					onClick: () => {
 						map.parentElement.style.boxShadow = '';
-						newFrame.remove();
-						form.style.opacity = 0;
+						newFrame.style.opacity = 0;
+						setTimeout(() => {
+							mapFrame.remove();
+						}, 300);
 					},
 				});
 

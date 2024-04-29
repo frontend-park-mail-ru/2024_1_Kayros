@@ -60,9 +60,12 @@ class Slider {
 	next() {
 		if (this.active === this.items.length - 1) {
 			api.sendCSATQuestions(() => {
-				this.frame?.remove();
+				this.frame.style.opacity = 0;
+				this.frame.style.bottom = '-60px';
 
-				this.parent.remove();
+				setTimeout(() => {
+					this.parent.remove();
+				}, 300);
 
 				if (this.focusId) {
 					const element = document.querySelector(`#${this.focusId}`);
