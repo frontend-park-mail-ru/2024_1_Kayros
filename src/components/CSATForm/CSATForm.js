@@ -48,15 +48,81 @@ class CSATForm {
 	 */
 	async render() {
 		this.items = [];
-		const frame = document.querySelector('iframe');
-
-		frame.onload = () => {
-			frame.style.opacity = 1;
-		};
-
-		frame.srcdoc = template();
 
 		await this.getData();
+
+		const frame = document.querySelector('iframe');
+
+		const cssLink = document.createElement('link');
+		cssLink.href = 'styles.css';
+		cssLink.rel = 'stylesheet';
+		cssLink.type = 'text/css';
+		cssLink.id = 'frame-stylesheet';
+
+		frame.srcdoc = template();
+		frame.style.opacity = 0;
+		frame.style.bottom = '-60px';
+
+		frame.onload = () => {
+			if (this.questions.defaultQuestions.length === 0) {
+				return;
+			}
+
+			frame.contentWindow.document.head.appendChild(cssLink);
+
+			const frameStylesheet = frame.contentDocument.querySelector('#frame-stylesheet');
+
+			frameStylesheet.onload = async () => {
+				frame.style.opacity = 1;
+				frame.style.bottom = '-20px';
+			};
+
+			const form = frame.contentDocument.querySelector('.csat-form');
+
+			const slider = new Slider(form, { formData: this.formData, items: this.items });
+			slider.render();
+
+			const action = document.createElement('div');
+			action.className = 'question__buttons_q';
+			form.appendChild(action);
+
+			const backButton = new Button(action, {
+				id: 'form-back-button',
+				icon: 'back-arrow',
+				style: 'clear',
+				onClick: () => slider.prev(),
+			});
+
+			backButton.render();
+
+			const prevBtn = form.querySelector('#form-back-button');
+			prevBtn.style.opacity = 0;
+
+			const nextButton = new Button(action, {
+				id: 'form-next-button',
+				style: 'clear',
+				icon: this.items.length > 1 ? 'right-arrow' : 'send-icon',
+				onClick: () => {
+					slider.next();
+				},
+			});
+
+			nextButton.render();
+
+			const closeButton = new Button(form, {
+				id: 'csat-close-button',
+				style: 'clear',
+				icon: 'close',
+				onClick: () => {
+					frame.style.opacity = 0;
+					frame.style.bottom = '-60px';
+					form.remove();
+					form.style.opacity = 0;
+				},
+			});
+
+			closeButton.render();
+		};
 
 		this.questions.defaultQuestions.forEach((item) => {
 			const div = document.createElement('div');
@@ -73,14 +139,24 @@ class CSATForm {
 			}
 
 			const newFrame = document.createElement('iframe');
+			newFrame.style.opacity = 0;
+			newFrame.style.bottom = '-40px';
+			newFrame.style.transition = '0.4s';
+			newFrame.style.position = 'absolute';
 
 			const map = document.getElementById(focusId);
 
+			map.appendChild(newFrame);
+
 			newFrame.srcdoc = template();
 
-			if (!map) return;
+			const cssLink = document.createElement('link');
+			cssLink.href = 'styles.css';
+			cssLink.rel = 'stylesheet';
+			cssLink.type = 'text/css';
+			cssLink.id = 'frame-stylesheet';
 
-			map.appendChild(newFrame);
+			if (!map) return;
 
 			items.forEach((item) => {
 				const div = document.createElement('div');
@@ -94,8 +170,18 @@ class CSATForm {
 
 			mapFrame.style.border = 0;
 			mapFrame.style.width = '100%';
+			mapFrame.style.height = '100%';
 
 			mapFrame.onload = () => {
+				newFrame.contentWindow.document.head.appendChild(cssLink);
+
+				const frameStylesheet = mapFrame.contentDocument.querySelector('#frame-stylesheet');
+
+				frameStylesheet.onload = async () => {
+					mapFrame.style.bottom = 0;
+					mapFrame.style.opacity = 1;
+				};
+
 				const form = mapFrame.contentDocument.querySelector('.csat-form');
 
 				form.style.zIndex = 101;
@@ -133,15 +219,6 @@ class CSATForm {
 
 				nextButton.render();
 
-				var cssLink = document.createElement('link');
-				cssLink.href = 'styles.css';
-				cssLink.rel = 'stylesheet';
-				cssLink.type = 'text/css';
-
-				newFrame.onload = () => {
-					newFrame.style.opacity = 1;
-				};
-
 				const closeButton = new Button(form, {
 					id: 'csat-close-button',
 					icon: 'close',
@@ -154,65 +231,8 @@ class CSATForm {
 				});
 
 				closeButton.render();
-
-				newFrame.contentWindow.document.head.appendChild(cssLink);
 			};
 		});
-
-		if (this.items.length === 0) {
-			return;
-		}
-
-		const form = frame.contentDocument.querySelector('.csat-form');
-
-		const slider = new Slider(form, { formData: this.formData, items: this.items });
-		slider.render();
-
-		const action = document.createElement('div');
-		action.className = 'question__buttons_q';
-		form.appendChild(action);
-
-		const backButton = new Button(action, {
-			id: 'form-back-button',
-			icon: 'back-arrow',
-			style: 'clear',
-			onClick: () => slider.prev(),
-		});
-
-		backButton.render();
-
-		const prevBtn = form.querySelector('#form-back-button');
-		prevBtn.style.opacity = 0;
-
-		const nextButton = new Button(action, {
-			id: 'form-next-button',
-			style: 'clear',
-			icon: this.items.length > 1 ? 'right-arrow' : 'send-icon',
-			onClick: () => {
-				slider.next();
-			},
-		});
-
-		nextButton.render();
-
-		const closeButton = new Button(form, {
-			id: 'csat-close-button',
-			style: 'clear',
-			icon: 'close',
-			onClick: () => {
-				form.remove();
-				form.style.opacity = 0;
-			},
-		});
-
-		closeButton.render();
-
-		var cssLink = document.createElement('link');
-		cssLink.href = 'styles.css';
-		cssLink.rel = 'stylesheet';
-		cssLink.type = 'text/css';
-
-		frame.contentWindow.document.head.appendChild(cssLink);
 	}
 }
 

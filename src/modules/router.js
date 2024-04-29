@@ -163,7 +163,7 @@ class Router {
 		clearTimeout(this.csatTimeout);
 		this.csatTimeout = setTimeout(() => {
 			form.render();
-		}, 4000);
+		}, 2000);
 
 		const params = {};
 
