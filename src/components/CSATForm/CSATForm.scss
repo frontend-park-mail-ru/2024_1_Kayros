@@ -7,7 +7,7 @@
 	}
 }
 
-.question__buttons {
+.question__answers {
 	display: flex;
 	gap: 5px;
 	width: 100%;
@@ -59,7 +59,7 @@
 	padding-right: 20px;
 }
 
-.question__buttons_q {
+.question__navigation-buttons {
 	display: flex;
 	justify-content: space-between;
 	gap: 5px;

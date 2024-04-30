@@ -14,7 +14,6 @@ class CSATForm {
 	 */
 	constructor() {
 		this.questions = { defaultQuestions: [], focusQuestions: {} };
-		this.items = [];
 		this.formData = [];
 	}
 
@@ -44,15 +43,31 @@ class CSATForm {
 	}
 
 	/**
-	 * Рендеринг компонента
+	 * Создание элементов вопросов
+	 * @param {Array<object>} items - информация о вопросах
+	 * @returns {Array<object>} - элементы с вопросами
 	 */
-	async render() {
-		this.items = [];
+	getSliderChildren(items) {
+		const elements = [];
 
-		await this.getData();
+		items.forEach((item) => {
+			const div = document.createElement('div');
+			div.innerHTML = questionTemplate(item);
 
-		const frame = document.querySelector('iframe');
+			elements.push({ content: div.innerHTML, ...item });
+		});
 
+		return elements;
+	}
+
+	/**
+	 * Наполнение фрейма вопросами
+	 * @param {HTMLIFrameElement} frame - iframe элемент
+	 * @param {object} params - параметры
+	 * @param {Array<HTMLElement>} params.questionElements - элементы опросника
+	 * @param {HTMLElement} params.focusElement - целевой элемент
+	 */
+	setFrame(frame, { questionElements, focusElement }) {
 		const cssLink = document.createElement('link');
 		cssLink.href = 'styles.css';
 		cssLink.rel = 'stylesheet';
@@ -62,28 +77,55 @@ class CSATForm {
 		frame.srcdoc = template();
 		frame.style.opacity = 0;
 		frame.style.bottom = '-60px';
+		frame.style.pointerEvents = 'all';
+
+		if (focusElement) {
+			frame.style.transition = '0.4s';
+			frame.style.position = 'absolute';
+			frame.style.zIndex = 100;
+			frame.style.border = 0;
+			frame.style.width = '100%';
+			frame.style.height = '100%';
+		}
 
 		frame.onload = () => {
-			if (this.questions.defaultQuestions.length === 0) {
-				return;
-			}
-
 			frame.contentWindow.document.head.appendChild(cssLink);
 
 			const frameStylesheet = frame.contentDocument.querySelector('#frame-stylesheet');
 
-			frameStylesheet.onload = async () => {
-				frame.style.opacity = 1;
-				frame.style.bottom = '-20px';
-			};
-
 			const form = frame.contentDocument.querySelector('.csat-form');
 
-			const slider = new Slider(form, { frame, formData: this.formData, items: this.items });
+			frameStylesheet.onload = async () => {
+				setTimeout(() => {
+					frame.style.opacity = 1;
+
+					if (focusElement) {
+						frame.style.bottom = 0;
+
+						form.style.zIndex = 101;
+
+						focusElement.parentElement.style.boxShadow = 'rgb(0 0 0 / 28%) 0px 0px 30px 15px';
+
+						form.style.left = '10px';
+						form.style.bottom = '10px';
+						return;
+					}
+
+					frame.style.bottom = '-20px';
+				}, 200);
+			};
+
+			const slider = new Slider(form, {
+				frame,
+				formData: this.formData,
+				children: questionElements,
+				focusId: focusElement?.id,
+			});
+
 			slider.render();
 
 			const action = document.createElement('div');
-			action.className = 'question__buttons_q';
+			action.className = 'question__navigation-buttons';
 			form.appendChild(action);
 
 			const backButton = new Button(action, {
@@ -101,8 +143,30 @@ class CSATForm {
 			const nextButton = new Button(action, {
 				id: 'form-next-button',
 				style: 'clear',
-				icon: this.items.length > 1 ? 'right-arrow' : 'send-icon',
+				icon: questionElements.length > 1 ? 'right-arrow' : 'send-icon',
 				onClick: () => {
+					if (slider.active === questionElements.length - 1) {
+						api.sendCSATQuestions(() => {
+							frame.style.opacity = 0;
+							frame.style.bottom = '-60px';
+							frame.style.pointerEvents = 'none';
+
+							setTimeout(() => {
+								if (focusElement) {
+									frame.remove();
+								} else {
+									form.remove();
+								}
+							}, 300);
+
+							if (focusElement) {
+								focusElement.parentElement.style.boxShadow = '';
+							}
+						}, slider.formData);
+
+						return;
+					}
+
 					slider.next();
 				},
 			});
@@ -114,9 +178,18 @@ class CSATForm {
 				style: 'clear',
 				icon: 'close',
 				onClick: () => {
+					if (focusElement) {
+						focusElement.parentElement.style.boxShadow = '';
+					}
+
 					frame.style.opacity = 0;
 					frame.style.bottom = '-60px';
+					frame.style.pointerEvents = 'none';
 					setTimeout(() => {
+						if (focusElement) {
+							frame.remove();
+						}
+
 						form.remove();
 					}, 300);
 				},
@@ -124,117 +197,42 @@ class CSATForm {
 
 			closeButton.render();
 		};
+	}
 
-		this.questions.defaultQuestions.forEach((item) => {
-			const div = document.createElement('div');
-			div.innerHTML = questionTemplate(item);
+	/**
+	 * Рендеринг компонента
+	 */
+	async render() {
+		await this.getData();
 
-			this.items.push({ content: div.innerHTML, ...item });
-		});
+		const defaultChildren = this.getSliderChildren(this.questions.defaultQuestions);
 
-		Object.entries(this.questions.focusQuestions).forEach(([focusId, items]) => {
-			const questions = [];
+		const frame = document.querySelector('iframe');
 
-			if (!items) {
+		if (defaultChildren.length > 0) {
+			this.setFrame(frame, { questionElements: defaultChildren, focus: false });
+		}
+
+		Object.entries(this.questions.focusQuestions).forEach(([focusId, questions]) => {
+			if (!questions) {
 				return;
 			}
 
 			const newFrame = document.createElement('iframe');
 			newFrame.style.opacity = 0;
-			newFrame.style.bottom = '-40px';
-			newFrame.style.transition = '0.4s';
-			newFrame.style.position = 'absolute';
 
-			const map = document.getElementById(focusId);
+			const focusElement = document.getElementById(focusId);
+			focusElement.appendChild(newFrame);
 
-			map.appendChild(newFrame);
+			if (!focusElement) return;
 
-			newFrame.srcdoc = template();
+			const focusChildren = this.getSliderChildren(questions);
 
-			const cssLink = document.createElement('link');
-			cssLink.href = 'styles.css';
-			cssLink.rel = 'stylesheet';
-			cssLink.type = 'text/css';
-			cssLink.id = 'frame-stylesheet';
+			const focusFrame = focusElement.querySelector('iframe');
 
-			if (!map) return;
-
-			items.forEach((item) => {
-				const div = document.createElement('div');
-				div.innerHTML = questionTemplate(item);
-
-				questions.push({ content: div.innerHTML, ...item });
-			});
-
-			const mapFrame = map.querySelector('iframe');
-			mapFrame.style.zIndex = 100;
-
-			mapFrame.style.border = 0;
-			mapFrame.style.width = '100%';
-			mapFrame.style.height = '100%';
-
-			mapFrame.onload = () => {
-				newFrame.contentWindow.document.head.appendChild(cssLink);
-
-				const frameStylesheet = mapFrame.contentDocument.querySelector('#frame-stylesheet');
-
-				frameStylesheet.onload = async () => {
-					mapFrame.style.bottom = 0;
-					mapFrame.style.opacity = 1;
-				};
-
-				const form = mapFrame.contentDocument.querySelector('.csat-form');
-
-				form.style.zIndex = 101;
-
-				map.parentElement.style.boxShadow = 'rgb(0 0 0 / 28%) 0px 0px 30px 15px';
-
-				form.style.left = '10px';
-				form.style.bottom = '10px';
-
-				const slider = new Slider(form, { frame: newFrame, formData: this.formData, items: questions, focusId });
-				slider.render();
-
-				const action = document.createElement('div');
-				action.className = 'question__buttons_q';
-				form.appendChild(action);
-
-				const backButton = new Button(action, {
-					id: 'form-back-button',
-					icon: 'back-arrow',
-					style: 'clear',
-					onClick: () => slider.prev(),
-				});
-
-				backButton.render();
-
-				const prevBtn = form.querySelector('#form-back-button');
-				prevBtn.style.opacity = 0;
-
-				const nextButton = new Button(action, {
-					id: 'form-next-button',
-					style: 'clear',
-					icon: questions.length > 1 ? 'right-arrow' : 'send-icon',
-					onClick: () => slider.next(),
-				});
-
-				nextButton.render();
-
-				const closeButton = new Button(form, {
-					id: 'csat-close-button',
-					icon: 'close',
-					style: 'clear',
-					onClick: () => {
-						map.parentElement.style.boxShadow = '';
-						newFrame.style.opacity = 0;
-						setTimeout(() => {
-							mapFrame.remove();
-						}, 300);
-					},
-				});
-
-				closeButton.render();
-			};
+			if (focusChildren.length > 0) {
+				this.setFrame(focusFrame, { questionElements: focusChildren, focusElement });
+			}
 		});
 	}
 }

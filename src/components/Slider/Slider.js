@@ -1,24 +1,23 @@
-import api from '../../modules/api';
 import Button from '../Button/Button';
 import template from './Slider.hbs';
 import './Slider.scss';
 
 /**
- * Лоадер
+ * Слайдер
  */
 class Slider {
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
 	 * @param {object} params - параметры компонента
-	 * @param {object} params.items - children
+	 * @param {object} params.children - элементы слайдера
 	 * @param {HTMLIFrameElement} params.frame - frame
 	 * @param {object} params.formData - ответы на форму
 	 * @param {object} params.focusId - элемент на странице
 	 */
-	constructor(parent, { frame, items, formData, focusId }) {
+	constructor(parent, { frame, children, formData, focusId }) {
 		this.parent = parent;
-		this.items = items;
+		this.children = children;
 		this.active = 0;
 		this.activeQuestions = {};
 		this.marginLeft = 0;
@@ -58,24 +57,6 @@ class Slider {
 	 *
 	 */
 	next() {
-		if (this.active === this.items.length - 1) {
-			api.sendCSATQuestions(() => {
-				this.frame.style.opacity = 0;
-				this.frame.style.bottom = '-60px';
-
-				setTimeout(() => {
-					this.parent.remove();
-				}, 300);
-
-				if (this.focusId) {
-					const element = document.querySelector(`#${this.focusId}`);
-					element.parentElement.style.boxShadow = '';
-				}
-			}, this.formData);
-
-			return;
-		}
-
 		const prev = this.parent.querySelector('#form-back-button');
 		const next = this.parent.querySelector('#form-next-button');
 
@@ -84,7 +65,7 @@ class Slider {
 		this.marginLeft -= this.parent.offsetWidth;
 		slider.style.marginLeft = this.marginLeft + 'px';
 
-		if (this.active === this.items.length - 1) {
+		if (this.active === this.children.length - 1) {
 			const img = new Image();
 			img.src = 'assets/send-icon.svg';
 			next.innerHTML = '';
@@ -100,38 +81,38 @@ class Slider {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.parent.insertAdjacentHTML('afterbegin', template({ items: this.items }));
+		this.parent.insertAdjacentHTML('afterbegin', template({ items: this.children }));
 
-		this.items.forEach((question) => {
-			const max = question.param_type === 'CSAT' ? 5 : 10;
+		this.children.forEach((element) => {
+			const max = element.param_type === 'CSAT' ? 5 : 10;
 
 			if (max === 5) {
-				const description = this.parent.querySelector(`#slider__description-${question.id}`);
+				const description = this.parent.querySelector(`#slider__description-${element.id}`);
 				description.style.width = '50%';
 			} else {
-				const description = this.parent.querySelector(`#slider__description-${question.id}`);
+				const description = this.parent.querySelector(`#slider__description-${element.id}`);
 				description.style.width = '100%';
 			}
 
 			for (let rating = 1; rating <= max; rating++) {
-				const action = this.parent.querySelector(`.question__buttons_${question.id}`);
+				const action = this.parent.querySelector(`#question__answers-${element.id}`);
 				const button = new Button(action, {
-					id: `question-${question.id}-${rating}`,
+					id: `question-${element.id}-${rating}`,
 					content: rating,
 					style: 'clear',
 					onClick: () => {
-						this.formData = this.formData.filter((cu) => cu.id !== question.id);
-						this.formData.push({ id: question.id, rating: rating });
+						this.formData = this.formData.filter((cu) => cu.id !== element.id);
+						this.formData.push({ id: element.id, rating: rating });
 
-						if (this.activeQuestions[question.id]) {
-							const prevButton = action.querySelector(`#question-${question.id}-${this.activeQuestions[question.id]}`);
+						if (this.activeQuestions[element.id]) {
+							const prevButton = action.querySelector(`#question-${element.id}-${this.activeQuestions[element.id]}`);
 							prevButton.classList.remove('active');
 						}
 
-						const activeButton = action.querySelector(`#question-${question.id}-${rating}`);
+						const activeButton = action.querySelector(`#question-${element.id}-${rating}`);
 						activeButton.classList.add('active');
 
-						this.activeQuestions[question.id] = rating;
+						this.activeQuestions[element.id] = rating;
 					},
 				});
 
