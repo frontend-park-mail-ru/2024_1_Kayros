@@ -1,10 +1,17 @@
 import '@fontsource/montserrat';
+import * as VKID from '@vkid/sdk';
 import { Notification } from 'resto-ui';
 import Layout from './components/Layout';
 import { router } from './modules/router';
 import routes from './routes';
 import urls from './routes/urls';
 import './global.scss';
+
+VKID.Config.set({
+	app: '51915631',
+	redirectUrl: 'https://resto-go.ru',
+	state: '',
+});
 
 const root = document.createElement('div');
 root.id = 'root';

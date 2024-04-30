@@ -1,3 +1,4 @@
+import * as VKID from '@vkid/sdk';
 import { FIELDS_SIGN_IN, FIELDS_SIGN_UP } from '../../constants';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
@@ -149,6 +150,19 @@ class AuthForm {
 				this.handleSubmit();
 			},
 		}).render();
+
+		const oneTap = new VKID.OneTap();
+
+		const vkAuthButton = document.querySelector('.auth-container__vk-auth');
+
+		if (vkAuthButton) {
+			oneTap.render({
+				container: vkAuthButton,
+				scheme: VKID.Scheme.LIGHT,
+				lang: VKID.Languages.RUS,
+				styles: { borderRadius: 14 },
+			});
+		}
 	}
 }
 
