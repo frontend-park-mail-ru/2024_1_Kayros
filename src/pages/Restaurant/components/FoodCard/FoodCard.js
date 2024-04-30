@@ -4,7 +4,7 @@ import Modal from '../../../../components/Modal/Modal';
 import api from '../../../../modules/api';
 import { router } from '../../../../modules/router';
 import urls from '../../../../routes/urls';
-import { localStorageHelper } from '../../../../utils';
+import { localStorageHelper, setCookieIfNotExist } from '../../../../utils';
 import clearCartModalTemplate from './ClearCartModal.hbs';
 import template from './FoodCard.hbs';
 import authModalTemplate from './NeedAuthModal.hbs';
@@ -39,11 +39,7 @@ class FoodCard {
 			return;
 		}
 
-		const cookieExists = document.cookie.includes('unauth_token=');
-
-		if (!cookieExists) {
-			document.cookie = `unauth_token=${crypto.randomUUID()}; path=/`;
-		}
+		setCookieIfNotExist('unauth_token', crypto.randomUUID());
 	}
 
 	/**

@@ -1,6 +1,6 @@
 import api from '../../modules/api';
 import { router } from '../../modules/router';
-import { localStorageHelper } from '../../utils';
+import { localStorageHelper, setCookieIfNotExist } from '../../utils';
 import Button from '../Button/Button';
 import Header from '../Header/Header';
 import template from './AddressSagests.hbs';
@@ -50,11 +50,7 @@ class AddressSagests {
 
 		this.address = searchInput.value.split(' · ')[1] || searchInput.value;
 
-		const cookieExists = document.cookie.includes('unauth_token=');
-
-		if (!cookieExists) {
-			document.cookie = `unauth_token=${crypto.randomUUID()}; path=/`;
-		}
+		setCookieIfNotExist('unauth_token', crypto.randomUUID());
 
 		await api.updateAddressSagests({ address: this.address }, this.handleAddressChange.bind(this));
 		const cartAddress = document.querySelector('#main-address');
