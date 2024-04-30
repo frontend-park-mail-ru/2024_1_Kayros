@@ -47,7 +47,7 @@ class Restaurants {
 	/**
 	 * Рендеринг страницы
 	 */
-	render() {
+	async render() {
 		this.#parent.insertAdjacentHTML('beforeend', template());
 
 		const currentHeader = document.querySelector('.header');
