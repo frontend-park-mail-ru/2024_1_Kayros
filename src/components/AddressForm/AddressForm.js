@@ -19,6 +19,20 @@ class AddressForm {
 	constructor() {}
 
 	/**
+	 * Получение местоположения пользователя
+	 * @param {*} goToPoint - функция для перехода по точке
+	 */
+	getLocation(goToPoint) {
+		if (!navigator.geolocation) {
+			return;
+		}
+
+		navigator.geolocation.getCurrentPosition((position) => {
+			goToPoint([position.coords.longitude, position.coords.latitude]);
+		});
+	}
+
+	/**
 	 * Рендеринг компонента
 	 */
 	async render() {
@@ -41,6 +55,8 @@ class AddressForm {
 
 		if (user?.address) {
 			api.geoCoder(user.address, map.goToPoint.bind(map));
+		} else {
+			this.getLocation(map.goToPoint.bind(map));
 		}
 
 		const sagestsElement = new AddressSagests(modalContent.querySelector('.find-address__sagests-container'), {
