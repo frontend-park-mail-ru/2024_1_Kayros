@@ -7,6 +7,8 @@ import RestaurantPage from '../pages/Restaurant';
 import RestaurantsPage from '../pages/Restaurants';
 import SignInPage from '../pages/SignIn';
 import SignUpPage from '../pages/SignUp';
+import StatisticPage from '../pages/Statistic';
+import SurveyPage from '../pages/Survey';
 import urls from './urls';
 
 const routes = {
@@ -41,6 +43,14 @@ const routes = {
 	[urls.profile]: {
 		title: 'Профиль',
 		component: ProfilePage,
+	},
+	[urls.statistic]: {
+		title: 'Статистика',
+		component: StatisticPage,
+	},
+	[urls.survey]: {
+		title: 'Опрос',
+		component: SurveyPage,
 	},
 };
 

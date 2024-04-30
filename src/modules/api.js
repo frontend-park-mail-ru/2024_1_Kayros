@@ -447,6 +447,16 @@ class Api {
 			type: 'error',
 		});
 	}
+
+	/**
+	 * Метод для получения статистики ответов.
+	 * @param {Function} callback -Результат запроса
+	 */
+	async getCSATAnswers(callback) {
+		const data = await ajax.get(`${this.#url}/quiz/stats`);
+
+		callback(data);
+	}
 }
 
 export default new Api();

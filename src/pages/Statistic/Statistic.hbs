@@ -1,0 +1,22 @@
+<div class="statistic">
+    <h1>Статистика ответов</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Вопрос</th>
+                <th>NPS</th>
+                <th>CSAT</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td>{{question_name}}</td>
+                <td>{{nps}}</td>
+                <td>{{csat}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <div class="statistic__return-button"> </div>
+</div>
