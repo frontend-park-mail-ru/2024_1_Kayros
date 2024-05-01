@@ -32,7 +32,7 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async getOrdersData(callback) {
-		const data = await ajax.get(`${this.#url}/orders`);
+		const data = await ajax.get(`${this.#url}/order/current`);
 
 		if (!data) {
 			callback(orders);

@@ -116,12 +116,6 @@
 	--counter-add-bg-hover: #dfdfdf;
 
 	--food-card-bg-hover: #f4f4f4;
-
-	--counter-add-bg-active: linear-gradient(-90deg, #b9b9b9, 40%, transparent);
-	--counter-remove-bg-active: linear-gradient(90deg, #b9b9b9, 40%, transparent);
-	--counter-add-bg-hover: #dfdfdf;
-
-	--food-card-bg-hover: #f4f4f4;
 	--food-subtitle-color: #545454;
 
 	--cart-pay-method-color: #adadad;
@@ -133,4 +127,6 @@
 	--profile-bg-color: #fff;
 
 	--order-panel-box-shadow: 0 8px 20px 0 #0000002a;
+
+	--stepper-connector-default: #dfdfdf;
 }

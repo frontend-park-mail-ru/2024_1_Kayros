@@ -32,6 +32,7 @@
 		background: var(--layout-bg-color);
 		border-radius: 20px;
 		padding: 8px 30px;
+		margin-left: auto;
 
 		span {
 			border-left: 1px solid var(--order-status-border);
@@ -40,6 +41,11 @@
 			font-weight: 600;
 			color: var(--text-color);
 		}
+	}
+
+	&__status-bar {
+		width: 100%;
+		margin-top: 20px;
 	}
 }
 

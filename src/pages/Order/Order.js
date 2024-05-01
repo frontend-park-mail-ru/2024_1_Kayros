@@ -1,4 +1,5 @@
 import BackButton from '../../components/BackButton';
+import Stepper from '../../components/Stepper/Stepper';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
 import template from './Order.hbs';
@@ -48,6 +49,11 @@ class Order {
 		});
 
 		backButton.render();
+
+		const statusBarContainer = this.#parent.querySelector('.order__status-bar');
+
+		const statusBar = new Stepper(statusBarContainer, { steps: ['Создан', 'Собирается', 'В пути', 'Получен'] });
+		statusBar.render();
 	}
 }
 
