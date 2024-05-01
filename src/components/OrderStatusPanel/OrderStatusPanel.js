@@ -1,3 +1,4 @@
+import { ORDER_STATUSES } from '../../constants';
 import { router } from '../../modules/router';
 import Button from '../Button';
 import template from './OrderStatusPanel.hbs';
@@ -23,6 +24,8 @@ class OrderStatusPanel {
 	 * Рендеринг компонента
 	 */
 	render() {
+		this.info.status = ORDER_STATUSES[this.info.status];
+
 		this.#parent.insertAdjacentHTML('beforeend', template(this.info));
 
 		const order = document.querySelector(`#order-panel-${this.info.id}`);

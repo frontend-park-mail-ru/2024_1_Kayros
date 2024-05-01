@@ -1,6 +1,7 @@
 .dish-card {
 	display: flex;
 	align-items: center;
+	position: relative;
 
 	.counter-button {
 		height: 31px;
@@ -20,6 +21,9 @@
 	}
 
 	&__price {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 		font-size: 18px;
 		font-weight: 600;
 	}
@@ -41,5 +45,25 @@
 			min-height: 100%;
 			object-fit: cover;
 		}
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+		width: 100%;
+
+		&-block {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+
+	&__count {
+		padding: 2px 12px;
+		background: var(--layout-bg-color);
+		border-radius: 14px;
+		width: fit-content;
 	}
 }

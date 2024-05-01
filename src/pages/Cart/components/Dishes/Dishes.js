@@ -1,5 +1,5 @@
+import DishCard from '../../../../components/DishCard';
 import api from '../../../../modules/api';
-import DishCard from '../DishCard/DishCard';
 import template from './Dishes.hbs';
 import './Dishes.scss';
 

@@ -1,12 +1,42 @@
 <div class="order">
 	<div class="order__button-container"></div>
 	<div class="order__main">
-		<div class="order__title">
-			<span>Заказ № {{this.id}} </span>
-			<div class="order__status">Статус заказа <span>{{this.status}}</span></div>
-		</div>
-		<div class="order__create-time">Создан в 19:30</div>
-		<div class="order__status-bar"></div>
-	</div>
 
+		<div class="order__head">
+			<div class="order__title">Заказ № {{this.id}}</div>
+			<div class="order__status">
+				Статус заказа
+				<span>{{this.status}}</span>
+			</div>
+		</div>
+
+		<div class="order__create-time">Создан в 19:30</div>
+
+		<div class="order__status-bar"></div>
+
+		<div class="order__info">
+			<div class="order__food">
+        <div class="order__subtitle">Блюда</div>
+      </div>
+			<div class="order__details">
+				<div class="order__subtitle">Детали заказа</div>
+				<div class="order__restaurant">
+					<div>Ресторан</div>
+					<span>Mates</span>
+				</div>
+				<div class="order__address">
+					<div>Адрес доставки</div>
+					<span>{{this.address}}</span>
+				</div>
+				<div class="order__pay-method">
+					<div>Способ оплаты</div>
+					<span>Карта</span>
+				</div>
+				<div class="order__sum">
+					<div>Сумма заказа</div>
+					<span>{{this.sum}} ₽</span>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

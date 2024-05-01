@@ -151,6 +151,15 @@ export const VALIDATION_ERRORS = {
 	nameFormat: 'Имя должно начинаться с буквы и содержать от 2 до 19 символов',
 };
 
+export const ORDER_STATUSES = {
+	payed: 'Оплачен',
+	created: 'Создан',
+	cooking: 'Готовится',
+	onTheWay: 'В пути',
+	delivered: 'Доставлен',
+	cancelled: 'Отменен',
+};
+
 export const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export const INVALID_EMAIL_CHAR_REGEX = /[^a-zA-Z0-9._%+\-@]/;

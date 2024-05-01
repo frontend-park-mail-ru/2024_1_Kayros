@@ -26,12 +26,6 @@ class Restaurants {
 	 * @param {Array} items - массив ресторанов
 	 */
 	renderData(items) {
-		const restaurantsContainer = document.querySelector('.restaurants');
-		const title = document.createElement('div');
-		title.className = 'restaurants__title';
-		title.innerText = 'Рестораны';
-		restaurantsContainer.insertAdjacentElement('afterbegin', title);
-
 		const restaurants = document.querySelector('.restaurants__cards');
 
 		if (!items) {
@@ -57,6 +51,16 @@ class Restaurants {
 	 * @param {Array} items - массив заказов
 	 */
 	renderOrders(items) {
+		if (!items) {
+			return;
+		}
+
+		const restaurantsContainer = document.querySelector('.restaurants');
+		const title = document.createElement('div');
+		title.className = 'restaurants__title';
+		title.innerText = 'Рестораны';
+		restaurantsContainer.insertAdjacentElement('afterbegin', title);
+
 		const content = document.querySelector('.content');
 
 		const slickSlider = new SlickSlider(content);

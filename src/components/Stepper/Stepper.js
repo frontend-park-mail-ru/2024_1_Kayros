@@ -13,11 +13,12 @@ class Stepper {
 	 * @param {Element} parent - родительский элемент
 	 * @param {object} params - параметры
 	 * @param {Array<string>} params.steps - шаги
+	 * @param {number} params.active - текущий шаг
 	 */
-	constructor(parent, { steps }) {
+	constructor(parent, { steps, active = 1 }) {
 		this.#parent = parent;
 		this.steps = steps;
-		this.active = 3;
+		this.active = active;
 	}
 
 	/**

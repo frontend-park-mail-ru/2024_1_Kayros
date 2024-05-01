@@ -1,7 +1,10 @@
-import BackButton from '../../components/BackButton';
+import Button from '../../components/Button';
+import DishCard from '../../components/DishCard';
 import Stepper from '../../components/Stepper/Stepper';
+import { ORDER_STATUSES } from '../../constants';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
+import urls from '../../routes/urls';
 import template from './Order.hbs';
 import './Order.scss';
 
@@ -38,14 +41,16 @@ class Order {
 	async render() {
 		await this.getData();
 
+		this.order.status = ORDER_STATUSES[this.order.status];
+
 		this.#parent.insertAdjacentHTML('beforeend', template(this.order));
 
 		const buttonContainer = this.#parent.querySelector('.order__button-container');
-		const backButton = new BackButton(buttonContainer, {
+		const backButton = new Button(buttonContainer, {
 			id: 'order-back-button',
 			icon: 'back-arrow-full',
-			content: 'Вернуться',
-			onClick: () => router.back(),
+			content: 'Все рестораны',
+			onClick: () => router.navigate(urls.restaurants),
 		});
 
 		backButton.render();
@@ -54,6 +59,12 @@ class Order {
 
 		const statusBar = new Stepper(statusBarContainer, { steps: ['Создан', 'Собирается', 'В пути', 'Получен'] });
 		statusBar.render();
+
+		const foods = this.#parent.querySelector('.order__food');
+		this.order.food.forEach((dish) => {
+			const dishCard = new DishCard(foods, dish, { addCounter: false });
+			dishCard.render();
+		});
 	}
 }
 
