@@ -33,13 +33,17 @@
 		align-items: center;
 		justify-content: center;
 		margin-left: auto;
-		background: var(--layout-bg-color);
-		border-radius: 50%;
-		width: 36px;
-		height: 36px;
 	}
 }
 
 #order-status-button {
+	width: 36px;
+	height: 36px;
+	border-radius: 18px;
+	background: var(--layout-bg-color);
 	padding: 0;
+
+	&:hover {
+		background: var(--back-button-bg-hover);
+	}
 }
