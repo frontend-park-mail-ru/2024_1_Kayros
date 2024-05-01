@@ -1,5 +1,6 @@
 import { Notification } from 'resto-ui';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SAGESTS } from '../constants';
+import order from '../mocks/order';
 import orders from '../mocks/orders';
 import ajax from './ajax';
 
@@ -35,6 +36,22 @@ class Api {
 
 		if (!data) {
 			callback(orders);
+			return;
+		}
+
+		callback(data);
+	}
+
+	/**
+	 * Метод для получения информации о заказе
+	 * @param {number} id - id заказа
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getOrderInfo(id, callback) {
+		const data = await ajax.get(`${this.#url}/order/${id}`);
+
+		if (!data) {
+			callback(order);
 			return;
 		}
 

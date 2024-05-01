@@ -1,3 +1,4 @@
+import { router } from '../../modules/router';
 import Button from '../Button';
 import template from './OrderStatusPanel.hbs';
 import './OrderStatusPanel.scss';
@@ -26,7 +27,15 @@ class OrderStatusPanel {
 
 		const order = document.querySelector(`#order-panel-${this.info.id}`);
 		const buttonContainer = order.querySelector('.order-panel__button');
-		const button = new Button(buttonContainer, { id: 'order-status-button', icon: 'right-arrow-full', style: 'clear' });
+		const button = new Button(buttonContainer, {
+			id: 'order-status-button',
+			icon: 'right-arrow-full',
+			style: 'clear',
+			onClick: () => {
+				router.navigate(`orders/${this.info.id}`, { pageTitle: `Заказ №${this.info.id}` });
+			},
+		});
+
 		button.render();
 	}
 }

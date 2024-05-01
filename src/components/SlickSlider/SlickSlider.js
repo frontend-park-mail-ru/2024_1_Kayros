@@ -24,6 +24,10 @@ class SlickSlider {
 	 * @param {number} params.duration - длительность трансформации
 	 */
 	transform(track, { duration = 0 } = {}) {
+		if (isNaN(this.indentLeft)) {
+			return;
+		}
+
 		track.animate([{ transform: `translateX(${this.indentLeft}px)` }], {
 			fill: 'forwards',
 			easing: 'cubic-bezier(.05,.34,.45,1)',
@@ -61,6 +65,10 @@ class SlickSlider {
 
 			if (this.indentLeft > 0) {
 				this.indentLeft /= 4;
+			}
+
+			if (this.indentLeft < this.#parent.offsetWidth - track.offsetWidth - 68) {
+				this.indentLeft = event.clientX - dragStartX;
 			}
 
 			this.transform(track);
