@@ -23,11 +23,13 @@ class BackButton {
 	 * Рендеринг компонента
 	 */
 	render() {
+		const isMobile = window.innerWidth <= 767;
+
 		const backButton = new Button(this.#parent, {
 			id: this.#id,
-			content: router.previousState ? 'Назад' : 'На главную',
-			style: 'clear',
-			icon: 'back-arrow',
+			content: router.previousState ? 'Назад' : isMobile ? '' : 'На главную',
+			style: isMobile ? 'clear-back-mobile' : 'clear',
+			icon: isMobile ? 'back-arrow-full' : 'back-arrow',
 			onClick: () => router.back(),
 		});
 
