@@ -1,3 +1,5 @@
+import { MOBILE_BREAKPOINT } from '../constants';
+
 export const localStorageHelper = {
 	getItem(name) {
 		try {
@@ -49,3 +51,5 @@ export const getPhoneMask = (phoneElement) => {
 
 	return formattedPhone;
 };
+
+export const isMobileScreen = () => window.innerWidth <= MOBILE_BREAKPOINT;

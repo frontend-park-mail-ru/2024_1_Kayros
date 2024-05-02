@@ -1,3 +1,5 @@
+@import "../../constants.scss";
+
 .auth-container {
 	display: flex;
 	justify-content: center;
@@ -126,7 +128,7 @@
 	margin-bottom: 20px;
 }
 
-@media (width <= 767px) {
+@media (max-width: $sm) {
 	.auth-container {
 		position: relative;
 
