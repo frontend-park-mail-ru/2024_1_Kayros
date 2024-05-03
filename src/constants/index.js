@@ -155,7 +155,7 @@ export const ORDER_STATUSES = {
 	payed: 'Оплачен',
 	created: 'Создан',
 	cooking: 'Готовится',
-	onTheWay: 'В пути',
+	'on-the-way': 'В пути',
 	delivered: 'Доставлен',
 	cancelled: 'Отменен',
 };

@@ -1,9 +1,9 @@
 import api from '../../modules/api';
 import template from './Restaurant.hbs';
-import './Restaurant.scss';
 import Banner from './components/Banner/Banner';
 import CategoryFood from './components/CategoryFood/CategoryFood';
 import Sidebar from './components/SideBar/Sidebar';
+import './Restaurant.scss';
 
 /**
  * Страница ресторана

@@ -8,6 +8,8 @@ import urls from '../../routes/urls';
 import template from './Order.hbs';
 import './Order.scss';
 
+const STEPS = ['Создан', 'Готовится', 'В пути', 'Доставлен'];
+
 /**
  * Страница заказа
  */
@@ -24,6 +26,7 @@ class Order {
 		this.#parent = parent;
 		this.id = id;
 		this.order = {};
+		this.fetchInterval = '';
 	}
 
 	/**
@@ -57,7 +60,11 @@ class Order {
 
 		const statusBarContainer = this.#parent.querySelector('.order__status-bar');
 
-		const statusBar = new Stepper(statusBarContainer, { steps: ['Создан', 'Собирается', 'В пути', 'Получен'] });
+		const statusBar = new Stepper(statusBarContainer, {
+			steps: STEPS,
+			active: STEPS.findIndex((val) => val === this.order.status) + 1,
+		});
+
 		statusBar.render();
 
 		const foods = this.#parent.querySelector('.order__food');
@@ -65,6 +72,27 @@ class Order {
 			const dishCard = new DishCard(foods, dish, { addCounter: false });
 			dishCard.render();
 		});
+
+		if (statusBar.active === STEPS.length) {
+			return;
+		}
+
+		this.fetchInterval = setInterval(() => {
+			api.getOrderInfo(this.id, (data) => {
+				if (
+					statusBar.active === STEPS.length ||
+					window.location.pathname !== urls.order.replace(':id', this.order.id)
+				) {
+					clearInterval(this.fetchInterval);
+					return;
+				}
+
+				const status = this.#parent.querySelector('.order__status-name');
+				status.innerHTML = ORDER_STATUSES[data.status];
+				statusBar.active = STEPS.findIndex((val) => val === ORDER_STATUSES[data.status]) + 1;
+				statusBar.rerender();
+			});
+		}, 3000);
 	}
 }
 

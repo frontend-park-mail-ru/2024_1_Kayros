@@ -38,8 +38,8 @@ class SlickSlider {
 			this.indentLeft = 0;
 		}
 
-		if (this.indentLeft < this.#parent.offsetWidth - track.offsetWidth - 68) {
-			this.indentLeft = this.#parent.offsetWidth - track.offsetWidth - 68;
+		if (this.indentLeft < this.#parent.offsetWidth - track.offsetWidth) {
+			this.indentLeft = this.#parent.offsetWidth - track.offsetWidth;
 		}
 	}
 
@@ -67,8 +67,8 @@ class SlickSlider {
 				this.indentLeft /= 4;
 			}
 
-			if (this.indentLeft < this.#parent.offsetWidth - track.offsetWidth - 68) {
-				this.indentLeft = event.clientX - dragStartX;
+			if (this.indentLeft < this.#parent.offsetWidth - track.offsetWidth - 40) {
+				this.indentLeft = this.#parent.offsetWidth - track.offsetWidth - 40;
 			}
 
 			this.transform(track);
@@ -99,8 +99,8 @@ class SlickSlider {
 			this.indentLeft = 0;
 		}
 
-		if (this.indentLeft < this.#parent.offsetWidth - track.offsetWidth - 68) {
-			this.indentLeft = this.#parent.offsetWidth - track.offsetWidth - 68;
+		if (this.indentLeft < this.#parent.offsetWidth - track.offsetWidth) {
+			this.indentLeft = this.#parent.offsetWidth - track.offsetWidth;
 		}
 
 		this.drag = false;
@@ -114,7 +114,7 @@ class SlickSlider {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('afterbegin', template());
+		this.#parent.innerHTML = template();
 
 		const track = this.#parent.querySelector('.slick-track');
 
@@ -137,8 +137,8 @@ class SlickSlider {
 				this.indentLeft = 0;
 			}
 
-			if (this.indentLeft < this.#parent.offsetWidth - track.offsetWidth - 68) {
-				this.indentLeft = this.#parent.offsetWidth - track.offsetWidth - 68;
+			if (this.indentLeft < this.#parent.offsetWidth - track.offsetWidth) {
+				this.indentLeft = this.#parent.offsetWidth - track.offsetWidth;
 			}
 
 			this.transform(track);

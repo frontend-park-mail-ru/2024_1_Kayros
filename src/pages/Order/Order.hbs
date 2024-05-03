@@ -6,7 +6,7 @@
 			<div class="order__title">Заказ № {{this.id}}</div>
 			<div class="order__status">
 				Статус заказа
-				<span>{{this.status}}</span>
+				<span class="order__status-name">{{this.status}}</span>
 			</div>
 		</div>
 
@@ -16,13 +16,12 @@
 
 		<div class="order__info">
 			<div class="order__food">
-        <div class="order__subtitle">Блюда</div>
       </div>
 			<div class="order__details">
 				<div class="order__subtitle">Детали заказа</div>
 				<div class="order__restaurant">
 					<div>Ресторан</div>
-					<span>Mates</span>
+					<span>{{this.restaurant_name}}</span>
 				</div>
 				<div class="order__address">
 					<div>Адрес доставки</div>

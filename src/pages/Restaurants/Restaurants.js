@@ -3,6 +3,7 @@ import Loader from '../../components/Loader';
 import OrderStatusPanel from '../../components/OrderStatusPanel';
 import SlickSlider from '../../components/SlickSlider';
 import api from '../../modules/api';
+import urls from '../../routes/urls';
 import template from './Restaurants.hbs';
 import RestaurantCard from './components/RestaurantCard';
 import './Restaurants.scss';
@@ -19,6 +20,7 @@ class Restaurants {
 	 */
 	constructor(parent) {
 		this.#parent = parent;
+		this.fetchInterval = '';
 	}
 
 	/**
@@ -51,22 +53,23 @@ class Restaurants {
 	 * @param {Array} items - массив заказов
 	 */
 	renderOrders(items) {
-		if (!items) {
+		const restaurantsContainer = document.querySelector('.restaurants');
+
+		if (!restaurantsContainer) {
 			return;
 		}
 
-		const restaurantsContainer = document.querySelector('.restaurants');
-		const title = document.createElement('div');
-		title.className = 'restaurants__title';
-		title.innerText = 'Рестораны';
-		restaurantsContainer.insertAdjacentElement('afterbegin', title);
+		const ordersContainer = document.querySelector('.orders-slider');
 
-		const content = document.querySelector('.content');
+		if (!items) {
+			ordersContainer.innerHTML = '';
+			return;
+		}
 
-		const slickSlider = new SlickSlider(content);
+		const slickSlider = new SlickSlider(ordersContainer);
 		slickSlider.render();
 
-		const slickTrack = content.querySelector('.slick-track');
+		const slickTrack = ordersContainer.querySelector('.slick-track');
 
 		if (!items) {
 			return;
@@ -107,6 +110,15 @@ class Restaurants {
 		loader.render();
 
 		this.getData();
+
+		this.fetchInterval = setInterval(() => {
+			if (window.location.pathname !== urls.restaurants) {
+				clearInterval(this.fetchInterval);
+				return;
+			}
+
+			api.getOrdersData(this.renderOrders.bind(this));
+		}, 3000);
 	}
 }
 

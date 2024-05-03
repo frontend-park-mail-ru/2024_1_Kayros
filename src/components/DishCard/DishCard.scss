@@ -3,6 +3,23 @@
 	align-items: center;
 	position: relative;
 
+	&__count {
+		padding: 2px 12px;
+		background: var(--layout-bg-color);
+		border-radius: 14px;
+		width: fit-content;
+	}
+
+	&--complete {
+		background: var(--layout-bg-color);
+		padding: 15px;
+		border-radius: 18px;
+
+		.dish-card__count {
+			background: var(--button-secondary-bg);
+		}
+	}
+
 	.counter-button {
 		height: 31px;
 		width: 100px;
@@ -58,12 +75,5 @@
 			display: flex;
 			flex-direction: column;
 		}
-	}
-
-	&__count {
-		padding: 2px 12px;
-		background: var(--layout-bg-color);
-		border-radius: 14px;
-		width: fit-content;
 	}
 }

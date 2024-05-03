@@ -26,7 +26,10 @@ class DishCard {
 	 * Рендер страницы
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('beforeend', template({ counter: this.addCounter, ...this.data }));
+		this.#parent.insertAdjacentHTML(
+			'beforeend',
+			template({ counter: this.addCounter, class: this.addCounter ? '' : 'dish-card--complete', ...this.data }),
+		);
 
 		if (!this.addCounter) {
 			return;
