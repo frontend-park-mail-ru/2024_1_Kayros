@@ -118,7 +118,7 @@ class Restaurants {
 			}
 
 			api.getOrdersData(this.renderOrders.bind(this));
-		}, 3000);
+		}, 10000);
 	}
 }
 
