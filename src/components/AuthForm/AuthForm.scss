@@ -135,24 +135,22 @@
 		&__logo-and-background {
 			display: block;
 			position: relative;
-			align-items: center;
-			justify-content: center;
+			height: 100vh;
 		}
 
 		&__mini-background {
-			position: relative;
 			width: 100%;
-			height: 100%;
+			display: block;
 			z-index: 1;
-			transform: scaleY(1.2);
+			object-fit: cover;
 		}
 
 		&__back-button--mobile {
 			display: block;
 			position: absolute;
-			padding-top: 50px;
-			padding-left: 27px;
+			left: calc(50% - 139px);
 			z-index: 10;
+			top: calc(15% - 10px);
 		}
 
 		&__back-button--desktop {
@@ -165,13 +163,14 @@
 
 		&__form-container {
 			position: absolute;
+			max-width: 275px;
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
 			z-index: 10;
 			margin-left: 0;
 			margin-top: 20px;
-			padding: 26px 39px;
+			padding: 26px 29px;
 			text-align: center;
 		}
 
@@ -187,9 +186,30 @@
 			display: block;
 			top: 15%;
 			left: 50%;
-			transform: translateX(-50%) scale(0.75);
+			transform: translateX(-50%) scale(0.7);
 			position: relative;
 			z-index: 10;
+		}
+
+		&__title {
+			font-weight: bold;
+			font-size: 20px;
+			margin-top: 8px;
+			margin-bottom: 10px;
+		}
+	}
+}
+
+@media (max-width: $xs) {
+	.auth-container {
+		&__form-container {
+			width: 248px;
+			transform: translate(-50%, -50%) scale(0.9);
+		}
+
+		&__back-button--mobile {
+			transform: scale(0.8);
+			left: calc(50% - 118px);
 		}
 	}
 }
