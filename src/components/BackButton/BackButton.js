@@ -1,5 +1,5 @@
 import { router } from '../../modules/router';
-import { isMobileScreen } from '../../utils';
+import { isMobileOrTabletScreen } from '../../utils';
 import Button from '../Button/Button';
 
 /**
@@ -24,7 +24,7 @@ class BackButton {
 	 * Рендеринг компонента
 	 */
 	render() {
-		const isMobile = isMobileScreen();
+		const isMobile = isMobileOrTabletScreen();
 
 		const backButton = new Button(this.#parent, {
 			id: this.#id,

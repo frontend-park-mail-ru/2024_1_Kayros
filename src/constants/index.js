@@ -169,3 +169,5 @@ export const YANDEX_API_SAGESTS = 'f96d8d36-1d0a-4786-9140-1b350e8179e1';
 export const YANDEX_API_GEOCODER = '0b04a1cd-dc01-4c43-b44a-3efac84fa9f6';
 
 export const MOBILE_BREAKPOINT = 768;
+
+export const TABLET_BREAKPOINT = 1024;
