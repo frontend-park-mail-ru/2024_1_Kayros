@@ -5,7 +5,7 @@
 	"description": "Фронтенд проекта \"Resto\" команды \"Кайрос\"",
 	"main": "index.js",
 	"scripts": {
-		"dev": "NODE_ENV=development npx webpack serve --mode=development",
+		"dev": "NODE_ENV=development npx webpack serve --mode=development --host 0.0.0.0",
 		"prebuild": "NODE_ENV=production npx webpack --mode=production",
 		"build": "npm run prebuild && node static-server/index.js",
 		"lint": "eslint . \".env*\"",
