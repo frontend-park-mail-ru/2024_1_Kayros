@@ -52,7 +52,7 @@ class Sidebar {
 
 				const category = document.getElementById(`category-${id}`);
 				var categoryPosition = category.getBoundingClientRect().top;
-				var offsetPosition = categoryPosition + window.scrollY - 118;
+				var offsetPosition = categoryPosition + window.scrollY - 95;
 
 				window.scrollTo({
 					top: offsetPosition,

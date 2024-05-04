@@ -1,6 +1,6 @@
+import { Notification } from 'resto-ui';
 import Content from '../components/Content/index.js';
 import Header from '../components/Header/index.js';
-import Notification from '../components/Notification/Notification.js';
 import { SUCCESS_MESSAGES } from '../constants/index.js';
 import urls from '../routes/urls.js';
 

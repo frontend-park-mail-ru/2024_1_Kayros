@@ -1,6 +1,6 @@
 import '@fontsource/montserrat';
+import { Notification } from 'resto-ui';
 import Layout from './components/Layout';
-import Notification from './components/Notification/Notification';
 import { router } from './modules/router';
 import routes from './routes';
 import urls from './routes/urls';

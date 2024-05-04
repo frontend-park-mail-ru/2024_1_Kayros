@@ -41,7 +41,7 @@ export const SUCCESS_MESSAGES = {
 	},
 	checkout: {
 		title: 'Оплата прошла успешно',
-		description: 'Передали заказ курьеру!',
+		description: 'Передали заказ ресторану!',
 	},
 };
 
@@ -145,9 +145,19 @@ export const VALIDATION_ERRORS = {
 	emailFormat: 'Неверный формат электронной почты',
 	incorrectSymbol: 'Содержит некорректный символ',
 	passwordRequirements: 'Пароль должен содержать минимум 8 символов, включая число и букву',
+	newPasswordMatchedWithOld: 'Новый пароль не должен совпадать со старым паролем',
 	fieldRequired: 'Поле не может быть пустым',
 	passwordUnmatched: 'Пароли не совпадают',
 	nameFormat: 'Имя должно начинаться с буквы и содержать от 2 до 19 символов',
+};
+
+export const ORDER_STATUSES = {
+	payed: 'Оплачен',
+	created: 'Создан',
+	cooking: 'Готовится',
+	'on-the-way': 'В пути',
+	delivered: 'Доставлен',
+	cancelled: 'Отменен',
 };
 
 export const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -164,9 +174,15 @@ export const INVALID_NAME_CHAR_REGEX = /[^a-zA-Zа-яА-ЯёЁ0-9]/;
 
 export const PHONE_REGEX = /^\+7 \(\d{3}\) \d{3} \d{2} \d{2}$/;
 
+export const APART_REGEX = /^[1-9][0-9]{0,3}$/;
+
+export const FLOOR_REGEX = /^[1-9][0-9]{0,2}$/;
+
+export const ENTRANCE_REGEX = /^[1-9][0-9]{0,1}$/;
+
 export const YANDEX_API_SAGESTS = 'f96d8d36-1d0a-4786-9140-1b350e8179e1';
 
-export const YANDEX_API_GEOCODER = '0b04a1cd-dc01-4c43-b44a-3efac84fa9f6';
+export const YANDEX_API_GEOCODER = '7e5782d5-d181-428b-a46d-5dcff8caa54d';
 
 export const MOBILE_BREAKPOINT = 768;
 

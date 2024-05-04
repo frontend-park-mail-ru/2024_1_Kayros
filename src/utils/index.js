@@ -52,4 +52,12 @@ export const getPhoneMask = (phoneElement) => {
 	return formattedPhone;
 };
 
+export const setCookieIfNotExist = (name, value) => {
+	const cookieExists = document.cookie.includes(`${name}=`);
+
+	if (!cookieExists) {
+		document.cookie = `${name}=${value}; path=/`;
+	}
+};
+
 export const isMobileOrTabletScreen = () => window.innerWidth <= TABLET_BREAKPOINT;

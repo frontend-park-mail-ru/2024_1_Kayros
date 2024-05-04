@@ -5,7 +5,7 @@
 	"description": "Фронтенд проекта \"Resto\" команды \"Кайрос\"",
 	"main": "index.js",
 	"scripts": {
-		"dev": "NODE_ENV=development npx webpack serve --mode=development",
+		"dev": "NODE_ENV=development npx webpack serve --mode=development --host 0.0.0.0",
 		"prebuild": "NODE_ENV=production npx webpack --mode=production",
 		"build": "npm run prebuild && node static-server/index.js",
 		"lint": "eslint . \".env*\"",
@@ -49,6 +49,7 @@
 		"jsdoc": "^4.0.2",
 		"lint-staged": "^15.2.2",
 		"mini-css-extract-plugin": "^2.8.0",
+		"resto-ui": "^1.0.3",
 		"sass": "^1.71.1",
 		"sass-loader": "^14.1.1",
 		"style-loader": "^3.3.4",

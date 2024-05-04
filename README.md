@@ -1,5 +1,10 @@
 # 2024_1_Kayros
-Фронтенд проекта "Delivery Club" команды "Кайрос"
+
+Фронтенд проекта "Resto" команды "Кайрос"
+
+![image](https://github.com/frontend-park-mail-ru/2024_1_Kayros/assets/35842926/ee76c037-cb80-4d20-b1cc-fab93f75295e)
+
+**Resto** - это сервис, где человек может посмотреть блюда из ресторанов Москвы и заказать их прямо          к себе домой, в офис, в гости
 
 ## Авторы
 
@@ -19,14 +24,23 @@
 
 [Бирюков Иван](https://github.com/Ivan-Bir) - _UX_
 
-## UX
-[Макет](https://www.figma.com/file/zoXRrBpzkKVlcCpuen8vVU/%C2%A0%C2%A0%C2%A0Resto)
+## Фронтенд
 
-[Описание сервиса](https://docs.google.com/document/d/10eWcYr5QyEXd_tSppIij8bKbJLy6Djw9Hr6cXpK2KL4)
+[Репозиторий](https://github.com/frontend-park-mail-ru/2024_1_Kayros)
+
+### UI-Kit:
+[Репозиторий](https://github.com/novakf/resto-ui-kit)
+
+[NPM](https://www.npmjs.com/package/resto-ui)
 
 ## Бэкенд
 
 [Репозиторий](https://github.com/go-park-mail-ru/2024_1_Kayros)
+
+## UX
+[Макет](https://www.figma.com/file/zoXRrBpzkKVlcCpuen8vVU/%C2%A0%C2%A0%C2%A0Resto)
+
+[Описание сервиса](https://docs.google.com/document/d/10eWcYr5QyEXd_tSppIij8bKbJLy6Djw9Hr6cXpK2KL4)
 
 ## Деплой
 
