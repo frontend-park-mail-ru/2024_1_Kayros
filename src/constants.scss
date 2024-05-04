@@ -8,6 +8,9 @@
 	--text-color: #2d2d2d;
 	--text-in-signin: #ffffff;
 
+	--order-status: #545454;
+	--order-status-border: #b9b9b9;
+
 	--layout-border-radius: 30px;
 	--layout-bg-color: #f6f6f6;
 
@@ -113,12 +116,6 @@
 	--counter-add-bg-hover: #dfdfdf;
 
 	--food-card-bg-hover: #f4f4f4;
-
-	--counter-add-bg-active: linear-gradient(-90deg, #b9b9b9, 40%, transparent);
-	--counter-remove-bg-active: linear-gradient(90deg, #b9b9b9, 40%, transparent);
-	--counter-add-bg-hover: #dfdfdf;
-
-	--food-card-bg-hover: #f4f4f4;
 	--food-subtitle-color: #545454;
 
 	--cart-pay-method-color: #adadad;
@@ -128,4 +125,9 @@
 	--file-upload-box-shadow: 0px 0px 15px -5px #cacaca;
 
 	--profile-bg-color: #fff;
+
+	--order-panel-box-shadow: 0 8px 20px 0 #0000002a;
+	--order-details-border: #b5b5b5;
+
+	--stepper-connector-default: #dfdfdf;
 }

@@ -26,6 +26,27 @@ class Api {
 	}
 
 	/**
+	 * Метод для получения списка ресторанов
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getOrdersData(callback) {
+		const data = await ajax.get(`${this.#url}/orders/current`, { showNotifyError: false });
+
+		callback(data);
+	}
+
+	/**
+	 * Метод для получения информации о заказе
+	 * @param {number} id - id заказа
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getOrderInfo(id, callback) {
+		const data = await ajax.get(`${this.#url}/order/${id}`);
+
+		callback(data);
+	}
+
+	/**
 	 * Метод для получения информации о пользователе
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
