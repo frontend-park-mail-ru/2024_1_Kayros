@@ -26,9 +26,11 @@ class BackButton {
 	render() {
 		const isMobile = isMobileOrTabletScreen();
 
+		const backButtonText = router.previousState ? 'Назад' : 'На главную';
+
 		const backButton = new Button(this.#parent, {
 			id: this.#id,
-			content: router.previousState ? 'Назад' : isMobile ? '' : 'На главную',
+			content: isMobile ? '' : backButtonText,
 			style: isMobile ? 'clear-back-mobile' : 'clear',
 			icon: 'back-arrow-full',
 			onClick: () => router.back(),
