@@ -11,7 +11,7 @@
 		"lint": "eslint . \".env*\"",
 		"lint:fix": "eslint . \".env*\" --fix ",
 		"hbs-lint:fix": "ember-template-lint . --fix",
-		"scss-lint:fix": "stylelint --allow-empty-input \"**/*.{scss}\" --fix",
+		"scss-lint:fix": "stylelint --allow-empty-input \"./src/**/*.scss\" --fix",
 		"prettier:fix": "npx prettier \"./src/**/*.{js,css,scss}\" --write",
 		"generate-docs": "npx jsdoc -c jsdoc.json",
 		"prepare": "husky"
