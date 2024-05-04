@@ -1,3 +1,5 @@
+@import "../../constants.scss";
+
 .header {
 	display: flex;
 	align-items: center;
@@ -62,5 +64,28 @@
 
 	&.btn--secondary {
 		opacity: 0;
+	}
+}
+
+@media (max-width: $lg) {
+	.header__address {
+		display: none;
+	}
+}
+
+@media (max-width: $sm) {
+	.header {
+		display: flex;
+		justify-content: center;
+
+		&__logo-container {
+			display: flex;
+			justify-content: center;
+			margin-left: 0;
+		}
+
+		&__content {
+			display: none;
+		}
 	}
 }
