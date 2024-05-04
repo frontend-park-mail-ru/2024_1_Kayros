@@ -150,7 +150,7 @@
 			position: absolute;
 			left: calc(50% - 139px);
 			z-index: 10;
-			top: calc(15% - 10px);
+			top: calc(50% - 275px);
 		}
 
 		&__back-button--desktop {
@@ -210,6 +210,7 @@
 		&__back-button--mobile {
 			transform: scale(0.8);
 			left: calc(50% - 118px);
+			top: calc(50% - 241px);
 		}
 	}
 }
