@@ -6,6 +6,7 @@
 		"custom-property-empty-line-before": null,
 		"scss/at-import-partial-extension": null,
 		"color-no-hex": true,
-		"color-named": "never"
+		"color-named": "never",
+		"media-feature-range-notation": "prefix"
 	}
 }
