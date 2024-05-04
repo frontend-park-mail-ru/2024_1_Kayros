@@ -95,12 +95,20 @@ class AuthForm {
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-		const logoContainer = document.querySelector('.auth-container__logo');
+		const logoDesktopContainer = document.querySelector('.auth-container__logo--desktop');
 
-		if (logoContainer) {
-			new Logo(logoContainer, {
+		if (logoDesktopContainer) {
+			new Logo(logoDesktopContainer, {
 				onClick: () => router.navigate(urls.restaurants),
 				logoType: 'white',
+			}).render();
+		}
+
+		const logoMobileContainer = document.querySelector('.auth-container__logo--mobile');
+
+		if (logoMobileContainer) {
+			new Logo(logoMobileContainer, {
+				onClick: () => router.navigate(urls.restaurants),
 			}).render();
 		}
 
@@ -113,9 +121,13 @@ class AuthForm {
 
 		link.render();
 
-		const backButtonBlock = document.querySelector('.auth-container__back-button');
-		const backButton = new BackButton(backButtonBlock, { id: `${this.#type}-back-button` });
-		backButton.render();
+		const backButtonDesktopBlock = document.querySelector('.auth-container__back-button--desktop');
+		const backButtonDesktop = new BackButton(backButtonDesktopBlock, { id: `${this.#type}-back-button` });
+		backButtonDesktop.render();
+
+		const backButtonMobileBlock = document.querySelector('.auth-container__back-button--mobile');
+		const backButtonMobile = new BackButton(backButtonMobileBlock, { id: `${this.#type}-back-button` });
+		backButtonMobile.render();
 
 		this.#config.fields.forEach((field) => {
 			new Input(this.#parent.querySelector(field.selector), {

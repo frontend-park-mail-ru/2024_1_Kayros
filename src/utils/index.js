@@ -1,3 +1,5 @@
+import { TABLET_BREAKPOINT } from '../constants';
+
 export const localStorageHelper = {
 	getItem(name) {
 		try {
@@ -25,19 +27,19 @@ export const getPhoneMask = (phoneElement) => {
 
 	for (let i = 0; i < phone.length; i++) {
 		switch (i) {
-			case 0:
-				formattedPhone += '+';
-				break;
-			case 1:
-				formattedPhone += ' (';
-				break;
-			case 4:
-				formattedPhone += ') ';
-				break;
-			case 7:
-			case 9:
-				formattedPhone += ' ';
-				break;
+		case 0:
+			formattedPhone += '+';
+			break;
+		case 1:
+			formattedPhone += ' (';
+			break;
+		case 4:
+			formattedPhone += ') ';
+			break;
+		case 7:
+		case 9:
+			formattedPhone += ' ';
+			break;
 		}
 
 		if (i < 11) {
@@ -57,3 +59,5 @@ export const setCookieIfNotExist = (name, value) => {
 		document.cookie = `${name}=${value}; path=/`;
 	}
 };
+
+export const isMobileOrTabletScreen = () => window.innerWidth <= TABLET_BREAKPOINT;

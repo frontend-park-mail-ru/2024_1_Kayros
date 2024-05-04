@@ -183,3 +183,7 @@ export const ENTRANCE_REGEX = /^[1-9][0-9]{0,1}$/;
 export const YANDEX_API_SAGESTS = 'f96d8d36-1d0a-4786-9140-1b350e8179e1';
 
 export const YANDEX_API_GEOCODER = '7e5782d5-d181-428b-a46d-5dcff8caa54d';
+
+export const MOBILE_BREAKPOINT = 768;
+
+export const TABLET_BREAKPOINT = 1024;
