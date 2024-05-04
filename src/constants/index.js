@@ -41,7 +41,7 @@ export const SUCCESS_MESSAGES = {
 	},
 	checkout: {
 		title: 'Оплата прошла успешно',
-		description: 'Передали заказ курьеру!',
+		description: 'Передали заказ ресторану!',
 	},
 };
 
@@ -149,6 +149,15 @@ export const VALIDATION_ERRORS = {
 	fieldRequired: 'Поле не может быть пустым',
 	passwordUnmatched: 'Пароли не совпадают',
 	nameFormat: 'Имя должно начинаться с буквы и содержать от 2 до 19 символов',
+};
+
+export const ORDER_STATUSES = {
+	payed: 'Оплачен',
+	created: 'Создан',
+	cooking: 'Готовится',
+	'on-the-way': 'В пути',
+	delivered: 'Доставлен',
+	cancelled: 'Отменен',
 };
 
 export const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

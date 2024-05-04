@@ -17,18 +17,15 @@ class Content {
 	constructor(parent, { withoutPadding = false } = {}) {
 		this.#parent = parent;
 		this.#withoutPadding = withoutPadding;
+		this.dragTime = 0;
+		this.indentLeft = 0;
 	}
 
 	/**
 	 * Рендеринг компонента
 	 */
-	render() {
+	async render() {
 		this.#parent.insertAdjacentHTML('beforeend', template());
-		const content = document.querySelector('.content');
-
-		if (this.#withoutPadding) {
-			content.classList.add('content--no-padding');
-		}
 	}
 }
 

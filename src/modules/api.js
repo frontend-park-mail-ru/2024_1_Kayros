@@ -26,6 +26,27 @@ class Api {
 	}
 
 	/**
+	 * Метод для получения списка ресторанов
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getOrdersData(callback) {
+		const data = await ajax.get(`${this.#url}/orders/current`, { showNotifyError: false });
+
+		callback(data);
+	}
+
+	/**
+	 * Метод для получения информации о заказе
+	 * @param {number} id - id заказа
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getOrderInfo(id, callback) {
+		const data = await ajax.get(`${this.#url}/order/${id}`);
+
+		callback(data);
+	}
+
+	/**
 	 * Метод для получения информации о пользователе
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
@@ -327,10 +348,10 @@ class Api {
 	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async removeFromCart(foodId) {
-		const { data } = await ajax.delete(`${this.#url}/order/food/delete/${foodId}`);
+		const { data, error } = await ajax.delete(`${this.#url}/order/food/delete/${foodId}`);
 
-		if (data) {
-			return data.sum;
+		if (data && !error) {
+			return data.sum || 0;
 		}
 
 		return false;
@@ -388,7 +409,7 @@ class Api {
 	async checkout() {
 		const { data, error } = await ajax.put(`${this.#url}/order/pay`);
 
-		if (data && !error) {
+		if (data && !error && !data.detail) {
 			Notification.open({
 				duration: 6,
 				title: SUCCESS_MESSAGES.checkout.title,
@@ -402,7 +423,7 @@ class Api {
 		Notification.open({
 			duration: 3,
 			title: ERROR_MESSAGES.CHECKOUT,
-			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			description: error || data.detail || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
 		});
 

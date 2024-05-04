@@ -25,10 +25,11 @@ class PayForm {
 
 		this.#parent = parent;
 		this.data = data;
-		this.main = data.address || '';
+		this.main = data?.address || '';
 		this.apart = extraAddressParts?.[0] || '';
 		this.entrance = extraAddressParts?.[1] || '';
 		this.floor = extraAddressParts?.[2] || '';
+		this.user = '';
 	}
 
 	/**
@@ -45,8 +46,17 @@ class PayForm {
 			extra_address: `${this.apart}, ${this.entrance}, ${this.floor}`,
 		});
 
+		if (!this.user) {
+			router.navigate(urls.signIn);
+			return;
+		}
+
 		if (data) {
-			await api.checkout();
+			const res = await api.checkout();
+
+			if (!res) {
+				return;
+			}
 
 			const cart = document.getElementById('cart-button');
 			const sum = cart.querySelector('span');
@@ -63,10 +73,15 @@ class PayForm {
 	 */
 	render() {
 		const user = localStorageHelper.getItem('user-info');
+		this.user = user;
+		let currentAddress = user?.address;
 
-		if (user.address) {
-			this.main = user.address;
+		if (!user) {
+			const unauthInfo = localStorageHelper.getItem('unauth-info');
+			currentAddress = unauthInfo?.address;
 		}
+
+		this.main = currentAddress || '';
 
 		this.#parent.insertAdjacentHTML('beforeend', template(this.data));
 		const form = this.#parent.querySelector('.pay-form');
@@ -105,7 +120,7 @@ class PayForm {
 		const checkoutButton = new Button(form, {
 			id: 'pay-form-button',
 			content: 'Оплатить',
-			disabled: !this.data.sum || !this.entrance || !this.floor || !this.apart,
+			disabled: !this.data?.sum || !this.entrance || !this.floor || !this.apart,
 			withLoader: true,
 			onClick: () => {
 				this.handleSubmit();
@@ -120,7 +135,7 @@ class PayForm {
 		apartInput.addEventListener('input', () => {
 			const isApartValid = validateApartNumber(apartInput.value, apartInputdErrorContainer);
 			this.isApartValid = isApartValid;
-			submit.disabled = !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
+			submit.disabled = !this.data?.sum || !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
 		});
 
 		const entranceInput = document.getElementById('entrance-address');
@@ -128,7 +143,7 @@ class PayForm {
 		entranceInput.addEventListener('input', () => {
 			const isEntranceValid = validateEntranceNumber(entranceInput.value, entranceInputErrorContainer);
 			this.isEntranceValid = isEntranceValid;
-			submit.disabled = !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
+			submit.disabled = !this.data?.sum || !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
 		});
 
 		const floorInput = document.getElementById('floor-address');
@@ -136,7 +151,7 @@ class PayForm {
 		floorInput.addEventListener('input', () => {
 			const isFloorValid = validateFloorNumber(floorInput.value, floorInputErrorContainer);
 			this.isFloorValid = isFloorValid;
-			submit.disabled = !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
+			submit.disabled = !this.data?.sum || !this.isApartValid || !this.isEntranceValid || !this.isFloorValid;
 		});
 	}
 }

@@ -8,11 +8,14 @@
 	--text-color: #2d2d2d;
 	--text-in-signin: #ffffff;
 
+	--order-status: #545454;
+	--order-status-border: #b9b9b9;
+
 	--layout-border-radius: 30px;
 	--layout-bg-color: #f6f6f6;
 
-	--profile-dropdown-item-color: #818181;
-	--profile-dropdown-item-color-hover: #4b4b4b;
+	--profile-dropdown-item-color: #414141;
+	--profile-dropdown-item-color-hover: #242424;
 
 	--link-color: #aeaeae;
 	--link-color-hover: #575757;
@@ -62,10 +65,11 @@
 	--header-profile-name-color-hover: #6f6f6f;
 	--header-box-shadow: 0 7px 15px -5px #9c9c9c;
 	--header-sticky-border-color: #d1d1d1;
+	--header-bg-color: #fff;
 
 	--profile-dropdown-width: 300px;
 	--profile-dropdown-bg-color: #fff;
-	--profile-dropdown-box-shadow: 0px 6px 10px 0px #2a2a2aa3;
+	--profile-dropdown-box-shadow: 0px 15px 20px 0px #00000047;
 
 	--address-dropdown-box-shadow: 0px 6px 10px 0px #9e9e9ea3;
 
@@ -112,12 +116,6 @@
 	--counter-add-bg-hover: #dfdfdf;
 
 	--food-card-bg-hover: #f4f4f4;
-
-	--counter-add-bg-active: linear-gradient(-90deg, #b9b9b9, 40%, transparent);
-	--counter-remove-bg-active: linear-gradient(90deg, #b9b9b9, 40%, transparent);
-	--counter-add-bg-hover: #dfdfdf;
-
-	--food-card-bg-hover: #f4f4f4;
 	--food-subtitle-color: #545454;
 
 	--cart-pay-method-color: #adadad;
@@ -127,4 +125,9 @@
 	--file-upload-box-shadow: 0px 0px 15px -5px #cacaca;
 
 	--profile-bg-color: #fff;
+
+	--order-panel-box-shadow: 0 8px 20px 0 #0000002a;
+	--order-details-border: #b5b5b5;
+
+	--stepper-connector-default: #dfdfdf;
 }

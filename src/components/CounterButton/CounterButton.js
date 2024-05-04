@@ -17,6 +17,7 @@ class CounterButton {
 	 * @param {number} params.productId - id продукта
 	 * @param {boolean} params.withAddButton - отображать кнопку добавления
 	 * @param {number} params.initCount - начальное количество
+	 * @param {number} params.maxCount - максимальное количество
 	 * @param {void} params.addCount - добавление 1
 	 * @param {void} params.removeCount - удаление 1
 	 * @param {void} params.updateCount - обновление счета
@@ -28,6 +29,7 @@ class CounterButton {
 			id,
 			productId,
 			initCount,
+			maxCount,
 			withAddButton = true,
 			addCount = () => {},
 			removeCount = () => {},
@@ -44,6 +46,7 @@ class CounterButton {
 		this.updateCount = updateCount;
 		this.productId = productId;
 		this.frontCount = initCount;
+		this.maxCount = maxCount;
 		this.timer;
 		this.withAddButton = withAddButton;
 		this.prevCount = prevCount;
@@ -150,10 +153,19 @@ class CounterButton {
 
 		const addButton = this.parent.querySelector('.counter-button__plus');
 
+		if (this.maxCount && this.frontCount === this.maxCount) {
+			addButton.classList.add('counter-button--disabled');
+		}
+
 		addButton.onclick = () => {
 			const isContinue = this.prevCount();
 
 			if (!isContinue) {
+				return;
+			}
+
+			if (this.maxCount && this.frontCount === this.maxCount) {
+				addButton.classList.add('counter-button--disabled');
 				return;
 			}
 
