@@ -128,7 +128,7 @@
 	margin-bottom: 20px;
 }
 
-@media (width <= $lg) and (height <= 610px) {
+@media (width <= $lg) and (height <= $h-sp) {
 	.auth-container {
 		position: relative;
 
@@ -201,7 +201,7 @@
 	}
 }
 
-@media (width <= $lg) and (height >= 610px) {
+@media (width <= $lg) and (height >= $h-sp) {
 	.auth-container {
 		position: relative;
 
