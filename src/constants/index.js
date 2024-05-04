@@ -41,7 +41,7 @@ export const SUCCESS_MESSAGES = {
 	},
 	checkout: {
 		title: 'Оплата прошла успешно',
-		description: 'Передали заказ курьеру!',
+		description: 'Передали заказ ресторану!',
 	},
 };
 

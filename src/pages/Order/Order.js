@@ -39,10 +39,35 @@ class Order {
 	}
 
 	/**
+	 *
+	 * @param {string} timestamp - строка
+	 * @returns {string} - отформатированная строка
+	 */
+	formatDate(timestamp) {
+		const timeDate = new Date(timestamp);
+
+		const date = timeDate.toLocaleDateString('ru-RU');
+		const time = timeDate.toLocaleTimeString('ru-RU').split(':').slice(0, 2).join(':');
+
+		return `${date} в ${time}`;
+	}
+
+	/**
 	 * Рендеринг компонента
 	 */
 	async render() {
 		await this.getData();
+
+		if (!this.order.id) {
+			this.#parent.insertAdjacentHTML('beforeend', template());
+			return;
+		}
+
+		if (this.order.created_at) {
+			this.order.created_at = `Создан ${this.formatDate(this.order.created_at)}`;
+		} else {
+			this.order.created_at = 'Ожидание ответа от ресторана ...';
+		}
 
 		this.order.status = ORDER_STATUSES[this.order.status];
 
@@ -88,11 +113,18 @@ class Order {
 				}
 
 				const status = this.#parent.querySelector('.order__status-name');
+
+				if (data.created_at) {
+					const date = this.#parent.querySelector('.order__create-time');
+					date.innerHTML = `Создан ${this.formatDate(data.created_at)}`;
+				}
+
 				status.innerHTML = ORDER_STATUSES[data.status];
+
 				statusBar.active = STEPS.findIndex((val) => val === ORDER_STATUSES[data.status]) + 1;
 				statusBar.rerender();
 			});
-		}, 3000);
+		}, 5000);
 	}
 }
 

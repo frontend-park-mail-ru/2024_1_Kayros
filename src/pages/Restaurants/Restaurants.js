@@ -1,9 +1,12 @@
+import { Notification } from 'resto-ui';
 import Header from '../../components/Header';
 import Loader from '../../components/Loader';
 import OrderStatusPanel from '../../components/OrderStatusPanel';
 import SlickSlider from '../../components/SlickSlider';
+import { ORDER_STATUSES } from '../../constants';
 import api from '../../modules/api';
 import urls from '../../routes/urls';
+import { localStorageHelper } from '../../utils';
 import template from './Restaurants.hbs';
 import RestaurantCard from './components/RestaurantCard';
 import './Restaurants.scss';
@@ -66,14 +69,34 @@ class Restaurants {
 			return;
 		}
 
+		const currentSLider = ordersContainer.querySelector('.slick-track');
+
+		if (currentSLider) {
+			items.forEach((item) => {
+				const orderPanel = currentSLider.querySelector(`#order-panel-${item.id}`);
+				const statusContainer = orderPanel.querySelector('.order-panel__status');
+
+				const currentStatus = statusContainer.innerText;
+
+				if (currentStatus !== ORDER_STATUSES[item.status]) {
+					statusContainer.innerText = ORDER_STATUSES[item.status];
+
+					Notification.open({
+						duration: 4,
+						title: `Заказ №${item.id}`,
+						description: ORDER_STATUSES[item.status],
+						type: 'success',
+					});
+				}
+			});
+
+			return;
+		}
+
 		const slickSlider = new SlickSlider(ordersContainer);
 		slickSlider.render();
 
 		const slickTrack = ordersContainer.querySelector('.slick-track');
-
-		if (!items) {
-			return;
-		}
 
 		items.forEach((item) => {
 			const orderPanel = new OrderStatusPanel(slickTrack, item);
@@ -112,13 +135,15 @@ class Restaurants {
 		this.getData();
 
 		this.fetchInterval = setInterval(() => {
-			if (window.location.pathname !== urls.restaurants) {
+			const user = localStorageHelper.getItem('user-info');
+
+			if (window.location.pathname !== urls.restaurants || !user) {
 				clearInterval(this.fetchInterval);
 				return;
 			}
 
 			api.getOrdersData(this.renderOrders.bind(this));
-		}, 10000);
+		}, 5000);
 	}
 }
 
