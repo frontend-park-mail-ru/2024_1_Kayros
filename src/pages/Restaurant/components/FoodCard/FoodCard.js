@@ -39,7 +39,7 @@ class FoodCard {
 			return;
 		}
 
-		setCookieIfNotExist('unauth_token', crypto.randomUUID());
+		setCookieIfNotExist('unauth_id', crypto.randomUUID());
 	}
 
 	/**

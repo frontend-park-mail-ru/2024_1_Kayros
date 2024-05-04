@@ -1,8 +1,3 @@
-$lg: 1200px;
-$md: 900px;
-$sm: 768px;
-$xs: 380px;
-
 :root {
 	--brand: #2d2d2d;
 
@@ -98,9 +93,7 @@ $xs: 380px;
 	--modal-content-background: #fff;
 
 	--address-pin-box-shadow: 0px 10px 6px -7px #00000057;
-	$lg: 1200px; // Для больших экранов
-	$md: 900px; // Для средних экранов
-	$sm: 768px;
+
 	--map-controls-border-color: #ddd;
 	--map-controls-bg: #fff;
 	--map-controls-box-shadow: 0px 4px 15px -2px #928181;

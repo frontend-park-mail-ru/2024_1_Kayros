@@ -25,10 +25,21 @@ class Input {
 	 * @param {string} params.value - начальное значение
 	 * @param {void} params.onChange - обработчик события
 	 * @param {boolean} params.disabled - блокировка
+	 * @param {'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend'} params.position - позиция в предке
 	 */
 	constructor(
 		parent,
-		{ id, placeholder, type = 'text', button, style = 'standart', value = '', onChange = '', disabled = false },
+		{
+			id,
+			placeholder,
+			type = 'text',
+			button,
+			style = 'standart',
+			value = '',
+			onChange = '',
+			disabled = false,
+			position = 'beforeend',
+		},
 	) {
 		this.#parent = parent;
 		this.#placeholder = placeholder;
@@ -40,6 +51,7 @@ class Input {
 		this.value = value;
 		this.onChange = onChange;
 		this.disabled = disabled;
+		this.position = position;
 	}
 
 	/**
@@ -63,7 +75,7 @@ class Input {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
+		this.#parent.insertAdjacentHTML(this.position, this.getHTML());
 
 		if (this.#button) {
 			const buttonBlock = this.#parent.querySelector('.input__search-button');

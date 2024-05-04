@@ -109,6 +109,8 @@ class ProfileDropdown {
 
 				if (item.exit) {
 					api.signout(this.handleExit.bind(this));
+					this.close(dropdown);
+					return;
 				}
 
 				this.navigate(item.url);
@@ -119,7 +121,11 @@ class ProfileDropdown {
 		this.#parent.addEventListener('click', (event) => {
 			event.stopPropagation();
 
-			this.open(dropdown);
+			if (!this.isOpen) {
+				this.open(dropdown);
+			} else {
+				this.close(dropdown);
+			}
 		});
 
 		window.addEventListener('click', () => {

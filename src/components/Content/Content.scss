@@ -1,3 +1,5 @@
+@import "../../variables";
+
 .content {
 	padding: 34px;
 
@@ -23,5 +25,9 @@
 		padding: 16px;
 		gap: 30px;
 		width: fit-content;
+	}
+
+	@media (max-width: $xsm) {
+		padding: 0;
 	}
 }

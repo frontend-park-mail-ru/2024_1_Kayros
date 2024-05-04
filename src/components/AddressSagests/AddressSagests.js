@@ -50,7 +50,7 @@ class AddressSagests {
 
 		this.address = searchInput.value.split(' · ')[1] || searchInput.value;
 
-		setCookieIfNotExist('unauth_token', crypto.randomUUID());
+		setCookieIfNotExist('unauth_id', crypto.randomUUID());
 
 		await api.updateAddressSagests({ address: this.address }, this.handleAddressChange.bind(this));
 		const cartAddress = document.querySelector('#main-address');

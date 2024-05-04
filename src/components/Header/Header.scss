@@ -1,3 +1,5 @@
+@import "../../variables";
+
 .header {
 	display: flex;
 	align-items: center;
@@ -24,6 +26,24 @@
 		border-radius: var(--layout-border-radius);
 		background: var(--layout-bg-color);
 		margin-right: 34px;
+
+		@media (max-width: $md) {
+			margin-right: 16px;
+			background: transparent;
+			gap: 10px;
+
+			.header__search-input {
+				display: none;
+			}
+
+			.header__address {
+				display: none;
+			}
+		}
+
+		@media (max-width: $xsm) {
+			margin-right: 0;
+		}
 	}
 
 	&__cart {
@@ -32,6 +52,16 @@
 		span {
 			font-size: 18px;
 			white-space: nowrap;
+		}
+
+		@media (max-width: $xsm) {
+			img {
+				height: 20px;
+			}
+
+			span {
+				font-size: 16px;
+			}
 		}
 	}
 
@@ -42,11 +72,27 @@
 
 	&__logo-container {
 		margin-left: 52px;
-		width: 120px;
+
+		@media (max-width: $xsm) {
+			margin-left: 16px;
+
+			.logo {
+				width: 100%;
+			}
+		}
 	}
 
 	& + .content {
 		padding-top: 10px;
+
+		@media (max-width: $xsm) {
+			padding-top: 0;
+		}
+	}
+
+	@media (max-width: $xsm) {
+		margin-top: 0;
+		gap: 10px;
 	}
 }
 

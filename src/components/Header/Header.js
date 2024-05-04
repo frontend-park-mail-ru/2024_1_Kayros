@@ -132,7 +132,9 @@ class Header {
 					headerElement.remove();
 					this.render();
 
-					this.navigate(urls.restaurants);
+					if (window.location.pathname !== urls.restaurants) {
+						this.navigate(urls.restaurants);
+					}
 				},
 			});
 
