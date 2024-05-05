@@ -31,15 +31,17 @@ class Banner {
 		api.getReviewsInfo(this.#data.id, (data) => {
 			const reviews = document.querySelector('.reviews');
 
-			data.forEach((review) => {
-				const ratingValues = [];
+			if (data?.length > 0) {
+				data.forEach((review) => {
+					const ratingValues = [];
 
-				for (let i = 0; i < 5; i++) {
-					ratingValues.push({ iconSuffix: i + 1 > review.rating ? '-default' : '' });
-				}
+					for (let i = 0; i < 5; i++) {
+						ratingValues.push({ iconSuffix: i + 1 > review.rating ? '-default' : '' });
+					}
 
-				review.rating = ratingValues;
-			});
+					review.rating = ratingValues;
+				});
+			}
 
 			reviews.insertAdjacentHTML('beforeend', reviewsItems({ reviews: data }));
 		});

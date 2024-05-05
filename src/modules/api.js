@@ -452,6 +452,7 @@ class Api {
 
 		if (data) {
 			callback(reviews);
+			return;
 		}
 
 		callback(data);

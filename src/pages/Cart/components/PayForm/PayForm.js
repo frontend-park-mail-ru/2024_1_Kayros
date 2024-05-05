@@ -46,7 +46,9 @@ class PayForm {
 			extra_address: `${this.apart}, ${this.entrance}, ${this.floor}`,
 		});
 
-		if (!this.user) {
+		const user = localStorageHelper.getItem('user-info');
+
+		if (!user) {
 			router.navigate(urls.signIn);
 			return;
 		}
