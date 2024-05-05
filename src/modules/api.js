@@ -1,5 +1,6 @@
 import { Notification } from 'resto-ui';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SAGESTS } from '../constants';
+import reviews from '../mocks/reviews';
 import ajax from './ajax';
 
 /**
@@ -439,6 +440,21 @@ class Api {
 		});
 
 		return false;
+	}
+
+	/**
+	 * Метод для получения отзывов
+	 * @param {number} id - id ресторана
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getReviewsInfo(id, callback) {
+		let data = await ajax.get(`${this.#url}/restaurants/${id}/comments`);
+
+		if (data) {
+			callback(reviews);
+		}
+
+		callback(data);
 	}
 }
 
