@@ -1,4 +1,5 @@
 import { Notification } from 'resto-ui';
+import Button from '../../components/Button';
 import Header from '../../components/Header';
 import Input from '../../components/Input/Input';
 import Loader from '../../components/Loader';
@@ -113,6 +114,48 @@ class Restaurants {
 	}
 
 	/**
+	 * Создаёт кнопку и добавляет её в указанный контейнер.
+	 * @param {HTMLElement} container - Контейнер, куда будет добавлена кнопка.
+	 * @param {string} id - id
+	 * @param {string} label - Текст
+	 * @param {string} [style] - Стиль
+	 */
+	createButton(container, id, label, style = '') {
+		const button = new Button(container, {
+			id: id,
+			onClick: () => {
+				this.updateButtonStyles(id);
+			},
+			content: label,
+			icon: '',
+			style: style,
+		});
+
+		button.render();
+	}
+
+	/**
+	 * Обновляет стили кнопок
+	 * @param {string} activeButtonId - Идентификатор кнопки, которую следует выделить как активную.
+	 */
+	updateButtonStyles(activeButtonId) {
+		const categories = ['category1-button', 'category2-button', 'category3-button'];
+		categories.forEach((buttonId) => {
+			const buttonElement = document.querySelector(`#${buttonId}`);
+
+			if (buttonElement) {
+				if (buttonId === activeButtonId) {
+					buttonElement.classList.add('btn--primary');
+					buttonElement.classList.remove('btn--secondary');
+				} else {
+					buttonElement.classList.add('btn--secondary');
+					buttonElement.classList.remove('btn--primary');
+				}
+			}
+		});
+	}
+
+	/**
 	 * Рендеринг страницы
 	 */
 	async render() {
@@ -136,8 +179,13 @@ class Restaurants {
 				position: 'afterbegin',
 				placeholder: 'Ресторан, категория',
 			});
+
 			search.render();
 		}
+
+		this.createButton(document.querySelector('.category1'), 'category1-button', 'Все', 'primary');
+		this.createButton(document.querySelector('.category2'), 'category2-button', 'Итальянская');
+		this.createButton(document.querySelector('.category3'), 'category3-button', 'Авторская');
 
 		const restaurants = document.querySelector('.restaurants__cards');
 		const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });
