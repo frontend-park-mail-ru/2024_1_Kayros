@@ -32,6 +32,8 @@ class AddressSagests {
 	 * Отобразить измение адреса в хэдере
 	 */
 	handleAddressChange() {
+		localStorage.setItem('user-address', JSON.stringify({ value: this.address }));
+
 		const header = document.querySelector('.header');
 		header.remove();
 		const newHeader = new Header({ navigate: router.navigate.bind(router) });

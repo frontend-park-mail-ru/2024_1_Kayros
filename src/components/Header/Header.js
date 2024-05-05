@@ -60,6 +60,11 @@ class Header {
 	 */
 	async userData() {
 		await api.getUserInfo(this.handleUserData);
+
+		await api.getUserAddress(({ address }) => {
+			localStorage.setItem('user-address', JSON.stringify({ value: address }));
+		});
+
 		api.getCartInfo(this.handleCartData.bind(this));
 	}
 
@@ -85,21 +90,20 @@ class Header {
 		await this.userData();
 
 		const user = localStorageHelper.getItem('user-info');
+		const address = localStorageHelper.getItem('user-address').value;
 
-		api.getUserAddress(({ address }) => {
-			const addressBlock = document.querySelector('.header__address');
-			const addressButton = new Button(addressBlock, {
-				id: 'address-button',
-				onClick: () => {
-					this.navigate(urls.address);
-				},
-				content: address || 'Укажите адрес доставки',
-				icon: address ? '' : 'address',
-				style: address ? 'secondary' : 'primary',
-			});
-
-			addressButton.render();
+		const addressBlock = document.querySelector('.header__address');
+		const addressButton = new Button(addressBlock, {
+			id: 'address-button',
+			onClick: () => {
+				this.navigate(urls.address);
+			},
+			content: address || 'Укажите адрес доставки',
+			icon: address ? '' : 'address',
+			style: address ? 'secondary' : 'primary',
 		});
+
+		addressButton.render();
 
 		const profileBlock = document.querySelector('.header__profile-block');
 

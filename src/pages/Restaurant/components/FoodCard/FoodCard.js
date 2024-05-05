@@ -210,17 +210,15 @@ class FoodCard {
 
 		const action = food.querySelector('.food-card__action');
 
-		await api.getUserAddress(({ address }) => {
-			this.address = address;
-		});
-
 		const counterButton = new CounterButton(action, {
 			id: `food-button-${this.data.id}`,
 			productId: this.data.id,
 			initCount: this.count,
 			maxCount: 99,
 			prevCount: () => {
-				if (this.address === '') {
+				const address = localStorageHelper.getItem('user-address').value;
+
+				if (address === '' || !address) {
 					this.openAddressModal();
 					return;
 				}

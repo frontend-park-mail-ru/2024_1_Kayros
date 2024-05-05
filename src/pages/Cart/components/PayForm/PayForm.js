@@ -74,10 +74,8 @@ class PayForm {
 	async render() {
 		const user = localStorageHelper.getItem('user-info');
 		this.user = user;
-
-		await api.getUserAddress(({ address }) => {
-			this.main = address;
-		});
+		const address = localStorageHelper.getItem('user-address').value;
+		this.main = address;
 
 		this.#parent.insertAdjacentHTML('beforeend', template(this.data));
 		const form = this.#parent.querySelector('.pay-form');

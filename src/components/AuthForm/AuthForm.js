@@ -2,7 +2,6 @@ import { FIELDS_SIGN_IN, FIELDS_SIGN_UP } from '../../constants';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls';
-import { deleteCookie } from '../../utils';
 import BackButton from '../BackButton/BackButton';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
@@ -86,7 +85,6 @@ class AuthForm {
 
 		this.#config.apiMethod(userData, (data) => {
 			localStorage.setItem('user-info', data);
-			deleteCookie('unauth_id');
 			router.back();
 		});
 	}
