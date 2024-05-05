@@ -25,10 +25,11 @@ class Input {
 	 * @param {string} params.value - начальное значение
 	 * @param {void} params.onChange - обработчик события
 	 * @param {boolean} params.disabled - блокировка
+	 * @param {function} params.buttonOnClick - обработчик события клика на кнопку
 	 */
 	constructor(
 		parent,
-		{ id, placeholder, type = 'text', button, style = 'standart', value = '', onChange = '', disabled = false },
+		{ buttonOnClick = () => {}, id, placeholder, type = 'text', button, style = 'standart', value = '', onChange = '', disabled = false },
 	) {
 		this.#parent = parent;
 		this.#placeholder = placeholder;
@@ -40,6 +41,7 @@ class Input {
 		this.value = value;
 		this.onChange = onChange;
 		this.disabled = disabled;
+		this.buttonOnClick = buttonOnClick;
 	}
 
 	/**
@@ -67,7 +69,11 @@ class Input {
 
 		if (this.#button) {
 			const buttonBlock = this.#parent.querySelector('.input__search-button');
-			const searchButton = new Button(buttonBlock, { id: `${this.#id}-search-button`, content: this.#button });
+			const searchButton = new Button(buttonBlock, {
+				id: `${this.#id}-search-button`,
+				content: this.#button,
+				onClick: this.buttonOnClick,
+			});
 			searchButton.render();
 		}
 

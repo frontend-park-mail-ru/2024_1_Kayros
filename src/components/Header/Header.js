@@ -8,12 +8,13 @@ import Profile from '../Profile';
 import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 import template from './Header.hbs';
 import './Header.scss';
+import {router} from "../../modules/router.js";
 
 /**
  * Шапка
  */
 class Header {
-	#parent;
+	parent;
 
 	/**
 	 * Конструктор класса
@@ -22,7 +23,7 @@ class Header {
 	 */
 	constructor({ navigate }) {
 		this.navigate = navigate;
-		this.#parent = document.querySelector('.layout');
+		this.parent = document.querySelector('.layout');
 	}
 
 	/**
@@ -55,6 +56,17 @@ class Header {
 		cartButton.render();
 	}
 
+	changeSearchInputValue() {
+		const urlSearchParams = new URLSearchParams(window.location.search);
+		const searchBlock = document.getElementById('restaurants-search');
+
+		if (window.location.pathname === urls.search) {
+			searchBlock.value = (urlSearchParams.get('search') || '');
+		} else {
+			searchBlock.value = '';
+		}
+	}
+
 	/**
 	 * Получение данных пользователя
 	 */
@@ -68,22 +80,42 @@ class Header {
 		api.getCartInfo(this.handleCartData.bind(this));
 	}
 
+	clickOnSearch() {
+		if (!this.searchValue) {
+			return;
+		}
+
+		const searchParams = {search: this.searchValue};
+
+		router.navigate(urls.search, {searchParams});
+	}
+
 	/**
 	 * Рендеринг компонента
 	 */
 	async render() {
-		this.#parent.insertAdjacentHTML('afterbegin', template());
+		this.parent.insertAdjacentHTML('afterbegin', template());
 
 		const logoBlock = document.querySelector('.header__logo-container');
 		const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
 		logo.render();
 
-		const searchBlock = this.#parent.querySelector('.header__search-input');
+		const urlSearchParams = new URLSearchParams(window.location.search);
+
+		const searchBlock = this.parent.querySelector('.header__search-input');
 		const searchInput = new Input(searchBlock, {
 			id: 'restaurants-search',
 			placeholder: 'Рестораны, еда',
 			button: 'Найти',
+			value: urlSearchParams.get('search') || '',
+			onChange: (event) => {
+				this.searchValue = event.target.value;
+
+			},
+			buttonOnClick: this.clickOnSearch.bind(this),
 		});
+
+		window.addEventListener('popstate', this.changeSearchInputValue.bind(this));
 
 		searchInput.render();
 

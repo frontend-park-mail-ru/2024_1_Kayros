@@ -8,6 +8,7 @@ import RestaurantPage from '../pages/Restaurant';
 import RestaurantsPage from '../pages/Restaurants';
 import SignInPage from '../pages/SignIn';
 import SignUpPage from '../pages/SignUp';
+import SearchPage from '../pages/Search';
 import urls from './urls';
 
 const routes = {
@@ -46,6 +47,10 @@ const routes = {
 	[urls.order]: {
 		title: 'Заказ',
 		component: OrderPage,
+	},
+	[urls.search]: {
+		title: 'Поиск',
+		component: SearchPage,
 	},
 };
 

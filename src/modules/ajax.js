@@ -20,11 +20,11 @@ class Ajax {
 		const token = getCookie('csrf_token');
 
 		try {
-			const response = await fetch(url, {
+			const response = await fetch(`${url}${window.location.search}`, {
 				headers: xsrf
 					? {
-						'XCSRF-Token': token || '',
-					}
+							'XCSRF-Token': token || '',
+						}
 					: {},
 			});
 
