@@ -30,13 +30,8 @@
 		opacity: 0;
 		width: 0;
 		font-size: 20px;
-		cursor: pointer;
 		transition: all 0.3s;
 		z-index: 11;
-
-		&:hover {
-			color: var(--header-profile-name-color-hover);
-		}
 	}
 }
 

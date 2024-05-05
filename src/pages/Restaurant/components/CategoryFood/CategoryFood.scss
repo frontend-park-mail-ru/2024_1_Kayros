@@ -15,7 +15,7 @@
 		justify-items: center;
 		gap: 14px;
 
-		@media (width <= 1286px) {
+		@media (max-width: 1286px) {
 			grid-template-columns: repeat(3, 1fr);
 		}
 	}

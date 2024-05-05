@@ -1,9 +1,9 @@
 import api from '../../modules/api';
 import template from './Restaurant.hbs';
-import './Restaurant.scss';
 import Banner from './components/Banner/Banner';
 import CategoryFood from './components/CategoryFood/CategoryFood';
 import Sidebar from './components/SideBar/Sidebar';
+import './Restaurant.scss';
 
 /**
  * Страница ресторана
@@ -63,7 +63,7 @@ class Restaurant {
 
 		document.title = `Resto - ${data.name}`;
 
-		this.#parent.innerHTML = this.getHTML(data);
+		this.#parent.insertAdjacentHTML('beforeend', this.getHTML(data));
 
 		const sidebarContainer = document.querySelector('.restaurant__sidebar');
 		const sidebar = new Sidebar(sidebarContainer, {
@@ -125,7 +125,7 @@ class Restaurant {
 	 * Рендеринг страницы
 	 */
 	async render() {
-		this.#parent.innerHTML = template();
+		this.#parent.insertAdjacentHTML('beforeend', template());
 
 		await this.getData();
 	}

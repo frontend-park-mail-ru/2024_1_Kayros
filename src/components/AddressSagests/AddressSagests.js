@@ -1,6 +1,6 @@
 import api from '../../modules/api';
 import { router } from '../../modules/router';
-import { localStorageHelper } from '../../utils';
+import { localStorageHelper, setCookieIfNotExist } from '../../utils';
 import Button from '../Button/Button';
 import Header from '../Header/Header';
 import template from './AddressSagests.hbs';
@@ -25,6 +25,7 @@ class AddressSagests {
 		this.closeModal = closeModal;
 		this.address = '';
 		this.goToPoint = goToPoint;
+		this.user = '';
 	}
 
 	/**
@@ -45,11 +46,16 @@ class AddressSagests {
 
 		this.address = searchInput.value.split(' · ')[1] || searchInput.value;
 
-		await api.updateAddressSagests({ address: this.address }, this.handleAddressChange);
+		setCookieIfNotExist('unauth_id', crypto.randomUUID());
+
+		await api.updateAddressSagests({ address: this.address }, this.handleAddressChange.bind(this));
 		const cartAddress = document.querySelector('#main-address');
+		const cartContainer = document.querySelector('#main-address-container');
 
 		if (cartAddress) {
 			cartAddress.value = this.address;
+			const holder = cartContainer.querySelector('.input__label-holder');
+			holder.style.width = 20 * 8 + 'px';
 		}
 
 		this.closeModal();
@@ -124,7 +130,7 @@ class AddressSagests {
 
 		const input = searchContainer.querySelector('input');
 
-		const searchButton = new Button(searchContainer, {
+		const submitButton = new Button(searchContainer, {
 			id: 'address-search-button',
 			content: 'Сохранить',
 			withLoader: true,
@@ -139,11 +145,12 @@ class AddressSagests {
 			disabled: input.value ? false : true,
 		});
 
-		searchButton.render();
+		submitButton.render();
 
 		const dropdown = sagestsContainer.querySelector('.address-sagests__dropdown-container');
 
 		const user = localStorageHelper.getItem('user-info');
+		this.user = user;
 
 		if (user?.address) {
 			input.value = user.address || '';

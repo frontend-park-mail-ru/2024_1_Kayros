@@ -18,11 +18,10 @@ class Content {
 		this.#parent = parent;
 		this.#withoutPadding = withoutPadding;
 	}
-
 	/**
 	 * Рендеринг компонента
 	 */
-	render() {
+	async render() {
 		this.#parent.insertAdjacentHTML('beforeend', template());
 		const content = document.querySelector('.content');
 

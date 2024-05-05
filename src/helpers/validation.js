@@ -9,6 +9,9 @@ import {
 	NAME_REGEX,
 	INVALID_NAME_CHAR_REGEX,
 	PHONE_REGEX,
+	APART_REGEX,
+	FLOOR_REGEX,
+	ENTRANCE_REGEX,
 } from '../constants';
 
 export const validatePhone = (phoneElement, phoneErrorElement) => {
@@ -99,4 +102,32 @@ export const validateConfirmPassword = (
 	}
 
 	return confirmPasswordElement.value && isPasswordsMatch;
+};
+
+export const validateMatchNewPassword = (newPassword, oldPassword, errorContainer) => {
+	if (newPassword.value === oldPassword.value) {
+		errorContainer.textContent = VALIDATION_ERRORS.newPasswordMatchedWithOld;
+		return false;
+	}
+
+	errorContainer.textContent = '';
+	return validatePassword(newPassword, errorContainer, true);
+};
+
+export const validateApartNumber = (apartValue, errorContainer) => {
+	const isApartlValid = APART_REGEX.test(apartValue);
+	errorContainer.textContent = isApartlValid ? '' : 'Введите корректное значение';
+	return isApartlValid;
+};
+
+export const validateFloorNumber = (floorValue, errorContainer) => {
+	const isFloorValid = FLOOR_REGEX.test(floorValue);
+	errorContainer.textContent = isFloorValid ? '' : 'Введите корректное значение';
+	return isFloorValid;
+};
+
+export const validateEntranceNumber = (entranceValue, errorContainer) => {
+	const isEntranceValid = ENTRANCE_REGEX.test(entranceValue);
+	errorContainer.textContent = isEntranceValid ? '' : 'Введите корректное значение';
+	return isEntranceValid;
 };

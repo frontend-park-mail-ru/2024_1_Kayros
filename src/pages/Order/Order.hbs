@@ -1,0 +1,44 @@
+<div class="order">
+	<div class="order__button-container"></div>
+	<div class="order__main">
+		{{#if this.id}}
+			<div class="order__head">
+				<div class="order__title">Заказ № {{this.id}}</div>
+				<div class="order__status">
+					Статус заказа
+					<span class="order__status-name">{{this.status}}</span>
+				</div>
+			</div>
+
+			<div class="order__create-time">{{this.created_at}}</div>
+
+			<div class="order__status-bar"></div>
+
+			<div class="order__info">
+				<div class="order__food">
+				</div>
+				<div class="order__details">
+					<div class="order__subtitle">Детали заказа</div>
+					<div class="order__restaurant">
+						<div>Ресторан</div>
+						<span>{{this.restaurant_name}}</span>
+					</div>
+					<div class="order__address">
+						<div>Адрес доставки</div>
+						<span>{{this.address}}</span>
+					</div>
+					<div class="order__pay-method">
+						<div>Способ оплаты</div>
+						<span>Карта</span>
+					</div>
+					<div class="order__sum">
+						<div>Сумма заказа</div>
+						<span>{{this.sum}} ₽</span>
+					</div>
+				</div>
+			</div>
+		{{else}}
+			<div class="order__subtitle">Заказ не найден</div>
+		{{/if}}
+	</div>
+</div>

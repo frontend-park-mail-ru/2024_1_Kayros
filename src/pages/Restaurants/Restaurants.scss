@@ -1,12 +1,21 @@
 .restaurants {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	justify-items: center;
-	color: var(--brand);
-	font-size: 18px;
-	transition: all 0.5s;
+	&__title {
+		font-size: 28px;
+		font-weight: 600;
+		margin-left: 16px;
+		margin-top: 16px;
+	}
 
-	@media (width <= 1400px) {
-		grid-template-columns: repeat(3, 1fr);
+	&__cards {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		justify-items: center;
+		color: var(--brand);
+		font-size: 18px;
+		transition: all 0.5s;
+
+		@media (max-width: 1400px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
 	}
 }

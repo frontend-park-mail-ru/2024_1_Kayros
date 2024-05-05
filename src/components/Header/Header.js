@@ -83,20 +83,23 @@ class Header {
 		searchInput.render();
 
 		await this.userData();
+
 		const user = localStorageHelper.getItem('user-info');
 
-		const addressBlock = document.querySelector('.header__address');
-		const addressButton = new Button(addressBlock, {
-			id: 'address-button',
-			onClick: () => {
-				this.navigate(urls.address);
-			},
-			content: user?.address || 'Укажите адрес доставки',
-			icon: user?.address ? '' : 'address',
-			style: user?.address ? 'secondary' : 'primary',
-		});
+		api.getUserAddress(({ address }) => {
+			const addressBlock = document.querySelector('.header__address');
+			const addressButton = new Button(addressBlock, {
+				id: 'address-button',
+				onClick: () => {
+					this.navigate(urls.address);
+				},
+				content: address || 'Укажите адрес доставки',
+				icon: address ? '' : 'address',
+				style: address ? 'secondary' : 'primary',
+			});
 
-		addressButton.render();
+			addressButton.render();
+		});
 
 		const profileBlock = document.querySelector('.header__profile-block');
 
