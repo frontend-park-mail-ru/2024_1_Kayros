@@ -1,11 +1,15 @@
 import Button from '../../components/Button';
 import DishCard from '../../components/DishCard';
+import Input from '../../components/Input/Input';
+import Modal from '../../components/Modal/Modal';
 import Stepper from '../../components/Stepper/Stepper';
 import { ORDER_STATUSES } from '../../constants';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls';
+import feedbackTemplate from './FeedBack.hbs';
 import template from './Order.hbs';
+import './FeedBack.scss';
 import './Order.scss';
 
 const STEPS = ['Создан', 'Готовится', 'В пути', 'Доставлен'];
@@ -27,6 +31,7 @@ class Order {
 		this.id = id;
 		this.order = {};
 		this.fetchInterval = '';
+		this.rating = 0;
 	}
 
 	/**
@@ -53,12 +58,86 @@ class Order {
 	}
 
 	/**
+	 *
+	 */
+	renderFeedback() {
+		const feedBack = document.querySelector('.feedback');
+		const feedBackComment = feedBack.querySelector('.feedback__comment');
+		const feedBackStars = feedBack.querySelector('.feedback__rating');
+
+		for (let i = 0; i < 5; i++) {
+			const button = new Button(feedBackStars, {
+				id: 'feedback-star-button',
+				icon: 'rating-icon-default',
+				style: 'clear',
+			});
+
+			button.render();
+		}
+
+		const stars = feedBackStars.querySelectorAll('.feedback-star-button-img');
+		const buttons = feedBackStars.querySelectorAll('#feedback-star-button');
+
+		buttons.forEach((star, i) => {
+			star.onmouseover = () => {
+				for (let j = 0; j <= i; j++) {
+					stars[j].src = 'assets/rating-icon.svg';
+				}
+
+				for (let j = i + 1; j < 5; j++) {
+					stars[j].src = 'assets/rating-icon-default.svg';
+				}
+			};
+
+			star.onmouseleave = () => {
+				for (let j = 0; j < this.rating; j++) {
+					stars[j].src = 'assets/rating-icon.svg';
+				}
+
+				for (let j = this.rating; j <= i; j++) {
+					stars[j].src = 'assets/rating-icon-default.svg';
+				}
+			};
+
+			star.onclick = () => {
+				this.rating = i + 1;
+
+				for (let j = 0; j < this.rating; j++) {
+					stars[j].src = 'assets/rating-icon.svg';
+				}
+
+				for (let j = this.rating; j < 5; j++) {
+					stars[j].src = 'assets/rating-icon-default.svg';
+				}
+			};
+		});
+
+		const textarea = new Input(feedBackComment, {
+			id: 'feedback-comment-area',
+			placeholder: 'Комментарий',
+			textarea: true,
+		});
+
+		textarea.render();
+
+		const submitButton = new Button(feedBack, {
+			id: 'feedback-submit-button',
+			content: 'Отправить',
+			onClick: () => {
+				api.sendFeedback();
+			},
+		});
+
+		submitButton.render();
+	}
+
+	/**
 	 * Рендеринг компонента
 	 */
 	async render() {
 		await this.getData();
 
-		if (!this.order.id) {
+		if (!this.order || !this.order.id) {
 			this.#parent.insertAdjacentHTML('beforeend', template());
 			return;
 		}
@@ -72,6 +151,26 @@ class Order {
 		this.order.status = ORDER_STATUSES[this.order.status];
 
 		this.#parent.insertAdjacentHTML('beforeend', template(this.order));
+
+		const reviewContainer = this.#parent.querySelector('.order__review');
+		const reviewButton = new Button(reviewContainer, {
+			id: 'order-review-button',
+			content: 'Оставить отзыв',
+			size: 's',
+			onClick: () => {
+				const modal = new Modal({
+					content: feedbackTemplate(),
+					className: 'feedback-modal',
+					initiatorId: 'order-review-button',
+				});
+
+				modal.render();
+
+				this.renderFeedback();
+			},
+		});
+
+		reviewButton.render();
 
 		const buttonContainer = this.#parent.querySelector('.order__button-container');
 		const backButton = new Button(buttonContainer, {

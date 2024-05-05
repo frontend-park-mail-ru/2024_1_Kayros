@@ -17,6 +17,16 @@ class Api {
 	}
 
 	/**
+	 * Метод для получения ссылки на оплату
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getCheckoutUrl(callback) {
+		const data = await ajax.get(`${this.#url}/order/pay/url`);
+
+		callback(data);
+	}
+
+	/**
 	 * Метод для получения списка ресторанов
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
