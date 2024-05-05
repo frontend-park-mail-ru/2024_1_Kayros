@@ -59,9 +59,12 @@ class Header {
 	changeSearchInputValue() {
 		const urlSearchParams = new URLSearchParams(window.location.search);
 		const searchBlock = document.getElementById('restaurants-search');
+		const searchValue = urlSearchParams.get('search') || '';
+
+		this.searchValue = searchValue;
 
 		if (window.location.pathname === urls.search) {
-			searchBlock.value = (urlSearchParams.get('search') || '');
+			searchBlock.value = searchValue;
 		} else {
 			searchBlock.value = '';
 		}
@@ -101,13 +104,16 @@ class Header {
 		logo.render();
 
 		const urlSearchParams = new URLSearchParams(window.location.search);
+		const searchValue = urlSearchParams.get('search') || '';
+
+		this.searchValue = searchValue
 
 		const searchBlock = this.parent.querySelector('.header__search-input');
 		const searchInput = new Input(searchBlock, {
 			id: 'restaurants-search',
 			placeholder: 'Рестораны, еда',
 			button: 'Найти',
-			value: urlSearchParams.get('search') || '',
+			value: searchValue,
 			onChange: (event) => {
 				this.searchValue = event.target.value;
 

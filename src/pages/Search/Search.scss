@@ -7,15 +7,31 @@
 	}
 
 	&__cards {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		justify-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
 		color: var(--brand);
 		font-size: 18px;
 		transition: all 0.5s;
 
 		@media (max-width: 1400px) {
 			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	.restaurant-card {
+		flex-direction: row;
+		gap: 20px;
+		min-width: initial;
+		max-width: initial;
+
+		&__image-container {
+			width: 110px;
+			height: 110px;
+		}
+
+		&__content {
+			flex: 1;
 		}
 	}
 }
