@@ -37,6 +37,7 @@
 		right: 30px;
 		top: 30px;
 		transition: filter 0.2s;
+		z-index: 10;
 
 		&:hover {
 			filter: brightness(0.5);
