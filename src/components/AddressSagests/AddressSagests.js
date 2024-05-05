@@ -32,9 +32,7 @@ class AddressSagests {
 	 * Отобразить измение адреса в хэдере
 	 */
 	handleAddressChange() {
-		if (!this.user) {
-			localStorage.setItem('unauth-info', JSON.stringify({ address: this.address }));
-		}
+		localStorage.setItem('user-address', JSON.stringify({ value: this.address }));
 
 		const header = document.querySelector('.header');
 		header.remove();

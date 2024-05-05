@@ -3,7 +3,7 @@
 .header {
 	display: flex;
 	align-items: center;
-	gap: 100px;
+	gap: 30px;
 	transition: all 0.15s;
 	z-index: 10;
 	position: sticky;
@@ -31,19 +31,15 @@
 			margin-right: 16px;
 			background: transparent;
 			gap: 10px;
-
-			.header__search-input {
-				display: none;
-			}
-
-			.header__address {
-				display: none;
-			}
 		}
 
 		@media (max-width: $xsm) {
 			margin-right: 0;
 		}
+	}
+
+	&__search-input {
+		min-width: 100px;
 	}
 
 	&__cart {
@@ -65,16 +61,40 @@
 		}
 	}
 
+	&__address {
+		max-width: 350px;
+
+		& .btn {
+			width: 100%;
+		}
+
+		& > .btn span {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			word-break: break-all;
+
+			@media (max-width: $xsm) {
+				font-size: 12px;
+			}
+		}
+	}
+
 	&__profile-block {
 		position: relative;
-		min-width: 30px;
+		min-width: 40px;
 	}
 
 	&__logo-container {
 		margin-left: 52px;
 
+		.logo {
+			width: 100%;
+			min-width: 60px;
+		}
+
 		@media (max-width: $xsm) {
 			margin-left: 16px;
+			display: none;
 
 			.logo {
 				width: 100%;
@@ -108,5 +128,7 @@
 
 	&.btn--secondary {
 		opacity: 0;
+		width: 0;
+		padding: 0;
 	}
 }

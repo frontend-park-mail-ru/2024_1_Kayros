@@ -31,3 +31,13 @@
 		padding: 0;
 	}
 }
+
+@media screen and (max-width: $sm) {
+	.content {
+		padding: 12px;
+
+		&--no-padding {
+			padding: 0;
+		}
+	}
+}

@@ -1,3 +1,5 @@
+@import "../../constants.scss";
+
 .dish-card {
 	display: flex;
 	align-items: center;
@@ -10,20 +12,9 @@
 		width: fit-content;
 	}
 
-	&--complete {
-		background: var(--layout-bg-color);
-		padding: 15px;
-		border-radius: 18px;
-
-		.dish-card__count {
-			background: var(--button-secondary-bg);
-		}
-	}
-
 	.counter-button {
 		height: 31px;
 		width: 100px;
-		margin: 0 30px;
 	}
 
 	&__title {
@@ -66,14 +57,59 @@
 
 	&__content {
 		display: flex;
-		flex-direction: column;
+		flex-flow: row wrap;
 		justify-content: space-between;
 		height: 100%;
 		width: 100%;
+		gap: 10px;
 
 		&-block {
 			display: flex;
 			flex-direction: column;
+			flex: 1;
+		}
+	}
+
+	&__count_info {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 20px;
+	}
+}
+
+.dish-card--complete {
+	background: var(--layout-bg-color);
+	padding: 15px;
+	border-radius: 18px;
+
+	& .dish-card__content {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+		width: 100%;
+	}
+
+	& .dish-card__count {
+		background: var(--button-secondary-bg);
+	}
+}
+
+@media (max-width: $sm) {
+	div.dish-card {
+		&__counter-block {
+			margin-left: 0;
+		}
+
+		&__content {
+			flex-direction: column;
+
+			&-block {
+				display: flex;
+				flex-direction: column;
+				flex: 1;
+			}
 		}
 	}
 }

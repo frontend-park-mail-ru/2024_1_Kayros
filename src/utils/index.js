@@ -27,19 +27,19 @@ export const getPhoneMask = (phoneElement) => {
 
 	for (let i = 0; i < phone.length; i++) {
 		switch (i) {
-		case 0:
-			formattedPhone += '+';
-			break;
-		case 1:
-			formattedPhone += ' (';
-			break;
-		case 4:
-			formattedPhone += ') ';
-			break;
-		case 7:
-		case 9:
-			formattedPhone += ' ';
-			break;
+			case 0:
+				formattedPhone += '+';
+				break;
+			case 1:
+				formattedPhone += ' (';
+				break;
+			case 4:
+				formattedPhone += ') ';
+				break;
+			case 7:
+			case 9:
+				formattedPhone += ' ';
+				break;
 		}
 
 		if (i < 11) {
@@ -58,6 +58,19 @@ export const setCookieIfNotExist = (name, value) => {
 	if (!cookieExists) {
 		document.cookie = `${name}=${value}; path=/`;
 	}
+};
+
+export const getCookie = (name) => {
+	let matches = document.cookie.match(
+		// eslint-disable-next-line no-useless-escape
+		new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'),
+	);
+
+	return matches ? decodeURIComponent(matches[1]) : undefined;
+};
+
+export const deleteCookie = (name) => {
+	document.cookie = `${name}=; path=/; max-age=-1`;
 };
 
 export const isMobileOrTabletScreen = () => window.innerWidth <= TABLET_BREAKPOINT;

@@ -18,10 +18,12 @@
 				<div class="dish-card__count">x{{this.count}}</div>
 			</div>
 		{{/unless}}
-	</div>
 
-	{{#if this.counter}}
-		<div class="dish-card__counter-block"></div>
-		<div class="dish-card__price">{{this.price}} ₽</div>
-	{{/if}}
+		{{#if this.counter}}
+			<div class="dish-card__count_info">
+				<div class="dish-card__counter-block"></div>
+				<div class="dish-card__price">{{this.price}} ₽</div>
+			</div>
+		{{/if}}
+	</div>
 </div>
