@@ -1,3 +1,5 @@
+@import "../../constants.scss";
+
 .file-upload {
 	display: flex;
 	overflow: hidden;
@@ -60,6 +62,10 @@
 		opacity: 0;
 		transition: 0.3s;
 		height: 60px;
+
+		@media (max-width: $sm) {
+			height: 50px;
+		}
 	}
 
 	&__delete {
