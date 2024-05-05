@@ -85,25 +85,21 @@ class Header {
 		await this.userData();
 
 		const user = localStorageHelper.getItem('user-info');
-		let currentAddress = user?.address;
 
-		if (!user) {
-			const unauthInfo = localStorageHelper.getItem('unauth-info');
-			currentAddress = unauthInfo?.address;
-		}
+		api.getUserAddress(({ address }) => {
+			const addressBlock = document.querySelector('.header__address');
+			const addressButton = new Button(addressBlock, {
+				id: 'address-button',
+				onClick: () => {
+					this.navigate(urls.address);
+				},
+				content: address || 'Укажите адрес доставки',
+				icon: address ? '' : 'address',
+				style: address ? 'secondary' : 'primary',
+			});
 
-		const addressBlock = document.querySelector('.header__address');
-		const addressButton = new Button(addressBlock, {
-			id: 'address-button',
-			onClick: () => {
-				this.navigate(urls.address);
-			},
-			content: currentAddress || 'Укажите адрес доставки',
-			icon: currentAddress ? '' : 'address',
-			style: currentAddress ? 'secondary' : 'primary',
+			addressButton.render();
 		});
-
-		addressButton.render();
 
 		const profileBlock = document.querySelector('.header__profile-block');
 

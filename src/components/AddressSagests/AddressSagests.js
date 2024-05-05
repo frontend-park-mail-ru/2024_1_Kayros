@@ -32,10 +32,6 @@ class AddressSagests {
 	 * Отобразить измение адреса в хэдере
 	 */
 	handleAddressChange() {
-		if (!this.user) {
-			localStorage.setItem('unauth-info', JSON.stringify({ address: this.address }));
-		}
-
 		const header = document.querySelector('.header');
 		header.remove();
 		const newHeader = new Header({ navigate: router.navigate.bind(router) });
@@ -50,7 +46,7 @@ class AddressSagests {
 
 		this.address = searchInput.value.split(' · ')[1] || searchInput.value;
 
-		setCookieIfNotExist('unauth_token', crypto.randomUUID());
+		setCookieIfNotExist('unauth_id', crypto.randomUUID());
 
 		await api.updateAddressSagests({ address: this.address }, this.handleAddressChange.bind(this));
 		const cartAddress = document.querySelector('#main-address');

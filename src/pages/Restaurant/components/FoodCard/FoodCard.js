@@ -27,6 +27,7 @@ class FoodCard {
 		this.added = false;
 		this.count = count;
 		this.cart = cart;
+		this.address = '';
 	}
 
 	/**
@@ -39,7 +40,7 @@ class FoodCard {
 			return;
 		}
 
-		setCookieIfNotExist('unauth_token', crypto.randomUUID());
+		setCookieIfNotExist('unauth_id', crypto.randomUUID());
 	}
 
 	/**
@@ -136,7 +137,7 @@ class FoodCard {
 
 		const sum = cart.querySelector('span');
 
-		if (res === 0) {
+		if (!res) {
 			cart.className = 'btn btn--secondary size-xs';
 			sum.innerHTML = '';
 		} else {
@@ -202,12 +203,16 @@ class FoodCard {
 	/**
 	 * Рендеринг компонента
 	 */
-	render() {
+	async render() {
 		this.parent.insertAdjacentHTML('beforeend', template(this.data));
 
 		const food = document.getElementById(`food-${this.data.id}`);
 
 		const action = food.querySelector('.food-card__action');
+
+		await api.getUserAddress(({ address }) => {
+			this.address = address;
+		});
 
 		const counterButton = new CounterButton(action, {
 			id: `food-button-${this.data.id}`,
@@ -215,11 +220,7 @@ class FoodCard {
 			initCount: this.count,
 			maxCount: 99,
 			prevCount: () => {
-				const user = localStorageHelper.getItem('user-info');
-				const unauthInfo = localStorageHelper.getItem('unauth-info');
-				const currentAddress = user?.address || unauthInfo?.address;
-
-				if (!currentAddress) {
+				if (this.address === '') {
 					this.openAddressModal();
 					return;
 				}

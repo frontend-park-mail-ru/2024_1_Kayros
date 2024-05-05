@@ -71,17 +71,13 @@ class PayForm {
 	/**
 	 * Рендер страницы
 	 */
-	render() {
+	async render() {
 		const user = localStorageHelper.getItem('user-info');
 		this.user = user;
-		let currentAddress = user?.address;
 
-		if (!user) {
-			const unauthInfo = localStorageHelper.getItem('unauth-info');
-			currentAddress = unauthInfo?.address;
-		}
-
-		this.main = currentAddress || '';
+		await api.getUserAddress(({ address }) => {
+			this.main = address;
+		});
 
 		this.#parent.insertAdjacentHTML('beforeend', template(this.data));
 		const form = this.#parent.querySelector('.pay-form');
@@ -96,7 +92,7 @@ class PayForm {
 				id: field.id,
 				placeholder: field.placeholder,
 				style: field.style,
-				value: this[field.name],
+				value: field.name === 'main' ? this.main : this[field.name],
 				onChange: (event) => {
 					this[field.name] = event.target.value;
 				},

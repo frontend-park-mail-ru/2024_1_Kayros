@@ -11,18 +11,21 @@ class Ajax {
 	 * @param {string} url - адрес сервера для отправки запроса
 	 * @param {object} params - параметры
 	 * @param {boolean} params.showNotifyError - показывать ошибку
+	 * @param {boolean} params.xsrf - отправлять ли заголовок
 	 * @returns {object} - полученные данные в виде json объекта
 	 */
-	async get(url, { showNotifyError = true } = {}) {
+	async get(url, { showNotifyError = true, xsrf = true } = {}) {
 		let data, responseError, result;
 
 		const token = getCookie('csrf_token');
 
 		try {
 			const response = await fetch(url, {
-				headers: {
-					'XCSRF-Token': token || '',
-				},
+				headers: xsrf
+					? {
+							'XCSRF-Token': token || '',
+						}
+					: {},
 			});
 
 			result = await response.text();
