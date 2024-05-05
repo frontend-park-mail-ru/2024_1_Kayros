@@ -442,7 +442,12 @@ class Api {
 	 */
 	async getCategories(callback) {
 		const data = await ajax.get(`${this.#url}/category`);
-		callback(data);
+
+		if (Array.isArray(data)) {
+			callback(data);
+		} else {
+			callback([]); 
+		}
 	}
 }
 

@@ -120,12 +120,25 @@ class Restaurants {
 	 */
 	async initCategories() {
 		api.getCategories(categories => {
+			const categoryBar = document.querySelector('.category-bar');
+
+			if (!categoryBar) {
+				return;
+			}
+	
+			if (categories.length === 0) {
+				return;
+			}
+	
 			categories.forEach(category => {
-				const container = document.querySelector(`.category${category.id}`);
-				this.createButton(container, `category${category.id}-button`, category.name, category.id);
+				const categoryDiv = document.createElement('div');
+				categoryDiv.className = `category category${category.id}`;
+				categoryBar.appendChild(categoryDiv);
+				this.createButton(categoryDiv, `category${category.id}-button`, category.name, '', category.id);
 			});
 		});
 	}
+
 	/**
 	 * Создаёт кнопку и добавляет её в указанный контейнер.
 	 * @param {HTMLElement} container - Контейнер, куда будет добавлена кнопка.
@@ -204,10 +217,6 @@ class Restaurants {
 
 			search.render();
 		}
-
-		this.createButton(document.querySelector('.category1'), 'category1-button', 'Все', 'primary');
-		this.createButton(document.querySelector('.category2'), 'category2-button', 'Итальянская');
-		this.createButton(document.querySelector('.category3'), 'category3-button', 'Авторская');
 
 		const restaurants = document.querySelector('.restaurants__cards');
 		const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });
