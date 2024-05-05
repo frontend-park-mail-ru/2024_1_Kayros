@@ -20,7 +20,6 @@
 		min-width: 100%;
 		min-height: 100%;
 		object-fit: cover;
-		transition: 0.3s;
 	}
 
 	&__input {
@@ -78,6 +77,7 @@
 	&:hover {
 		box-shadow: var(--file-upload-box-shadow);
 		border: 1px solid transparent;
+		border-radius: 50%;
 
 		.file-upload__image {
 			filter: blur(4px) opacity(0.8);
