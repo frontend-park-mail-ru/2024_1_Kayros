@@ -57,6 +57,16 @@ class Api {
 	}
 
 	/**
+	 * Метод для получения информации о пользователе
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getUserAddress(callback) {
+		const data = await ajax.get(`${this.#url}/user/address`, { showNotifyError: false });
+
+		callback(data);
+	}
+
+	/**
 	 * Метод для изменения информации пользователя
 	 * @param {object} body - объект, посылаемый в запросе
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
@@ -229,6 +239,7 @@ class Api {
 	async getSagests(text, callback) {
 		const { results } = await ajax.get(
 			`https://suggest-maps.yandex.ru/v1/suggest?text=${text}&bbox=37.39,55.57~37.84,55.9&strict_bounds=1&apikey=${YANDEX_API_SAGESTS}&lang=ru`,
+			{ xsrf: false },
 		);
 
 		callback(results);
@@ -296,7 +307,7 @@ class Api {
 	async updateAddressSagests(body, callback = () => {}) {
 		const { data, error } = await ajax.put(`${this.#url}/user/address`, body);
 
-		if (data && !error && !data.detail) {
+		if (data && !error) {
 			Notification.open({
 				duration: 3,
 				title: SUCCESS_MESSAGES.address.title,

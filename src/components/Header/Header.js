@@ -60,6 +60,11 @@ class Header {
 	 */
 	async userData() {
 		await api.getUserInfo(this.handleUserData);
+
+		await api.getUserAddress(({ address }) => {
+			localStorage.setItem('user-address', JSON.stringify({ value: address }));
+		});
+
 		api.getCartInfo(this.handleCartData.bind(this));
 	}
 
@@ -85,12 +90,7 @@ class Header {
 		await this.userData();
 
 		const user = localStorageHelper.getItem('user-info');
-		let currentAddress = user?.address;
-
-		if (!user) {
-			const unauthInfo = localStorageHelper.getItem('unauth-info');
-			currentAddress = unauthInfo?.address;
-		}
+		const address = localStorageHelper.getItem('user-address').value;
 
 		const addressBlock = document.querySelector('.header__address');
 		const addressButton = new Button(addressBlock, {
@@ -98,9 +98,9 @@ class Header {
 			onClick: () => {
 				this.navigate(urls.address);
 			},
-			content: currentAddress || 'Укажите адрес доставки',
-			icon: currentAddress ? '' : 'address',
-			style: currentAddress ? 'secondary' : 'primary',
+			content: address || 'Укажите адрес доставки',
+			icon: address ? '' : 'address',
+			style: address ? 'secondary' : 'primary',
 		});
 
 		addressButton.render();
