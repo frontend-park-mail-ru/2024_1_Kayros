@@ -1,3 +1,5 @@
+@import "../../constants.scss";
+
 .stepper {
 	display: flex;
 	justify-content: space-between;
@@ -33,5 +35,11 @@
 			border-radius: 17px;
 			cursor: default;
 		}
+	}
+}
+
+@media screen and (max-width: $sm) {
+	.stepper__step-name {
+		font-size: 14px;
 	}
 }
