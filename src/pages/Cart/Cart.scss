@@ -1,24 +1,7 @@
 @import "../../constants.scss";
 
-.cart {
-	display: flex;
+.cart-wrapper {
 	margin-top: 16px;
-	gap: 50px;
-
-	&__dishes {
-		width: 60%;
-	}
-
-	&__pay-form {
-		width: 40%;
-		min-width: 456px;
-	}
-
-	&__empty {
-		font-size: 22px;
-		margin: 10px 0;
-		text-align: end;
-	}
 
 	#back-button {
 		background: var(--layout-bg-color);
@@ -31,14 +14,40 @@
 			background: var(--back-button-bg-hover);
 		}
 	}
+}
+
+.cart {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 30px;
+
+	&__dishes {
+		flex: 1;
+	}
+
+	&__pay-form {
+		max-width: 456px;
+	}
+
+	&__empty {
+		font-size: 22px;
+		margin: 10px 0;
+		text-align: end;
+	}
 
 	#cutleries-counter {
 		width: 116px;
 		height: 31px;
 		margin: 30px 0;
 	}
+}
 
-	@media (max-width: $sm) {
+@media (max-width: $sm) {
+	.cart {
 		flex-direction: column;
+
+		&__pay-form {
+			max-width: 100%;
+		}
 	}
 }

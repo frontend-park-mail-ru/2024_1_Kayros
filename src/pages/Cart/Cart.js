@@ -26,8 +26,9 @@ class Cart {
 	 */
 	renderData(data) {
 		const dishesBlock = this.#parent.querySelector('.cart__dishes');
+		const backButtonBlock = this.#parent.querySelector('.cart__back-button');
 
-		const backButton = new Button(dishesBlock, {
+		const backButton = new Button(backButtonBlock, {
 			id: 'back-button',
 			icon: 'back-arrow-full',
 			content: 'Назад',

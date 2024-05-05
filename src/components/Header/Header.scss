@@ -1,7 +1,7 @@
 .header {
 	display: flex;
 	align-items: center;
-	gap: 100px;
+	gap: 30px;
 	transition: all 0.15s;
 	z-index: 10;
 	position: sticky;
@@ -26,6 +26,10 @@
 		margin-right: 34px;
 	}
 
+	&__search-input {
+		min-width: 100px;
+	}
+
 	&__cart {
 		margin-left: auto;
 
@@ -35,14 +39,27 @@
 		}
 	}
 
+	&__address {
+		max-width: 350px;
+
+		& .btn {
+			width: 100%;
+		}
+
+		& > .btn span {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			word-break: break-all;
+		}
+	}
+
 	&__profile-block {
 		position: relative;
-		min-width: 30px;
+		min-width: 88px;
 	}
 
 	&__logo-container {
-		margin-left: 52px;
-		width: 120px;
+		margin-left: 50px;
 	}
 
 	& + .content {
@@ -62,5 +79,7 @@
 
 	&.btn--secondary {
 		opacity: 0;
+		width: 0;
+		padding: 0;
 	}
 }
