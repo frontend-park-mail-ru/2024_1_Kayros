@@ -130,14 +130,6 @@
 			margin: 0;
 		}
 
-		&__head {
-			margin-left: 10px;
-		}
-
-		&__create-time {
-			margin-left: 10px;
-		}
-
 		&__info {
 			flex-direction: column;
 			padding-bottom: 0;
@@ -149,7 +141,6 @@
 
 		&__food {
 			width: 100%;
-			padding-right: 10px;
 		}
 
 		&__status-bar {
@@ -161,7 +152,7 @@
 			position: static;
 			background: var(--order-details-bg-mobile);
 			width: 100%;
-			padding: 10px;
+			padding: 0;
 		}
 
 		&__sum {
