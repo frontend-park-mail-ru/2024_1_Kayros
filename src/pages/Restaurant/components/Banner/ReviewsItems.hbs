@@ -1,0 +1,27 @@
+<div class="reviews__items">
+	{{#if reviews.detail}}
+		<div style="text-align: center;">{{reviews.detail}}</div>
+	{{else}}
+		{{#each reviews as |review reviewId|}}
+			<div class="reviews__review" id="reviews__review-{{id}}">
+				<div class="reviews__user-container">
+					<div class="reviews__avatar-container">
+						<img src="{{user_img}}" alt="avatar" />
+					</div>
+					<div class="reviews__user-info">
+						<div class="reviews__user-name">{{user_name}}</div>
+						<div class="reviews__rating">
+							{{#each rating}}
+								<img class="rating__star" src="assets/rating-icon{{iconSuffix}}.svg" alt="star" />
+							{{/each}}
+							<div class="reviews__date">28 апреля</div>
+						</div>
+					</div>
+				</div>
+				<div class="reviews__content">
+					<div class="reviews__text">{{text}}</div>
+				</div>
+			</div>
+		{{/each}}
+	{{/if}}
+</div>

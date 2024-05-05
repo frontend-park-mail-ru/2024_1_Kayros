@@ -28,6 +28,16 @@
 		margin: 16px 0;
 	}
 
+	&__review {
+		display: flex;
+		align-items: center;
+		margin-left: auto;
+
+		button {
+			font-size: 18px;
+		}
+	}
+
 	&__status {
 		display: none;
 		align-items: center;
