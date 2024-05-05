@@ -32,6 +32,7 @@ class Order {
 		this.order = {};
 		this.fetchInterval = '';
 		this.rating = 0;
+		this.text = '';
 	}
 
 	/**
@@ -61,6 +62,14 @@ class Order {
 	 *
 	 */
 	renderFeedback() {
+		const modal = new Modal({
+			content: feedbackTemplate(),
+			className: 'feedback-modal',
+			initiatorId: 'order-review-button',
+		});
+
+		modal.render();
+
 		const feedBack = document.querySelector('.feedback');
 		const feedBackComment = feedBack.querySelector('.feedback__comment');
 		const feedBackStars = feedBack.querySelector('.feedback__rating');
@@ -115,6 +124,9 @@ class Order {
 		const textarea = new Input(feedBackComment, {
 			id: 'feedback-comment-area',
 			placeholder: 'Комментарий',
+			onChange: (event) => {
+				this.text = event.target.value;
+			},
 			textarea: true,
 		});
 
@@ -124,7 +136,8 @@ class Order {
 			id: 'feedback-submit-button',
 			content: 'Отправить',
 			onClick: () => {
-				api.sendFeedback();
+				api.sendFeedback(this.order.restaurant_id, { text: this.text, rating: this.rating });
+				modal.close();
 			},
 		});
 
@@ -158,14 +171,6 @@ class Order {
 			content: 'Оставить отзыв',
 			size: 's',
 			onClick: () => {
-				const modal = new Modal({
-					content: feedbackTemplate(),
-					className: 'feedback-modal',
-					initiatorId: 'order-review-button',
-				});
-
-				modal.render();
-
 				this.renderFeedback();
 			},
 		});

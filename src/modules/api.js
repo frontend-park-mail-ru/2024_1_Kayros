@@ -365,6 +365,34 @@ class Api {
 	}
 
 	/**
+	 * Метод для добавления отзывы
+	 * @param {number} id - id
+	 * @param {object} body - объект
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async sendFeedback(id, body) {
+		const { data, error } = await ajax.post(`${this.#url}/restaurants/${id}/comment`, body);
+
+		if (data && !error) {
+			Notification.open({
+				duration: 3,
+				title: 'Отзыв оставлен',
+				description: 'Спасибо за уделенное время!',
+				type: 'success',
+			});
+
+			return data;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CART_UPDATE,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+	}
+
+	/**
 	 * Метод для удаления блюда из корзины
 	 * @param {number} foodId - id блюда
 	 * @returns {Promise<boolean>} - результат запроса

@@ -86,11 +86,13 @@ class Input {
 
 		const inputContainer = document.getElementById(`${this.#id}-container`);
 
-		const input = inputContainer.querySelector('input');
+		let input = inputContainer.querySelector('input');
 
-		if (!this.textarea) {
-			input.oninput = this.onChange;
+		if (this.textarea) {
+			input = inputContainer.querySelector('textarea');
 		}
+
+		input.oninput = this.onChange;
 
 		if (this.style === 'dynamic' && !this.textarea) {
 			const holder = inputContainer.querySelector('.input__label-holder');
