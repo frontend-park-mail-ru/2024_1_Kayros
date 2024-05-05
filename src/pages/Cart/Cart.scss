@@ -1,3 +1,5 @@
+@import "../../constants.scss";
+
 .cart {
 	display: flex;
 	margin-top: 16px;
@@ -34,5 +36,9 @@
 		width: 116px;
 		height: 31px;
 		margin: 30px 0;
+	}
+
+	@media (max-width: $sm) {
+		flex-direction: column;
 	}
 }
