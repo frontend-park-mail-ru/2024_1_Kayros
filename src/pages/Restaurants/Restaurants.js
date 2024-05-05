@@ -35,6 +35,8 @@ class Restaurants {
 	renderData(items) {
 		const restaurants = document.querySelector('.restaurants__cards');
 
+		restaurants.innerHTML = '';
+
 		if (!items) {
 			restaurants.innerText = 'Нет доступных ресторанов';
 			return;
@@ -114,17 +116,30 @@ class Restaurants {
 	}
 
 	/**
+	 *
+	 */
+	async initCategories() {
+		api.getCategories(categories => {
+			categories.forEach(category => {
+				const container = document.querySelector(`.category${category.id}`);
+				this.createButton(container, `category${category.id}-button`, category.name, category.id);
+			});
+		});
+	}
+	/**
 	 * Создаёт кнопку и добавляет её в указанный контейнер.
 	 * @param {HTMLElement} container - Контейнер, куда будет добавлена кнопка.
-	 * @param {string} id - id
+	 * @param {string} id - id кнопки
 	 * @param {string} label - Текст
 	 * @param {string} [style] - Стиль
+	 * @param {string} categoryId - id Категории ресторана
 	 */
-	createButton(container, id, label, style = '') {
+	createButton(container, id, label, style = '', categoryId) {
 		const button = new Button(container, {
 			id: id,
 			onClick: () => {
 				this.updateButtonStyles(id);
+				this.filterRestaurantsByCategory(categoryId);
 			},
 			content: label,
 			icon: '',
@@ -132,6 +147,12 @@ class Restaurants {
 		});
 
 		button.render();
+	}
+	/**
+	 * @param {string} categoryId - id Категории ресторана
+	 */
+	filterRestaurantsByCategory(categoryId) {
+		api.getRestaurants(this.renderData.bind(this), categoryId);
 	}
 
 	/**
@@ -160,6 +181,7 @@ class Restaurants {
 	 */
 	async render() {
 		this.#parent.insertAdjacentHTML('beforeend', template());
+		this.initCategories();
 
 		const currentHeader = document.querySelector('.header');
 
