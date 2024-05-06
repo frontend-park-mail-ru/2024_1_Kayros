@@ -165,7 +165,7 @@ class Restaurants {
 	 * @param {string} categoryId - id Категории ресторана
 	 * @param {string} style - Стиль
 	 */
-	createButton(container, id, label, categoryId, style = '') {
+	createButton(container, id, label, categoryId, style = 'secondary') {
 		const button = new Button(container, {
 			id: id,
 			onClick: () => {
@@ -240,7 +240,6 @@ class Restaurants {
 				api.getRestaurants(this.renderData.bind(this));
 			});
 		}
-		
 		if (window.innerWidth < 900) {
 			const urlSearchParams = new URLSearchParams(window.location.search);
 			const searchValue = urlSearchParams.get('search') || '';
