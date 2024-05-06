@@ -56,7 +56,6 @@ class PayForm {
 		if (data) {
 			const res = await api.checkout();
 
-
 			if (!res) {
 				return;
 			}

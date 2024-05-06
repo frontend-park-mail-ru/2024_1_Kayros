@@ -93,9 +93,9 @@ class Header {
 			return;
 		}
 
-		const searchParams = {search: this.searchValue};
+		const searchParams = { search: this.searchValue };
 
-		this.navigate(urls.search, {searchParams});
+		this.navigate(urls.search, { searchParams });
 	}
 
 	/**
@@ -135,7 +135,6 @@ class Header {
 			value: searchValue,
 			onChange: (event) => {
 				this.searchValue = event.target.value;
-
 			},
 			buttonOnClick: this.clickOnSearch.bind(this),
 		});

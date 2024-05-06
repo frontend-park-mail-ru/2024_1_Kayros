@@ -109,6 +109,8 @@ class ProfileDropdown {
 
 				if (item.exit) {
 					api.signout(this.handleExit.bind(this));
+					const orders = document.querySelector('.orders-slider');
+					orders.innerHTML = '';
 					this.close(dropdown);
 					return;
 				}
