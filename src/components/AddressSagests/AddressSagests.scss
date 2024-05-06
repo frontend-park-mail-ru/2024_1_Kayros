@@ -1,3 +1,5 @@
+@import "../../variables";
+
 .address-sagests {
 	display: flex;
 	flex-direction: column;
@@ -9,6 +11,17 @@
 
 		button {
 			margin-left: auto;
+		}
+
+		@media (max-width: $sm) {
+			flex-direction: column;
+			justify-content: space-between;
+			min-height: 500px;
+
+			button {
+				margin-left: 0;
+				height: 50px;
+			}
 		}
 	}
 
@@ -28,6 +41,10 @@
 		max-height: 340px;
 		overflow: auto;
 		overscroll-behavior: contain;
+
+		@media (max-width: $sm) {
+			width: 100%;
+		}
 
 		&::-webkit-scrollbar {
 			width: 4px;
@@ -73,6 +90,10 @@
 			&:focus {
 				border-color: var(--input-border-color-focus);
 				box-shadow: var(--input-box-shadow-focus);
+			}
+
+			@media (max-width: $sm) {
+				font-size: 14px;
 			}
 		}
 	}

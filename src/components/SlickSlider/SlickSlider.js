@@ -74,8 +74,35 @@ class SlickSlider {
 			this.transform(track);
 		};
 
+		document.ontouchmove = (event) => {
+			this.drag = true;
+			clearTimeout(mouseMoveTimer);
+
+			this.indentLeft = event.clientX - dragStartX;
+
+			if (this.indentLeft > 0) {
+				this.indentLeft /= 4;
+			}
+
+			if (this.indentLeft < this.#parent.offsetWidth - track.offsetWidth - 40) {
+				this.indentLeft = this.#parent.offsetWidth - track.offsetWidth - 40;
+			}
+
+			this.transform(track);
+		};
+
 		document.onmouseup = () => {
 			document.onmousemove = null;
+
+			const dragStopX = event.clientX - this.indentLeft;
+
+			clearInterval(scrollInterval);
+
+			this.afterDragScroll(track, dragStartX - dragStopX);
+		};
+
+		document.ontouchend = () => {
+			document.ontouchmove = null;
 
 			const dragStopX = event.clientX - this.indentLeft;
 
@@ -125,6 +152,10 @@ class SlickSlider {
 		track.onmousedown = (event) => {
 			event.preventDefault();
 
+			this.dragDrop(event, track);
+		};
+
+		track.ontouchstart = (event) => {
 			this.dragDrop(event, track);
 		};
 

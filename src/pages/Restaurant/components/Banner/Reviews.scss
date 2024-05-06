@@ -1,3 +1,5 @@
+@import "../../../../variables";
+
 .reviews {
 	display: flex;
 	flex-direction: column;
@@ -92,9 +94,24 @@
 		gap: 2px;
 	}
 
+	&__info {
+		display: flex;
+		align-items: center;
+
+		@media (max-width: $xsm) {
+			flex-direction: column;
+			gap: 10px;
+			align-items: flex-start;
+		}
+	}
+
 	&__date {
 		margin-left: 16px;
 		font-size: 14px;
+
+		@media (max-width: $xsm) {
+			margin-left: 0;
+		}
 	}
 
 	&__content {
@@ -106,6 +123,10 @@
 		margin: 0 54px;
 		width: fit-content;
 		border-top-left-radius: 0;
+
+		@media (max-width: $xsm) {
+			margin: 0;
+		}
 	}
 
 	&__review {
@@ -117,5 +138,10 @@
 
 .reviews-modal {
 	width: 590px;
+
+	@media (max-width: $xsm) {
+		height: 500px;
+	}
+
 	height: 600px;
 }
