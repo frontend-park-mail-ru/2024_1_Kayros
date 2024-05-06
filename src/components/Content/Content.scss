@@ -3,6 +3,10 @@
 .content {
 	padding: 34px;
 
+	@media (max-width: $xsm) {
+		margin-top: 80px;
+	}
+
 	&:has(#content-loader) {
 		opacity: 0.5;
 		pointer-events: none;

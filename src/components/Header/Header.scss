@@ -10,6 +10,7 @@
 	top: 0;
 	margin-top: 26px;
 	background: var(--header-bg-color);
+	width: 100%;
 
 	&:not(.sticky) {
 		border-bottom: transparent;
@@ -40,6 +41,10 @@
 
 	&__search-input {
 		min-width: 100px;
+
+		@media (max-width: $xsm) {
+			display: none;
+		}
 	}
 
 	&__cart {
@@ -51,6 +56,8 @@
 		}
 
 		@media (max-width: $xsm) {
+			display: none;
+
 			img {
 				height: 20px;
 			}
@@ -68,6 +75,12 @@
 			width: 100%;
 		}
 
+		button {
+			@media (max-width: $xsm) {
+				padding: 4px 12px !important;
+			}
+		}
+
 		& > .btn span {
 			overflow: hidden;
 			text-overflow: ellipsis;
@@ -82,6 +95,7 @@
 	&__profile-block {
 		position: relative;
 		min-width: 40px;
+		margin-left: auto;
 	}
 
 	&__logo-container {
@@ -94,9 +108,9 @@
 
 		@media (max-width: $xsm) {
 			margin-left: 16px;
-			display: none;
 
 			.logo {
+				display: none;
 				width: 100%;
 			}
 		}

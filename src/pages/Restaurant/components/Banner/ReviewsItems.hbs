@@ -10,10 +10,12 @@
 					</div>
 					<div class="reviews__user-info">
 						<div class="reviews__user-name">{{user_name}}</div>
-						<div class="reviews__rating">
-							{{#each rating}}
-								<img class="rating__star" src="assets/rating-icon{{iconSuffix}}.svg" alt="star" />
-							{{/each}}
+						<div class="reviews__info">
+							<div class="reviews__rating">
+								{{#each rating}}
+									<img class="rating__star" src="assets/rating-icon{{iconSuffix}}.svg" alt="star" />
+								{{/each}}
+							</div>
 							<div class="reviews__date">28 апреля</div>
 						</div>
 					</div>

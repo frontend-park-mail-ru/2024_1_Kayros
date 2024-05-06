@@ -1,3 +1,5 @@
+@import "../../../variables";
+
 .dropdown {
 	&__item {
 		display: flex;
@@ -7,6 +9,10 @@
 		padding: 8px 10px;
 		cursor: pointer;
 
+		@media (max-width: $sm) {
+			font-size: 12px;
+		}
+
 		&.disabled {
 			pointer-events: none;
 			cursor: default;
@@ -15,6 +21,10 @@
 		&-subtitle {
 			font-size: 14px;
 			color: var(--sagests-dropdown-subtitle-color);
+
+			@media (max-width: $sm) {
+				font-size: 12px;
+			}
 		}
 
 		&:hover {

@@ -61,7 +61,7 @@ class Header {
 	async userData() {
 		await api.getUserInfo(this.handleUserData);
 
-		await api.getUserAddress(({ address }) => {
+		await api.getUserAddress(({ address } = {}) => {
 			localStorage.setItem('user-address', JSON.stringify({ value: address }));
 		});
 
@@ -73,10 +73,24 @@ class Header {
 	 */
 	async render() {
 		this.#parent.insertAdjacentHTML('afterbegin', template());
-
 		const logoBlock = document.querySelector('.header__logo-container');
-		const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
-		logo.render();
+
+		if (window.innerWidth > 480) {
+			const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
+			logo.render();
+		} else {
+			const backButton = new Button(logoBlock, {
+				id: 'header-back-button',
+				icon: 'favicon',
+				style: 'clear',
+				replace: true,
+				onClick: () => {
+					this.navigate(urls.restaurants);
+				},
+			});
+
+			backButton.render();
+		}
 
 		const searchBlock = this.#parent.querySelector('.header__search-input');
 		const searchInput = new Input(searchBlock, {
@@ -122,6 +136,11 @@ class Header {
 
 		const headerElement = document.querySelector('.header');
 
+		if (window.innerWidth < 480) {
+			headerElement.style.position = 'fixed';
+			headerElement.style.borderBottom = '1px solid #e3e3e3';
+		}
+
 		const profile = document.querySelector('.header__profile');
 
 		if (profile) {
@@ -141,13 +160,15 @@ class Header {
 			profileDropdown.render();
 		}
 
-		window.addEventListener('scroll', () => {
-			if (window.scrollY > 20) {
-				headerElement.classList.add('sticky');
-			} else {
-				headerElement.classList.remove('sticky');
-			}
-		});
+		if (window.innerWidth > 480) {
+			window.addEventListener('scroll', () => {
+				if (window.scrollY > 20) {
+					headerElement.classList.add('sticky');
+				} else {
+					headerElement.classList.remove('sticky');
+				}
+			});
+		}
 	}
 }
 
