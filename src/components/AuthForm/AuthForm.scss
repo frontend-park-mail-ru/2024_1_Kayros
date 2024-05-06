@@ -1,3 +1,5 @@
+@import "../../variables";
+
 .auth-container {
 	display: flex;
 	justify-content: center;
@@ -13,8 +15,6 @@
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		justify-content: center;
 		z-index: 5;
 		transform: scale(1.2);
 	}
@@ -27,6 +27,14 @@
 		left: 45%;
 		transform: translate(-50%, 0);
 		width: 100%;
+
+		&--desktop {
+			display: block;
+		}
+
+		&--mobile {
+			display: none;
+		}
 	}
 
 	&__description {
@@ -55,6 +63,8 @@
 	}
 
 	&__title {
+		font-weight: bold;
+		font-size: 24px;
 		margin-bottom: 20px;
 	}
 
@@ -103,9 +113,122 @@
 		&:hover {
 			filter: opacity(1);
 		}
+
+		&--mobile {
+			display: none;
+		}
+
+		&--desktop {
+			display: block;
+		}
 	}
 }
 
 .input-container {
 	margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1024px) {
+	.auth-container {
+		position: relative;
+
+		&__logo-and-background {
+			display: block;
+			position: relative;
+			height: 100vh;
+			width: 100%;
+		}
+
+		&__mini-background {
+			width: 100%;
+			display: block;
+			z-index: 1;
+			object-fit: cover;
+		}
+
+		&__back-button--mobile {
+			display: block;
+			position: absolute;
+			left: calc(50% - 165px);
+			z-index: 10;
+			top: calc(50% - 299px);
+		}
+
+		&__back-button--desktop {
+			display: none;
+		}
+
+		&__description {
+			display: none;
+		}
+
+		&__form-container {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 10;
+			margin-left: 0;
+			padding: 26px 29px;
+			text-align: center;
+		}
+
+		&__redirect {
+			flex-direction: column;
+		}
+
+		&__logo--desktop {
+			display: none;
+		}
+
+		&__logo--mobile {
+			display: block;
+			top: 15%;
+			left: 50%;
+			transform: translateX(-50%) scale(0.7);
+			position: relative;
+			z-index: 10;
+		}
+
+		&__title {
+			font-weight: bold;
+			font-size: 20px;
+			margin-top: 8px;
+			margin-bottom: 10px;
+		}
+	}
+}
+
+@media (max-width: $sm) {
+	.auth-container {
+		&__back-button--mobile {
+			top: calc(50% - 295px);
+			left: calc(50% - 148px);
+		}
+
+		&__form-container {
+			width: 300px;
+			padding: 26px 29px;
+		}
+
+		&__error-message {
+			font-size: 13px;
+		}
+	}
+}
+
+@media (max-width: $xs) {
+	.auth-container {
+		&__form-container {
+			margin-top: 20px;
+			width: 275px;
+			transform: translate(-50%, -50%) scale(0.9);
+		}
+
+		&__back-button--mobile {
+			transform: scale(0.8);
+			left: calc(50% - 129px);
+			top: calc(50% - 241px);
+		}
+	}
 }

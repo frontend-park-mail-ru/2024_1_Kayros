@@ -49,6 +49,14 @@
 	&--clear {
 		background: transparent;
 		padding: 0;
+		color: var(--button-secondary-text-color);
+	}
+
+	&--clear-back-mobile {
+		background: var(--button-bg-back-mobile);
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
 	}
 
 	&--secondary {

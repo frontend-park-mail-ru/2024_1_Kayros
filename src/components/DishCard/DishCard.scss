@@ -1,0 +1,115 @@
+@import "../../constants.scss";
+
+.dish-card {
+	display: flex;
+	align-items: center;
+	position: relative;
+
+	&__count {
+		padding: 2px 12px;
+		background: var(--layout-bg-color);
+		border-radius: 14px;
+		width: fit-content;
+	}
+
+	.counter-button {
+		height: 31px;
+		width: 100px;
+	}
+
+	&__title {
+		font-size: 18px;
+		font-weight: 600;
+		margin-bottom: 6px;
+	}
+
+	&__weight {
+		color: var(--food-subtitle-color);
+		font-size: 16px;
+	}
+
+	&__price {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 18px;
+		font-weight: 600;
+	}
+
+	&__img {
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+		background: var(--layout-bg-color);
+		border-radius: 10px;
+		width: 20%;
+		height: 120px;
+		min-width: 120px;
+		margin-right: 16px;
+
+		img {
+			width: 100%;
+			min-height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	&__content {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		height: 100%;
+		width: 100%;
+		gap: 10px;
+
+		&-block {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+		}
+	}
+
+	&__count_info {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 20px;
+	}
+}
+
+.dish-card--complete {
+	background: var(--layout-bg-color);
+	padding: 15px;
+	border-radius: 18px;
+
+	& .dish-card__content {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+		width: 100%;
+	}
+
+	& .dish-card__count {
+		background: var(--button-secondary-bg);
+	}
+}
+
+@media (max-width: $sm) {
+	div.dish-card {
+		&__counter-block {
+			margin-left: 0;
+		}
+
+		&__content {
+			flex-direction: column;
+
+			&-block {
+				display: flex;
+				flex-direction: column;
+				flex: 1;
+			}
+		}
+	}
+}

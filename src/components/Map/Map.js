@@ -464,6 +464,10 @@ class Map {
 	 * Рендеринг компонента
 	 */
 	render() {
+		if (window.innerWidth < 480) {
+			return;
+		}
+
 		this.#parent.insertAdjacentHTML('beforeend', template({ class: this.fullPage && 'fullpage' }));
 
 		this.#container = document.getElementById('map-container');

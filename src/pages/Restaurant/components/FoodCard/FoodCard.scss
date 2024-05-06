@@ -1,3 +1,5 @@
+@import "../../../../variables";
+
 .food-card {
 	display: inline-flex;
 	flex-direction: column;
@@ -7,6 +9,11 @@
 	border-radius: 20px;
 	width: 90%;
 	min-width: 200px;
+
+	@media (max-width: $xsm) {
+		min-width: 150px;
+		padding: 10px;
+	}
 
 	button {
 		width: 108px;
@@ -30,6 +37,10 @@
 		height: 200px;
 		flex-shrink: 0;
 
+		@media (max-width: $xsm) {
+			height: 160px;
+		}
+
 		img {
 			min-height: 100%;
 			width: 100%;
@@ -39,6 +50,7 @@
 
 	&__content {
 		display: flex;
+		align-items: center;
 		justify-content: space-between;
 		gap: 10px;
 		margin: 18px 0;
@@ -51,6 +63,10 @@
 		min-height: 24px;
 		display: flex;
 		align-items: center;
+
+		@media (max-width: $xsm) {
+			font-size: 12px;
+		}
 	}
 
 	&__values {
@@ -58,10 +74,18 @@
 			white-space: nowrap;
 			font-size: 20px;
 			font-weight: 600;
+
+			@media (max-width: $xsm) {
+				font-size: 16px;
+			}
 		}
 
 		&--weight {
 			font-size: 14px;
+
+			@media (max-width: $xsm) {
+				font-size: 12px;
+			}
 		}
 	}
 

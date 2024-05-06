@@ -1,3 +1,5 @@
+@import "../../../../variables";
+
 .category__block {
 	display: flex;
 	flex-direction: column;
@@ -15,8 +17,12 @@
 		justify-items: center;
 		gap: 14px;
 
-		@media (width <= 1286px) {
+		@media (max-width: $lg) {
 			grid-template-columns: repeat(3, 1fr);
+		}
+
+		@media (max-width: $xsm) {
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 }

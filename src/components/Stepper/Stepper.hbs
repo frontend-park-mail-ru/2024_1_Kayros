@@ -1,0 +1,10 @@
+<div class="stepper">
+	{{#each steps as |step stepId|}}
+		{{#if stepId}}
+			<div class="stepper__connector" id="stepper__connector-{{stepId}}"></div>
+		{{/if}}
+		<div class="stepper__step" id="stepper__step-{{stepId}}">
+			<span class="stepper__step-name">{{step}}</span>
+		</div>
+	{{/each}}
+</div>

@@ -1,5 +1,5 @@
-import CounterButton from '../../../../components/CounterButton';
-import api from '../../../../modules/api';
+import api from '../../modules/api';
+import CounterButton from '../CounterButton';
 import template from './DishCard.hbs';
 import './DishCard.scss';
 
@@ -13,17 +13,27 @@ class DishCard {
 	 * Создает экземпляр
 	 * @param {HTMLDivElement} parent - родительский элемент
 	 * @param {object} data - информация о еде
+	 * @param {object} params - параметры
+	 * @param {boolean} params.addCounter - карточка с счетчиком
 	 */
-	constructor(parent, data) {
+	constructor(parent, data, { addCounter = true } = {}) {
 		this.#parent = parent;
 		this.data = data;
+		this.addCounter = addCounter;
 	}
 
 	/**
 	 * Рендер страницы
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('beforeend', template(this.data));
+		this.#parent.insertAdjacentHTML(
+			'beforeend',
+			template({ counter: this.addCounter, class: this.addCounter ? '' : 'dish-card--complete', ...this.data }),
+		);
+
+		if (!this.addCounter) {
+			return;
+		}
 
 		const card = this.#parent.querySelector(`#food-${this.data.id}`);
 
@@ -31,6 +41,7 @@ class DishCard {
 		const counter = new CounterButton(counterBlock, {
 			id: `dish-card__counter-${this.data.id}`,
 			initCount: this.data.count,
+			maxCount: 99,
 			productId: this.data.id,
 			withAddButton: false,
 			addCount: async (id) => {

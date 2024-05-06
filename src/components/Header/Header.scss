@@ -1,12 +1,16 @@
+@import "../../variables";
+
 .header {
 	display: flex;
 	align-items: center;
-	gap: 100px;
+	gap: 30px;
 	transition: all 0.15s;
 	z-index: 10;
 	position: sticky;
 	top: 0;
 	margin-top: 26px;
+	background: var(--header-bg-color);
+	width: 100%;
 
 	&:not(.sticky) {
 		border-bottom: transparent;
@@ -23,6 +27,24 @@
 		border-radius: var(--layout-border-radius);
 		background: var(--layout-bg-color);
 		margin-right: 34px;
+
+		@media (max-width: $md) {
+			margin-right: 16px;
+			background: transparent;
+			gap: 10px;
+		}
+
+		@media (max-width: $xsm) {
+			margin-right: 0;
+		}
+	}
+
+	&__search-input {
+		min-width: 100px;
+
+		@media (max-width: $xsm) {
+			display: none;
+		}
 	}
 
 	&__cart {
@@ -32,20 +54,79 @@
 			font-size: 18px;
 			white-space: nowrap;
 		}
+
+		@media (max-width: $xsm) {
+			display: none;
+
+			img {
+				height: 20px;
+			}
+
+			span {
+				font-size: 16px;
+			}
+		}
+	}
+
+	&__address {
+		max-width: 350px;
+
+		& .btn {
+			width: 100%;
+		}
+
+		button {
+			@media (max-width: $xsm) {
+				padding: 4px 12px !important;
+			}
+		}
+
+		& > .btn span {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			word-break: break-all;
+
+			@media (max-width: $xsm) {
+				font-size: 12px;
+			}
+		}
 	}
 
 	&__profile-block {
 		position: relative;
-		min-width: 30px;
+		min-width: 40px;
+		margin-left: auto;
 	}
 
 	&__logo-container {
 		margin-left: 52px;
-		width: 120px;
+
+		.logo {
+			width: 100%;
+			min-width: 60px;
+		}
+
+		@media (max-width: $xsm) {
+			margin-left: 16px;
+
+			.logo {
+				display: none;
+				width: 100%;
+			}
+		}
 	}
 
 	& + .content {
 		padding-top: 10px;
+
+		@media (max-width: $xsm) {
+			padding-top: 0;
+		}
+	}
+
+	@media (max-width: $xsm) {
+		margin-top: 0;
+		gap: 10px;
 	}
 }
 
@@ -61,5 +142,7 @@
 
 	&.btn--secondary {
 		opacity: 0;
+		width: 0;
+		padding: 0;
 	}
 }

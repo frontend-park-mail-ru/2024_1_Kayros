@@ -1,0 +1,49 @@
+.order-panel {
+	display: grid;
+	grid-template-columns: repeat(2, auto);
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px;
+	width: 282px;
+	height: 80px;
+	border-radius: 10px;
+	transition: 0.4s;
+	box-shadow: var(--order-panel-box-shadow);
+
+	&__restaurant {
+		font-size: 18px;
+		font-weight: 600;
+	}
+
+	&__status {
+		font-size: 14px;
+		width: fit-content;
+		font-weight: 600;
+		background: var(--layout-bg-color);
+		padding: 4px 10px;
+		border-radius: 12px;
+	}
+
+	&__time {
+		font-size: 14px;
+	}
+
+	&__button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-left: auto;
+	}
+}
+
+#order-status-button {
+	width: 36px;
+	height: 36px;
+	border-radius: 18px;
+	background: var(--layout-bg-color);
+	padding: 0;
+
+	&:hover {
+		background: var(--back-button-bg-hover);
+	}
+}

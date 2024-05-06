@@ -1,4 +1,5 @@
 import { router } from '../../modules/router';
+import { isMobileOrTabletScreen } from '../../utils';
 import Button from '../Button/Button';
 
 /**
@@ -23,11 +24,15 @@ class BackButton {
 	 * Рендеринг компонента
 	 */
 	render() {
+		const isMobile = isMobileOrTabletScreen();
+
+		const backButtonText = router.previousState ? 'Назад' : 'На главную';
+
 		const backButton = new Button(this.#parent, {
 			id: this.#id,
-			content: router.previousState ? 'Назад' : 'На главную',
-			style: 'clear',
-			icon: 'back-arrow',
+			content: isMobile ? '' : backButtonText,
+			style: isMobile ? 'clear-back-mobile' : 'clear',
+			icon: 'back-arrow-full',
 			onClick: () => router.back(),
 		});
 

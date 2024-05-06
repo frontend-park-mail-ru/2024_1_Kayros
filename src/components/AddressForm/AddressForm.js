@@ -19,6 +19,22 @@ class AddressForm {
 	constructor() {}
 
 	/**
+	 * Получение местоположения пользователя
+	 * @param {void} goToPoint - функция для перехода по точке
+	 * @param {void} getAddressName - функция для получения адреса по точке
+	 */
+	getLocation(goToPoint, getAddressName) {
+		if (!navigator.geolocation) {
+			return;
+		}
+
+		navigator.geolocation.getCurrentPosition((position) => {
+			goToPoint([position.coords.longitude, position.coords.latitude]);
+			getAddressName();
+		});
+	}
+
+	/**
 	 * Рендеринг компонента
 	 */
 	async render() {
@@ -39,12 +55,12 @@ class AddressForm {
 		const map = new Map(mapContainer, { fullPage: false, startX: 6000, startY: 6500 });
 		map.render();
 
-		if (user?.address) {
-			api.geoCoder(user.address, map.goToPoint.bind(map));
-		}
-
-		if (user?.address) {
-			api.geoCoder(user.address, map.goToPoint.bind(map));
+		if (window.innerWidth > 480) {
+			if (user?.address) {
+				api.geoCoder(user.address, map.goToPoint.bind(map));
+			} else {
+				this.getLocation(map.goToPoint.bind(map), map.getAddressName.bind(map));
+			}
 		}
 
 		const sagestsElement = new AddressSagests(modalContent.querySelector('.find-address__sagests-container'), {

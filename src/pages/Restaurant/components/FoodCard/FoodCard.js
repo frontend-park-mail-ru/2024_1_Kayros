@@ -4,7 +4,7 @@ import Modal from '../../../../components/Modal/Modal';
 import api from '../../../../modules/api';
 import { router } from '../../../../modules/router';
 import urls from '../../../../routes/urls';
-import { localStorageHelper } from '../../../../utils';
+import { localStorageHelper, setCookieIfNotExist } from '../../../../utils';
 import clearCartModalTemplate from './ClearCartModal.hbs';
 import template from './FoodCard.hbs';
 import authModalTemplate from './NeedAuthModal.hbs';
@@ -27,6 +27,20 @@ class FoodCard {
 		this.added = false;
 		this.count = count;
 		this.cart = cart;
+		this.address = '';
+	}
+
+	/**
+	 * Проверка и установка токена для неавторизованного пользователя
+	 */
+	checkUserToken() {
+		const user = localStorageHelper.getItem('user-info');
+
+		if (user) {
+			return;
+		}
+
+		setCookieIfNotExist('unauth_id', crypto.randomUUID());
 	}
 
 	/**
@@ -80,7 +94,7 @@ class FoodCard {
 	/**
 	 * Открытие модалки, если пользователь не авторизован
 	 */
-	openAuthModal() {
+	openAddressModal() {
 		const modal = new Modal({ content: authModalTemplate(), className: 'food-card-modal', closeButton: false });
 		modal.render();
 
@@ -88,10 +102,12 @@ class FoodCard {
 
 		const authButton = new Button(modalContent, {
 			id: 'food-modal-accept-button',
-			content: 'Войти',
+			content: 'Указать адрес',
 			onClick: () => {
 				modal.close();
-				router.navigate(urls.signIn);
+				setTimeout(() => {
+					router.navigate(urls.address);
+				}, 100);
 			},
 		});
 
@@ -112,6 +128,8 @@ class FoodCard {
 	 * @returns {number} результат
 	 */
 	async addFood(id) {
+		this.checkUserToken();
+
 		const cart = document.getElementById('cart-button');
 		if (!cart) return;
 
@@ -119,7 +137,7 @@ class FoodCard {
 
 		const sum = cart.querySelector('span');
 
-		if (res === 0) {
+		if (!res) {
 			cart.className = 'btn btn--secondary size-xs';
 			sum.innerHTML = '';
 		} else {
@@ -136,6 +154,8 @@ class FoodCard {
 	 * @returns {number} результат
 	 */
 	async removeCount(id) {
+		this.checkUserToken();
+
 		const res = await api.removeFromCart(id);
 
 		const cart = document.getElementById('cart-button');
@@ -161,6 +181,8 @@ class FoodCard {
 	 * @returns {number} результат
 	 */
 	async updateCartCount({ id, count }) {
+		this.checkUserToken();
+
 		const res = await api.updateCartCount({ food_id: id, count });
 
 		const cart = document.getElementById('cart-button');
@@ -181,7 +203,7 @@ class FoodCard {
 	/**
 	 * Рендеринг компонента
 	 */
-	render() {
+	async render() {
 		this.parent.insertAdjacentHTML('beforeend', template(this.data));
 
 		const food = document.getElementById(`food-${this.data.id}`);
@@ -192,16 +214,12 @@ class FoodCard {
 			id: `food-button-${this.data.id}`,
 			productId: this.data.id,
 			initCount: this.count,
+			maxCount: 99,
 			prevCount: () => {
-				const user = localStorageHelper.getItem('user-info');
+				const address = localStorageHelper.getItem('user-address').value;
 
-				if (!user) {
-					this.openAuthModal();
-					return;
-				}
-
-				if (!user.address) {
-					router.navigate(urls.address);
+				if (address === '' || !address) {
+					this.openAddressModal();
 					return;
 				}
 

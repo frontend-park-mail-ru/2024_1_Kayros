@@ -1,3 +1,5 @@
+@import "../../constants.scss";
+
 .file-upload {
 	display: flex;
 	overflow: hidden;
@@ -20,7 +22,6 @@
 		min-width: 100%;
 		min-height: 100%;
 		object-fit: cover;
-		transition: 0.3s;
 	}
 
 	&__input {
@@ -61,6 +62,10 @@
 		opacity: 0;
 		transition: 0.3s;
 		height: 60px;
+
+		@media (max-width: $sm) {
+			height: 50px;
+		}
 	}
 
 	&__delete {
@@ -78,6 +83,7 @@
 	&:hover {
 		box-shadow: var(--file-upload-box-shadow);
 		border: 1px solid transparent;
+		border-radius: 50%;
 
 		.file-upload__image {
 			filter: blur(4px) opacity(0.8);
