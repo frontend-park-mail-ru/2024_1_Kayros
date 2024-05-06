@@ -5,7 +5,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 100vh;
+	height: 100vh;	
 	width: 100vw;
 	background-color: var(--modal-wrapper-background);
 	position: fixed;
@@ -40,13 +40,33 @@
 		top: 30px;
 		transition: filter 0.2s;
 		z-index: 10;
+		padding-left:15px;
 
 		&:hover {
 			filter: brightness(0.5);
 		}
+			@media (max-width: $sm){
+				top:19px;
+				right:20px;
+			}
+
+			@media (max-width: 400px){
+				top:19px;
+				right:0px;
+			}
+	}
+	
+	@media (max-width: $xs){
+		margin:20px;
 	}
 
-	@media (max-width: $sm) {
-		margin: 0 10px;
+	
+	.find-address__title {
+		@media (max-width: 450px){
+			font-size:19px;
+		}
+		@media (max-width: 350px){
+			font-size:15px;
+		}
 	}
 }

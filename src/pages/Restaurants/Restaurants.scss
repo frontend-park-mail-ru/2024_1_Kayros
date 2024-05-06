@@ -44,5 +44,11 @@
 		gap: 10px;
 		width: 90%;
 		overflow-x: scroll;
+		
+		@media screen and (max-width: $sm) {
+			// padding: 20px 10px;
+			padding: 20px 19px;
+		}
 	}
 }
+
