@@ -45,21 +45,30 @@ class DishCard {
 			productId: this.data.id,
 			withAddButton: false,
 			addCount: async (id) => {
-				const res = await api.addToCart(id);
+				const sum = await api.addToCart(id);
+
+				if (!sum && sum !== 0) {
+					return;
+				}
 
 				const cart = document.getElementById('cart-button');
 				const formSum = document.querySelector('#pay-form-sum');
-				const sum = cart.querySelector('span');
+				const sumBlock = cart.querySelector('span');
 
 				if (!sum) cart.remove();
 
-				sum.innerHTML = res ? `${res} ₽` : '';
-				formSum.innerHTML = `${res || 0} ₽`;
+				sumBlock.innerHTML = sum ? `${sum} ₽` : '';
+				formSum.innerHTML = `${sum || 0} ₽`;
 
-				return res;
+				return sum;
 			},
 			removeCount: async (id) => {
 				const sum = await api.removeFromCart(id);
+
+				if (!sum && sum !== 0) {
+					return;
+				}
+
 				const submit = document.getElementById('pay-form-button');
 
 				const cart = document.getElementById('cart-button');
@@ -87,6 +96,10 @@ class DishCard {
 			},
 			updateCount: async ({ id, count }) => {
 				const sum = await api.updateCartCount({ food_id: id, count });
+
+				if (!sum && sum !== 0) {
+					return;
+				}
 
 				const cart = document.getElementById('cart-button');
 				const formSum = document.querySelector('#pay-form-sum');
