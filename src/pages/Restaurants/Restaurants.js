@@ -136,6 +136,7 @@ class Restaurants {
 				position: 'afterbegin',
 				placeholder: 'Ресторан, категория',
 			});
+
 			search.render();
 		}
 
