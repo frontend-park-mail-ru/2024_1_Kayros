@@ -36,4 +36,13 @@
 	.input__search-button {
 		right: 20px;
 	}
+
+	.category-bar {
+		display: flex;
+		flex-direction: row;
+		margin: 20px 35px;
+		gap: 10px;
+		width: 90%;
+		overflow: hidden;
+	}
 }

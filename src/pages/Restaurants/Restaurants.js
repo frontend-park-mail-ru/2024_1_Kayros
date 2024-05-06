@@ -143,6 +143,68 @@ class Restaurants {
 	}
 
 	/**
+	 *
+	 */
+	async initCategories() {
+		api.getCategories((categories) => {
+			const categoryBar = document.querySelector('.category-bar');
+			categories.forEach((category) => {
+				const categoryDiv = document.createElement('div');
+				categoryDiv.className = `category category${category.id}`;
+				categoryBar.appendChild(categoryDiv);
+				this.createButton(categoryDiv, `category${category.id}-button`, category.name, category.id);
+			});
+		});
+	}
+
+	/**
+	 * Создаёт кнопку и добавляет её в указанный контейнер.
+	 * @param {HTMLElement} container - Контейнер, куда будет добавлена кнопка.
+	 * @param {string} id - id кнопки
+	 * @param {string} label - Текст
+	 * @param {string} categoryId - id Категории ресторана
+	 * @param {string} style - Стиль
+	 */
+	createButton(container, id, label, categoryId, style = '') {
+		const button = new Button(container, {
+			id: id,
+			onClick: () => {
+				this.updateButtonStyles(id);
+				this.filterRestaurantsByCategory(categoryId);
+			},
+			content: label,
+			icon: '',
+			style: style,
+			additionalClass: 'category-button',
+		});
+
+		button.render();
+	}
+	/**
+	 * @param {string} categoryId - id Категории ресторана
+	 */
+	filterRestaurantsByCategory(categoryId) {
+		api.getRestaurants(this.renderData.bind(this), categoryId);
+	}
+
+	/**
+	 * Обновляет стили кнопок
+	 * @param {string} activeButtonId - Идентификатор кнопки, которую следует выделить как активную.
+	 */
+	updateButtonStyles(activeButtonId) {
+		const buttons = document.querySelectorAll('.category-button');
+		buttons.forEach((button) => {
+			if (button.id === activeButtonId) {
+				button.classList.add('btn--primary');
+				button.classList.remove('btn--secondary');
+			} else {
+				button.classList.add('btn--secondary');
+				button.classList.remove('btn--primary');
+			}
+		});
+	}
+
+	/**
 	 * Рендеринг страницы
 	 */
 	async render() {
@@ -159,6 +221,26 @@ class Restaurants {
 
 		await this.getOrdersData(content);
 
+		await this.initCategories();
+
+		const allCategoriesButton = document.querySelector('.all-categories-button');		
+		const button = new Button(allCategoriesButton, {
+			id: 'all-categories-button',
+			onClick: () => {
+				this.updateButtonStyles('all-categories-button');
+			},
+			content: 'Все',
+			additionalClass: 'category-button',
+		});
+
+		button.render();
+
+		if (allCategoriesButton) {
+			allCategoriesButton.addEventListener('click', () => {
+				api.getRestaurants(this.renderData.bind(this));
+			});
+		}
+		
 		if (window.innerWidth < 900) {
 			const urlSearchParams = new URLSearchParams(window.location.search);
 			const searchValue = urlSearchParams.get('search') || '';
