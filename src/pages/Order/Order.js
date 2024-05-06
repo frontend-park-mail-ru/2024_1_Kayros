@@ -136,7 +136,9 @@ class Order {
 			id: 'feedback-submit-button',
 			content: 'Отправить',
 			onClick: () => {
-				api.sendFeedback(this.order.restaurant_id, { text: this.text, rating: this.rating });
+				api.sendFeedback(this.order.restaurant_id, { order_id: Number(this.id), text: this.text, rating: this.rating });
+				const reviewButton = document.querySelector('#order-review-button');
+				reviewButton.style.display = 'none';
 				modal.close();
 			},
 		});
@@ -165,17 +167,19 @@ class Order {
 
 		this.#parent.insertAdjacentHTML('beforeend', template(this.order));
 
-		const reviewContainer = this.#parent.querySelector('.order__review');
-		const reviewButton = new Button(reviewContainer, {
-			id: 'order-review-button',
-			content: 'Оставить отзыв',
-			size: 's',
-			onClick: () => {
-				this.renderFeedback();
-			},
-		});
+		if (!this.order.commented) {
+			const reviewContainer = this.#parent.querySelector('.order__review');
+			const reviewButton = new Button(reviewContainer, {
+				id: 'order-review-button',
+				content: 'Оставить отзыв',
+				size: 's',
+				onClick: () => {
+					this.renderFeedback();
+				},
+			});
 
-		reviewButton.render();
+			reviewButton.render();
+		}
 
 		const buttonContainer = this.#parent.querySelector('.order__button-container');
 		const backButton = new Button(buttonContainer, {

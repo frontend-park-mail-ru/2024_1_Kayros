@@ -8,7 +8,6 @@ import Profile from '../Profile';
 import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 import template from './Header.hbs';
 import './Header.scss';
-import {router} from "../../modules/router.js";
 
 /**
  * Шапка
@@ -56,6 +55,9 @@ class Header {
 		cartButton.render();
 	}
 
+	/**
+	 *
+	 */
 	changeSearchInputValue() {
 		const urlSearchParams = new URLSearchParams(window.location.search);
 		const searchBlock = document.getElementById('restaurants-search');
@@ -83,6 +85,9 @@ class Header {
 		api.getCartInfo(this.handleCartData.bind(this));
 	}
 
+	/**
+	 *
+	 */
 	clickOnSearch() {
 		if (!this.searchValue) {
 			return;
@@ -90,7 +95,7 @@ class Header {
 
 		const searchParams = {search: this.searchValue};
 
-		router.navigate(urls.search, {searchParams});
+		this.navigate(urls.search, {searchParams});
 	}
 
 	/**
@@ -120,7 +125,7 @@ class Header {
 		const urlSearchParams = new URLSearchParams(window.location.search);
 		const searchValue = urlSearchParams.get('search') || '';
 
-		this.searchValue = searchValue
+		this.searchValue = searchValue;
 
 		const searchBlock = this.#parent.querySelector('.header__search-input');
 		const searchInput = new Input(searchBlock, {

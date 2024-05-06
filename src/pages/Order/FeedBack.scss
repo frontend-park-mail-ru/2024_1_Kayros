@@ -1,3 +1,5 @@
+@import "../../variables";
+
 .feedback {
 	display: flex;
 	flex-direction: column;
@@ -51,4 +53,14 @@
 
 .feedback-modal {
 	width: 500px;
+}
+
+@media (max-width: $xsm) {
+	#order-review-button {
+		padding: 6px 12px;
+
+		span {
+			font-size: 12px;
+		}
+	}
 }
