@@ -51,7 +51,7 @@
 		"jsdoc": "^4.0.2",
 		"lint-staged": "^15.2.2",
 		"mini-css-extract-plugin": "^2.8.0",
-		"resto-ui": "^1.0.3",
+		"resto-ui": "^1.1.1",
 		"sass": "^1.71.1",
 		"sass-loader": "^14.1.1",
 		"style-loader": "^3.3.4",
