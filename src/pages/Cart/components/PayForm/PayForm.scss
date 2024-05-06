@@ -1,12 +1,28 @@
+@import "../../../../constants.scss";
+
 .pay-form {
 	display: flex;
 	flex-direction: column;
 	background: var(--layout-bg-color);
 	border-radius: var(--layout-border-radius);
-	margin-top: 50px;
 	padding: 30px;
 	position: sticky;
 	top: 100px;
+
+	&__sum_info {
+		display: none;
+	}
+
+	&__pay-action {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+	}
+
+	&__button {
+		width: 100%;
+	}
 
 	&__title {
 		font-size: 22px;
@@ -80,4 +96,35 @@
 	font-size: 14px;
 	margin: 5px;
 	z-index: 1000;
+}
+
+@media (max-width: $sm) {
+	.pay-form {
+		background: transparent;
+		padding: 0;
+		position: static;
+
+		&__pay-action {
+			background: var(--order-details-bg-mobile);
+			position: sticky;
+			bottom: 0;
+			padding: 20px 0;
+			z-index: 100;
+		}
+
+		&__inputs {
+			background: var(--address-bg);
+		}
+
+		&__sum_info {
+			display: block;
+			width: 100px;
+			font-size: 15px;
+		}
+
+		&__sum {
+			font-weight: 600;
+			font-size: 18px;
+		}
+	}
 }

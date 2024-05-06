@@ -1,0 +1,54 @@
+.feedback {
+	display: flex;
+	flex-direction: column;
+	padding: 30px;
+
+	&__title {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		font-size: 28px;
+		font-weight: 600;
+	}
+
+	&__subtitle {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		font-size: 24px;
+		font-weight: 600;
+	}
+
+	&__rating {
+		display: flex;
+		align-items: center;
+		margin: 20px auto 40px;
+
+		button {
+			padding: 0 10px !important;
+		}
+
+		img {
+			width: 40px;
+		}
+	}
+
+	&__comment {
+		margin-top: 20px;
+	}
+
+	&__example {
+		font-size: 14px;
+		color: var(--feedback-exmaple);
+		margin-top: 10px;
+	}
+
+	#feedback-submit-button {
+		height: 50px;
+		margin-top: 40px;
+	}
+}
+
+.feedback-modal {
+	width: 500px;
+}

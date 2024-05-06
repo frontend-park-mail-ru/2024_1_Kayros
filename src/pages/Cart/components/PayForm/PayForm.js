@@ -46,7 +46,9 @@ class PayForm {
 			extra_address: `${this.apart}, ${this.entrance}, ${this.floor}`,
 		});
 
-		if (!this.user) {
+		const user = localStorageHelper.getItem('user-info');
+
+		if (!user) {
 			router.navigate(urls.signIn);
 			return;
 		}
@@ -111,7 +113,9 @@ class PayForm {
 			router.navigate(urls.address);
 		};
 
-		const checkoutButton = new Button(form, {
+		const checkoutButtonBlock = this.#parent.querySelector('.pay-form__button');
+
+		const checkoutButton = new Button(checkoutButtonBlock, {
 			id: 'pay-form-button',
 			content: 'Оплатить',
 			disabled: !this.data?.sum || !this.entrance || !this.floor || !this.apart,

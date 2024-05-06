@@ -14,7 +14,7 @@
 
 	&__rating {
 		display: flex;
-		align-items: flex-start;
+		align-items: center;
 		gap: 8px;
 		font-weight: 600;
 		font-size: 16px;
@@ -22,6 +22,16 @@
 
 		&--rating-value {
 			margin-right: 16px;
+		}
+
+		button {
+			font-size: 18px;
+			font-weight: 600;
+			transition: 0.3s;
+
+			&:hover {
+				color: var(--button-bg-hover);
+			}
 		}
 	}
 

@@ -25,11 +25,23 @@ class Input {
 	 * @param {string} params.value - начальное значение
 	 * @param {void} params.onChange - обработчик события
 	 * @param {boolean} params.disabled - блокировка
+	 * @param {boolean} params.textarea - поле вместо инпута
 	 * @param {function} params.buttonOnClick - обработчик события клика на кнопку
 	 */
 	constructor(
 		parent,
-		{ buttonOnClick = () => {}, id, placeholder, type = 'text', button, style = 'standart', value = '', onChange = '', disabled = false },
+		{
+			id,
+			placeholder,
+			type = 'text',
+			button,
+			style = 'standart',
+			value = '',
+			onChange = '',
+			disabled = false,
+			textarea = false,
+            buttonOnClick = () => {}
+		},
 	) {
 		this.#parent = parent;
 		this.#placeholder = placeholder;
@@ -42,6 +54,7 @@ class Input {
 		this.onChange = onChange;
 		this.disabled = disabled;
 		this.buttonOnClick = buttonOnClick;
+		this.textarea = textarea;
 	}
 
 	/**
@@ -58,6 +71,7 @@ class Input {
 			dynamic: this.style === 'dynamic',
 			value: this.value,
 			attribute: this.disabled ? 'disabled' : '',
+			textarea: this.textarea,
 		});
 	}
 
@@ -79,11 +93,15 @@ class Input {
 
 		const inputContainer = document.getElementById(`${this.#id}-container`);
 
-		const input = inputContainer.querySelector('input');
+		let input = inputContainer.querySelector('input');
+
+		if (this.textarea) {
+			input = inputContainer.querySelector('textarea');
+		}
 
 		input.oninput = this.onChange;
 
-		if (this.style === 'dynamic') {
+		if (this.style === 'dynamic' && !this.textarea) {
 			const holder = inputContainer.querySelector('.input__label-holder');
 			const label = inputContainer.querySelector('.input__label');
 

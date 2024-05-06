@@ -16,6 +16,16 @@ class Api {
 	}
 
 	/**
+	 * Метод для получения ссылки на оплату
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getCheckoutUrl(callback) {
+		const data = await ajax.get(`${this.#url}/order/pay/url`);
+
+		callback(data);
+	}
+
+	/**
 	 * Метод для получения списка ресторанов
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
@@ -364,6 +374,34 @@ class Api {
 	}
 
 	/**
+	 * Метод для добавления отзывы
+	 * @param {number} id - id
+	 * @param {object} body - объект
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async sendFeedback(id, body) {
+		const { data, error } = await ajax.post(`${this.#url}/restaurants/${id}/comment`, body);
+
+		if (data && !error) {
+			Notification.open({
+				duration: 3,
+				title: 'Отзыв оставлен',
+				description: 'Спасибо за уделенное время!',
+				type: 'success',
+			});
+
+			return data;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CART_UPDATE,
+			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+	}
+
+	/**
 	 * Метод для удаления блюда из корзины
 	 * @param {number} foodId - id блюда
 	 * @returns {Promise<boolean>} - результат запроса
@@ -449,6 +487,17 @@ class Api {
 		});
 
 		return false;
+	}
+
+	/**
+	 * Метод для получения отзывов
+	 * @param {number} id - id ресторана
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getReviewsInfo(id, callback) {
+		let data = await ajax.get(`${this.#url}/restaurants/${id}/comments`);
+
+		callback(data);
 	}
 }
 
