@@ -25,7 +25,9 @@ class Input {
 	 * @param {string} params.value - начальное значение
 	 * @param {void} params.onChange - обработчик события
 	 * @param {boolean} params.disabled - блокировка
+	 * @param {'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend'} params.position - позиция в предке
 	 * @param {boolean} params.textarea - поле вместо инпута
+	 * @param {function} params.buttonOnClick - обработчик события клика на кнопку
 	 */
 	constructor(
 		parent,
@@ -38,7 +40,9 @@ class Input {
 			value = '',
 			onChange = '',
 			disabled = false,
+			position = 'beforeend',
 			textarea = false,
+            buttonOnClick = () => {}
 		},
 	) {
 		this.#parent = parent;
@@ -51,6 +55,8 @@ class Input {
 		this.value = value;
 		this.onChange = onChange;
 		this.disabled = disabled;
+		this.buttonOnClick = buttonOnClick;
+		this.position = position;
 		this.textarea = textarea;
 	}
 
@@ -76,11 +82,15 @@ class Input {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
+		this.#parent.insertAdjacentHTML(this.position, this.getHTML());
 
 		if (this.#button) {
 			const buttonBlock = this.#parent.querySelector('.input__search-button');
-			const searchButton = new Button(buttonBlock, { id: `${this.#id}-search-button`, content: this.#button });
+			const searchButton = new Button(buttonBlock, {
+				id: `${this.#id}-search-button`,
+				content: this.#button,
+				onClick: this.buttonOnClick,
+			});
 			searchButton.render();
 		}
 

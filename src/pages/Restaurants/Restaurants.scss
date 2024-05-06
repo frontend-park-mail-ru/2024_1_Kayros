@@ -1,3 +1,5 @@
+@import "../../variables";
+
 .restaurants {
 	&__title {
 		font-size: 28px;
@@ -14,8 +16,33 @@
 		font-size: 18px;
 		transition: all 0.5s;
 
-		@media (max-width: 1400px) {
+		@media (max-width: $xl) {
 			grid-template-columns: repeat(3, 1fr);
 		}
+
+		@media (max-width: $md) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		@media (max-width: $xsm) {
+			grid-template-columns: repeat(1, 1fr);
+		}
+	}
+
+	#restaurants-search-input {
+		margin: 10px 16px;
+	}
+
+	.input__search-button {
+		right: 20px;
+	}
+
+	.category-bar {
+		display: flex;
+		flex-direction: row;
+		padding: 20px 35px;
+		gap: 10px;
+		width: 90%;
+		overflow-x: scroll;
 	}
 }

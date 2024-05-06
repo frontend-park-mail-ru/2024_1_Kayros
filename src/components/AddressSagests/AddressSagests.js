@@ -106,7 +106,9 @@ class AddressSagests {
 				input.blur();
 				this.address = street || currentItem.title?.text;
 
-				api.geoCoder(street || address, this.goToPoint);
+				if (window.innerWidth > 480) {
+					api.geoCoder(street || address, this.goToPoint);
+				}
 			},
 		});
 

@@ -15,7 +15,7 @@ class CategoryFood {
 	 * @param {void} params.setActiveCategory - обновить активную категорию
 	 * @param {object} params.cart - информация о корзине
 	 */
-	constructor(parent, { data, activeCategory, setActiveCategory, cart }) {
+	constructor(parent, { data, activeCategory, setActiveCategory = () => {}, cart }) {
 		this.parent = parent;
 		this.data = data;
 		this.activeCategory = activeCategory;

@@ -8,6 +8,7 @@ import Profile from '../Profile';
 import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 import template from './Header.hbs';
 import './Header.scss';
+import {router} from "../../modules/router.js";
 
 /**
  * Шапка
@@ -55,17 +56,41 @@ class Header {
 		cartButton.render();
 	}
 
+	changeSearchInputValue() {
+		const urlSearchParams = new URLSearchParams(window.location.search);
+		const searchBlock = document.getElementById('restaurants-search');
+		const searchValue = urlSearchParams.get('search') || '';
+
+		this.searchValue = searchValue;
+
+		if (window.location.pathname === urls.search) {
+			searchBlock.value = searchValue;
+		} else {
+			searchBlock.value = '';
+		}
+	}
+
 	/**
 	 * Получение данных пользователя
 	 */
 	async userData() {
 		await api.getUserInfo(this.handleUserData);
 
-		await api.getUserAddress(({ address }) => {
+		await api.getUserAddress(({ address } = {}) => {
 			localStorage.setItem('user-address', JSON.stringify({ value: address }));
 		});
 
 		api.getCartInfo(this.handleCartData.bind(this));
+	}
+
+	clickOnSearch() {
+		if (!this.searchValue) {
+			return;
+		}
+
+		const searchParams = {search: this.searchValue};
+
+		router.navigate(urls.search, {searchParams});
 	}
 
 	/**
@@ -73,17 +98,44 @@ class Header {
 	 */
 	async render() {
 		this.#parent.insertAdjacentHTML('afterbegin', template());
-
 		const logoBlock = document.querySelector('.header__logo-container');
-		const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
-		logo.render();
+
+		if (window.innerWidth > 480) {
+			const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
+			logo.render();
+		} else {
+			const backButton = new Button(logoBlock, {
+				id: 'header-back-button',
+				icon: 'favicon',
+				style: 'clear',
+				replace: true,
+				onClick: () => {
+					this.navigate(urls.restaurants);
+				},
+			});
+
+			backButton.render();
+		}
+
+		const urlSearchParams = new URLSearchParams(window.location.search);
+		const searchValue = urlSearchParams.get('search') || '';
+
+		this.searchValue = searchValue
 
 		const searchBlock = this.#parent.querySelector('.header__search-input');
 		const searchInput = new Input(searchBlock, {
 			id: 'restaurants-search',
-			placeholder: 'Рестораны, еда',
+			placeholder: 'Рестораны, категория',
 			button: 'Найти',
+			value: searchValue,
+			onChange: (event) => {
+				this.searchValue = event.target.value;
+
+			},
+			buttonOnClick: this.clickOnSearch.bind(this),
 		});
+
+		window.addEventListener('popstate', this.changeSearchInputValue.bind(this));
 
 		searchInput.render();
 
@@ -122,6 +174,11 @@ class Header {
 
 		const headerElement = document.querySelector('.header');
 
+		if (window.innerWidth < 480) {
+			headerElement.style.position = 'fixed';
+			headerElement.style.borderBottom = '1px solid #e3e3e3';
+		}
+
 		const profile = document.querySelector('.header__profile');
 
 		if (profile) {
@@ -132,20 +189,24 @@ class Header {
 					headerElement.remove();
 					this.render();
 
-					this.navigate(urls.restaurants);
+					if (window.location.pathname !== urls.restaurants) {
+						this.navigate(urls.restaurants);
+					}
 				},
 			});
 
 			profileDropdown.render();
 		}
 
-		window.addEventListener('scroll', () => {
-			if (window.scrollY > 20) {
-				headerElement.classList.add('sticky');
-			} else {
-				headerElement.classList.remove('sticky');
-			}
-		});
+		if (window.innerWidth > 480) {
+			window.addEventListener('scroll', () => {
+				if (window.scrollY > 20) {
+					headerElement.classList.add('sticky');
+				} else {
+					headerElement.classList.remove('sticky');
+				}
+			});
+		}
 	}
 }
 

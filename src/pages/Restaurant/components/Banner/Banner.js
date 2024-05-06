@@ -51,6 +51,8 @@ class Banner {
 	 * Рендеринг компонента
 	 */
 	render() {
+		this.#data.rating = Math.round(this.#data.rating * 10) / 10;
+
 		this.#parent.insertAdjacentHTML('beforeend', template(this.#data));
 
 		const banner = document.querySelector('.restaurant-banner__rating');
