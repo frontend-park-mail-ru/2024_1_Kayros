@@ -193,6 +193,24 @@ class Restaurants {
 		await this.getOrdersData(content);
 		await this.initCategories();
 
+		const allCategoriesButton = document.querySelector('.all-categories-button');		
+		const button = new Button(allCategoriesButton, {
+			id: 'all-categories-button',
+			onClick: () => {
+				this.updateButtonStyles('all-categories-button');
+			},
+			content: 'Все',
+			additionalClass: 'category-button',
+		});
+
+		button.render();
+
+		if (allCategoriesButton) {
+			allCategoriesButton.addEventListener('click', () => {
+				api.getRestaurants(this.renderData.bind(this));
+			});
+		}
+
 		if (window.innerWidth < 900) {
 			const restaurantsContainer = document.querySelector('.restaurants');
 			const search = new Input(restaurantsContainer, {
