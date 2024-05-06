@@ -1,4 +1,5 @@
 import { Notification } from 'resto-ui';
+import Button from '../../components/Button/index.js';
 import Header from '../../components/Header';
 import Input from '../../components/Input/Input';
 import Loader from '../../components/Loader';
@@ -6,13 +7,12 @@ import OrderStatusPanel from '../../components/OrderStatusPanel';
 import SlickSlider from '../../components/SlickSlider';
 import { ORDER_STATUSES } from '../../constants';
 import api from '../../modules/api';
+import { router } from '../../modules/router.js';
 import urls from '../../routes/urls';
 import { localStorageHelper } from '../../utils';
 import template from './Restaurants.hbs';
 import RestaurantCard from './components/RestaurantCard';
 import './Restaurants.scss';
-import {router} from "../../modules/router.js";
-import Button from "../../components/Button/index.js";
 
 /**
  * Страница со списком ресторанов
@@ -126,16 +126,22 @@ class Restaurants {
 		await api.getOrdersData(this.renderOrders.bind(this));
 	}
 
+	/**
+	 *
+	 */
 	clickOnSearch() {
 		if (!this.searchValue) {
 			return;
 		}
 
-		const searchParams = {search: this.searchValue};
+		const searchParams = { search: this.searchValue };
 
-		router.navigate(urls.search, {searchParams});
+		router.navigate(urls.search, { searchParams });
 	}
 
+	/**
+	 *
+	 */
 	changeSearchInputValue() {
 		const urlSearchParams = new URLSearchParams(window.location.search);
 		const searchBlock = document.getElementById('restaurants-search-input');
@@ -240,7 +246,7 @@ class Restaurants {
 
 		await this.initCategories();
 
-		const allCategoriesButton = document.querySelector('.all-categories-button');		
+		const allCategoriesButton = document.querySelector('.all-categories-button');
 		const button = new Button(allCategoriesButton, {
 			id: 'all-categories-button',
 			onClick: () => {
@@ -255,11 +261,12 @@ class Restaurants {
 		if (allCategoriesButton) {
 			allCategoriesButton.addEventListener('click', this.getData.bind(this));
 		}
-		if (window.innerWidth < 900) {
+
+		if (window.innerWidth < 768) {
 			const urlSearchParams = new URLSearchParams(window.location.search);
 			const searchValue = urlSearchParams.get('search') || '';
 
-			this.searchValue = searchValue
+			this.searchValue = searchValue;
 
 			const restaurantsContainer = document.querySelector('.restaurants');
 
@@ -271,7 +278,6 @@ class Restaurants {
 				placeholder: 'Ресторан, категория',
 				onChange: (event) => {
 					this.searchValue = event.target.value;
-
 				},
 				buttonOnClick: this.clickOnSearch.bind(this),
 			});

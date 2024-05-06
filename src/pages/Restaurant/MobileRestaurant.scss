@@ -9,19 +9,20 @@
 		display: flex;
 		gap: 20px;
 		padding: 20px;
-		overflow-x: scroll;
 		width: calc(100vw - 40px);
 
 		button {
 			padding: 0 !important;
 			font-size: 16px;
 			color: var(--cart-pay-method-color);
-			transition: 0.3s;
+			transition: 0.1s;
 		}
 	}
 
 	&__food {
-		width: 100px;
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
 	}
 
 	.mobile-category-link {

@@ -159,6 +159,16 @@ class Restaurant {
 				content: category.name,
 				style: 'clear',
 				additionalClass: 'mobile-category-link',
+				onClick: () => {
+					const categoryItem = document.getElementById(`category-${category.id}`);
+					var categoryPosition = categoryItem.getBoundingClientRect().top;
+					var offsetPosition = categoryPosition + window.scrollY - 120;
+
+					window.scrollTo({
+						top: offsetPosition,
+						behavior: 'smooth',
+					});
+				},
 			});
 
 			link.render();
@@ -188,7 +198,7 @@ class Restaurant {
 		};
 
 		const categoriesObserver = new IntersectionObserver(observerCallback, {
-			rootMargin: '-200px 0px -200px 0px',
+			rootMargin: '-100px 0px -600px 0px',
 			threshold: 0,
 		});
 

@@ -36,13 +36,14 @@
 
 		@media (max-width: $xsm) {
 			margin-right: 0;
+			margin-left: auto;
 		}
 	}
 
 	&__search-input {
 		min-width: 100px;
 
-		@media (max-width: $xsm) {
+		@media (max-width: $sm) {
 			display: none;
 		}
 	}
