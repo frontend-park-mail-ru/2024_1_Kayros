@@ -35,7 +35,7 @@ class OrderStatusPanel {
 			icon: 'right-arrow-full',
 			style: 'clear',
 			onClick: () => {
-				router.navigate(`orders/${this.info.id}`, { pageTitle: `Заказ №${this.info.id}` });
+				router.navigate(`orders/${this.info.id}`);
 			},
 		});
 

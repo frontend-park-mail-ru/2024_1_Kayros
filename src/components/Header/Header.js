@@ -14,7 +14,7 @@ import {router} from "../../modules/router.js";
  * Шапка
  */
 class Header {
-	parent;
+	#parent;
 
 	/**
 	 * Конструктор класса
@@ -23,7 +23,7 @@ class Header {
 	 */
 	constructor({ navigate }) {
 		this.navigate = navigate;
-		this.parent = document.querySelector('.layout');
+		this.#parent = document.querySelector('.layout');
 	}
 
 	/**
@@ -76,7 +76,7 @@ class Header {
 	async userData() {
 		await api.getUserInfo(this.handleUserData);
 
-		await api.getUserAddress(({ address }) => {
+		await api.getUserAddress(({ address } = {}) => {
 			localStorage.setItem('user-address', JSON.stringify({ value: address }));
 		});
 
@@ -97,11 +97,25 @@ class Header {
 	 * Рендеринг компонента
 	 */
 	async render() {
-		this.parent.insertAdjacentHTML('afterbegin', template());
-
+		this.#parent.insertAdjacentHTML('afterbegin', template());
 		const logoBlock = document.querySelector('.header__logo-container');
-		const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
-		logo.render();
+
+		if (window.innerWidth > 480) {
+			const logo = new Logo(logoBlock, { onClick: () => this.navigate(urls.restaurants) });
+			logo.render();
+		} else {
+			const backButton = new Button(logoBlock, {
+				id: 'header-back-button',
+				icon: 'favicon',
+				style: 'clear',
+				replace: true,
+				onClick: () => {
+					this.navigate(urls.restaurants);
+				},
+			});
+
+			backButton.render();
+		}
 
 		const urlSearchParams = new URLSearchParams(window.location.search);
 		const searchValue = urlSearchParams.get('search') || '';
@@ -160,6 +174,11 @@ class Header {
 
 		const headerElement = document.querySelector('.header');
 
+		if (window.innerWidth < 480) {
+			headerElement.style.position = 'fixed';
+			headerElement.style.borderBottom = '1px solid #e3e3e3';
+		}
+
 		const profile = document.querySelector('.header__profile');
 
 		if (profile) {
@@ -170,20 +189,24 @@ class Header {
 					headerElement.remove();
 					this.render();
 
-					this.navigate(urls.restaurants);
+					if (window.location.pathname !== urls.restaurants) {
+						this.navigate(urls.restaurants);
+					}
 				},
 			});
 
 			profileDropdown.render();
 		}
 
-		window.addEventListener('scroll', () => {
-			if (window.scrollY > 20) {
-				headerElement.classList.add('sticky');
-			} else {
-				headerElement.classList.remove('sticky');
-			}
-		});
+		if (window.innerWidth > 480) {
+			window.addEventListener('scroll', () => {
+				if (window.scrollY > 20) {
+					headerElement.classList.add('sticky');
+				} else {
+					headerElement.classList.remove('sticky');
+				}
+			});
+		}
 	}
 }
 

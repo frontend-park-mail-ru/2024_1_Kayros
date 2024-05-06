@@ -1,5 +1,6 @@
 import { Notification } from 'resto-ui';
 import Header from '../../components/Header';
+import Input from '../../components/Input/Input';
 import Loader from '../../components/Loader';
 import OrderStatusPanel from '../../components/OrderStatusPanel';
 import SlickSlider from '../../components/SlickSlider';
@@ -127,6 +128,17 @@ class Restaurants {
 		const content = document.querySelector('.content');
 
 		await this.getOrdersData(content);
+
+		if (window.innerWidth < 900) {
+			const restaurantsContainer = document.querySelector('.restaurants');
+			const search = new Input(restaurantsContainer, {
+				id: 'restaurants-search-input',
+				position: 'afterbegin',
+				placeholder: 'Ресторан, категория',
+			});
+
+			search.render();
+		}
 
 		const restaurants = document.querySelector('.restaurants__cards');
 		const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });

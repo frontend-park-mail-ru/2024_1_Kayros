@@ -1,7 +1,13 @@
+@import "../../variables";
+
 .find-address {
 	display: flex;
 	flex-direction: column;
 	padding: 30px;
+
+	@media (max-width: $sm) {
+		padding: 20px;
+	}
 
 	&__title {
 		display: flex;
@@ -10,6 +16,10 @@
 		font-size: 28px;
 		font-weight: 600;
 		margin-bottom: 10px;
+
+		@media (max-width: $sm) {
+			font-size: 22px;
+		}
 	}
 
 	&__subtitle {
@@ -30,6 +40,10 @@
 		background: var(--map-background-color);
 		background-image: radial-gradient(var(--map-background-dot-color) 1px, transparent 0);
 		background-size: 18px 18px;
+
+		@media (max-width: $sm) {
+			display: none;
+		}
 	}
 
 	&__map-pin {
@@ -50,4 +64,5 @@
 
 .address-modal {
 	width: 900px;
+	min-height: 600px;
 }

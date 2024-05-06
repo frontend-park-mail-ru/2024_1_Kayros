@@ -55,10 +55,12 @@ class AddressForm {
 		const map = new Map(mapContainer, { fullPage: false, startX: 6000, startY: 6500 });
 		map.render();
 
-		if (user?.address) {
-			api.geoCoder(user.address, map.goToPoint.bind(map));
-		} else {
-			this.getLocation(map.goToPoint.bind(map), map.getAddressName.bind(map));
+		if (window.innerWidth > 480) {
+			if (user?.address) {
+				api.geoCoder(user.address, map.goToPoint.bind(map));
+			} else {
+				this.getLocation(map.goToPoint.bind(map), map.getAddressName.bind(map));
+			}
 		}
 
 		const sagestsElement = new AddressSagests(modalContent.querySelector('.find-address__sagests-container'), {

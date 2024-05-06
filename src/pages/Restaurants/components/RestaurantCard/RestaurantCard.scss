@@ -4,7 +4,7 @@
 	cursor: pointer;
 	padding: 16px;
 	width: 90%;
-	min-width: 290px;
+	min-width: 200px;
 	max-width: 380px;
 
 	&__image-container {
@@ -12,7 +12,8 @@
 		align-items: center;
 		overflow: hidden;
 		background: var(--layout-bg-color);
-		height: 220px;
+		height: 70%;
+		max-height: 220px;
 		border-radius: 18px;
 
 		img {

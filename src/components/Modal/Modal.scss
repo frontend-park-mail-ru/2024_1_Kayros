@@ -1,3 +1,5 @@
+@import "../../variables";
+
 #modal-wrapper {
 	z-index: 15;
 	display: flex;
@@ -42,5 +44,9 @@
 		&:hover {
 			filter: brightness(0.5);
 		}
+	}
+
+	@media (max-width: $sm) {
+		margin: 0 10px;
 	}
 }
