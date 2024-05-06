@@ -40,9 +40,9 @@
 	.category-bar {
 		display: flex;
 		flex-direction: row;
-		margin: 20px 35px;
+		padding: 20px 35px;
 		gap: 10px;
 		width: 90%;
-		overflow: hidden;
+		overflow: scroll;
 	}
 }

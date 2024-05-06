@@ -41,6 +41,13 @@ class Restaurants {
 			return;
 		}
 
+		if (!items.length) {
+			restaurants.innerText = 'Нет ресторанов такой категории';
+			return;
+		}
+
+		restaurants.innerHTML = '';
+
 		items.forEach((item) => {
 			const restaurantCard = new RestaurantCard(restaurants, item);
 			restaurantCard.render();
@@ -50,8 +57,13 @@ class Restaurants {
 	/**
 	 * Получение данных о ресторанах
 	 */
-	getData() {
-		api.getRestaurants(this.renderData.bind(this));
+	async getData() {
+		const restaurants = document.querySelector('.restaurants__cards');
+
+		const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });
+		loader.render();
+
+		await api.getRestaurants(this.renderData.bind(this));
 	}
 
 	/**
@@ -168,9 +180,9 @@ class Restaurants {
 	createButton(container, id, label, categoryId, style = '') {
 		const button = new Button(container, {
 			id: id,
-			onClick: () => {
+			onClick: async () => {
 				this.updateButtonStyles(id);
-				this.filterRestaurantsByCategory(categoryId);
+				await this.filterRestaurantsByCategory(categoryId);
 			},
 			content: label,
 			icon: '',
@@ -183,8 +195,13 @@ class Restaurants {
 	/**
 	 * @param {string} categoryId - id Категории ресторана
 	 */
-	filterRestaurantsByCategory(categoryId) {
-		api.getRestaurants(this.renderData.bind(this), categoryId);
+	async filterRestaurantsByCategory(categoryId) {
+		const restaurants = document.querySelector('.restaurants__cards');
+
+		const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });
+		loader.render();
+
+		await api.getRestaurants(this.renderData.bind(this), categoryId);
 	}
 
 	/**
@@ -236,9 +253,7 @@ class Restaurants {
 		button.render();
 
 		if (allCategoriesButton) {
-			allCategoriesButton.addEventListener('click', () => {
-				api.getRestaurants(this.renderData.bind(this));
-			});
+			allCategoriesButton.addEventListener('click', this.getData.bind(this));
 		}
 		
 		if (window.innerWidth < 900) {
@@ -271,7 +286,7 @@ class Restaurants {
 		const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });
 		loader.render();
 
-		this.getData();
+		await this.getData();
 
 		this.fetchInterval = setInterval(() => {
 			const user = localStorageHelper.getItem('user-info');

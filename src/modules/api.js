@@ -22,7 +22,7 @@ class Api {
 	async getCheckoutUrl(callback) {
 		const data = await ajax.get(`${this.#url}/order/pay/url`);
 
-		callback(data);
+ 		callback(data);
 	}
 
 	/**		
