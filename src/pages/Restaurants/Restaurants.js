@@ -35,8 +35,6 @@ class Restaurants {
 	renderData(items) {
 		const restaurants = document.querySelector('.restaurants__cards');
 
-		restaurants.innerHTML = '';
-
 		if (!items) {
 			restaurants.innerText = 'Нет доступных ресторанов';
 			return;
@@ -119,22 +117,13 @@ class Restaurants {
 	 *
 	 */
 	async initCategories() {
-		api.getCategories(categories => {
+		api.getCategories((categories) => {
 			const categoryBar = document.querySelector('.category-bar');
-
-			if (!categoryBar) {
-				return;
-			}
-	
-			if (categories.length === 0) {
-				return;
-			}
-	
-			categories.forEach(category => {
+			categories.forEach((category) => {
 				const categoryDiv = document.createElement('div');
 				categoryDiv.className = `category category${category.id}`;
 				categoryBar.appendChild(categoryDiv);
-				this.createButton(categoryDiv, `category${category.id}-button`, category.name, '', category.id);
+				this.createButton(categoryDiv, `category${category.id}-button`, category.name, category.id);
 			});
 		});
 	}
@@ -144,10 +133,10 @@ class Restaurants {
 	 * @param {HTMLElement} container - Контейнер, куда будет добавлена кнопка.
 	 * @param {string} id - id кнопки
 	 * @param {string} label - Текст
-	 * @param {string} [style] - Стиль
 	 * @param {string} categoryId - id Категории ресторана
+	 * @param {string} style - Стиль
 	 */
-	createButton(container, id, label, style = '', categoryId) {
+	createButton(container, id, label, categoryId, style = '') {
 		const button = new Button(container, {
 			id: id,
 			onClick: () => {
@@ -157,6 +146,7 @@ class Restaurants {
 			content: label,
 			icon: '',
 			style: style,
+			additionalClass: 'category-button',
 		});
 
 		button.render();
@@ -173,18 +163,14 @@ class Restaurants {
 	 * @param {string} activeButtonId - Идентификатор кнопки, которую следует выделить как активную.
 	 */
 	updateButtonStyles(activeButtonId) {
-		const categories = ['category1-button', 'category2-button', 'category3-button'];
-		categories.forEach((buttonId) => {
-			const buttonElement = document.querySelector(`#${buttonId}`);
-
-			if (buttonElement) {
-				if (buttonId === activeButtonId) {
-					buttonElement.classList.add('btn--primary');
-					buttonElement.classList.remove('btn--secondary');
-				} else {
-					buttonElement.classList.add('btn--secondary');
-					buttonElement.classList.remove('btn--primary');
-				}
+		const buttons = document.querySelectorAll('.category-button');
+		buttons.forEach((button) => {
+			if (button.id === activeButtonId) {
+				button.classList.add('btn--primary');
+				button.classList.remove('btn--secondary');
+			} else {
+				button.classList.add('btn--secondary');
+				button.classList.remove('btn--primary');
 			}
 		});
 	}
@@ -195,7 +181,6 @@ class Restaurants {
 	async render() {
 		this.#parent.insertAdjacentHTML('beforeend', template());
 		this.initCategories();
-
 		const currentHeader = document.querySelector('.header');
 
 		if (!currentHeader) {

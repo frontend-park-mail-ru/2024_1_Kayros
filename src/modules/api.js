@@ -15,14 +15,14 @@ class Api {
 		this.#url = '/api/v1';
 	}
 
-	/**
+	/**		
 	 * Метод для получения списка ресторанов
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 * @param {string} categoryId - id Категории ресторана
 	 */
 	async getRestaurants(callback, categoryId = null) {
 		let url = `${this.#url}/restaurants`;
-
+						
 		if (categoryId) {
 			url += `?filter=${categoryId}`;
 		}
@@ -30,7 +30,7 @@ class Api {
 		const data = await ajax.get(url);
 		callback(data);
 	}
-
+	
 	/**
 	 * Метод для получения списка ресторанов
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
@@ -442,12 +442,7 @@ class Api {
 	 */
 	async getCategories(callback) {
 		const data = await ajax.get(`${this.#url}/category`);
-
-		if (Array.isArray(data)) {
-			callback(data);
-		} else {
-			callback([]); 
-		}
+		callback(data);
 	}
 }
 
