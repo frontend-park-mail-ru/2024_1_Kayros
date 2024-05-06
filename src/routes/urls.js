@@ -9,7 +9,7 @@ const urls = {
 	map: '/map',
 	cart: '/cart',
 	profile: '/profile',
-	search: '/search'
+	search: '/search',
 };
 
 export default urls;

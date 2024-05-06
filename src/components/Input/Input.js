@@ -27,7 +27,7 @@ class Input {
 	 * @param {boolean} params.disabled - блокировка
 	 * @param {'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend'} params.position - позиция в предке
 	 * @param {boolean} params.textarea - поле вместо инпута
-	 * @param {function} params.buttonOnClick - обработчик события клика на кнопку
+	 * @param {Function} params.buttonOnClick - обработчик события клика на кнопку
 	 */
 	constructor(
 		parent,
@@ -42,7 +42,7 @@ class Input {
 			disabled = false,
 			position = 'beforeend',
 			textarea = false,
-            buttonOnClick = () => {}
+			buttonOnClick = () => {},
 		},
 	) {
 		this.#parent = parent;
@@ -91,6 +91,7 @@ class Input {
 				content: this.#button,
 				onClick: this.buttonOnClick,
 			});
+
 			searchButton.render();
 		}
 

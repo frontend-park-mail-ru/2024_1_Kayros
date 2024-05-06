@@ -44,11 +44,30 @@
 		gap: 10px;
 		width: 90%;
 		overflow-x: scroll;
-		
+		z-index: 100;
+
+		&::-webkit-scrollbar {
+			width: 4px;
+			height: 2px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: var(--custom-scrollbar-bg-color);
+			border-radius: 10px;
+		}
+
+		&::-webkit-scrollbar-thumb:hover {
+			background: var(--custom-scrollbar-bg-color-hover);
+			border-radius: 10px;
+		}
+
 		@media screen and (max-width: $sm) {
 			// padding: 20px 10px;
 			padding: 20px 19px;
 		}
 	}
 }
-
