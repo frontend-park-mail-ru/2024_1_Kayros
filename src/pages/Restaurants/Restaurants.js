@@ -180,7 +180,6 @@ class Restaurants {
 	 */
 	async render() {
 		this.#parent.insertAdjacentHTML('beforeend', template());
-		this.initCategories();
 		const currentHeader = document.querySelector('.header');
 
 		if (!currentHeader) {
@@ -191,6 +190,7 @@ class Restaurants {
 		const content = document.querySelector('.content');
 
 		await this.getOrdersData(content);
+		await this.initCategories();
 
 		if (window.innerWidth < 900) {
 			const restaurantsContainer = document.querySelector('.restaurants');
