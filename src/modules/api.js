@@ -22,18 +22,24 @@ class Api {
 	async getCheckoutUrl(callback) {
 		const data = await ajax.get(`${this.#url}/order/pay/url`);
 
-		callback(data);
+ 		callback(data);
 	}
 
-	/**
+	/**		
 	 * Метод для получения списка ресторанов
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 * @param {string} categoryId - id Категории ресторана
 	 */
-	async getRestaurants(callback) {
-		const data = await ajax.get(`${this.#url}/restaurants`);
-
-		callback(data);
-	}
+		async getRestaurants(callback, categoryId = null) {
+			let url = `${this.#url}/restaurants`;
+							
+			if (categoryId) {
+				url += `?filter=${categoryId}`;
+			}
+	
+			const data = await ajax.get(url);
+			callback(data);
+		}
 
 	/**
 	 * Метод для получения списка ресторанов
@@ -499,6 +505,15 @@ class Api {
 
 		callback(data);
 	}
+
+	/**
+	 * Загружает данные о категориях и передаёт их в callback-функцию.
+	 * @param {Function} callback - функция-коллбэк, вызываемая после выполенения запроса.
+	 */
+		async getCategories(callback) {
+			const data = await ajax.get(`${this.#url}/category`);
+			callback(data);
+		}
 }
 
 export default new Api();
