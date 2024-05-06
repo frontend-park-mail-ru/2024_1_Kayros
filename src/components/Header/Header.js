@@ -122,7 +122,7 @@ class Header {
 
 		this.searchValue = searchValue
 
-		const searchBlock = this.parent.querySelector('.header__search-input');
+		const searchBlock = this.#parent.querySelector('.header__search-input');
 		const searchInput = new Input(searchBlock, {
 			id: 'restaurants-search',
 			placeholder: 'Рестораны, категория',
