@@ -102,7 +102,7 @@ class PayForm {
 
 			if (field.id !== 'main-address') {
 				const errorMessage = document.createElement('div');
-				errorMessage.classList.add('error-message');
+				errorMessage.classList.add('error-message__pay-form');
 				errorMessage.id = `${field.name}-error`;
 				inputContainer.appendChild(errorMessage);
 			}
