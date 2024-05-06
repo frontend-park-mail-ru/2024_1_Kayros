@@ -177,7 +177,7 @@ class Restaurants {
 	 * @param {string} categoryId - id Категории ресторана
 	 * @param {string} style - Стиль
 	 */
-	createButton(container, id, label, categoryId, style = '') {
+	createButton(container, id, label, categoryId, style = 'secondary') {
 		const button = new Button(container, {
 			id: id,
 			onClick: async () => {
@@ -255,7 +255,6 @@ class Restaurants {
 		if (allCategoriesButton) {
 			allCategoriesButton.addEventListener('click', this.getData.bind(this));
 		}
-		
 		if (window.innerWidth < 900) {
 			const urlSearchParams = new URLSearchParams(window.location.search);
 			const searchValue = urlSearchParams.get('search') || '';
