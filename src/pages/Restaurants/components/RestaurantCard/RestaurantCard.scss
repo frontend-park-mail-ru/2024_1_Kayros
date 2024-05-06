@@ -50,6 +50,16 @@
 		font-size: 16px;
 		min-height: 40px;
 	}
+
+	&__categories {
+		color: var(--subtitle);
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+		word-break: break-all;
+		font-size: 15px;
+	}
 }
 
 .rating-container {

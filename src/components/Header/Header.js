@@ -8,6 +8,7 @@ import Profile from '../Profile';
 import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 import template from './Header.hbs';
 import './Header.scss';
+import {router} from "../../modules/router.js";
 
 /**
  * Шапка
@@ -55,6 +56,20 @@ class Header {
 		cartButton.render();
 	}
 
+	changeSearchInputValue() {
+		const urlSearchParams = new URLSearchParams(window.location.search);
+		const searchBlock = document.getElementById('restaurants-search');
+		const searchValue = urlSearchParams.get('search') || '';
+
+		this.searchValue = searchValue;
+
+		if (window.location.pathname === urls.search) {
+			searchBlock.value = searchValue;
+		} else {
+			searchBlock.value = '';
+		}
+	}
+
 	/**
 	 * Получение данных пользователя
 	 */
@@ -66,6 +81,16 @@ class Header {
 		});
 
 		api.getCartInfo(this.handleCartData.bind(this));
+	}
+
+	clickOnSearch() {
+		if (!this.searchValue) {
+			return;
+		}
+
+		const searchParams = {search: this.searchValue};
+
+		router.navigate(urls.search, {searchParams});
 	}
 
 	/**
@@ -92,12 +117,25 @@ class Header {
 			backButton.render();
 		}
 
-		const searchBlock = this.#parent.querySelector('.header__search-input');
+		const urlSearchParams = new URLSearchParams(window.location.search);
+		const searchValue = urlSearchParams.get('search') || '';
+
+		this.searchValue = searchValue
+
+		const searchBlock = this.parent.querySelector('.header__search-input');
 		const searchInput = new Input(searchBlock, {
 			id: 'restaurants-search',
-			placeholder: 'Рестораны, еда',
+			placeholder: 'Рестораны, категория',
 			button: 'Найти',
+			value: searchValue,
+			onChange: (event) => {
+				this.searchValue = event.target.value;
+
+			},
+			buttonOnClick: this.clickOnSearch.bind(this),
 		});
+
+		window.addEventListener('popstate', this.changeSearchInputValue.bind(this));
 
 		searchInput.render();
 

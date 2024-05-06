@@ -37,6 +37,16 @@ class Api {
 
 	/**
 	 * Метод для получения списка ресторанов
+	 * @param {function} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getSearchRestaurants(callback) {
+		const data = await ajax.get(`${this.#url}/search`);
+
+		callback(data);
+	}
+
+	/**
+	 * Метод для получения списка ресторанов
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async getOrdersData(callback) {

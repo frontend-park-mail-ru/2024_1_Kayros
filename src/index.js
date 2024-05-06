@@ -13,8 +13,10 @@ document.body.appendChild(root);
 const layout = new Layout(root);
 layout.render();
 
+const urlSearchParams = new URLSearchParams(window.location.search);
+
 router.addRoutes(routes);
-router.navigate(window.location.pathname);
+router.navigate(window.location.pathname, {searchParams: urlSearchParams});
 
 if (process.env.CACHE_ENABLE) {
 	const registerServiceWorker = async () => {
