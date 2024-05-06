@@ -11,6 +11,8 @@ import { localStorageHelper } from '../../utils';
 import template from './Restaurants.hbs';
 import RestaurantCard from './components/RestaurantCard';
 import './Restaurants.scss';
+import {router} from "../../modules/router.js";
+import Button from "../../components/Button/index.js";
 
 /**
  * Страница со списком ресторанов
@@ -112,6 +114,34 @@ class Restaurants {
 		await api.getOrdersData(this.renderOrders.bind(this));
 	}
 
+	clickOnSearch() {
+		if (!this.searchValue) {
+			return;
+		}
+
+		const searchParams = {search: this.searchValue};
+
+		router.navigate(urls.search, {searchParams});
+	}
+
+	changeSearchInputValue() {
+		const urlSearchParams = new URLSearchParams(window.location.search);
+		const searchBlock = document.getElementById('restaurants-search-input');
+		const searchValue = urlSearchParams.get('search') || '';
+
+		this.searchValue = searchValue;
+
+		if (!searchBlock) {
+			return;
+		}
+
+		if (window.location.pathname === urls.search) {
+			searchBlock.value = searchValue;
+		} else {
+			searchBlock.value = '';
+		}
+	}
+
 	/**
 	 * Рендеринг страницы
 	 */
@@ -130,14 +160,29 @@ class Restaurants {
 		await this.getOrdersData(content);
 
 		if (window.innerWidth < 900) {
+			const urlSearchParams = new URLSearchParams(window.location.search);
+			const searchValue = urlSearchParams.get('search') || '';
+
+			this.searchValue = searchValue
+
 			const restaurantsContainer = document.querySelector('.restaurants');
-			const search = new Input(restaurantsContainer, {
+
+			const searchInput = new Input(restaurantsContainer, {
+				button: 'Найти',
+				value: searchValue,
 				id: 'restaurants-search-input',
 				position: 'afterbegin',
 				placeholder: 'Ресторан, категория',
+				onChange: (event) => {
+					this.searchValue = event.target.value;
+
+				},
+				buttonOnClick: this.clickOnSearch.bind(this),
 			});
 
-			search.render();
+			searchInput.render();
+
+			window.addEventListener('popstate', this.changeSearchInputValue.bind(this));
 		}
 
 		const restaurants = document.querySelector('.restaurants__cards');

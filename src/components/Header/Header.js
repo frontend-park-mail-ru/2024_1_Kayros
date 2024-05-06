@@ -125,7 +125,7 @@ class Header {
 		const searchBlock = this.parent.querySelector('.header__search-input');
 		const searchInput = new Input(searchBlock, {
 			id: 'restaurants-search',
-			placeholder: 'Рестораны, еда',
+			placeholder: 'Рестораны, категория',
 			button: 'Найти',
 			value: searchValue,
 			onChange: (event) => {

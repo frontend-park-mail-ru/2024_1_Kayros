@@ -4,6 +4,9 @@ import api from '../../modules/api';
 import template from './Search.hbs';
 import SearchRestaurantCard from '../Restaurants/components/RestaurantCard';
 import './Search.scss';
+import Input from "../../components/Input/index.js";
+import {router} from "../../modules/router.js";
+import urls from "../../routes/urls.js";
 
 /**
  * Страница со списком ресторанов
@@ -44,6 +47,34 @@ class Search {
         api.getSearchRestaurants(this.renderData.bind(this));
     }
 
+    clickOnSearch() {
+        if (!this.searchValue) {
+            return;
+        }
+
+        const searchParams = {search: this.searchValue};
+
+        router.navigate(urls.search, {searchParams});
+    }
+
+    changeSearchInputValue() {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const searchBlock = document.getElementById('restaurants-search-input');
+        const searchValue = urlSearchParams.get('search') || '';
+
+        this.searchValue = searchValue;
+
+        if (!searchBlock) {
+            return;
+        }
+
+        if (window.location.pathname === urls.search) {
+            searchBlock.value = searchValue;
+        } else {
+            searchBlock.value = '';
+        }
+    }
+
     /**
      * Рендеринг страницы
      */
@@ -55,6 +86,32 @@ class Search {
         if (!currentHeader) {
             const header = new Header();
             header.render();
+        }
+
+        if (window.innerWidth < 900) {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const searchValue = urlSearchParams.get('search') || '';
+
+            this.searchValue = searchValue;
+
+            const restaurantsContainer = document.querySelector('.search-restaurants');
+
+            const searchInput = new Input(restaurantsContainer, {
+                button: 'Найти',
+                value: searchValue,
+                id: 'restaurants-search-input',
+                position: 'afterbegin',
+                placeholder: 'Ресторан, категория',
+                onChange: (event) => {
+                    this.searchValue = event.target.value;
+
+                },
+                buttonOnClick: this.clickOnSearch.bind(this),
+            });
+
+            searchInput.render();
+
+            window.addEventListener('popstate', this.changeSearchInputValue.bind(this));
         }
 
         const searchRestaurants = document.querySelector('.search-restaurants__cards');
