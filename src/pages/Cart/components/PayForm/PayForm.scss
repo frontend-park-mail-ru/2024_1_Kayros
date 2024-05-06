@@ -60,6 +60,7 @@
 
 	&__input-container {
 		background: inherit;
+		position: relative;
 	}
 
 	&__methods {
@@ -95,7 +96,9 @@
 	color: var(--red);
 	font-size: 14px;
 	margin: 5px;
+	margin-bottom: 10px;
 	z-index: 1000;
+	position: absolute; 
 }
 
 @media (max-width: $sm) {
@@ -109,7 +112,7 @@
 			position: sticky;
 			bottom: 0;
 			padding: 20px 0;
-			z-index: 100;
+			z-index: 9;
 		}
 
 		&__inputs {
@@ -126,5 +129,14 @@
 			font-weight: 600;
 			font-size: 18px;
 		}
+		&__methods {
+			margin-bottom: 20px;
+			margin-top:16px;
+		}
+	}
+
+	.error-message {
+		font-size: 12px;
+		position: absolute; 
 	}
 }

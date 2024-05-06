@@ -56,7 +56,6 @@ class PayForm {
 		if (data) {
 			const res = await api.checkout();
 
-			//await api.getCheckoutUrl((data) => console.log(data))
 
 			if (!res) {
 				return;
