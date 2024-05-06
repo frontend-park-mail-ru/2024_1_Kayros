@@ -25,13 +25,19 @@ class Api {
 		callback(data);
 	}
 
-	/**
+	/**		
 	 * Метод для получения списка ресторанов
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 * @param {string} categoryId - id Категории ресторана
 	 */
-	async getRestaurants(callback) {
-		const data = await ajax.get(`${this.#url}/restaurants`);
+	async getRestaurants(callback, categoryId = null) {
+		let url = `${this.#url}/restaurants`;
+						
+		if (categoryId) {
+			url += `?filter=${categoryId}`;
+		}
 
+		const data = await ajax.get(url);
 		callback(data);
 	}
 
@@ -487,6 +493,15 @@ class Api {
 	async getReviewsInfo(id, callback) {
 		let data = await ajax.get(`${this.#url}/restaurants/${id}/comments`);
 
+		callback(data);
+	}
+
+	/**
+	 * Загружает данные о категориях и передаёт их в callback-функцию.
+	 * @param {Function} callback - функция-коллбэк, вызываемая после выполенения запроса.
+	 */
+	async getCategories(callback) {
+		const data = await ajax.get(`${this.#url}/category`);
 		callback(data);
 	}
 }
