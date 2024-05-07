@@ -1,0 +1,42 @@
+.restaurant-mobile {
+	position: absolute;
+	top: -6px;
+
+	&__slider {
+		position: sticky;
+		top: 64px;
+		background: var(--address-bg);
+		display: flex;
+		gap: 20px;
+		padding: 20px;
+		width: calc(100vw - 40px);
+
+		button {
+			padding: 0 !important;
+			font-size: 16px;
+			color: var(--cart-pay-method-color);
+			transition: 0.1s;
+		}
+	}
+
+	&__food {
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
+	}
+
+	.mobile-category-link {
+		&.category-active {
+			color: var(--link-color-active);
+			font-weight: 600;
+		}
+
+		&:not(.category-active):hover {
+			color: var(--link-color-hover);
+		}
+	}
+}
+
+#header-back-button {
+	padding: 6px;
+}

@@ -7,6 +7,10 @@
 .restaurant__sidebar {
 	display: flex;
 	flex-direction: column;
+
+	@media (max-width: 500px) {
+		width: 100%;
+	}
 }
 
 .restaurant__main {
@@ -15,6 +19,7 @@
 		border-radius: 10px;
 		width: 100%;
 		min-height: 278px;
+		margin-top: 18px;
 	}
 
 	.restaurant__food {
@@ -24,4 +29,8 @@
 		margin-top: 30px;
 		padding-bottom: 30px;
 	}
+}
+
+.orders-slider {
+	overflow-x: auto;
 }

@@ -1,5 +1,11 @@
+@import "../../variables";
+
 .content {
 	padding: 34px;
+
+	@media (max-width: $xsm) {
+		margin-top: 80px;
+	}
 
 	&:has(#content-loader) {
 		opacity: 0.5;
@@ -16,5 +22,27 @@
 
 	&--no-padding {
 		padding: 0;
+		margin-top: 0;
+	}
+
+	&__orders {
+		display: flex;
+		padding: 16px;
+		gap: 30px;
+		width: fit-content;
+	}
+
+	@media (max-width: $xsm) {
+		padding: 0;
+	}
+}
+
+@media screen and (max-width: $sm) {
+	.content {
+		padding: 12px;
+
+		&--no-padding {
+			padding: 0;
+		}
 	}
 }

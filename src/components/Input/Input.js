@@ -25,10 +25,25 @@ class Input {
 	 * @param {string} params.value - начальное значение
 	 * @param {void} params.onChange - обработчик события
 	 * @param {boolean} params.disabled - блокировка
+	 * @param {'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend'} params.position - позиция в предке
+	 * @param {boolean} params.textarea - поле вместо инпута
+	 * @param {Function} params.buttonOnClick - обработчик события клика на кнопку
 	 */
 	constructor(
 		parent,
-		{ id, placeholder, type = 'text', button, style = 'standart', value = '', onChange = '', disabled = false },
+		{
+			id,
+			placeholder,
+			type = 'text',
+			button,
+			style = 'standart',
+			value = '',
+			onChange = '',
+			disabled = false,
+			position = 'beforeend',
+			textarea = false,
+			buttonOnClick = () => {},
+		},
 	) {
 		this.#parent = parent;
 		this.#placeholder = placeholder;
@@ -40,6 +55,9 @@ class Input {
 		this.value = value;
 		this.onChange = onChange;
 		this.disabled = disabled;
+		this.buttonOnClick = buttonOnClick;
+		this.position = position;
+		this.textarea = textarea;
 	}
 
 	/**
@@ -56,6 +74,7 @@ class Input {
 			dynamic: this.style === 'dynamic',
 			value: this.value,
 			attribute: this.disabled ? 'disabled' : '',
+			textarea: this.textarea,
 		});
 	}
 
@@ -63,21 +82,30 @@ class Input {
 	 * Рендеринг компонента
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
+		this.#parent.insertAdjacentHTML(this.position, this.getHTML());
 
 		if (this.#button) {
 			const buttonBlock = this.#parent.querySelector('.input__search-button');
-			const searchButton = new Button(buttonBlock, { id: `${this.#id}-search-button`, content: this.#button });
+			const searchButton = new Button(buttonBlock, {
+				id: `${this.#id}-search-button`,
+				content: this.#button,
+				onClick: this.buttonOnClick,
+			});
+
 			searchButton.render();
 		}
 
 		const inputContainer = document.getElementById(`${this.#id}-container`);
 
-		const input = inputContainer.querySelector('input');
+		let input = inputContainer.querySelector('input');
+
+		if (this.textarea) {
+			input = inputContainer.querySelector('textarea');
+		}
 
 		input.oninput = this.onChange;
 
-		if (this.style === 'dynamic') {
+		if (this.style === 'dynamic' && !this.textarea) {
 			const holder = inputContainer.querySelector('.input__label-holder');
 			const label = inputContainer.querySelector('.input__label');
 

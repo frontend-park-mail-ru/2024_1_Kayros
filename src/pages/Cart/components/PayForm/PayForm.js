@@ -46,7 +46,9 @@ class PayForm {
 			extra_address: `${this.apart}, ${this.entrance}, ${this.floor}`,
 		});
 
-		if (!this.user) {
+		const user = localStorageHelper.getItem('user-info');
+
+		if (!user) {
 			router.navigate(urls.signIn);
 			return;
 		}
@@ -71,17 +73,11 @@ class PayForm {
 	/**
 	 * Рендер страницы
 	 */
-	render() {
+	async render() {
 		const user = localStorageHelper.getItem('user-info');
 		this.user = user;
-		let currentAddress = user?.address;
-
-		if (!user) {
-			const unauthInfo = localStorageHelper.getItem('unauth-info');
-			currentAddress = unauthInfo?.address;
-		}
-
-		this.main = currentAddress || '';
+		const address = localStorageHelper.getItem('user-address').value;
+		this.main = address;
 
 		this.#parent.insertAdjacentHTML('beforeend', template(this.data));
 		const form = this.#parent.querySelector('.pay-form');
@@ -96,7 +92,7 @@ class PayForm {
 				id: field.id,
 				placeholder: field.placeholder,
 				style: field.style,
-				value: this[field.name],
+				value: field.name === 'main' ? this.main : this[field.name],
 				onChange: (event) => {
 					this[field.name] = event.target.value;
 				},
@@ -105,7 +101,7 @@ class PayForm {
 
 			if (field.id !== 'main-address') {
 				const errorMessage = document.createElement('div');
-				errorMessage.classList.add('error-message');
+				errorMessage.classList.add('error-message__pay-form');
 				errorMessage.id = `${field.name}-error`;
 				inputContainer.appendChild(errorMessage);
 			}
@@ -117,7 +113,9 @@ class PayForm {
 			router.navigate(urls.address);
 		};
 
-		const checkoutButton = new Button(form, {
+		const checkoutButtonBlock = this.#parent.querySelector('.pay-form__button');
+
+		const checkoutButton = new Button(checkoutButtonBlock, {
 			id: 'pay-form-button',
 			content: 'Оплатить',
 			disabled: !this.data?.sum || !this.entrance || !this.floor || !this.apart,

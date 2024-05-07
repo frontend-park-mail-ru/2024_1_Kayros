@@ -1,0 +1,45 @@
+@import "../../constants.scss";
+
+.stepper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	&__connector {
+		border-bottom: 1px solid var(--stepper-connector-default);
+		z-index: 0;
+		width: 100%;
+		transition: 0.3s;
+	}
+
+	&__step {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		align-items: center;
+		padding: 0 4px;
+		background: transparent;
+
+		&-name {
+			top: 40px;
+			position: absolute;
+			white-space: nowrap;
+		}
+
+		button {
+			background: var(--layout-bg-color);
+			width: 34px;
+			height: 34px;
+			border-radius: 17px;
+			cursor: default;
+		}
+	}
+}
+
+@media screen and (max-width: $sm) {
+	.stepper__step-name {
+		font-size: 14px;
+	}
+}

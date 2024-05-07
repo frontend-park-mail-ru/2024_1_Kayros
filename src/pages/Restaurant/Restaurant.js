@@ -1,9 +1,12 @@
+import Button from '../../components/Button/Button';
 import api from '../../modules/api';
+import mobileTemplate from './MobileRestaurant.hbs';
 import template from './Restaurant.hbs';
-import './Restaurant.scss';
 import Banner from './components/Banner/Banner';
 import CategoryFood from './components/CategoryFood/CategoryFood';
 import Sidebar from './components/SideBar/Sidebar';
+import './Restaurant.scss';
+import './MobileRestaurant.scss';
 
 /**
  * Страница ресторана
@@ -21,6 +24,7 @@ class Restaurant {
 		this.#parent = parent;
 		this.activeCategory = 0;
 		this.id = id;
+		this.isMobile = window.innerWidth < 480;
 	}
 
 	/**
@@ -29,7 +33,11 @@ class Restaurant {
 	 * @returns {HTMLElement} html
 	 */
 	getHTML(data) {
-		return template(data);
+		if (this.isMobile) {
+			return mobileTemplate(data);
+		} else {
+			return template(data);
+		}
 	}
 
 	/**
@@ -37,9 +45,21 @@ class Restaurant {
 	 * @param {number} id - id новой категории
 	 */
 	setActiveCategory(id) {
-		const activeItem = document.querySelector(`#item-${id}`);
+		let activeItem = null;
 
-		const items = document.querySelectorAll('.restaurant-categories__item');
+		if (this.isMobile) {
+			activeItem = document.querySelector(`#mobile-category-${id}`);
+		} else {
+			activeItem = document.querySelector(`#item-${id}`);
+		}
+
+		let items = [];
+
+		if (this.isMobile) {
+			items = document.querySelectorAll('.mobile-category-link');
+		} else {
+			items = document.querySelectorAll('.restaurant-categories__item');
+		}
 
 		items.forEach((item) => {
 			item.classList.remove('category-active');
@@ -111,6 +131,81 @@ class Restaurant {
 	}
 
 	/**
+	 *
+	 * @param {*} data - data
+	 * @returns {*} return
+	 */
+	renderMobile(data) {
+		const restaurant = document.querySelector('.restaurant-mobile');
+
+		if (!data) {
+			restaurant.innerText = 'Ресторан не найден';
+			return;
+		}
+
+		document.title = `Resto - ${data.name}`;
+
+		this.#parent.innerHTML = this.getHTML(data);
+
+		const bannerContainer = document.querySelector('.restaurant-mobile__banner');
+		const banner = new Banner(bannerContainer, data);
+		banner.render();
+
+		const sliderContainer = document.querySelector('.restaurant-mobile__slider');
+
+		data.categories.forEach((category) => {
+			const link = new Button(sliderContainer, {
+				id: `mobile-category-${category.id}`,
+				content: category.name,
+				style: 'clear',
+				additionalClass: 'mobile-category-link',
+				onClick: () => {
+					const categoryItem = document.getElementById(`category-${category.id}`);
+					var categoryPosition = categoryItem.getBoundingClientRect().top;
+					var offsetPosition = categoryPosition + window.scrollY - 120;
+
+					window.scrollTo({
+						top: offsetPosition,
+						behavior: 'smooth',
+					});
+				},
+			});
+
+			link.render();
+		});
+
+		const foodList = document.querySelector('.restaurant-mobile__food');
+		data.categories.forEach((category) => {
+			const categoryBlock = new CategoryFood(foodList, {
+				data: category,
+				activeCategory: this.activeCategory,
+				cart: this.cart,
+			});
+
+			categoryBlock.render();
+		});
+
+		const categories = document.querySelectorAll('.category__title');
+
+		const observerCallback = (entries) => {
+			entries.forEach((entry) => {
+				const id = entry.target.id.split('-')[1];
+
+				if (entry.isIntersecting && this.activeCategory !== Number(id)) {
+					this.setActiveCategory(id);
+				}
+			});
+		};
+
+		const categoriesObserver = new IntersectionObserver(observerCallback, {
+			rootMargin: '-100px 0px -600px 0px',
+			threshold: 0,
+		});
+
+		categories.forEach((category) => categoriesObserver.observe(category));
+	}
+
+	/**
 	 * Получение информации о ресторане
 	 */
 	async getData() {
@@ -118,14 +213,21 @@ class Restaurant {
 			this.cart = data;
 		});
 
-		api.getRestaurantInfo(this.id, this.renderData.bind(this));
+		api.getRestaurantInfo(this.id, this.isMobile ? this.renderMobile.bind(this) : this.renderData.bind(this));
 	}
 
 	/**
 	 * Рендеринг страницы
 	 */
 	async render() {
-		this.#parent.innerHTML = template();
+		if (this.isMobile) {
+			const content = document.querySelector('.content');
+			content.classList.add('content--no-padding');
+
+			this.#parent.insertAdjacentHTML('beforeend', mobileTemplate());
+		} else {
+			this.#parent.insertAdjacentHTML('beforeend', template());
+		}
 
 		await this.getData();
 	}

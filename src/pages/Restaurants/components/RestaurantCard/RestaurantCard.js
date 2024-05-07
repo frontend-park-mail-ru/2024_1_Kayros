@@ -16,14 +16,16 @@ class RestaurantCard {
 	 * @param {string} params.name - название ресторана (заголовок карточки)
 	 * @param {string} params.short_description - описание ресторана
 	 * @param {string} params.rating - рейтинг ресторана
+	 * @param {Array} params.categories - категории ресторана
 	 */
-	constructor(parent, { id, img_url, name, short_description, rating }) {
+	constructor(parent, { id, img_url, name, short_description, rating, categories = [] }) {
 		this.parent = parent;
 		this.id = id;
 		this.image = img_url;
 		this.name = name;
 		this.description = short_description;
 		this.rating = rating;
+		this.categories = categories.map(({ name }) => name).join(', ');
 	}
 
 	/**
@@ -37,6 +39,7 @@ class RestaurantCard {
 			title: this.name,
 			subtitle: this.description,
 			rating: this.rating,
+			categories: this.categories,
 		});
 	}
 

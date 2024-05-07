@@ -1,3 +1,5 @@
+@import "../../variables";
+
 #modal-wrapper {
 	z-index: 9;
 	display: flex;
@@ -37,9 +39,35 @@
 		right: 30px;
 		top: 30px;
 		transition: filter 0.2s;
+		z-index: 10;
+		padding-left: 15px;
 
 		&:hover {
 			filter: brightness(0.5);
+		}
+
+		@media (max-width: $sm) {
+			top: 19px;
+			right: 20px;
+		}
+
+		@media (max-width: 400px) {
+			top: 19px;
+			right: 0;
+		}
+	}
+
+	@media (max-width: $xs) {
+		margin: 20px;
+	}
+
+	.find-address__title {
+		@media (max-width: 450px) {
+			font-size: 19px;
+		}
+
+		@media (max-width: 350px) {
+			font-size: 15px;
 		}
 	}
 }

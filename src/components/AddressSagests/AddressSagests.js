@@ -1,6 +1,6 @@
 import api from '../../modules/api';
 import { router } from '../../modules/router';
-import { localStorageHelper } from '../../utils';
+import { localStorageHelper, setCookieIfNotExist } from '../../utils';
 import Button from '../Button/Button';
 import Header from '../Header/Header';
 import template from './AddressSagests.hbs';
@@ -32,9 +32,7 @@ class AddressSagests {
 	 * Отобразить измение адреса в хэдере
 	 */
 	handleAddressChange() {
-		if (!this.user) {
-			localStorage.setItem('unauth-info', JSON.stringify({ address: this.address }));
-		}
+		localStorage.setItem('user-address', JSON.stringify({ value: this.address }));
 
 		const header = document.querySelector('.header');
 		header.remove();
@@ -50,11 +48,7 @@ class AddressSagests {
 
 		this.address = searchInput.value.split(' · ')[1] || searchInput.value;
 
-		const cookieExists = document.cookie.includes('unauth_token=');
-
-		if (!cookieExists) {
-			document.cookie = `unauth_token=${crypto.randomUUID()}; path=/`;
-		}
+		setCookieIfNotExist('unauth_id', crypto.randomUUID());
 
 		await api.updateAddressSagests({ address: this.address }, this.handleAddressChange.bind(this));
 		const cartAddress = document.querySelector('#main-address');
@@ -112,7 +106,9 @@ class AddressSagests {
 				input.blur();
 				this.address = street || currentItem.title?.text;
 
-				api.geoCoder(street || address, this.goToPoint);
+				if (window.innerWidth > 480) {
+					api.geoCoder(street || address, this.goToPoint);
+				}
 			},
 		});
 

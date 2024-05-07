@@ -3,7 +3,7 @@ import template from './FileUpload.hbs';
 import './FileUpload.scss';
 
 // это 10Мб
-const MAX_FILE_SIZE = 1000000;
+const MAX_FILE_SIZE = 10000000;
 
 /**
  * Загрузка файла

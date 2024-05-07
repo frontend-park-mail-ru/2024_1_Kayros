@@ -48,10 +48,15 @@ class Router {
 	 * @param {string} path - Путь для навигации
 	 * @param {object} params - Параметры навигации
 	 * @param {string} params.pageTitle - Заголовок страницы
+	 * @param {object} params.searchParams - search параметры
 	 */
-	navigate(path, { pageTitle = '' } = {}) {
+	navigate(path, { pageTitle = '', searchParams = {} } = {}) {
 		const currentPath = window.history.state?.path;
 		path = this.normalizePath(path);
+
+		let urlSearchParams = new URLSearchParams(searchParams).toString();
+
+		urlSearchParams = urlSearchParams ? `?${urlSearchParams}` : '';
 
 		if (path === urls.base) {
 			path = urls.restaurants;
@@ -93,7 +98,7 @@ class Router {
 			window.history.replaceState({ path }, '', path);
 		} else {
 			this.previousState = window.history?.state;
-			window.history.pushState({ path }, '', path);
+			window.history.pushState({ path: `${path}${urlSearchParams}` }, '', `${path}${urlSearchParams}`);
 		}
 
 		this.handleLocationChange();

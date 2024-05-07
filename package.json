@@ -5,13 +5,13 @@
 	"description": "Фронтенд проекта \"Resto\" команды \"Кайрос\"",
 	"main": "index.js",
 	"scripts": {
-		"dev": "NODE_ENV=development npx webpack serve --mode=development",
+		"dev": "NODE_ENV=development npx webpack serve --mode=development --host 0.0.0.0",
 		"prebuild": "NODE_ENV=production npx webpack --mode=production",
 		"build": "npm run prebuild && node static-server/index.js",
 		"lint": "eslint . \".env*\"",
 		"lint:fix": "eslint . \".env*\" --fix ",
 		"hbs-lint:fix": "ember-template-lint . --fix",
-		"scss-lint:fix": "stylelint --allow-empty-input \"**/*.{scss}\" --fix",
+		"scss-lint:fix": "stylelint --allow-empty-input \"./src/**/*.scss\" --fix",
 		"prettier:fix": "npx prettier \"./src/**/*.{js,css,scss}\" --write",
 		"generate-docs": "npx jsdoc -c jsdoc.json",
 		"prepare": "husky"
@@ -27,6 +27,8 @@
 	},
 	"dependencies": {
 		"@fontsource/montserrat": "^5.0.17",
+		"crypto": "^1.0.1",
+		"crypto-browserify": "^3.12.0",
 		"handlebars": "^4.7.8"
 	},
 	"devDependencies": {
@@ -49,7 +51,7 @@
 		"jsdoc": "^4.0.2",
 		"lint-staged": "^15.2.2",
 		"mini-css-extract-plugin": "^2.8.0",
-		"resto-ui": "^1.0.3",
+		"resto-ui": "^1.1.1",
 		"sass": "^1.71.1",
 		"sass-loader": "^14.1.1",
 		"style-loader": "^3.3.4",

@@ -4,7 +4,7 @@ import Modal from '../../../../components/Modal/Modal';
 import api from '../../../../modules/api';
 import { router } from '../../../../modules/router';
 import urls from '../../../../routes/urls';
-import { localStorageHelper } from '../../../../utils';
+import { localStorageHelper, setCookieIfNotExist } from '../../../../utils';
 import clearCartModalTemplate from './ClearCartModal.hbs';
 import template from './FoodCard.hbs';
 import authModalTemplate from './NeedAuthModal.hbs';
@@ -27,6 +27,7 @@ class FoodCard {
 		this.added = false;
 		this.count = count;
 		this.cart = cart;
+		this.address = '';
 	}
 
 	/**
@@ -39,11 +40,7 @@ class FoodCard {
 			return;
 		}
 
-		const cookieExists = document.cookie.includes('unauth_token=');
-
-		if (!cookieExists) {
-			document.cookie = `unauth_token=${crypto.randomUUID()}; path=/`;
-		}
+		setCookieIfNotExist('unauth_id', crypto.randomUUID());
 	}
 
 	/**
@@ -140,7 +137,7 @@ class FoodCard {
 
 		const sum = cart.querySelector('span');
 
-		if (res === 0) {
+		if (!res) {
 			cart.className = 'btn btn--secondary size-xs';
 			sum.innerHTML = '';
 		} else {
@@ -206,7 +203,7 @@ class FoodCard {
 	/**
 	 * Рендеринг компонента
 	 */
-	render() {
+	async render() {
 		this.parent.insertAdjacentHTML('beforeend', template(this.data));
 
 		const food = document.getElementById(`food-${this.data.id}`);
@@ -219,11 +216,9 @@ class FoodCard {
 			initCount: this.count,
 			maxCount: 99,
 			prevCount: () => {
-				const user = localStorageHelper.getItem('user-info');
-				const unauthInfo = localStorageHelper.getItem('unauth-info');
-				const currentAddress = user?.address || unauthInfo?.address;
+				const address = localStorageHelper.getItem('user-address').value;
 
-				if (!currentAddress) {
+				if (address === '' || !address) {
 					this.openAddressModal();
 					return;
 				}

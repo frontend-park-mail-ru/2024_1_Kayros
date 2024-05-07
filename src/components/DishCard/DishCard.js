@@ -1,5 +1,5 @@
-import CounterButton from '../../../../components/CounterButton';
-import api from '../../../../modules/api';
+import api from '../../modules/api';
+import CounterButton from '../CounterButton';
 import template from './DishCard.hbs';
 import './DishCard.scss';
 
@@ -13,17 +13,27 @@ class DishCard {
 	 * Создает экземпляр
 	 * @param {HTMLDivElement} parent - родительский элемент
 	 * @param {object} data - информация о еде
+	 * @param {object} params - параметры
+	 * @param {boolean} params.addCounter - карточка с счетчиком
 	 */
-	constructor(parent, data) {
+	constructor(parent, data, { addCounter = true } = {}) {
 		this.#parent = parent;
 		this.data = data;
+		this.addCounter = addCounter;
 	}
 
 	/**
 	 * Рендер страницы
 	 */
 	render() {
-		this.#parent.insertAdjacentHTML('beforeend', template(this.data));
+		this.#parent.insertAdjacentHTML(
+			'beforeend',
+			template({ counter: this.addCounter, class: this.addCounter ? '' : 'dish-card--complete', ...this.data }),
+		);
+
+		if (!this.addCounter) {
+			return;
+		}
 
 		const card = this.#parent.querySelector(`#food-${this.data.id}`);
 
@@ -35,21 +45,30 @@ class DishCard {
 			productId: this.data.id,
 			withAddButton: false,
 			addCount: async (id) => {
-				const res = await api.addToCart(id);
+				const sum = await api.addToCart(id);
+
+				if (!sum && sum !== 0) {
+					return;
+				}
 
 				const cart = document.getElementById('cart-button');
 				const formSum = document.querySelector('#pay-form-sum');
-				const sum = cart.querySelector('span');
+				const sumBlock = cart.querySelector('span');
 
 				if (!sum) cart.remove();
 
-				sum.innerHTML = res ? `${res} ₽` : '';
-				formSum.innerHTML = `${res || 0} ₽`;
+				sumBlock.innerHTML = sum ? `${sum} ₽` : '';
+				formSum.innerHTML = `${sum || 0} ₽`;
 
-				return res;
+				return sum;
 			},
 			removeCount: async (id) => {
 				const sum = await api.removeFromCart(id);
+
+				if (!sum && sum !== 0) {
+					return;
+				}
+
 				const submit = document.getElementById('pay-form-button');
 
 				const cart = document.getElementById('cart-button');
@@ -77,6 +96,10 @@ class DishCard {
 			},
 			updateCount: async ({ id, count }) => {
 				const sum = await api.updateCartCount({ food_id: id, count });
+
+				if (!sum && sum !== 0) {
+					return;
+				}
 
 				const cart = document.getElementById('cart-button');
 				const formSum = document.querySelector('#pay-form-sum');
