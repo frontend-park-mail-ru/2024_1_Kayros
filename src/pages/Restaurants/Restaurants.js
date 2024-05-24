@@ -19,7 +19,6 @@ import './Restaurants.scss';
  */
 class Restaurants {
 	#parent;
-
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
@@ -303,6 +302,31 @@ class Restaurants {
 
 			api.getOrdersData(this.renderOrders.bind(this));
 		}, 5000);
+
+		if (window.innerWidth < 768) {
+			await this.checkCartDataAndRenderButton();
+		}
+	}
+
+	/**
+	 *
+	 */
+	checkCartDataAndRenderButton() {
+		api.getCartInfo((cartData) => {
+			if (cartData) {
+				const cartBlockMobile = document.querySelector('.cart__mobile');
+
+				const cartButtonMobile = new Button(cartBlockMobile, {
+					id: 'cart-button1',
+					content: '',
+					icon: 'cart',
+					style: 'primary',
+					onClick: () => router.navigate(urls.cart),
+				});
+
+				cartButtonMobile.render();
+			}
+		});
 	}
 }
 
