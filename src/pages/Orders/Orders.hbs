@@ -1,23 +1,26 @@
 <div class="statistic">
-    <h1>Статистика ответов</h1>
+    <h1>Архив заказов</h1>
     <table>
         <thead>
             <tr>
-                <th>Вопрос</th>
-                <th>NPS</th>
-                <th>CSAT</th>
+                <th>ID заказа</th>
+                <th>Статус</th>
+                <th>Дата</th>
+                <th>Название ресторана</th>
+                <th>Сумма</th>
             </tr>
         </thead>
         <tbody>
             {{#each data}}
             <tr>
-                <td>{{question_name}}</td>
-                <td>{{nps}}</td>
-                <td>{{csat}}</td>
+                <td>{{id}}</td>
+                <td>{{status}}</td>
+                <td>{{date}}</td>
+                <td>{{restaurant_name}}</td>
+                <td>{{sum}}</td>
             </tr>
             {{/each}}
         </tbody>
     </table>
     <div class="statistic__return-button"> </div>
 </div>
-

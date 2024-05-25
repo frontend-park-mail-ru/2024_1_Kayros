@@ -187,3 +187,20 @@ export const YANDEX_API_GEOCODER = '7e5782d5-d181-428b-a46d-5dcff8caa54d';
 export const MOBILE_BREAKPOINT = 768;
 
 export const TABLET_BREAKPOINT = 1024;
+
+export const mockOrdersData = [
+	{
+		id: 1,
+		status: 'completed',
+		date: '2024-05-24',
+		restaurant_name: 'Restaurant A',
+		sum: 29.99
+	},
+	{
+		id: 2,
+		status: 'pending',
+		date: '2024-05-24',
+		restaurant_name: 'Restaurant B',
+		sum: 19.99
+	}
+];

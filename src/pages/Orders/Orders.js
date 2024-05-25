@@ -20,27 +20,23 @@ class Orders {
 	}
 
 	/**
-	 * Получение данных о ресторанах
-	 */
-	async getData() {
-		await api.getCSATAnswers((data) => {
-			this.data = data;
-		});
-	}
-
-	/**
 	 * Рендер страницы.
 	 */
-	render() {
-		const html = template();
+	async render() {
+		const data = await new Promise((resolve) => {
+			api.getUserOrdersArchive(resolve);
+		});
+
+		const html = template({ data });
 		this.#parent.insertAdjacentHTML('beforeend', html);
-		new Button(document.querySelector('.not-found__return-button'), {
+		new Button(document.querySelector('.statistic__return-button'), {
 			id: 'return-to-home',
 			content: 'Вернуться на главную',
 			onClick: () => {
 				router.navigate(urls.restaurants);
 			},
 		}).render();
+        
 	}
 }
 
