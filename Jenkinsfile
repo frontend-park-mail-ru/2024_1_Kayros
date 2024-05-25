@@ -1,13 +1,14 @@
 pipeline {
     agent {
         node {  
-            label 'agent1'
+            label 'мастер'
             customWorkspace '/home/ubuntu/frontend'
         }
     }
     stages {
         stage('Build') { 
             steps {
+                sh 'pwd'
                 sh './build.sh' 
             }
         }
