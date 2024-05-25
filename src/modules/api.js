@@ -1,5 +1,11 @@
 import { Notification } from 'resto-ui';
-import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SAGESTS, mockOrdersData } from '../constants';
+import {
+	ERROR_MESSAGES,
+	SUCCESS_MESSAGES,
+	YANDEX_API_GEOCODER,
+	YANDEX_API_SAGESTS,
+	mockOrdersData,
+} from '../constants';
 import ajax from './ajax';
 
 /**
@@ -66,9 +72,9 @@ class Api {
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
 	async getUserOrdersArchive(callback) {
-		const data = await ajax.get(`${this.#url}/orders/archive`, { showNotifyError: false });
+		const data = await ajax.get(`${this.#url}/orders/archive`);
 
-		if (!data || data.length === 0) {
+		if (!data) {
 			callback(mockOrdersData);
 		} else {
 			callback(data);

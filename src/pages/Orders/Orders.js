@@ -6,13 +6,13 @@ import template from './Orders.hbs';
 import './Orders.scss';
 
 /**
- * Класс спользуется для отображения сообщения об отсутствии страницы или ресурса.
+ * Класс используется для отображения списка заказов.
  */
 class Orders {
 	#parent;
 
 	/**
-	 * Создает экземпляр страницы NotFound.
+	 * Создает экземпляр страницы Orders.
 	 * @param {HTMLDivElement} parent - родительский элемент
 	 */
 	constructor(parent) {
@@ -27,16 +27,57 @@ class Orders {
 			api.getUserOrdersArchive(resolve);
 		});
 
-		const html = template({ data });
-		this.#parent.insertAdjacentHTML('beforeend', html);
-		new Button(document.querySelector('.statistic__return-button'), {
-			id: 'return-to-home',
-			content: 'Вернуться на главную',
-			onClick: () => {
-				router.navigate(urls.restaurants);
-			},
-		}).render();
+		// Форматирование данных
+		const formattedData = data.map(order => ({
+			...order,
+			status_class: this.getStatusClass(order.status),
+			formattedTime: this.formatDate(order.time)
+		}));
+
+		const html = template({ data: formattedData });
+		this.#parent.innerHTML = html;
         
+		// Создание кнопок для каждой карточки заказа
+		formattedData.forEach(order => {
+			new Button(document.querySelector(`#view-order-${order.id}`), {
+				id: `view-order-button-${order.id}`,
+				icon: 'right-arrow-full',
+				style: 'clear-back-mobile',
+				content: '',
+				onClick: () => {
+					router.navigate(`${urls.orders}/${order.id}`);
+				},
+			}).render();
+		});
+
+	}
+
+	/**
+	 * Преобразует статус заказа в CSS-класс.
+	 * @param {string} status - Статус заказа.
+	 * @returns {string} CSS-класс для статуса заказа.
+	 */
+	getStatusClass(status) {
+		switch (status.toLowerCase()) {
+		case 'delivered':
+			return 'delivered';
+		case 'created':
+			return 'created';
+		case 'cooking':
+			return 'cooking';
+		case 'on the way':
+			return'on-the-way';
+		}
+	}
+
+	/**
+	 * Форматирует дату в строку формата 'день.месяц.год'.
+	 * @param {string} dateString - Дата в виде строки.
+	 * @returns {string} Отформатированная дата.
+	 */
+	formatDate(dateString) {
+		const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+		return new Date(dateString).toLocaleDateString('ru-RU', options);
 	}
 }
 

@@ -190,17 +190,35 @@ export const TABLET_BREAKPOINT = 1024;
 
 export const mockOrdersData = [
 	{
-		id: 1,
-		status: 'completed',
-		date: '2024-05-24',
-		restaurant_name: 'Restaurant A',
-		sum: 29.99
+		id: 5,
+		user_id: 3,
+		status: 'created',
+		time: '2024-05-23T06:03:47Z',
+		restaurant_name: 'Горныч',
+		sum: 1040
 	},
 	{
-		id: 2,
-		status: 'pending',
-		date: '2024-05-24',
-		restaurant_name: 'Restaurant B',
-		sum: 19.99
+		id: 6,
+		user_id: 3,
+		status: 'cooking',
+		time: '2024-01-23T06:06:34Z',
+		restaurant_name: 'Каменыч',
+		sum: 1041
+	},
+	{
+		id: 7,
+		user_id: 3,
+		status: 'on the way',
+		time: '2024-01-23T06:06:34Z',
+		restaurant_name: 'Повидлыч',
+		sum: 1041
+	},
+	{
+		id: 8,
+		user_id: 3,
+		status: 'delivered',
+		time: '2024-01-23T06:06:34Z',
+		restaurant_name: 'КимЧеныныч',
+		sum: 1041
 	}
 ];

@@ -1,26 +1,18 @@
-<div class="statistic">
-    <h1>Архив заказов</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID заказа</th>
-                <th>Статус</th>
-                <th>Дата</th>
-                <th>Название ресторана</th>
-                <th>Сумма</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each data}}
-            <tr>
-                <td>{{id}}</td>
-                <td>{{status}}</td>
-                <td>{{date}}</td>
-                <td>{{restaurant_name}}</td>
-                <td>{{sum}}</td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-    <div class="statistic__return-button"> </div>
+<div class="orders-page">
+    {{#each data}}
+    <div class="order-card" id="order-{{id}}">
+        <div class="order-card__header">
+            <div class="order-card__number">Заказ № {{id}}</div>
+            <div class="order-card__button" id="view-order-{{id}}"></div>
+        </div>
+        <div class="order-card__body">
+            <div class="order-card__restaurant">{{restaurant_name}}</div>
+             <div class="order-card__price">{{sum}} ₽</div>
+        </div>
+        <div class="order-card__footer">
+             <div class="order-card__date">{{formattedTime}}</div>
+            <div class="order-card__status order-card__status--{{status_class}}">{{status}}</div>
+        </div>
+    </div>
+    {{/each}}
 </div>

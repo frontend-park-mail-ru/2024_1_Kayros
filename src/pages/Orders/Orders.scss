@@ -1,37 +1,80 @@
-.statistic {
+@import "../../constants.scss";
+
+.orders-page {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-	height: auto;
-	text-align: center;
+	margin: 20px;
+}
 
-	h1 {
-		margin: 50px;
+.order-card {
+	width: 100%;
+	max-width: 400px;
+	border: 1px solid var(--order-card-border);
+	border-radius: 15px;
+	padding: 15px;
+	margin: 10px 0;
+	background: var(--auth-background);
+	box-shadow: var(--dropdown-box-shadow);
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 20px;
 	}
 
-	table {
-		border-collapse: collapse;
-		width: 80%;
-		margin-bottom: 100px;
-		font-family: Arial, sans-serif;
-		font-size: 20px;
+	&__body {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 10px;
+	}
 
-		th,
-		td {
-			padding: 20px;
-			text-align: left;
-			vertical-align: middle;
+	&__number {
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	&__restaurant {
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	&__price {
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	&__date {
+		font-size: 14px;
+		color: var(--order-date);
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__status {
+		font-size: 16px;
+		font-weight: bold;
+
+		&--created {
+			color: var(--order-created);
 		}
 
-		th {
-			background-color: rgb(244 244 244);
-			font-weight: bold;
-			padding-left: 15px;
+		&--delivered {
+			color: var(--order-delivered);
 		}
 
-		tr:hover {
-			background-color: rgb(167 139 139 / 10%);
+		&--cooking {
+			color: var(--order-is-cooking);
+		}
+
+		&--on-the-way {
+			color: var(--order-on-the-way);
 		}
 	}
 }
