@@ -165,7 +165,7 @@ class Restaurants {
 	async initCategories() {
 		api.getCategories((categories) => {
 			const categoryBar = document.querySelector('.category-bar');
-			categories.forEach((category) => {
+			categories?.forEach((category) => {
 				const categoryDiv = document.createElement('div');
 				categoryDiv.className = `category category${category.id}`;
 				categoryBar.appendChild(categoryDiv);
