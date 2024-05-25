@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        node {  
-            label 'мастер'
-            customWorkspace '/home/ubuntu/frontend'
-        }
-    }
+    agent any
     stages {
         stage('Build') { 
             steps {
