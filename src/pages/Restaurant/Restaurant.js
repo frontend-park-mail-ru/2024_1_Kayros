@@ -187,6 +187,10 @@ class Restaurant {
 			categoryBlock.render();
 		});
 
+		const spacer = document.createElement('div');
+		spacer.style.height = '300px';
+		document.querySelector('.restaurant-mobile').appendChild(spacer);
+
 		const categories = document.querySelectorAll('.category__title');
 
 		const observerCallback = (entries) => {
@@ -200,12 +204,12 @@ class Restaurant {
 		};
 
 		const categoriesObserver = new IntersectionObserver(observerCallback, {
-			rootMargin: '-100px 0px -600px 0px',
+			rootMargin: '-100px 0px -500px 0px',
 			threshold: 0,
 		});
 
 		categories.forEach((category) => categoriesObserver.observe(category));
-		
+
 		await this.checkCartDataAndRenderButton();
 	}
 
@@ -218,7 +222,7 @@ class Restaurant {
 				this.renderCartIcon();
 			} else {
 				this.removeCartIcon();
-			}	
+			}
 		});
 	}
 	/**
@@ -237,7 +241,7 @@ class Restaurant {
 	 */
 	renderCartIcon() {
 		const cartBlockMobile = document.querySelector('.cart__mobile');
-		let existingButton = document.getElementById('cart-button2');
+		let existingButton = document.getElementById('cart-button__restaurant');
 
 		if (!existingButton) {
 			const cartButtonMobile = new Button(cartBlockMobile, {
@@ -251,7 +255,7 @@ class Restaurant {
 			cartButtonMobile.render();
 		}
 	}
-	
+
 	/**
 	 *
 	 */
@@ -280,4 +284,4 @@ class Restaurant {
 	}
 }
 
-export default Restaurant;	
+export default Restaurant;

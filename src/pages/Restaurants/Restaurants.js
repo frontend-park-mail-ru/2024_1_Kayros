@@ -317,7 +317,7 @@ class Restaurants {
 				const cartBlockMobile = document.querySelector('.cart__mobile');
 
 				const cartButtonMobile = new Button(cartBlockMobile, {
-					id: 'cart-button1',
+					id: 'cart-button__restaurants',
 					content: '',
 					icon: 'cart',
 					style: 'primary',
