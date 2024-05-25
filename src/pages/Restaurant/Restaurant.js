@@ -187,10 +187,6 @@ class Restaurant {
 			categoryBlock.render();
 		});
 
-		const spacer = document.createElement('div');
-		spacer.style.height = '300px';
-		document.querySelector('.restaurant-mobile').appendChild(spacer);
-
 		const categories = document.querySelectorAll('.category__title');
 
 		const observerCallback = (entries) => {
@@ -204,7 +200,7 @@ class Restaurant {
 		};
 
 		const categoriesObserver = new IntersectionObserver(observerCallback, {
-			rootMargin: '-100px 0px -500px 0px',
+			rootMargin: '-100px 0px -600px 0px',
 			threshold: 0,
 		});
 
