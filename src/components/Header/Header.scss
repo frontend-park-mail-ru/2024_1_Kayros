@@ -38,6 +38,11 @@
 			margin-right: 0;
 			margin-left: auto;
 		}
+
+		@media (max-width: $xs) {
+			padding: 14px 10px;
+			gap: 3px;
+		}
 	}
 
 	&__search-input {
@@ -115,6 +120,10 @@
 				width: 100%;
 			}
 		}
+
+		@media (max-width: $xs) {
+			margin-left: 0;
+		}
 	}
 
 	& + .content {
@@ -128,6 +137,11 @@
 	@media (max-width: $xsm) {
 		margin-top: 0;
 		gap: 10px;
+	}
+
+	@media (max-width: $xs) {
+		gap: 0;
+		justify-content: cenet;
 	}
 }
 
