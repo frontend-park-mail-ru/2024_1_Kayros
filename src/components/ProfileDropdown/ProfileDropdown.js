@@ -7,6 +7,7 @@ import { OPEN_PROFILE_SLIDE_OPTIONS, CLOSE_PROFILE_SLIDE_OPTIONS } from './const
 const dropdownItems = [
 	{ id: 'profile-link', name: 'Профиль', exit: false, url: urls.profile },
 	{ id: 'cart-link', name: 'Корзина', exit: false, url: urls.cart },
+	{ id: 'orders-link', name: 'Заказы', exit: false, url: urls.orders },
 	{ id: 'exit-link', name: 'Выйти', exit: true, url: urls.restaurants },
 ];
 
