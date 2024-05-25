@@ -205,7 +205,7 @@ class Restaurant {
 		});
 
 		categories.forEach((category) => categoriesObserver.observe(category));
-		
+
 		await this.checkCartDataAndRenderButton();
 	}
 
@@ -218,7 +218,7 @@ class Restaurant {
 				this.renderCartIcon();
 			} else {
 				this.removeCartIcon();
-			}	
+			}
 		});
 	}
 	/**
@@ -251,12 +251,12 @@ class Restaurant {
 			cartButtonMobile.render();
 		}
 	}
-	
+
 	/**
 	 *
 	 */
 	removeCartIcon() {
-		const existingButton = document.getElementById('cart-button2');
+		const existingButton = document.getElementById('cart-button__restaurant');
 
 		if (existingButton) {
 			existingButton.remove();
@@ -280,4 +280,4 @@ class Restaurant {
 	}
 }
 
-export default Restaurant;	
+export default Restaurant;
