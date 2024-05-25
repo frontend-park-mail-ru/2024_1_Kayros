@@ -187,6 +187,10 @@ class Restaurant {
 			categoryBlock.render();
 		});
 
+		const spacer = document.createElement('div');
+		spacer.style.height = '300px';
+		document.querySelector('.restaurant-mobile').appendChild(spacer);
+
 		const categories = document.querySelectorAll('.category__title');
 
 		const observerCallback = (entries) => {
@@ -200,7 +204,7 @@ class Restaurant {
 		};
 
 		const categoriesObserver = new IntersectionObserver(observerCallback, {
-			rootMargin: '-100px 0px -600px 0px',
+			rootMargin: '-100px 0px -500px 0px',
 			threshold: 0,
 		});
 
@@ -237,7 +241,7 @@ class Restaurant {
 	 */
 	renderCartIcon() {
 		const cartBlockMobile = document.querySelector('.cart__mobile');
-		let existingButton = document.getElementById('cart-button2');
+		let existingButton = document.getElementById('cart-button__restaurant');
 
 		if (!existingButton) {
 			const cartButtonMobile = new Button(cartBlockMobile, {
@@ -256,7 +260,7 @@ class Restaurant {
 	 *
 	 */
 	removeCartIcon() {
-		const existingButton = document.getElementById('cart-button__restaurant');
+		const existingButton = document.getElementById('cart-button2');
 
 		if (existingButton) {
 			existingButton.remove();
