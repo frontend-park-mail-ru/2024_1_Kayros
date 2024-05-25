@@ -77,6 +77,14 @@
 	&__address {
 		max-width: 350px;
 
+		@media (max-width: $xsm) {
+			max-width: 230px;
+		}
+
+		@media (max-width: 360px) {
+			max-width: 160px;
+		}
+
 		& .btn {
 			width: 100%;
 		}
