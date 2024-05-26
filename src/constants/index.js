@@ -195,7 +195,7 @@ export const mockOrdersData = [
 		status: 'created',
 		time: '2024-05-23T06:03:47Z',
 		restaurant_name: 'Горныч',
-		sum: 1040
+		sum: 1040,
 	},
 	{
 		id: 6,
@@ -203,15 +203,15 @@ export const mockOrdersData = [
 		status: 'cooking',
 		time: '2024-01-23T06:06:34Z',
 		restaurant_name: 'Каменыч',
-		sum: 1041
+		sum: 1041,
 	},
 	{
 		id: 7,
 		user_id: 3,
-		status: 'on the way',
+		status: 'on-the-way',
 		time: '2024-01-23T06:06:34Z',
 		restaurant_name: 'Повидлыч',
-		sum: 1041
+		sum: 1041,
 	},
 	{
 		id: 8,
@@ -219,6 +219,6 @@ export const mockOrdersData = [
 		status: 'delivered',
 		time: '2024-01-23T06:06:34Z',
 		restaurant_name: 'КимЧеныныч',
-		sum: 1041
-	}
+		sum: 1041,
+	},
 ];

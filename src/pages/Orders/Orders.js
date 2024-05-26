@@ -1,5 +1,5 @@
 import Button from '../../components/Button';
-import {ORDER_STATUSES} from '../../constants/index.js';
+import { ORDER_STATUSES } from '../../constants/index.js';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls';
@@ -12,6 +12,7 @@ import './Orders.scss';
  */
 class Orders {
 	#parent;
+	#activeOrderId;
 
 	/**
 	 * Создает экземпляр страницы Orders.
@@ -19,6 +20,7 @@ class Orders {
 	 */
 	constructor(parent) {
 		this.#parent = parent;
+		this.#activeOrderId = null;
 	}
 
 	/**
@@ -30,7 +32,14 @@ class Orders {
 
 		orderContainer.innerHTML = '';
 
-		new Order(orderContainer, {id , className: 'order-in-orders'}).render();
+		new Order(orderContainer, { id, className: 'order-in-orders' }).render();
+
+		if (this.#activeOrderId !== null) {
+			document.querySelector(`#order-${this.#activeOrderId}`).classList.remove('order-card--active');
+		}
+
+		this.#activeOrderId = id;
+		document.querySelector(`#order-${id}`).classList.add('order-card--active');
 	}
 
 	/**
@@ -69,6 +78,9 @@ class Orders {
 			}).render();
 		});
 
+		if (window.innerWidth > 900 && formattedData.length > 0) {
+			this.renderOrder(formattedData[0].id);
+		}
 	}
 
 	/**
@@ -85,7 +97,9 @@ class Orders {
 		case 'cooking':
 			return 'cooking';
 		case 'on the way':
-			return'on-the-way';
+			return 'on-the-way';
+		default:
+			return '';
 		}
 	}
 

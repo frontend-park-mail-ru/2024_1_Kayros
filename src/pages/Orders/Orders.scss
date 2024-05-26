@@ -19,7 +19,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	width: 300px;
+	width: 30%;
 
 	@media (max-width: $md) {
 		width: 100%;
@@ -104,4 +104,16 @@
 			color: var(--order-on-the-way);
 		}
 	}
+
+	&--active {
+		border-color: var(--active-border-color);
+		background-color: var(--active-background-color);
+	}
+}
+
+.no-orders-message {
+	font-size: 20px;
+	color: var(--text-color);
+	text-align: center;
+	margin-top: 50px;
 }

@@ -1,6 +1,7 @@
 <div class="orders-title">Мои заказы</div>
 <div class="orders-page">
     <div class="orders-list">
+        {{#if data.length}}
         {{#each data}}
         <div class="order-card" id="order-{{id}}">
             <div class="order-card__header">
@@ -17,6 +18,9 @@
             </div>
         </div>
         {{/each}}
+        {{else}}
+            <div class="no-orders-message">У вас ещё нет заказов</div>
+        {{/if}}
     </div>
     <div class="order-wrapper"></div>
 </div>
