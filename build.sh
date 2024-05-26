@@ -2,5 +2,5 @@
 npm i
 npm run prebuild
 cp -r ./dist /root/frontend/
-sudo docker restart nginx
+docker restart nginx
 echo "====== DONE ======"
