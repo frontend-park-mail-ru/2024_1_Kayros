@@ -1,15 +1,42 @@
 @import "../../constants.scss";
+@import "../../variables";
+
+.orders-title {
+	font-size: 30px;
+	font-weight: 600;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
 
 .orders-page {
 	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 20px;
+}
+
+.orders-list {
+	display: flex;
 	flex-direction: column;
-	align-items: center;
-	margin: 20px;
+	align-items: flex-start;
+	width: 300px;
+
+	@media (max-width: $md) {
+		width: 100%;
+	}
+}
+
+.order-wrapper {
+	flex: 1;
+
+	@media (max-width: $md) {
+		display: none;
+	}
 }
 
 .order-card {
+	box-sizing: border-box;
 	width: 100%;
-	max-width: 400px;
 	border: 1px solid var(--order-card-border);
 	border-radius: 15px;
 	padding: 15px;

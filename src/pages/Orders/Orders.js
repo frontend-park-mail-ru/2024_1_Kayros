@@ -1,7 +1,9 @@
 import Button from '../../components/Button';
+import {ORDER_STATUSES} from '../../constants/index.js';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
 import urls from '../../routes/urls';
+import Order from '../Order/index.js';
 import template from './Orders.hbs';
 import './Orders.scss';
 
@@ -20,6 +22,18 @@ class Orders {
 	}
 
 	/**
+	 * Создает блок с заказом на странице Orders.
+	 * @param {number} id - id заказа
+	 */
+	renderOrder(id) {
+		const orderContainer = this.#parent.querySelector('.order-wrapper');
+
+		orderContainer.innerHTML = '';
+
+		new Order(orderContainer, {id , className: 'order-in-orders'}).render();
+	}
+
+	/**
 	 * Рендер страницы.
 	 */
 	async render() {
@@ -30,7 +44,8 @@ class Orders {
 		// Форматирование данных
 		const formattedData = data.map(order => ({
 			...order,
-			status_class: this.getStatusClass(order.status),
+			status: ORDER_STATUSES[order.status],
+			status_class: order.status,
 			formattedTime: this.formatDate(order.time)
 		}));
 
@@ -45,7 +60,11 @@ class Orders {
 				style: 'clear-back-mobile',
 				content: '',
 				onClick: () => {
-					router.navigate(`${urls.orders}/${order.id}`);
+					if (window.innerWidth > 900) {
+						this.renderOrder(order.id);
+					} else {
+						router.navigate(`${urls.orders}/${order.id}`);
+					}
 				},
 			}).render();
 		});
