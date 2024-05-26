@@ -1,6 +1,6 @@
 #!/bin/bash
 npm i
 npm run prebuild
-cp -r ./dist /home/kayros/frontend/
-docker restart nginx
+sudo cp -r ./dist /home/kayros/frontend/
+sudo docker restart nginx
 echo "====== DONE ======"
