@@ -44,7 +44,7 @@
 
 ## Деплой
 
-[Сайт](https://resto-go.ru)
+[Сайт](https://resto-go.online)
 
 ## Установка
 
