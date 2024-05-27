@@ -286,74 +286,74 @@ class Restaurants {
 				const restaurantCard = new RestaurantCard(slickTrackRecomendations, item);
 				restaurantCard.render();
 			});
+		}
 
-			const content = document.querySelector('.content');
+		const content = document.querySelector('.content');
 
-			await this.getOrdersData(content);
+		await this.getOrdersData(content);
 
-			await this.initCategories();
+		await this.initCategories();
 
-			const allCategoriesButton = document.querySelector('.all-categories-button');
-			const button = new Button(allCategoriesButton, {
-				id: 'all-categories-button',
-				onClick: () => {
-					this.updateButtonStyles('all-categories-button');
+		const allCategoriesButton = document.querySelector('.all-categories-button');
+		const button = new Button(allCategoriesButton, {
+			id: 'all-categories-button',
+			onClick: () => {
+				this.updateButtonStyles('all-categories-button');
+			},
+			content: 'Все',
+			additionalClass: 'category-button',
+		});
+
+		button.render();
+
+		if (allCategoriesButton) {
+			allCategoriesButton.addEventListener('click', this.getData.bind(this));
+		}
+
+		if (window.innerWidth < 768) {
+			const urlSearchParams = new URLSearchParams(window.location.search);
+			const searchValue = urlSearchParams.get('search') || '';
+
+			this.searchValue = searchValue;
+
+			const restaurantsContainer = document.querySelector('.restaurants');
+
+			const searchInput = new Input(restaurantsContainer, {
+				button: 'Найти',
+				value: searchValue,
+				id: 'restaurants-search-input',
+				position: 'afterbegin',
+				placeholder: 'Ресторан, категория',
+				onChange: (event) => {
+					this.searchValue = event.target.value;
 				},
-				content: 'Все',
-				additionalClass: 'category-button',
+				buttonOnClick: this.clickOnSearch.bind(this),
 			});
 
-			button.render();
+			searchInput.render();
 
-			if (allCategoriesButton) {
-				allCategoriesButton.addEventListener('click', this.getData.bind(this));
+			window.addEventListener('popstate', this.changeSearchInputValue.bind(this));
+		}
+
+		const restaurants = document.querySelector('.restaurants__cards');
+		const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });
+		loader.render();
+
+		await this.getData();
+
+		this.fetchInterval = setInterval(() => {
+			const user = localStorageHelper.getItem('user-info');
+
+			if (window.location.pathname !== urls.restaurants || !user) {
+				clearInterval(this.fetchInterval);
+				return;
 			}
 
-			if (window.innerWidth < 768) {
-				const urlSearchParams = new URLSearchParams(window.location.search);
-				const searchValue = urlSearchParams.get('search') || '';
+			api.getOrdersData(this.renderOrders.bind(this));
+		}, 5000);
 
-				this.searchValue = searchValue;
-
-				const restaurantsContainer = document.querySelector('.restaurants');
-
-				const searchInput = new Input(restaurantsContainer, {
-					button: 'Найти',
-					value: searchValue,
-					id: 'restaurants-search-input',
-					position: 'afterbegin',
-					placeholder: 'Ресторан, категория',
-					onChange: (event) => {
-						this.searchValue = event.target.value;
-					},
-					buttonOnClick: this.clickOnSearch.bind(this),
-				});
-
-				searchInput.render();
-
-				window.addEventListener('popstate', this.changeSearchInputValue.bind(this));
-			}
-
-			const restaurants = document.querySelector('.restaurants__cards');
-			const loader = new Loader(restaurants, { id: 'content-loader', size: 'xl' });
-			loader.render();
-
-			await this.getData();
-
-			this.fetchInterval = setInterval(() => {
-				const user = localStorageHelper.getItem('user-info');
-
-				if (window.location.pathname !== urls.restaurants || !user) {
-					clearInterval(this.fetchInterval);
-					return;
-				}
-
-				api.getOrdersData(this.renderOrders.bind(this));
-			}, 5000);
-
-			if (window.innerWidth < 768) {
-				await this.checkCartDataAndRenderButton();
-			}
+		if (window.innerWidth < 768) {
+			await this.checkCartDataAndRenderButton();
 		}
 	}
 
