@@ -158,7 +158,7 @@ class PayForm {
 
 		const checkoutButton = new Button(checkoutButtonBlock, {
 			id: 'pay-form-button',
-			content: 'Оплатить',
+			content: 'Заказать',
 			disabled: !this.data?.sum || !this.entrance || !this.floor || !this.apart,
 			withLoader: true,
 			onClick: () => {
