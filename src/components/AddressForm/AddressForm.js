@@ -51,7 +51,7 @@ class AddressForm {
 		const modal = new Modal({
 			content: template({addressTitle}),
 			className: 'address-modal',
-			url: urls.address,
+			url: this.isUserAddress  ? '' : urls.address,
 			initiatorId: 'address-button',
 		});
 
