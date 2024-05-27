@@ -107,11 +107,12 @@
 	.category-bar {
 		display: flex;
 		flex-direction: row;
-		padding: 20px 35px;
+		padding: 20px 0;
 		gap: 10px;
 		width: 90%;
 		overflow-x: scroll;
 		z-index: 100;
+    margin-left: 20px;
 
 		&::-webkit-scrollbar {
 			width: 4px;
