@@ -16,6 +16,8 @@
 		color: var(--brand);
 		font-size: 18px;
 		transition: all 0.5s;
+    min-height: 700px;
+    margin-top: 20px;
 
 		@media (max-width: $xl) {
 			grid-template-columns: repeat(3, 1fr);
@@ -34,7 +36,6 @@
 		color: var(--brand);
 		font-size: 18px;
 		transition: all 0.5s;
-		overflow-x: auto;
 
 		.restaurant-card {
 			padding: 0;

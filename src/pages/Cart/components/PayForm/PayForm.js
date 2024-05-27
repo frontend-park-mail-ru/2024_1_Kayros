@@ -1,11 +1,13 @@
 import Button from '../../../../components/Button';
 import Input from '../../../../components/Input/Input';
+import SlickSlider from '../../../../components/SlickSlider/SlickSlider';
 import { FIELDS_ADRESS_FORM } from '../../../../constants';
 import { validateApartNumber, validateEntranceNumber, validateFloorNumber } from '../../../../helpers/validation';
 import api from '../../../../modules/api';
 import { router } from '../../../../modules/router';
 import urls from '../../../../routes/urls';
 import { localStorageHelper } from '../../../../utils';
+import Coupon from '../Coupon/Coupon';
 import template from './PayForm.hbs';
 import './PayForm.scss';
 
@@ -150,6 +152,10 @@ class PayForm {
 					const form = this.#parent.querySelector('.pay-form');
 					form.remove();
 					this.render();
+
+					const cart = document.getElementById('cart-button');
+					const sumBlock = cart.querySelector('span');
+					sumBlock.innerText = `${this.data.new_sum} ₽`;
 				}
 			},
 			button: 'Применить',

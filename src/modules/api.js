@@ -576,7 +576,7 @@ class Api {
 	 * @returns {Promise<object>} - результат запроса
 	 */
 	async getRecomendations() {
-		const data = await ajax.get(`${this.#url}/recomendation`);
+		const data = await ajax.get(`${this.#url}/recomendation`, { showNotifyError: false });
 		return data?.payload;
 	}
 }

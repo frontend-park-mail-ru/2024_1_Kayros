@@ -5,7 +5,15 @@
 	width: fit-content;
 	min-width: calc(100% - 32px);
 
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
 	&:active {
 		cursor: grabbing;
+	}
+
+	.restaurant-card {
+		min-height: 200px !important;
 	}
 }

@@ -81,6 +81,16 @@
 		pointer-events: none;
 	}
 
+	&__new-sum {
+		& ~ div {
+			transform: scale(0.7);
+			transform-origin: right;
+			color: #9b9b9b;
+			text-decoration: line-through;
+			margin-top: -5px;
+		}
+	}
+
 	#pay-form-button {
 		height: 36px;
 		margin-top: auto;
@@ -123,7 +133,7 @@
 
 		&__sum {
 			font-weight: 600;
-			font-size: 18px;
+			font-size: 20px;
 		}
 
 		&__methods {
@@ -138,4 +148,11 @@
 
 #payform-promocode {
 	background: transparent;
+}
+
+.pay-form__coupons {
+	display: flex;
+  position: relative;
+	gap: 30px;
+	width: fit-content;
 }
