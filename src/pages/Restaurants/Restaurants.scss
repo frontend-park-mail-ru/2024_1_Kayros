@@ -1,5 +1,9 @@
 @import "../../variables";
 
+.coupons-slider {
+	overflow-x: auto;
+}
+
 .restaurants {
 	&__title {
 		font-size: 28px;
