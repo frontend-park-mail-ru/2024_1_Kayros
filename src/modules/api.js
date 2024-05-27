@@ -38,7 +38,9 @@ class Api {
 		}
 
 		const data = await ajax.get(url);
-		callback(data);
+
+		const payload = data?.payload;
+		callback(payload);
 	}
 
 	/**
@@ -58,7 +60,9 @@ class Api {
 	async getOrdersData(callback) {
 		const data = await ajax.get(`${this.#url}/orders/current`, { showNotifyError: false });
 
-		callback(data);
+		const payload = data?.payload;
+
+		callback(payload);
 	}
 
 	/**
@@ -408,6 +412,44 @@ class Api {
 	}
 
 	/**
+	 * Получение списка промокодов
+	 */
+	async getPromocodes() {
+		const data = await ajax.get(`${this.#url}/promocode`);
+
+		const payload = data?.payload;
+
+		return payload;
+	}
+
+	/**
+	 * Метод для добавления промокода
+	 * @param {object} body - объект
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async sendPromcode(body) {
+		const { data, error } = await ajax.post(`${this.#url}/promocode`, body);
+
+		if (!data?.detail && !error) {
+			Notification.open({
+				duration: 3,
+				title: 'Промокод применен!',
+				description: 'Успешных покупок',
+				type: 'success',
+			});
+
+			return data;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: 'Не удалось применить промокод',
+			description: error || data.detail || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+	}
+
+	/**
 	 * Метод для удаления блюда из корзины
 	 * @param {number} foodId - id блюда
 	 * @returns {Promise<boolean>} - результат запроса
@@ -503,7 +545,9 @@ class Api {
 	async getReviewsInfo(id, callback) {
 		let data = await ajax.get(`${this.#url}/restaurants/${id}/comments`);
 
-		callback(data);
+		const payload = data?.payload;
+
+		callback(payload);
 	}
 
 	/**
@@ -512,7 +556,8 @@ class Api {
 	 */
 	async getCategories(callback) {
 		const data = await ajax.get(`${this.#url}/category`);
-		callback(data);
+		const payload = data?.payload;
+		callback(payload);
 	}
 }
 
