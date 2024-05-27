@@ -19,7 +19,6 @@ import './Restaurants.scss';
  */
 class Restaurants {
 	#parent;
-
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
@@ -170,7 +169,7 @@ class Restaurants {
 	async initCategories() {
 		api.getCategories((categories) => {
 			const categoryBar = document.querySelector('.category-bar');
-			categories.forEach((category) => {
+			categories?.forEach((category) => {
 				const categoryDiv = document.createElement('div');
 				categoryDiv.className = `category category${category.id}`;
 				categoryBar.appendChild(categoryDiv);
@@ -322,6 +321,31 @@ class Restaurants {
 
 			api.getOrdersData(this.renderOrders.bind(this));
 		}, 5000);
+
+		if (window.innerWidth < 768) {
+			await this.checkCartDataAndRenderButton();
+		}
+	}
+
+	/**
+	 *
+	 */
+	checkCartDataAndRenderButton() {
+		api.getCartInfo((cartData) => {
+			if (cartData) {
+				const cartBlockMobile = document.querySelector('.cart__mobile');
+
+				const cartButtonMobile = new Button(cartBlockMobile, {
+					id: 'cart-button__restaurants',
+					content: '',
+					icon: 'cart',
+					style: 'primary',
+					onClick: () => router.navigate(urls.cart),
+				});
+
+				cartButtonMobile.render();
+			}
+		});
 	}
 }
 

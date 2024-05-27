@@ -25,14 +25,16 @@ class Order {
 	 * @param {Element} parent - родительский элемент
 	 * @param {object} params - параметры
 	 * @param {number} params.id - id заказа
+	 * @param {string} params.className - className заказа
 	 */
-	constructor(parent, { id }) {
+	constructor(parent, { id, className = '' }) {
 		this.#parent = parent;
 		this.id = id;
 		this.order = {};
 		this.fetchInterval = '';
 		this.rating = 0;
 		this.text = '';
+		this.className = className;
 	}
 
 	/**
@@ -165,7 +167,7 @@ class Order {
 
 		this.order.status = ORDER_STATUSES[this.order.status];
 
-		this.#parent.insertAdjacentHTML('beforeend', template(this.order));
+		this.#parent.insertAdjacentHTML('beforeend', template({ ...this.order, className: this.className }));
 
 		if (!this.order.commented) {
 			const reviewContainer = this.#parent.querySelector('.order__review');

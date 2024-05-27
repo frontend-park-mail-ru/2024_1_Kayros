@@ -23,8 +23,8 @@ class Ajax {
 			const response = await fetch(`${url}${window.location.search}`, {
 				headers: xsrf
 					? {
-							'XCSRF-Token': token || '',
-						}
+						'XCSRF-Token': token || '',
+					}
 					: {},
 			});
 

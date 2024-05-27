@@ -178,3 +178,26 @@
 		}
 	}
 }
+
+.order-in-orders {
+	margin-top: 0;
+	background: var(--layout-bg-color);
+	border-radius: 20px;
+	padding: 8px 30px;
+
+	.order__button-container {
+		display: none;
+	}
+
+	.order__details {
+		background: var(--order-details-bg-mobile);
+	}
+
+	.order__info {
+		padding-bottom: 0;
+	}
+
+	.dish-card--complete {
+		background: var(--order-details-bg-mobile);
+	}
+}

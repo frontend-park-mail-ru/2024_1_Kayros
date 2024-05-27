@@ -6,6 +6,7 @@ import { OPEN_PROFILE_SLIDE_OPTIONS, CLOSE_PROFILE_SLIDE_OPTIONS } from './const
 
 const dropdownItems = [
 	{ id: 'profile-link', name: 'Профиль', exit: false, url: urls.profile },
+	{ id: 'orders-link', name: 'Заказы', exit: false, url: urls.orders },
 	{ id: 'cart-link', name: 'Корзина', exit: false, url: urls.cart },
 	{ id: 'exit-link', name: 'Выйти', exit: true, url: urls.restaurants },
 ];
@@ -110,7 +111,11 @@ class ProfileDropdown {
 				if (item.exit) {
 					api.signout(this.handleExit.bind(this));
 					const orders = document.querySelector('.orders-slider');
-					orders.innerHTML = '';
+
+					if (orders) {
+						orders.innerHTML = '';
+					}
+
 					this.close(dropdown);
 					return;
 				}

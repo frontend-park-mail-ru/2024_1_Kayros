@@ -108,6 +108,7 @@ class PayForm {
 				disabled: field.name === 'main',
 				buttonOnClick: async () => {
 					const data = await api.sendPromcode({ code: this[field.name] });
+
 					if (data.code_id) {
 						await this.getData();
 						const form = this.#parent.querySelector('.pay-form');
@@ -143,6 +144,7 @@ class PayForm {
 			},
 			buttonOnClick: async () => {
 				const data = await api.sendPromcode({ code: this['promocode'] });
+
 				if (data.code_id) {
 					await this.getData();
 					const form = this.#parent.querySelector('.pay-form');

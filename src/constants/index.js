@@ -187,3 +187,38 @@ export const YANDEX_API_GEOCODER = '7e5782d5-d181-428b-a46d-5dcff8caa54d';
 export const MOBILE_BREAKPOINT = 768;
 
 export const TABLET_BREAKPOINT = 1024;
+
+export const mockOrdersData = [
+	{
+		id: 5,
+		user_id: 3,
+		status: 'created',
+		time: '2024-05-23T06:03:47Z',
+		restaurant_name: 'Горныч',
+		sum: 1040,
+	},
+	{
+		id: 6,
+		user_id: 3,
+		status: 'cooking',
+		time: '2024-01-23T06:06:34Z',
+		restaurant_name: 'Каменыч',
+		sum: 1041,
+	},
+	{
+		id: 7,
+		user_id: 3,
+		status: 'on-the-way',
+		time: '2024-01-23T06:06:34Z',
+		restaurant_name: 'Повидлыч',
+		sum: 1041,
+	},
+	{
+		id: 8,
+		user_id: 3,
+		status: 'delivered',
+		time: '2024-01-23T06:06:34Z',
+		restaurant_name: 'КимЧеныныч',
+		sum: 1041,
+	},
+];

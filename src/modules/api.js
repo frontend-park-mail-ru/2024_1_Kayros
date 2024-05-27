@@ -1,5 +1,11 @@
 import { Notification } from 'resto-ui';
-import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SAGESTS } from '../constants';
+import {
+	ERROR_MESSAGES,
+	SUCCESS_MESSAGES,
+	YANDEX_API_GEOCODER,
+	YANDEX_API_SAGESTS,
+	mockOrdersData,
+} from '../constants';
 import ajax from './ajax';
 
 /**
@@ -65,6 +71,20 @@ class Api {
 		const payload = data?.payload;
 
 		callback(payload);
+	}
+
+	/**
+	 * Метод для получения списка прошлых заказов
+	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 */
+	async getUserOrdersArchive(callback) {
+		const data = await ajax.get(`${this.#url}/orders/archive`);
+
+		if (!data) {
+			callback(mockOrdersData);
+		} else {
+			callback(data);
+		}
 	}
 
 	/**
@@ -415,13 +435,12 @@ class Api {
 
 	/**
 	 * Получение списка промокодов
+	 * @returns {Promise<object>} - результат запроса
 	 */
 	async getPromocodes() {
 		const data = await ajax.get(`${this.#url}/promocode`);
 
-		const payload = data?.payload;
-
-		return payload;
+		return data?.payload;
 	}
 
 	/**
@@ -564,11 +583,11 @@ class Api {
 
 	/**
 	 * Рекомендации
+	 * @returns {Promise<object>} - результат запроса
 	 */
 	async getRecomendations() {
 		const data = await ajax.get(`${this.#url}/recomendation`);
-		const payload = data?.payload;
-		return payload;
+		return data?.payload;
 	}
 }
 
