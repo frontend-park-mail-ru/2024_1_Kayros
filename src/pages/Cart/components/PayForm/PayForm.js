@@ -103,7 +103,6 @@ class PayForm {
 				style: field.style,
 				value: field.name === 'main' ? this.main : this[field.name],
 				onChange: (event) => {
-					console.log('event');
 					this[field.name] = event.target.value;
 				},
 				disabled: field.name === 'main',
