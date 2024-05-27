@@ -19,13 +19,17 @@ class AddressSagests {
 	 * @param {object} params - параметры компонента
 	 * @param {void} params.closeModal - метод для закрытия модалки
 	 * @param {void} params.goToPoint - переход по точке
+	 * @param {boolean} params.isUserAddress - чей адрес: юзера или заказов
+	 * @param {string} params.userAddress - адрес юзера
 	 */
-	constructor(parent, { closeModal, goToPoint }) {
+	constructor(parent, { closeModal, goToPoint, isUserAddress = false, userAddress = '' }) {
 		this.#parent = parent;
 		this.closeModal = closeModal;
 		this.address = '';
 		this.goToPoint = goToPoint;
 		this.user = '';
+		this.isUserAddress = isUserAddress;
+		this.userAddress = userAddress;
 	}
 
 	/**
@@ -46,18 +50,25 @@ class AddressSagests {
 	async setAddress() {
 		const searchInput = this.#parent.querySelector('#address-search-input');
 
-		this.address = searchInput.value.split(' · ')[1] || searchInput.value;
+		if (this.isUserAddress) {
+			this.address = this.userAddress;
+		} else {
+			this.address = searchInput.value.split(' · ')[1] || searchInput.value;
 
-		setCookieIfNotExist('unauth_id', crypto.randomUUID());
+			setCookieIfNotExist('unauth_id', crypto.randomUUID());
+		}
 
-		await api.updateAddressSagests({ address: this.address }, this.handleAddressChange.bind(this));
-		const cartAddress = document.querySelector('#main-address');
-		const cartContainer = document.querySelector('#main-address-container');
+		await api.updateAddressSagests({ address: this.address }, this.isUserAddress ? () => {} : this.handleAddressChange.bind(this), {user_address: this.isUserAddress});
 
-		if (cartAddress) {
-			cartAddress.value = this.address;
-			const holder = cartContainer.querySelector('.input__label-holder');
-			holder.style.width = 20 * 8 + 'px';
+		if (!this.isUserAddress) {
+			const cartAddress = document.querySelector('#main-address');
+			const cartContainer = document.querySelector('#main-address-container');
+
+			if (cartAddress) {
+				cartAddress.value = this.address;
+				const holder = cartContainer.querySelector('.input__label-holder');
+				holder.style.width = 20 * 8 + 'px';
+			}
 		}
 
 		this.closeModal();

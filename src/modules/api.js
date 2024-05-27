@@ -105,10 +105,11 @@ class Api {
 
 	/**
 	 * Метод для получения информации о пользователе
+	 * @param {object} queryParams - query параметры
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
-	async getUserAddress(callback) {
-		const data = await ajax.get(`${this.#url}/user/address`, { showNotifyError: false });
+	async getUserAddress(callback, queryParams = {}) {
+		const data = await ajax.get(`${this.#url}/user/address`, { queryParams, showNotifyError: false });
 
 		callback(data);
 	}
@@ -348,11 +349,12 @@ class Api {
 	 *  Метод для обновления адреса
 	 * @param {object} body - объект
 	 * @param {object} body.address - основной
+	 * @param {object} queryParams - query параметры
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 * @returns {Promise<object>} - результат запроса
 	 */
-	async updateAddressSagests(body, callback = () => {}) {
-		const { data, error } = await ajax.put(`${this.#url}/user/address`, body);
+	async updateAddressSagests(body, callback = () => {}, queryParams = {}) {
+		const { data, error } = await ajax.put(`${this.#url}/user/address`, body, {queryParams});
 
 		if (data && !error) {
 			Notification.open({
@@ -583,6 +585,27 @@ class Api {
 	async getRecomendations() {
 		const data = await ajax.get(`${this.#url}/recomendation`);
 		return data?.payload;
+	}
+
+	/**
+	 * Выбор адреса как основного
+	 * @returns {Promise<object>} - результат запроса
+	 */
+	async chooseAddress() {
+		const { data, error } =  await ajax.put(`${this.#url}/user/unauth_address`);
+
+		if (!error) {
+			return true;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.ADDRESS_CHOOSE,
+			description: data?.detail || error  || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return false;
 	}
 }
 

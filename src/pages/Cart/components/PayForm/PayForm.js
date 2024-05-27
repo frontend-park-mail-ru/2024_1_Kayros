@@ -105,7 +105,6 @@ class PayForm {
 				onChange: (event) => {
 					this[field.name] = event.target.value;
 				},
-				disabled: field.name === 'main',
 				buttonOnClick: async () => {
 					const data = await api.sendPromcode({ code: this[field.name] });
 

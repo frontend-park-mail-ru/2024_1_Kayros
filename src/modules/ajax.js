@@ -12,15 +12,18 @@ class Ajax {
 	 * @param {object} params - параметры
 	 * @param {boolean} params.showNotifyError - показывать ошибку
 	 * @param {boolean} params.xsrf - отправлять ли заголовок
+	 * @param {object} params.queryParams - query параметры
 	 * @returns {object} - полученные данные в виде json объекта
 	 */
-	async get(url, { showNotifyError = true, xsrf = true } = {}) {
+	async get(url, { queryParams = {}, showNotifyError = true, xsrf = true } = {}) {
 		let data, responseError, result;
 
 		const token = getCookie('csrf_token');
+		let preparedQueryParams = new URLSearchParams(queryParams).toString();
+		preparedQueryParams = preparedQueryParams ? `?${preparedQueryParams}` : '';
 
 		try {
-			const response = await fetch(`${url}${window.location.search}`, {
+			const response = await fetch(`${url}${preparedQueryParams || window.location.search}`, {
 				headers: xsrf
 					? {
 						'XCSRF-Token': token || '',
@@ -92,15 +95,19 @@ class Ajax {
 	 * @param {void} body - объект, посылаемый в запросе
 	 * @param {object} params - доп параметры
 	 * @param {boolean} params.formData - является ли объект formData
+	 * @param {boolean} params.queryParams - query параметры запроса
 	 * @returns {object} - объект, содержащий полученные данные и ошибку, если произошла
 	 */
-	async put(url, body = {}, { formData = false } = {}) {
+	async put(url, body = {}, { formData = false, queryParams = {} } = {}) {
 		let data, responseError, result;
+
+		let preparedQueryParams = new URLSearchParams(queryParams).toString();
+		preparedQueryParams = preparedQueryParams ? `?${preparedQueryParams}` : '';
 
 		const token = getCookie('csrf_token');
 
 		try {
-			const response = await fetch(url, {
+			const response = await fetch(`${url}${preparedQueryParams}`, {
 				method: 'PUT',
 				body: formData ? body : JSON.stringify(body),
 				headers: {

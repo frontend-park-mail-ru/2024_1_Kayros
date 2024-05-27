@@ -11,7 +11,26 @@
 		width: 200px;
 	}
 
+	&__address {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		width: 340px;
+		background: var(--profile-bg-color);
+
+		&-title {
+			font-size: 24px;
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+
+		& #address-add-button {
+			width: fit-content;
+		}
+	}
+
 	&__info {
+		margin-top: 50px;
 		display: flex;
 		flex-direction: column;
 		gap: 14px;

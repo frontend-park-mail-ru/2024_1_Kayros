@@ -1,3 +1,4 @@
+import AddressForm from "../../components/AddressForm/index.js";
 import Button from '../../components/Button/Button';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import Input from '../../components/Input';
@@ -11,9 +12,11 @@ import {
 	validateMatchNewPassword,
 } from '../../helpers/validation.js';
 import api from '../../modules/api';
-import { getPhoneMask } from '../../utils';
+import {getCookie, getPhoneMask} from '../../utils';
 import template from './Profile.hbs';
 import './Profile.scss';
+import {router} from "../../modules/router.js";
+import Header from "../../components/Header/index.js";
 
 /**
  * Страница профиля
@@ -27,6 +30,7 @@ class Profile {
 	 */
 	constructor(parent) {
 		this.#parent = parent;
+		this.userAddress = '';
 		this.file = '';
 		this.name = '';
 		this.email = '';
@@ -96,6 +100,62 @@ class Profile {
 		});
 	}
 
+	changeAddress() {
+		new AddressForm({isUserAddress: true, userAddress: this.userAddress}).render();
+	}
+
+	renderAddress(data) {
+		const profileAddress = this.#parent.querySelector('.profile__address');
+
+		this.userAddress = data?.address;
+
+		const unauthId = getCookie('unauth_id');
+
+		if (this.userAddress) {
+			new Input(profileAddress, {
+				id: 'user-address',
+				style: 'dynamic',
+				placeholder: 'Улица, номер дома',
+				value: this.userAddress,
+				onChange: (event) => {
+					this.userAddress = event.target.value;
+				},
+				buttonOnClick: async () => {
+					this.changeAddress();
+				},
+				button: 'Изменить',
+			}).render();
+		} else {
+			new Button(profileAddress, {
+				id: 'address-add-button',
+				onClick: async () => {
+					this.changeAddress();
+				},
+				icon: 'plus',
+				content: 'Добавить адрес',
+				style: 'default',
+			}).render();
+		}
+
+		if (this.userAddress && unauthId) {
+			new Button(profileAddress, {
+				id: 'address-choose-button',
+				onClick: async () => {
+					const isOk = await api.chooseAddress();
+
+					if (isOk) {
+						const header = document.querySelector('.header');
+						header.remove();
+						const newHeader = new Header({ navigate: router.navigate.bind(router) });
+						newHeader.render();
+					}
+				},
+				content: 'Выбрать',
+				style: 'primary',
+			}).render();
+		}
+	}
+
 	/**
 	 * Отрисовка профиля
 	 * @param {Array} data - информация о пользователе
@@ -105,8 +165,6 @@ class Profile {
 		this.name = data.name;
 		this.email = data.email;
 		this.phone = data.phone;
-
-		this.#parent.innerHTML = template();
 
 		const profileImage = this.#parent.querySelector('.profile__image');
 		const fileUpload = new FileUpload(profileImage, {
@@ -283,11 +341,18 @@ class Profile {
 		api.getUserInfo(this.renderData.bind(this));
 	}
 
+	getUserAddress() {
+		api.getUserAddress(this.renderAddress.bind(this), {user_address: true});
+	}
+
 	/**
 	 * Рендеринг страницы
 	 */
 	render() {
+		this.#parent.innerHTML = template();
+
 		this.getData();
+		this.getUserAddress();
 	}
 }
 
