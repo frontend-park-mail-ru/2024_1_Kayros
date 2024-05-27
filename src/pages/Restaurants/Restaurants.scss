@@ -14,6 +14,11 @@
 		color: var(--brand);
 		font-size: 18px;
 		transition: all 0.5s;
+		overflow-x: auto;
+
+		.restaurant-card__subtitle {
+			display: none;
+		}
 
 		&.slick-slider {
 			display: block;
