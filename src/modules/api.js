@@ -1,10 +1,5 @@
 import { Notification } from 'resto-ui';
-import {
-	ERROR_MESSAGES,
-	SUCCESS_MESSAGES,
-	YANDEX_API_GEOCODER,
-	YANDEX_API_SAGESTS,
-} from '../constants';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES, YANDEX_API_GEOCODER, YANDEX_API_SAGESTS } from '../constants';
 import ajax from './ajax';
 
 /**
