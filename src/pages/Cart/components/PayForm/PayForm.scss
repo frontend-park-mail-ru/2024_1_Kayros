@@ -73,17 +73,12 @@
 
 	&__methods-item {
 		display: flex;
-		align-items: center;
 		gap: 12px;
-		border-radius: var(--layout-border-radius);
+		border-radius: var(--input-border-radius);
 		border: 1px solid var(--cart-pay-method-color);
 		padding: 8px 16px;
-		transition: 0.3s;
-
-		&:hover {
-			border: 1px solid var(--cart-pay-method-color-hover);
-			background: var(--cart-pay-method-color-hover);
-		}
+		max-width: 150px;
+		pointer-events: none;
 	}
 
 	#pay-form-button {
