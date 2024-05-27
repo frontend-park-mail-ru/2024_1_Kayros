@@ -5,10 +5,12 @@
 		font-size: 28px;
 		font-weight: 600;
 		margin-left: 16px;
-		margin-top: 16px;
+		margin-top: 20px;
+    margin-bottom: 16px;
 	}
 
-	&__cards {
+	&__cards,
+	&__recomendations {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		justify-items: center;
