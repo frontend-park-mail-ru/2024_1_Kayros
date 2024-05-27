@@ -50,7 +50,9 @@ class Api {
 	async getSearchRestaurants(callback) {
 		const data = await ajax.get(`${this.#url}/search`);
 
-		callback(data);
+		const payload = data?.payload;
+
+		callback(payload);
 	}
 
 	/**
@@ -558,6 +560,15 @@ class Api {
 		const data = await ajax.get(`${this.#url}/category`);
 		const payload = data?.payload;
 		callback(payload);
+	}
+
+	/**
+	 * Рекомендации
+	 */
+	async getRecomendations() {
+		const data = await ajax.get(`${this.#url}/recomendation`);
+		const payload = data?.payload;
+		return payload;
 	}
 }
 
