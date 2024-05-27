@@ -51,18 +51,18 @@ class Orders {
 		});
 
 		// Форматирование данных
-		const formattedData = data.map(order => ({
+		const formattedData = data.map((order) => ({
 			...order,
 			status: ORDER_STATUSES[order.status],
 			status_class: order.status,
-			formattedTime: this.formatDate(order.time)
+			formattedTime: this.formatDate(order.time),
 		}));
 
 		const html = template({ data: formattedData });
 		this.#parent.innerHTML = html;
-        
+
 		// Создание кнопок для каждой карточки заказа
-		formattedData.forEach(order => {
+		formattedData.forEach((order) => {
 			new Button(document.querySelector(`#view-order-${order.id}`), {
 				id: `view-order-button-${order.id}`,
 				icon: 'right-arrow-full',
