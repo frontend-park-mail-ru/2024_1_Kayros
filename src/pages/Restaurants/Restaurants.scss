@@ -11,23 +11,46 @@
 
 	&__cards,
 	&__recomendations {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		justify-items: center;
 		color: var(--brand);
 		font-size: 18px;
 		transition: all 0.5s;
 
+		&.slick-slider {
+			display: block;
+		}
+
+		.slick-list {
+			overflow: hidden;
+		}
+
+		.slick-track {
+			display: flex;
+			align-items: center;
+		}
+
+		.slick-slide {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			outline: none;
+		}
+
 		@media (max-width: $xl) {
-			grid-template-columns: repeat(3, 1fr);
+			.slick-slide {
+				width: calc(100% / 3) !important;
+			}
 		}
 
 		@media (max-width: $md) {
-			grid-template-columns: repeat(2, 1fr);
+			.slick-slide {
+				width: calc(100% / 2) !important;
+			}
 		}
 
 		@media (max-width: $xsm) {
-			grid-template-columns: repeat(1, 1fr);
+			.slick-slide {
+				width: 100% !important;
+			}
 		}
 	}
 
@@ -68,7 +91,6 @@
 		}
 
 		@media screen and (max-width: $sm) {
-			// padding: 20px 10px;
 			padding: 20px 19px;
 		}
 	}

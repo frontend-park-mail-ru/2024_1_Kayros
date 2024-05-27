@@ -253,8 +253,14 @@ class Restaurants {
 
 		recomendations.insertAdjacentElement('beforebegin', div);
 
+		// Добавляем SlickSlider для рекомендаций
+		const slickSliderRecomendations = new SlickSlider(recomendations);
+		slickSliderRecomendations.render();
+
+		const slickTrackRecomendations = recomendations.querySelector('.slick-track');
+
 		recs?.forEach((item) => {
-			const restaurantCard = new RestaurantCard(recomendations, item);
+			const restaurantCard = new RestaurantCard(slickTrackRecomendations, item);
 			restaurantCard.render();
 		});
 
