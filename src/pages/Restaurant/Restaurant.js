@@ -192,16 +192,19 @@ class Restaurant {
 		const observerCallback = (entries) => {
 			entries.forEach((entry) => {
 				const id = entry.target.id.split('-')[1];
-
-				if (entry.isIntersecting && this.activeCategory !== Number(id)) {
-					this.setActiveCategory(id);
+		
+				// Проверяем видимость категории по верхней и нижней границе
+				const isVisible = entry.intersectionRatio > 0.5 || (entry.boundingClientRect.bottom > window.innerHeight && entry.isIntersecting);
+		
+				if (isVisible && this.activeCategory !== Number(id)) {
+					this.setActiveCategory(Number(id));
 				}
 			});
 		};
 
 		const categoriesObserver = new IntersectionObserver(observerCallback, {
 			rootMargin: '-100px 0px -600px 0px',
-			threshold: 0,
+			threshold: [0.5, 1.0],
 		});
 
 		categories.forEach((category) => categoriesObserver.observe(category));
