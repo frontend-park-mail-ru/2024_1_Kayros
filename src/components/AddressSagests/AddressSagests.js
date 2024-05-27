@@ -197,6 +197,8 @@ class AddressSagests {
 
 		dropdown.onclick = (event) => {
 			event.stopPropagation();
+			dropdown.classList.remove('dropdown-open');
+			this.open = false;
 		};
 
 		window.onclick = () => {

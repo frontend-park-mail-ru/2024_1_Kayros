@@ -47,6 +47,10 @@ class Restaurants {
 
 		restaurants.innerHTML = '';
 
+		const div = document.createElement('div');
+		div.innerText = 'Все рестораны';
+		div.className = 'restaurants__title';
+
 		items.forEach((item) => {
 			const restaurantCard = new RestaurantCard(restaurants, item);
 			restaurantCard.render();
@@ -238,6 +242,21 @@ class Restaurants {
 			const header = new Header();
 			header.render();
 		}
+
+		const recs = await api.getRecomendations();
+
+		const div = document.createElement('div');
+		div.innerText = 'Рекомендации';
+		div.className = 'restaurants__title';
+
+		const recomendations = document.querySelector('.restaurants__recomendations');
+
+		recomendations.insertAdjacentElement('beforebegin', div);
+
+		recs.forEach((item) => {
+			const restaurantCard = new RestaurantCard(recomendations, item);
+			restaurantCard.render();
+		});
 
 		const content = document.querySelector('.content');
 

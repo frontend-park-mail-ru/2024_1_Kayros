@@ -71,6 +71,15 @@ class PayForm {
 	}
 
 	/**
+	 * Получение информации о корзине
+	 */
+	async getData() {
+		await api.getCartInfo((data) => {
+			this.data = data;
+		});
+	}
+
+	/**
 	 * Рендер страницы
 	 */
 	async render() {
@@ -97,6 +106,17 @@ class PayForm {
 					this[field.name] = event.target.value;
 				},
 				disabled: field.name === 'main',
+				buttonOnClick: async () => {
+					const data = await api.sendPromcode({ code: this[field.name] });
+
+					if (data.code_id) {
+						await this.getData();
+						const form = this.#parent.querySelector('.pay-form');
+						form.remove();
+						this.render();
+					}
+				},
+				button: field.name === 'promocode' ? 'Применить' : '',
 			}).render();
 
 			if (field.id !== 'main-address') {
@@ -112,6 +132,28 @@ class PayForm {
 		mainInput.onclick = () => {
 			router.navigate(urls.address);
 		};
+
+		const promo = this.#parent.querySelector('.pay-form__promo');
+
+		new Input(promo, {
+			id: 'payform-promocode',
+			placeholder: 'Введите промокод',
+			value: this['promocode'],
+			onChange: (event) => {
+				this['promocode'] = event.target.value;
+			},
+			buttonOnClick: async () => {
+				const data = await api.sendPromcode({ code: this['promocode'] });
+
+				if (data.code_id) {
+					await this.getData();
+					const form = this.#parent.querySelector('.pay-form');
+					form.remove();
+					this.render();
+				}
+			},
+			button: 'Применить',
+		}).render();
 
 		const checkoutButtonBlock = this.#parent.querySelector('.pay-form__button');
 

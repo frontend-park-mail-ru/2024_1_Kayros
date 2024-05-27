@@ -75,7 +75,7 @@ module.exports = {
 			},
 			{
 				context: ['/minio-api'],
-				target: 'http://5.35.12.15.238',
+				target: 'http://5.35.12.15',
 			},
 		],
 	},
@@ -85,6 +85,9 @@ module.exports = {
 			title: 'Resto',
 			favicon: './src/assets/favicon.png',
 			base: '/',
+			meta: {
+				viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+			},
 		}),
 		new MiniCssExtractPlugin({
 			filename: 'styles.css',
