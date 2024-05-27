@@ -46,17 +46,16 @@ class Orders {
 	 * Рендер страницы.
 	 */
 	async render() {
-		const data = await new Promise((resolve) => {
-			api.getUserOrdersArchive(resolve);
-		});
+		const data = await api.getUserOrdersArchive();
 
 		// Форматирование данных
-		const formattedData = data.map((order) => ({
-			...order,
-			status: ORDER_STATUSES[order.status],
-			status_class: order.status,
-			formattedTime: this.formatDate(order.time),
-		}));
+		const formattedData =
+			data?.map((order) => ({
+				...order,
+				status: ORDER_STATUSES[order.status],
+				status_class: order.status,
+				formattedTime: this.formatDate(order.time),
+			})) || [];
 
 		const html = template({ data: formattedData });
 		this.#parent.innerHTML = html;
@@ -79,7 +78,7 @@ class Orders {
 		});
 
 		if (window.innerWidth > 900 && formattedData.length > 0) {
-			this.renderOrder(formattedData[0].id);
+			this.renderOrder(formattedData[0]?.id);
 		}
 	}
 

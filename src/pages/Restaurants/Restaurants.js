@@ -253,7 +253,7 @@ class Restaurants {
 
 		recomendations.insertAdjacentElement('beforebegin', div);
 
-		recs.forEach((item) => {
+		recs?.forEach((item) => {
 			const restaurantCard = new RestaurantCard(recomendations, item);
 			restaurantCard.render();
 		});

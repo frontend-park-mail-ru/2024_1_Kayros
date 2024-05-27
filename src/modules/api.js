@@ -4,7 +4,6 @@ import {
 	SUCCESS_MESSAGES,
 	YANDEX_API_GEOCODER,
 	YANDEX_API_SAGESTS,
-	mockOrdersData,
 } from '../constants';
 import ajax from './ajax';
 
@@ -75,16 +74,12 @@ class Api {
 
 	/**
 	 * Метод для получения списка прошлых заказов
-	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
+	 * @returns {Promise<object>} - результат запроса
 	 */
-	async getUserOrdersArchive(callback) {
+	async getUserOrdersArchive() {
 		const data = await ajax.get(`${this.#url}/orders/archive`);
 
-		if (!data) {
-			callback(mockOrdersData);
-		} else {
-			callback(data);
-		}
+		return data?.payload;
 	}
 
 	/**

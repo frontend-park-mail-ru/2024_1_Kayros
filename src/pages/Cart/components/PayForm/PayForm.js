@@ -145,7 +145,7 @@ class PayForm {
 			buttonOnClick: async () => {
 				const data = await api.sendPromcode({ code: this['promocode'] });
 
-				if (data.code_id) {
+				if (data?.code_id) {
 					await this.getData();
 					const form = this.#parent.querySelector('.pay-form');
 					form.remove();
