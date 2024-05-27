@@ -6,6 +6,7 @@ import Map from '../Map';
 import Modal from '../Modal/Modal';
 import template from './AddressForm.hbs';
 import './AddressForm.scss';
+import Profile from "../../pages/Profile/index.js";
 
 /**
  * Форма добавления адреса
@@ -74,6 +75,12 @@ class AddressForm {
 		const sagestsElement = new AddressSagests(modalContent.querySelector('.find-address__sagests-container'), {
 			closeModal: () => {
 				modal.close();
+
+				if (window.location.pathname === urls.profile) {
+					const content = document.querySelector('.content');
+					const profile = new Profile(content);
+					profile.getUserAddress();
+				}
 			},
 			goToPoint: (coords) => {
 				map.goToPoint(coords);

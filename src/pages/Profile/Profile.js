@@ -106,13 +106,22 @@ class Profile {
 
 	renderAddress(data) {
 		const profileAddress = this.#parent.querySelector('.profile__address');
+		const addressInput = profileAddress.querySelector('.profile__address-input');
+
+		const inputElement = addressInput.querySelector('.input');
+		const addButton = profileAddress.querySelector('#address-add-button');
+		const chooseButton = profileAddress.querySelector('#address-choose-button');
+
+		inputElement?.remove();
+		addButton?.remove();
+		chooseButton?.remove();
 
 		this.userAddress = data?.address;
 
 		const unauthId = getCookie('unauth_id');
 
 		if (this.userAddress) {
-			new Input(profileAddress, {
+			new Input(addressInput, {
 				id: 'user-address',
 				style: 'dynamic',
 				placeholder: 'Улица, номер дома',
@@ -120,11 +129,11 @@ class Profile {
 				onChange: (event) => {
 					this.userAddress = event.target.value;
 				},
-				buttonOnClick: async () => {
-					this.changeAddress();
-				},
-				button: 'Изменить',
 			}).render();
+
+			addressInput.onclick = () => {
+				this.changeAddress();
+			}
 		} else {
 			new Button(profileAddress, {
 				id: 'address-add-button',
@@ -345,11 +354,15 @@ class Profile {
 		api.getUserAddress(this.renderAddress.bind(this), {user_address: true});
 	}
 
+	renderTemplate() {
+		this.#parent.innerHTML = template();
+	}
+
 	/**
 	 * Рендеринг страницы
 	 */
 	render() {
-		this.#parent.innerHTML = template();
+		this.renderTemplate();
 
 		this.getData();
 		this.getUserAddress();
