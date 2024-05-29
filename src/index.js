@@ -9,7 +9,7 @@ import './global.scss';
 
 VKID.Config.set({
 	app: '51915631',
-	redirectUrl: 'https:/resto-go.online',
+	redirectUrl: 'https://resto-go.online',
 	state: '',
 });
 
