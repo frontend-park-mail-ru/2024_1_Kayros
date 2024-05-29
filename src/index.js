@@ -9,11 +9,9 @@ import './global.scss';
 
 VKID.Config.set({
 	app: '51915631',
-	redirectUrl: 'https://resto-go.online',
+	redirectUrl: 'https://b440-195-19-45-172.ngrok-free.app/api/v1/vk',
 	state: '',
 });
-
-
 
 const root = document.createElement('div');
 root.id = 'root';
@@ -23,8 +21,6 @@ const layout = new Layout(root);
 layout.render();
 
 const urlSearchParams = new URLSearchParams(window.location.search);
-
-console.log(JSON.parse(window.location.search.replace('?payload', '')))
 
 router.addRoutes(routes);
 
