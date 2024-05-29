@@ -24,7 +24,7 @@ layout.render();
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 
-console.log(urlSearchParams.entries())
+console.log(window.location)
 
 router.addRoutes(routes);
 
