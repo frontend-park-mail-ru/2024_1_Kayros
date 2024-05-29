@@ -26,6 +26,7 @@ router.addRoutes(routes);
 
 if (window.location.pathname.includes('api/v1/vk')) {
 	router.navigate(urls.restaurants);
+  
 } else {
 	router.navigate(window.location.pathname, { searchParams: urlSearchParams });
 }
