@@ -23,7 +23,12 @@ layout.render();
 const urlSearchParams = new URLSearchParams(window.location.search);
 
 router.addRoutes(routes);
-router.navigate(window.location.pathname, { searchParams: urlSearchParams });
+
+if (window.location.pathname.includes('api/v1/vk')) {
+	router.navigate(urls.restaurants);
+} else {
+	router.navigate(window.location.pathname, { searchParams: urlSearchParams });
+}
 
 if (process.env.CACHE_ENABLE) {
 	const registerServiceWorker = async () => {
