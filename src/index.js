@@ -9,9 +9,11 @@ import './global.scss';
 
 VKID.Config.set({
 	app: '51915631',
-	redirectUrl: 'https://resto-go.online/api/v1/vk',
+	redirectUrl: 'https:/resto-go.online',
 	state: '',
 });
+
+
 
 const root = document.createElement('div');
 root.id = 'root';
@@ -22,11 +24,13 @@ layout.render();
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 
+console.log(urlSearchParams)
+
 router.addRoutes(routes);
 
 if (window.location.pathname.includes('api/v1/vk')) {
 	router.navigate(urls.restaurants);
-  
+
 } else {
 	router.navigate(window.location.pathname, { searchParams: urlSearchParams });
 }
