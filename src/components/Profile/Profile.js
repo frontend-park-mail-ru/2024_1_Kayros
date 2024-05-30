@@ -25,6 +25,7 @@ class Profile {
 	 */
 	getHTML() {
 		const avatar = this.#user.img_url.replace('&amp;', '');
+		console.log(this.#user.img_url, avatar);
 		const classList = `avatar-container ${avatar.includes('default') ? 'avatar-container--default' : ''}`;
 		return template({ name: this.#user.name, avatarUrl: avatar, class: classList });
 	}
