@@ -104,6 +104,16 @@ class Profile {
 		new AddressForm({isUserAddress: true, userAddress: this.userAddress}).render();
 	}
 
+	/**
+	 * Перерисовать хедер
+	 */
+	rerenderHeader() {
+		const header = document.querySelector('.header');
+		header.remove();
+		const newHeader = new Header({ navigate: router.navigate.bind(router) });
+		newHeader.render();
+	}
+
 	renderAddress(data) {
 		const profileAddress = this.#parent.querySelector('.profile__address');
 		const addressInput = profileAddress.querySelector('.profile__address-input');
@@ -153,10 +163,7 @@ class Profile {
 					const isOk = await api.chooseAddress();
 
 					if (isOk) {
-						const header = document.querySelector('.header');
-						header.remove();
-						const newHeader = new Header({ navigate: router.navigate.bind(router) });
-						newHeader.render();
+						this.rerenderHeader();
 					}
 				},
 				content: 'Выбрать',

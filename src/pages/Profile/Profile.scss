@@ -21,6 +21,11 @@
 			background: var(--profile-bg-color);
 			position: relative;
 
+			& .input {
+				transition: opacity 0.3s;
+				opacity: 1;
+			}
+
 			& .hover-label {
 			position: absolute;
 			width: 100%;
@@ -28,7 +33,7 @@
 			display: none;
 			z-index: 10;
 			border-radius: var(--input-border-radius);
-			background: rgba(255, 255, 255, 0.5);
+			background: transparent;
 			}
 		}
 
@@ -43,6 +48,7 @@
 				align-items: center;
 				cursor: pointer;
 				opacity: 1;
+				background: rgba(255, 255, 255, 0.5);
 				color: var(--link-color-active);
 				font-weight: 600;
 			}
