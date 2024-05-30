@@ -93,11 +93,16 @@ class AuthForm {
 	/**
 	 * Рендеринг компонента
 	 */
-	render() {
+	async render() {
 		const urlParams = new URLSearchParams(window.location.search);
 		const payload = urlParams.get('payload');
 
-		console.log(JSON.parse(payload));
+		try {
+			const data = JSON.parse(payload);
+			await api.sendVK(data);
+
+			router.navigate(urls.restaurants);
+		} catch {}
 
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 

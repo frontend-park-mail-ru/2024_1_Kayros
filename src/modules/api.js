@@ -466,7 +466,7 @@ class Api {
 	 * @returns {Promise<boolean>} - результат запроса
 	 */
 	async sendVK(body) {
-		const { data, error } = await ajax.post(`${this.#url}/vk`, body);
+		const { data, error } = await ajax.post(`https://38d0-195-19-34-102.ngrok-free.app/api/v1/vk`, body);
 		return data;
 	}
 
