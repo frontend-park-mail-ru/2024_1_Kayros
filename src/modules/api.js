@@ -428,7 +428,7 @@ class Api {
 	 * @returns {Promise<object>} - результат запроса
 	 */
 	async getPromocodes() {
-		const data = await ajax.get(`${this.#url}/promocode`);
+		const data = await ajax.get(`${this.#url}/promocode`, { showNotifyError: false });
 
 		return data?.payload;
 	}
