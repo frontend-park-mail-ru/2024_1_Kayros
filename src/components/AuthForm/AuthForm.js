@@ -94,6 +94,11 @@ class AuthForm {
 	 * Рендеринг компонента
 	 */
 	render() {
+		const urlParams = new URLSearchParams(window.location.search);
+		const payload = urlParams.get('payload');
+
+		console.log(payload);
+
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
 		const logoDesktopContainer = document.querySelector('.auth-container__logo--desktop');
