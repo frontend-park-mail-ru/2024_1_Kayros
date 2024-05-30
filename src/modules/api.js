@@ -461,6 +461,16 @@ class Api {
 	}
 
 	/**
+	 * Метод для добавления промокода
+	 * @param {object} body - объект
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async sendVK(body) {
+		const { data, error } = await ajax.post(`${this.#url}/vk`, body);
+		return data;
+	}
+
+	/**
 	 * Метод для удаления блюда из корзины
 	 * @param {number} foodId - id блюда
 	 * @returns {Promise<boolean>} - результат запроса
