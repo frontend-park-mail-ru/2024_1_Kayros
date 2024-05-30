@@ -99,9 +99,11 @@ class AuthForm {
 
 		try {
 			const data = JSON.parse(payload);
-			await api.sendVK(data);
 
-			router.navigate(urls.restaurants);
+			if (data) {
+				const res = await api.sendVK({ payload: data });
+				router.navigate(urls.restaurants);
+			}
 		} catch {}
 
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
