@@ -349,7 +349,7 @@ class Api {
 	async updateAddressSagests(body, callback = () => {}) {
 		const { data, error } = await ajax.put(`${this.#url}/user/address`, body);
 
-		if (data && !error) {
+		if (data && !error && !data?.detail) {
 			Notification.open({
 				duration: 3,
 				title: SUCCESS_MESSAGES.address.title,

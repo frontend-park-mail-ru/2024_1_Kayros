@@ -88,7 +88,7 @@ class PayForm {
 		const user = localStorageHelper.getItem('user-info');
 		this.user = user;
 		const address = localStorageHelper.getItem('user-address').value;
-		this.main = address;
+		this.main = address || user?.address;
 
 		this.#parent.insertAdjacentHTML('beforeend', template(this.data));
 		const form = this.#parent.querySelector('.pay-form');

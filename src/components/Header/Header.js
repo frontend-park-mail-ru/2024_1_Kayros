@@ -154,9 +154,9 @@ class Header {
 			onClick: () => {
 				this.navigate(urls.address);
 			},
-			content: address || 'Укажите адрес доставки',
-			icon: address ? '' : 'address',
-			style: address ? 'secondary' : 'primary',
+			content: address || user?.address || 'Укажите адрес доставки',
+			icon: address || user?.address ? '' : 'address',
+			style: address || user?.address ? 'secondary' : 'primary',
 		});
 
 		addressButton.render();
