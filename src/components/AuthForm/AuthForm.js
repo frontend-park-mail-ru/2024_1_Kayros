@@ -97,7 +97,7 @@ class AuthForm {
 		const urlParams = new URLSearchParams(window.location.search);
 		const payload = urlParams.get('payload');
 
-		console.log(payload);
+		console.log(JSON.parse(payload));
 
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
