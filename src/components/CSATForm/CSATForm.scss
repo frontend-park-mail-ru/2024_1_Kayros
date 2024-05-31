@@ -42,6 +42,13 @@
 
 		transition: 0.3s;
 	}
+
+	@media (max-width: 500px) {
+		width: 92vw;
+		left: 0;
+		bottom: 0;
+		position: absolute;
+	}
 }
 
 #form-back-button {

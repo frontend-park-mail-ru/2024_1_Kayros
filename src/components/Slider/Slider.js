@@ -84,7 +84,7 @@ class Slider {
 		this.parent.insertAdjacentHTML('afterbegin', template({ items: this.children }));
 
 		this.children.forEach((element) => {
-			const max = element.param_type === 'CSAT' ? 5 : 10;
+			const max = element.param_type === 'CSAT' ? 5 : 5;
 
 			if (max === 5) {
 				const description = this.parent.querySelector(`#slider__description-${element.id}`);

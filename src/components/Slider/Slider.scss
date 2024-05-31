@@ -8,6 +8,10 @@
 	&__item {
 		width: inherit;
 		width: 440px;
+
+    @media (max-width: 500px) {
+      width: 92vw;
+    }
 	}
 
 	&__description {

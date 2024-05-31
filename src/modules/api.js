@@ -349,7 +349,7 @@ class Api {
 	 * @returns {Promise<object>} - результат запроса
 	 */
 	async updateAddressSagests(body, callback = () => {}, queryParams = {}) {
-		const { data, error } = await ajax.put(`${this.#url}/user/address`, body, {queryParams});
+		const { data, error } = await ajax.put(`${this.#url}/user/address`, body, { queryParams });
 
 		if (!error) {
 			Notification.open({
@@ -596,7 +596,7 @@ class Api {
 	 * @returns {Promise<object>} - результат запроса
 	 */
 	async chooseAddress() {
-		const { data, error } =  await ajax.put(`${this.#url}/user/unauth_address`);
+		const { data, error } = await ajax.put(`${this.#url}/user/unauth_address`);
 
 		if (!error) {
 			return true;
@@ -605,7 +605,7 @@ class Api {
 		Notification.open({
 			duration: 3,
 			title: ERROR_MESSAGES.ADDRESS_CHOOSE,
-			description: data?.detail || error  || ERROR_MESSAGES.SERVER_RESPONSE,
+			description: data?.detail || error || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
 		});
 
@@ -620,7 +620,9 @@ class Api {
 	async getCSATQuestions(callback, url) {
 		const data = await ajax.get(`${this.#url}/quiz/questions?url=${url}`);
 
-		callback(data);
+		const payload = data?.payload;
+
+		callback(payload);
 	}
 
 	/**
