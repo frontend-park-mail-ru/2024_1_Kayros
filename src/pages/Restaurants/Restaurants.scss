@@ -70,6 +70,13 @@
 			overflow: hidden;
 		}
 
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	
+		&:active {
+			cursor: grabbing;
+		}
 		.slick-track {
 			display: flex;
 			align-items: center;
@@ -120,8 +127,12 @@
     margin-left: 20px;
 
 		&::-webkit-scrollbar {
-			width: 4px;
-			height: 2px;
+			display: none;
+		}
+
+	
+		&:active {
+			cursor: grabbing;
 		}
 
 		&::-webkit-scrollbar-track {
