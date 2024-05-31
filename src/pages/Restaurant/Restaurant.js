@@ -26,7 +26,7 @@ class Restaurant {
 		this.#parent = parent;
 		this.activeCategory = 0;
 		this.id = id;
-		this.isMobile = window.innerWidth < 1024;
+		this.isMobile = window.innerWidth < 480;
 	}
 
 	/**
