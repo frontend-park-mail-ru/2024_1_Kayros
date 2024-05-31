@@ -48,7 +48,7 @@ class RestaurantCard {
 	 */
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', this.getHTML());
-		const restaurantCard = document.getElementById(`restaurant-${this.id}`);
+		const restaurantCard = this.parent.querySelector(`#restaurant-${this.id}`);
 
 		restaurantCard.onclick = () => {
 			router.navigate(`${urls.restaurants}/${this.id}`, { pageTitle: this.name });

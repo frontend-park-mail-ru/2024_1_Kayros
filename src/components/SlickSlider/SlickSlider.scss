@@ -4,8 +4,17 @@
 	gap: 30px;
 	width: fit-content;
 	min-width: calc(100% - 32px);
+  margin-bottom: 10px;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
 
 	&:active {
 		cursor: grabbing;
+	}
+
+	.restaurant-card {
+		min-height: 200px !important;
 	}
 }

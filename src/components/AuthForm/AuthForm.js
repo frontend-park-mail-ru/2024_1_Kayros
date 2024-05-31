@@ -1,3 +1,4 @@
+import * as VKID from '@vkid/sdk';
 import { FIELDS_SIGN_IN, FIELDS_SIGN_UP } from '../../constants';
 import api from '../../modules/api';
 import { router } from '../../modules/router';
@@ -92,7 +93,19 @@ class AuthForm {
 	/**
 	 * Рендеринг компонента
 	 */
-	render() {
+	async render() {
+		const urlParams = new URLSearchParams(window.location.search);
+		const payload = urlParams.get('payload');
+
+		try {
+			const data = JSON.parse(payload);
+
+			if (data) {
+				const res = await api.sendVK({ payload: { ...data } });
+				router.navigate(urls.restaurants);
+			}
+		} catch {}
+
 		this.#parent.insertAdjacentHTML('beforeend', this.getHTML());
 
 		const logoDesktopContainer = document.querySelector('.auth-container__logo--desktop');
@@ -149,6 +162,19 @@ class AuthForm {
 				this.handleSubmit();
 			},
 		}).render();
+
+		const oneTap = new VKID.OneTap();
+
+		const vkAuthButton = document.querySelector('.auth-container__vk-auth');
+
+		if (vkAuthButton) {
+			oneTap.render({
+				container: vkAuthButton,
+				scheme: VKID.Scheme.LIGHT,
+				lang: VKID.Languages.RUS,
+				styles: { borderRadius: 14 },
+			});
+		}
 	}
 }
 

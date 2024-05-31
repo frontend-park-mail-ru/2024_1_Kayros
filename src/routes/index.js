@@ -3,6 +3,7 @@ import Map from '../components/Map/Map';
 import CartPage from '../pages/Cart';
 import NotFound from '../pages/NotFound';
 import OrderPage from '../pages/Order/Order';
+import OrdersPage from '../pages/Orders';
 import ProfilePage from '../pages/Profile';
 import RestaurantPage from '../pages/Restaurant';
 import RestaurantsPage from '../pages/Restaurants';
@@ -49,6 +50,10 @@ const routes = {
 	[urls.order]: {
 		title: 'Заказ',
 		component: OrderPage,
+	},
+	[urls.orders]: {
+		title: 'Заказы',
+		component: OrdersPage,
 	},
 	[urls.search]: {
 		title: 'Поиск',

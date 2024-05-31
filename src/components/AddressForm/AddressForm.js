@@ -6,6 +6,7 @@ import Map from '../Map';
 import Modal from '../Modal/Modal';
 import template from './AddressForm.hbs';
 import './AddressForm.scss';
+import Profile from "../../pages/Profile/index.js";
 
 /**
  * Форма добавления адреса
@@ -15,8 +16,14 @@ class AddressForm {
 
 	/**
 	 * Конструктор класса
+	 * @param {object} params - параметры формы адреса
+	 * @param {boolean} params.isUserAddress - чей адрес: юзера или заказов
+	 * @param {string} params.userAddress - адрес юзера
 	 */
-	constructor() {}
+	constructor({isUserAddress = false, userAddress = ''} = {}) {
+		this.isUserAddress = isUserAddress;
+		this.userAddress = userAddress;
+	}
 
 	/**
 	 * Получение местоположения пользователя
@@ -40,10 +47,12 @@ class AddressForm {
 	async render() {
 		const user = localStorageHelper.getItem('user-info');
 
+		const addressTitle = this.isUserAddress ? this.userAddress ? 'Измените свой адресс доставки' : 'Добавьте свой адрес доставки' : 'Укажите адрес доставки';
+
 		const modal = new Modal({
-			content: template(),
+			content: template({addressTitle}),
 			className: 'address-modal',
-			url: urls.address,
+			url: this.isUserAddress  ? '' : urls.address,
 			initiatorId: 'address-button',
 		});
 
@@ -66,10 +75,18 @@ class AddressForm {
 		const sagestsElement = new AddressSagests(modalContent.querySelector('.find-address__sagests-container'), {
 			closeModal: () => {
 				modal.close();
+
+				if (window.location.pathname === urls.profile) {
+					const content = document.querySelector('.content');
+					const profile = new Profile(content);
+					profile.getUserAddress();
+				}
 			},
 			goToPoint: (coords) => {
 				map.goToPoint(coords);
 			},
+			isUserAddress: this.isUserAddress,
+			userAddress: this.userAddress,
 		});
 
 		sagestsElement.render();

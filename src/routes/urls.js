@@ -3,6 +3,7 @@ const urls = {
 	restaurants: '/restaurants',
 	restaurant: '/restaurants/:id',
 	order: '/orders/:id',
+	orders: '/orders',
 	signIn: '/signin',
 	signUp: '/signup',
 	address: '/address',

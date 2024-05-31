@@ -1,11 +1,16 @@
 @import "../../variables";
 
+.coupons-slider, .restaurants__recomendations {
+	overflow-x: auto;
+}
+
 .restaurants {
 	&__title {
 		font-size: 28px;
 		font-weight: 600;
 		margin-left: 16px;
-		margin-top: 16px;
+		margin-top: 20px;
+		margin-bottom: 16px;
 	}
 
 	&__cards {
@@ -15,6 +20,8 @@
 		color: var(--brand);
 		font-size: 18px;
 		transition: all 0.5s;
+    min-height: 700px;
+    margin-top: 20px;
 
 		@media (max-width: $xl) {
 			grid-template-columns: repeat(3, 1fr);
@@ -29,6 +36,70 @@
 		}
 	}
 
+	&__recomendations {
+		color: var(--brand);
+		font-size: 18px;
+		transition: all 0.5s;
+
+		.restaurant-card {
+			padding: 0;
+
+			.restaurant-card__image-container {
+				height: 150px;
+				width: 100%;
+				overflow: hidden;
+			}
+
+			.restaurant-card__image {
+				height: 100%;
+				width: 100%;
+				object-fit: cover;
+			}
+		}
+
+		.restaurant-card__subtitle {
+			display: none;
+		}
+
+		&.slick-slider {
+			display: block;
+		}
+
+		.slick-list {
+			overflow: hidden;
+		}
+
+		.slick-track {
+			display: flex;
+			align-items: center;
+		}
+
+		.slick-slide {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			outline: none;
+		}
+
+		@media (max-width: $xl) {
+			.slick-slide {
+				width: calc(100% / 3) !important;
+			}
+		}
+
+		@media (max-width: $md) {
+			.slick-slide {
+				width: calc(100% / 2) !important;
+			}
+		}
+
+		@media (max-width: $xsm) {
+			.slick-slide {
+				width: 100% !important;
+			}
+		}
+	}
+
 	#restaurants-search-input {
 		margin: 10px 16px;
 	}
@@ -40,11 +111,12 @@
 	.category-bar {
 		display: flex;
 		flex-direction: row;
-		padding: 20px 35px;
+		padding: 20px 0;
 		gap: 10px;
 		width: 90%;
 		overflow-x: scroll;
 		z-index: 100;
+    margin-left: 20px;
 
 		&::-webkit-scrollbar {
 			width: 4px;
@@ -66,8 +138,24 @@
 		}
 
 		@media screen and (max-width: $sm) {
-			// padding: 20px 10px;
 			padding: 20px 19px;
 		}
+	}
+}
+
+.cart__mobile {
+	position: fixed;
+	bottom: 35px;
+	right: 35px;
+	z-index: 100000;
+
+	.btn {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+	}
+
+	@media (min-width: $sm) {
+		display: none;
 	}
 }

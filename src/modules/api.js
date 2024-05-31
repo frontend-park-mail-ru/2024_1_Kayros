@@ -38,7 +38,9 @@ class Api {
 		}
 
 		const data = await ajax.get(url);
-		callback(data);
+
+		const payload = data?.payload;
+		callback(payload);
 	}
 
 	/**
@@ -48,7 +50,9 @@ class Api {
 	async getSearchRestaurants(callback) {
 		const data = await ajax.get(`${this.#url}/search`);
 
-		callback(data);
+		const payload = data?.payload;
+
+		callback(payload);
 	}
 
 	/**
@@ -58,7 +62,19 @@ class Api {
 	async getOrdersData(callback) {
 		const data = await ajax.get(`${this.#url}/orders/current`, { showNotifyError: false });
 
-		callback(data);
+		const payload = data?.payload;
+
+		callback(payload);
+	}
+
+	/**
+	 * Метод для получения списка прошлых заказов
+	 * @returns {Promise<object>} - результат запроса
+	 */
+	async getUserOrdersArchive() {
+		const data = await ajax.get(`${this.#url}/orders/archive`);
+
+		return data?.payload;
 	}
 
 	/**
@@ -84,10 +100,11 @@ class Api {
 
 	/**
 	 * Метод для получения информации о пользователе
+	 * @param {object} queryParams - query параметры
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 */
-	async getUserAddress(callback) {
-		const data = await ajax.get(`${this.#url}/user/address`, { showNotifyError: false });
+	async getUserAddress(callback, queryParams = {}) {
+		const data = await ajax.get(`${this.#url}/user/address`, { queryParams, showNotifyError: false });
 
 		callback(data);
 	}
@@ -327,13 +344,14 @@ class Api {
 	 *  Метод для обновления адреса
 	 * @param {object} body - объект
 	 * @param {object} body.address - основной
+	 * @param {object} queryParams - query параметры
 	 * @param {void} callback - функция-коллбэк, вызываемая после выполенения запроса
 	 * @returns {Promise<object>} - результат запроса
 	 */
-	async updateAddressSagests(body, callback = () => {}) {
-		const { data, error } = await ajax.put(`${this.#url}/user/address`, body);
+	async updateAddressSagests(body, callback = () => {}, queryParams = {}) {
+		const { data, error } = await ajax.put(`${this.#url}/user/address`, body, {queryParams});
 
-		if (data && !error) {
+		if (!error) {
 			Notification.open({
 				duration: 3,
 				title: SUCCESS_MESSAGES.address.title,
@@ -342,17 +360,16 @@ class Api {
 			});
 
 			callback(data);
-			return data;
+
+			return;
 		}
 
 		Notification.open({
 			duration: 3,
 			title: ERROR_MESSAGES.ADDRESS,
-			description: error || data.detail,
+			description: error || data?.detail,
 			type: 'error',
 		});
-
-		return data;
 	}
 
 	/**
@@ -405,6 +422,53 @@ class Api {
 			description: error || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
 		});
+	}
+
+	/**
+	 * Получение списка промокодов
+	 * @returns {Promise<object>} - результат запроса
+	 */
+	async getPromocodes() {
+		const data = await ajax.get(`${this.#url}/promocode`, { showNotifyError: false });
+
+		return data?.payload;
+	}
+
+	/**
+	 * Метод для добавления промокода
+	 * @param {object} body - объект
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async sendPromcode(body) {
+		const { data, error } = await ajax.post(`${this.#url}/promocode`, body);
+
+		if (!data?.detail && !error) {
+			Notification.open({
+				duration: 3,
+				title: 'Промокод применен!',
+				description: 'Успешных покупок',
+				type: 'success',
+			});
+
+			return data;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: 'Не удалось применить промокод',
+			description: error || data.detail || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+	}
+
+	/**
+	 * Метод для добавления промокода
+	 * @param {object} body - объект
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async sendVK(body) {
+		const { data, error } = await ajax.post(`${this.#url}/vkk`, body);
+		return data;
 	}
 
 	/**
@@ -503,7 +567,9 @@ class Api {
 	async getReviewsInfo(id, callback) {
 		let data = await ajax.get(`${this.#url}/restaurants/${id}/comments`);
 
-		callback(data);
+		const payload = data?.payload;
+
+		callback(payload);
 	}
 
 	/**
@@ -512,7 +578,38 @@ class Api {
 	 */
 	async getCategories(callback) {
 		const data = await ajax.get(`${this.#url}/category`);
-		callback(data);
+		const payload = data?.payload;
+		callback(payload);
+	}
+
+	/**
+	 * Рекомендации
+	 * @returns {Promise<object>} - результат запроса
+	 */
+	async getRecomendations() {
+		const data = await ajax.get(`${this.#url}/recomendation`, { showNotifyError: false });
+		return data?.payload;
+	}
+
+	/**
+	 * Выбор адреса как основного
+	 * @returns {Promise<object>} - результат запроса
+	 */
+	async chooseAddress() {
+		const { data, error } =  await ajax.put(`${this.#url}/user/unauth_address`);
+
+		if (!error) {
+			return true;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.ADDRESS_CHOOSE,
+			description: data?.detail || error  || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+
+		return false;
 	}
 
 	/**

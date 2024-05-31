@@ -2,7 +2,13 @@
 
 	<div class="pay-form__price">
 		<div class="pay-form__title">Сумма заказа</div>
-		<div class="pay-form__title" id="pay-form-sum">{{#if this.sum}}{{this.sum}}{{else}}0{{/if}} ₽</div>
+		<div class="pay-form__title" id="pay-form-sum">
+			{{#if this.new_sum}}
+				<div class="pay-form__new-sum">{{this.new_sum}} ₽</div>
+			{{/if}}
+
+			<div class="pay-form__sum">{{#if this.sum}}{{this.sum}}{{else}}0{{/if}} ₽</div>
+		</div>
 	</div>
 
 	<div class="pay-form__delivery-info">
@@ -14,24 +20,27 @@
 		<div class="pay-form__inputs"></div>
 	</div>
 
+  <div class="pay-form__promo" style="margin-bottom: 20px;"></div>
+
+  <div class="pay-form__coupons" style="margin-bottom: 20px;"></div>
+
 	<div class="pay-form__methods">
 		<div class="pay-form__title">Способ оплаты</div>
 		<div class="pay-form__method-dropdown">
 			<div class="pay-form__methods-item">
-				<img src="/assets/spb.svg" alt="spb" />
-				СБП
-				<img src="/assets/right-arrow.svg" alt="arrow" />
+				<img src="/assets/bank-card.svg" alt="spb" />
+					Картой при получении
 			</div>
 		</div>
 	</div>
 
-    <div class="pay-form__pay-action">
-        <div class="pay-form__sum_info">
-            <div>К оплате</div>
-            <div class="pay-form__sum">{{#if this.sum}}{{this.sum}}{{else}}0{{/if}} ₽</div>
-        </div>
+	<div class="pay-form__pay-action">
+		<div class="pay-form__sum_info">
+			<div>К оплате</div>
+			<div class="pay-form__sum">{{#if this.sum}}{{this.sum}}{{else}}0{{/if}} ₽</div>
+		</div>
 
-        <div class="pay-form__button">
-        </div>
-    </div>
+		<div class="pay-form__button">
+		</div>
+	</div>
 </div>

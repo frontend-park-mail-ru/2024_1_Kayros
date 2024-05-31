@@ -145,6 +145,7 @@ class FoodCard {
 			sum.innerHTML = res ? `${res} ₽` : '';
 		}
 
+		this.checkCartDataAndRenderButton();
 		return res;
 	}
 
@@ -170,6 +171,7 @@ class FoodCard {
 			sum.innerHTML = `${res || 0} ₽`;
 		}
 
+		this.checkCartDataAndRenderButton();
 		return res;
 	}
 
@@ -197,6 +199,7 @@ class FoodCard {
 			sum.innerHTML = `${res || 0} ₽`;
 		}
 
+		this.checkCartDataAndRenderButton();
 		return res;
 	}
 
@@ -217,8 +220,9 @@ class FoodCard {
 			maxCount: 99,
 			prevCount: () => {
 				const address = localStorageHelper.getItem('user-address').value;
+				const user = localStorageHelper.getItem('user-info');
 
-				if (address === '' || !address) {
+				if ((address === '' || !address) && !user?.address) {
 					this.openAddressModal();
 					return;
 				}
@@ -249,6 +253,50 @@ class FoodCard {
 		});
 
 		counterButton.render();
+	}
+
+	/**
+	 * Проверка данных корзины и отрисовка иконки корзины
+	 */
+	checkCartDataAndRenderButton() {
+		api.getCartInfo((cartData) => {
+			if (cartData) {
+				this.renderCartIcon();
+			} else {
+				this.removeCartIcon();
+			}
+		});
+	}
+
+	/**
+	 *
+	 */
+	renderCartIcon() {
+		const cartBlockMobile = document.querySelector('.cart__mobile');
+		let existingButton = document.getElementById('cart-button2');
+
+		if (!existingButton) {
+			const cartButtonMobile = new Button(cartBlockMobile, {
+				id: 'cart-button2',
+				content: '',
+				icon: 'cart',
+				style: 'primary',
+				onClick: () => router.navigate(urls.cart),
+			});
+
+			cartButtonMobile.render();
+		}
+	}
+
+	/**
+	 *
+	 */
+	removeCartIcon() {
+		const existingButton = document.getElementById('cart-button2');
+
+		if (existingButton) {
+			existingButton.remove();
+		}
 	}
 }
 
