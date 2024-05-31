@@ -107,7 +107,6 @@ class PayForm {
 				onChange: (event) => {
 					this[field.name] = event.target.value;
 				},
-				disabled: field.name === 'main',
 				buttonOnClick: async () => {
 					const data = await api.sendPromcode({ code: this[field.name] });
 
@@ -165,7 +164,7 @@ class PayForm {
 
 		const checkoutButton = new Button(checkoutButtonBlock, {
 			id: 'pay-form-button',
-			content: 'Оплатить',
+			content: 'Заказать',
 			disabled: !this.data?.sum || !this.entrance || !this.floor || !this.apart,
 			withLoader: true,
 			onClick: () => {
