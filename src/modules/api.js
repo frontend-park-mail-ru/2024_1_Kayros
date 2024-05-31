@@ -577,7 +577,7 @@ class Api {
 	 * @param {Function} callback - функция-коллбэк, вызываемая после выполенения запроса.
 	 */
 	async getCategories(callback) {
-		const data = await ajax.get(`${this.#url}/category`);
+		const data = await ajax.get(`${this.#url}/catego3ry`);
 		const payload = data?.payload;
 		callback(payload);
 	}
