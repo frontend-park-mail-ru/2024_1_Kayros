@@ -154,6 +154,13 @@ class Order {
 	async render() {
 		await this.getData();
 
+		const activeCardStatus = document.querySelector('.order-card--active .order-card__status');
+
+		if (activeCardStatus) {
+			activeCardStatus.innerHTML = ORDER_STATUSES[this.order.status];
+			activeCardStatus.className = `order-card__status order-card__status--${this.order.status}`;
+		}
+
 		if (!this.order || !this.order.id) {
 			this.#parent.insertAdjacentHTML('beforeend', template());
 			return;
