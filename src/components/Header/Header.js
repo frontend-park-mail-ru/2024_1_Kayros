@@ -146,7 +146,7 @@ class Header {
 		await this.userData();
 
 		const user = localStorageHelper.getItem('user-info');
-		const address = localStorageHelper.getItem('user-address').value;
+		const address = localStorageHelper.getItem('user-address')?.value;
 
 		const addressBlock = document.querySelector('.header__address');
 		const addressButton = new Button(addressBlock, {
