@@ -1,6 +1,5 @@
 import template from './Coupon.hbs';
 import './Coupon.scss';
-
 /**
  * Купон
  */
@@ -21,15 +20,41 @@ class Coupon {
 		this.data = data;
 	}
 
+	formatDate(dateString) {
+		const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+		return new Date(dateString).toLocaleDateString('ru-RU', options);
+	}
+
 	/**
 	 * Рендеринг компонента
 	 */
 	render() {
-		const timeDate = new Date(this.data.date);
+		let text = '';
 
-		const date = timeDate.toLocaleDateString('ru-RU', { day: '2-digit', month: 'long' });
+		switch(this.data.type) {
+			case 'first':
+				text = 'Скидка действует на первый заказ в нашем сервисе';
+				break;
+			case 'sum':
+				text = `Скидка действует от суммы заказа ${this.data.sum}р.`;
+				break;
+			case 'rest':
+				text = `Скидка на первый заказ в ресторане ${this.data.rest}`;
+				break;
+			case 'once':
+			default:
+				text = 'Единоразовая скидка специально для Вас';
+		}
 
-		this.#parent.insertAdjacentHTML('beforeend', template({ id: this.#id, sale: this.data.sale, date }));
+
+		this.#parent.insertAdjacentHTML('beforeend', template(
+			{
+				id: this.#id,
+				sale: this.data.sale,
+				date: this.formatDate(this.data.date),
+				code: this.data.code,
+				text,
+			}));
 
 		const c = document.getElementById(`${this.#id}`);
 

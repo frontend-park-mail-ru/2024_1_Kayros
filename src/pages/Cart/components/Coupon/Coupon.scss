@@ -4,14 +4,15 @@
 	justify-content: center;
 	align-items: center;
 	display: flex;
-	width: 200px;
-	height: 80px;
+	width: 220px;
+	height: 90px;
 	border-radius: 5px;
 	box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
 	background-color: #fff;
 	padding: 10px;
 	gap: 20px;
 	border: 1px solid #ededed;
+	position: relative;
 
 	&.copied {
 		.copied {
@@ -31,9 +32,7 @@
 	}
 
 	&__logo {
-		img {
-			height: 36px;
-		}
+
 	}
 
 	&:hover {
@@ -64,14 +63,27 @@
 	&__content {
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
+		gap: 4px;
+		flex: 1;
 	}
+}
+
+.coupon__code {
+	transition: 0.2s;
+	font-weight: 600;
 }
 
 .coupon__num {
 	transition: 0.2s;
-	font-size: 18px;
+	font-size: 20px;
 	font-weight: 600;
+}
+
+.coupon__text {
+	transition: 0.2s;
+	font-size: 14px;
+	font-weight: 600;
+	color: #797979;
 }
 
 .coupon__time {
