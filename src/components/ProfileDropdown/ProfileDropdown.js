@@ -8,6 +8,7 @@ const dropdownItems = [
 	{ id: 'profile-link', name: 'Профиль', exit: false, url: urls.profile },
 	{ id: 'orders-link', name: 'Заказы', exit: false, url: urls.orders },
 	{ id: 'cart-link', name: 'Корзина', exit: false, url: urls.cart },
+	{ id: 'statistic-link', name: 'Cтатистика', exit: false, url: urls.statistic },
 	{ id: 'exit-link', name: 'Выйти', exit: true, url: urls.restaurants },
 ];
 

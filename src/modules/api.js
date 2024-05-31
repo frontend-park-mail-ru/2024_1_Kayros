@@ -349,7 +349,7 @@ class Api {
 	 * @returns {Promise<object>} - результат запроса
 	 */
 	async updateAddressSagests(body, callback = () => {}, queryParams = {}) {
-		const { data, error } = await ajax.put(`${this.#url}/user/address`, body, {queryParams});
+		const { data, error } = await ajax.put(`${this.#url}/user/address`, body, { queryParams });
 
 		if (!error) {
 			Notification.open({
@@ -596,7 +596,7 @@ class Api {
 	 * @returns {Promise<object>} - результат запроса
 	 */
 	async chooseAddress() {
-		const { data, error } =  await ajax.put(`${this.#url}/user/unauth_address`);
+		const { data, error } = await ajax.put(`${this.#url}/user/unauth_address`);
 
 		if (!error) {
 			return true;
@@ -605,11 +605,62 @@ class Api {
 		Notification.open({
 			duration: 3,
 			title: ERROR_MESSAGES.ADDRESS_CHOOSE,
-			description: data?.detail || error  || ERROR_MESSAGES.SERVER_RESPONSE,
+			description: data?.detail || error || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
 		});
 
 		return false;
+	}
+
+	/**
+	 * Функция для получения вопросов
+	 * @param {void} callback - коллбэк
+	 * @param {string} url - адрес страницы, с которой идет запрос
+	 */
+	async getCSATQuestions(callback, url) {
+		const data = await ajax.get(`${this.#url}/quiz/questions?url=${url}`);
+
+		const payload = data?.payload;
+
+		callback(payload);
+	}
+
+	/**
+	 * Функция для отправки формы
+	 * @param {void} callback - коллбэк
+	 * @param {object} body - body
+	 */
+	async sendCSATQuestions(callback, body) {
+		const { data, error } = await ajax.post(`${this.#url}/quiz/question/rating`, body);
+
+		if (!error) {
+			Notification.open({
+				duration: 3,
+				title: SUCCESS_MESSAGES.csat.title,
+				description: SUCCESS_MESSAGES.csat.description,
+				type: 'success',
+			});
+
+			callback(data);
+			return;
+		}
+
+		Notification.open({
+			duration: 3,
+			title: ERROR_MESSAGES.CSAT,
+			description: error || data.detail || ERROR_MESSAGES.SERVER_RESPONSE,
+			type: 'error',
+		});
+	}
+
+	/**
+	 * Метод для получения статистики ответов.
+	 * @param {Function} callback -Результат запроса
+	 */
+	async getCSATAnswers(callback) {
+		const data = await ajax.get(`${this.#url}/quiz/stats`);
+
+		callback(data);
 	}
 }
 

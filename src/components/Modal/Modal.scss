@@ -1,7 +1,7 @@
 @import "../../variables";
 
 #modal-wrapper {
-	z-index: 15;
+	z-index: 9;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -28,7 +28,7 @@
 	background-color: var(--modal-content-background);
 	transform: scale(0.1);
 	transition: transform 0.3s;
-	z-index: 20;
+	z-index: 9;
 
 	&.modal-open {
 		transform: scale(1);

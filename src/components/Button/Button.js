@@ -32,7 +32,6 @@ class Button {
 	 * @param {string | undefined} params.icon - иконка
 	 * @param {'xs' | 's'} params.size - размер кнопки
 	 * @param {string} params.additionalClass - дополнительные классы для стилизации
-	 * @param {string} params.replace - замена
 	 * @param {'afterbegin' | 'afterend' | 'beforebegin' | 'beforeend'} params.position - позиция в предке
 	 */
 	constructor(
@@ -49,7 +48,6 @@ class Button {
 			size = 'xs',
 			additionalClass = '',
 			position = 'beforeend',
-			replace = false,
 		},
 	) {
 		this.#parent = parent;
@@ -64,7 +62,6 @@ class Button {
 		this.#size = size;
 		this.#additionalClass = additionalClass;
 		this.position = position;
-		this.replace = replace;
 	}
 
 	/**
@@ -88,11 +85,7 @@ class Button {
 	 * Рендеринг компонента
 	 */
 	render() {
-		if (this.replace) {
-			this.#parent.innerHTML = this.getHTML();
-		} else {
-			this.#parent.insertAdjacentHTML(this.position, this.getHTML());
-		}
+		this.#parent.insertAdjacentHTML(this.position, this.getHTML());
 
 		const currentButton = this.#parent.querySelector(`#${this.#id}`);
 

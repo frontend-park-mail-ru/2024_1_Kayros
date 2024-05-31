@@ -11,6 +11,7 @@ const urls = {
 	cart: '/cart',
 	profile: '/profile',
 	search: '/search',
+	statistic: '/statistic',
 };
 
 export default urls;

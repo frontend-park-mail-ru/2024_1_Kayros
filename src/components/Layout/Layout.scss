@@ -1,3 +1,35 @@
 .layout {
 	position: relative;
 }
+
+#csat-form-button {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+}
+
+.form-frame {
+	position: fixed;
+	transition: 0.4s;
+	right: -20px;
+	bottom: -60px;
+	z-index: 100001;
+	opacity: 0;
+	margin-top: 50px;
+	pointer-events: none;
+
+	@media (max-width: 500px) {
+		right: 0;
+		bottom: 0;
+		width: 92vw;
+	}
+}
+
+.background {
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+  background: #0000001f;
+  z-index: 10;
+  top: 0;
+}

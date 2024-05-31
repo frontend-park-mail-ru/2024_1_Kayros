@@ -1,0 +1,24 @@
+.slider {
+	display: flex;
+	width: fit-content;
+	transition: 0.3s;
+	margin-left: 0;
+	gap: 40px;
+
+	&__item {
+		width: inherit;
+		width: 440px;
+
+    @media (max-width: 500px) {
+      width: 92vw;
+    }
+	}
+
+	&__description {
+		display: flex;
+		justify-content: space-between;
+		margin: 10px auto 0;
+		width: 100%;
+		color: var(--slider-description-color);
+	}
+}

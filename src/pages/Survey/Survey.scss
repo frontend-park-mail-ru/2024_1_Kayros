@@ -1,0 +1,30 @@
+.not-found {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 50vh;
+	text-align: center;
+
+	h1 {
+		margin-bottom: 20px;
+	}
+
+	.question-container {
+		display: flex;
+		flex-direction: row;
+		gap: 20px;
+	}
+
+	.profile__info-title {
+		font-size: 20px;
+	}
+
+	.not-found__return-button {
+		margin-top: 20px;
+	}
+
+	.block {
+		// border: 1px solid gray;
+	}
+}
