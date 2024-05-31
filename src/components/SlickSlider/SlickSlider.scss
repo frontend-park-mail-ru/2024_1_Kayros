@@ -1,10 +1,9 @@
 .slick-track {
 	display: flex;
-	padding: 16px;
 	gap: 30px;
 	width: fit-content;
 	min-width: calc(100% - 32px);
-  margin-bottom: 10px;
+  	margin-bottom: 10px;	
 
 	&::-webkit-scrollbar {
 		display: none;
@@ -17,4 +16,6 @@
 	.restaurant-card {
 		min-height: 200px !important;
 	}
+
+
 }

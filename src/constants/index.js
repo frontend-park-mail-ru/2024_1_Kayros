@@ -153,7 +153,6 @@ export const VALIDATION_ERRORS = {
 };
 
 export const ORDER_STATUSES = {
-	payed: 'Оплачен',
 	created: 'Создан',
 	cooking: 'Готовится',
 	'on-the-way': 'В пути',

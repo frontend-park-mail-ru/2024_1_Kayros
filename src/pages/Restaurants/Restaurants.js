@@ -168,16 +168,40 @@ class Restaurants {
 	 *
 	 */
 	async initCategories() {
+		const categoryBar = document.querySelector('.category-bar');
 		api.getCategories((categories) => {
-			const categoryBar = document.querySelector('.category-bar');
-			categories?.forEach((category) => {
+		
+			if (!categories || categories.length === 0) {
+				categoryBar.style.display = 'none'; 
+				return; 
+			}
+	
+			categories.forEach((category) => {
 				const categoryDiv = document.createElement('div');
 				categoryDiv.className = `category category${category.id}`;
 				categoryBar.appendChild(categoryDiv);
 				this.createButton(categoryDiv, `category${category.id}-button`, category.name, category.id);
 			});
+	
+			const allCategoriesButton = document.querySelector('.all-categories-button');
+			const button = new Button(allCategoriesButton, {
+				id: 'all-categories-button',
+				onClick: () => {
+					this.updateButtonStyles('all-categories-button');
+				},
+				content: 'Все',
+				additionalClass: 'category-button',
+			});
+	
+			button.render();
+	
+			if (allCategoriesButton) {
+				allCategoriesButton.addEventListener('click', this.getData.bind(this));
+			}
 		});
 	}
+	
+
 
 	/**
 	 * Создаёт кнопку и добавляет её в указанный контейнер.
@@ -295,22 +319,6 @@ class Restaurants {
 		await this.getOrdersData(content);
 
 		await this.initCategories();
-
-		const allCategoriesButton = document.querySelector('.all-categories-button');
-		const button = new Button(allCategoriesButton, {
-			id: 'all-categories-button',
-			onClick: () => {
-				this.updateButtonStyles('all-categories-button');
-			},
-			content: 'Все',
-			additionalClass: 'category-button',
-		});
-
-		button.render();
-
-		if (allCategoriesButton) {
-			allCategoriesButton.addEventListener('click', this.getData.bind(this));
-		}
 
 		if (window.innerWidth < 768) {
 			const urlSearchParams = new URLSearchParams(window.location.search);
