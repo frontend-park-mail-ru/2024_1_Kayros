@@ -91,6 +91,8 @@ class Orders {
 		switch (status.toLowerCase()) {
 		case 'delivered':
 			return 'delivered';
+		case 'created':
+			return 'created';
 		case 'cooking':
 			return 'cooking';
 		case 'on the way':
