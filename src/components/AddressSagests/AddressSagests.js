@@ -6,8 +6,9 @@ import Header from '../Header/Header';
 import template from './AddressSagests.hbs';
 import Dropdown from './Dropdown/Dropdown';
 import './AddressSagests.scss';
-import Profile from "../../pages/Profile";
-import urls from "../../routes/urls.js";
+import Profile from '../../pages/Profile';
+import urls from '../../routes/urls.js';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Саджесты для адреса
@@ -70,12 +71,16 @@ class AddressSagests {
 		const searchInput = this.#parent.querySelector('#address-search-input');
 
 		if (!this.isUserAddress) {
-			setCookieIfNotExist('unauth_id', crypto.randomUUID());
+			setCookieIfNotExist('unauth_id', uuidv4());
 		}
 
 		this.address = searchInput.value.split(' · ')[1] || searchInput.value;
 
-		await api.updateAddressSagests({ address: this.address }, this.isUserAddress ? this.handleUserAddressChange.bind(this) : this.handleAddressChange.bind(this), {user_address: this.isUserAddress});
+		await api.updateAddressSagests(
+			{ address: this.address },
+			this.isUserAddress ? this.handleUserAddressChange.bind(this) : this.handleAddressChange.bind(this),
+			{ user_address: this.isUserAddress },
+		);
 
 		if (!this.isUserAddress) {
 			const cartAddress = document.querySelector('#main-address');

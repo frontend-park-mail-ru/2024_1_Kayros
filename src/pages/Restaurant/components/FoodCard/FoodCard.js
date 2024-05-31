@@ -8,6 +8,7 @@ import { localStorageHelper, setCookieIfNotExist } from '../../../../utils';
 import clearCartModalTemplate from './ClearCartModal.hbs';
 import template from './FoodCard.hbs';
 import authModalTemplate from './NeedAuthModal.hbs';
+import { v4 as uuidv4 } from 'uuid';
 import './FoodCard.scss';
 
 /**
@@ -40,7 +41,7 @@ class FoodCard {
 			return;
 		}
 
-		setCookieIfNotExist('unauth_id', crypto.randomUUID());
+		setCookieIfNotExist('unauth_id', uuidv4());
 	}
 
 	/**
