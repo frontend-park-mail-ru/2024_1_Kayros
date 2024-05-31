@@ -248,7 +248,7 @@ class Restaurants {
 
 		if (codes) {
 			const couponsTitle = document.createElement('div');
-			couponsTitle.innerText = 'Вам доступны купоны';
+			couponsTitle.innerText = 'Промокоды';
 			couponsTitle.className = 'restaurants__title';
 
 			const coupons = this.#parent.querySelector('.coupons-slider');
