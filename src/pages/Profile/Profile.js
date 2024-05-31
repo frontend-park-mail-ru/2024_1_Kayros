@@ -193,7 +193,7 @@ class Profile {
 					submitButton.disabled = false;
 				}
 			},
-			file: data?.img_url,
+			file: data?.img_url.replaceAll('&amp;', '&'),
 		});
 
 		fileUpload.render();

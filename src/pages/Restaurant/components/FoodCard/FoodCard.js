@@ -220,8 +220,9 @@ class FoodCard {
 			maxCount: 99,
 			prevCount: () => {
 				const address = localStorageHelper.getItem('user-address').value;
+				const user = localStorageHelper.getItem('user-info');
 
-				if (address === '' || !address) {
+				if ((address === '' || !address) && !user?.address) {
 					this.openAddressModal();
 					return;
 				}

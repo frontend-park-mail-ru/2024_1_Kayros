@@ -244,26 +244,28 @@ class Restaurants {
 			header.render();
 		}
 
-		const couponsTitle = document.createElement('div');
-		couponsTitle.innerText = 'Вам доступны купоны';
-		couponsTitle.className = 'restaurants__title';
-
-		const coupons = this.#parent.querySelector('.coupons-slider');
-
-		coupons.insertAdjacentElement('beforebegin', couponsTitle);
-
 		const codes = await api.getPromocodes();
 
-		const slickSlider = new SlickSlider(coupons);
-		slickSlider.render();
+		if (codes) {
+			const couponsTitle = document.createElement('div');
+			couponsTitle.innerText = 'Вам доступны купоны';
+			couponsTitle.className = 'restaurants__title';
 
-		const slickTrack = coupons.querySelector('.slick-track');
+			const coupons = this.#parent.querySelector('.coupons-slider');
 
-		codes.forEach((code, i) => {
-			console.log(code);
-			const coupon = new Coupon(slickTrack, { id: `coupon-${i}`, data: code });
-			coupon.render();
-		});
+			coupons.insertAdjacentElement('beforebegin', couponsTitle);
+
+			const slickSlider = new SlickSlider(coupons);
+			slickSlider.render();
+
+			const slickTrack = coupons.querySelector('.slick-track');
+
+			codes.forEach((code, i) => {
+				console.log(code);
+				const coupon = new Coupon(slickTrack, { id: `coupon-${i}`, data: code });
+				coupon.render();
+			});
+		}
 
 		const recs = await api.getRecomendations();
 

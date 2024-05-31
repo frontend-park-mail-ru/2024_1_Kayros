@@ -429,7 +429,7 @@ class Api {
 	 * @returns {Promise<object>} - результат запроса
 	 */
 	async getPromocodes() {
-		const data = await ajax.get(`${this.#url}/promocode`);
+		const data = await ajax.get(`${this.#url}/promocode`, { showNotifyError: false });
 
 		return data?.payload;
 	}
@@ -459,6 +459,16 @@ class Api {
 			description: error || data.detail || ERROR_MESSAGES.SERVER_RESPONSE,
 			type: 'error',
 		});
+	}
+
+	/**
+	 * Метод для добавления промокода
+	 * @param {object} body - объект
+	 * @returns {Promise<boolean>} - результат запроса
+	 */
+	async sendVK(body) {
+		const { data, error } = await ajax.post(`${this.#url}/vk`, body);
+		return data;
 	}
 
 	/**
