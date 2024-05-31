@@ -1,3 +1,5 @@
+@import "../../../../variables";
+
 .coupon {
 	width: 100%;
 	height: fit-content;
@@ -13,6 +15,10 @@
 	gap: 20px;
 	border: 1px solid #ededed;
 	position: relative;
+	box-sizing: content-box;
+
+	@media (max-width: $sm) {
+	}
 
 	&.copied {
 		.copied {
