@@ -13,13 +13,13 @@ import { localStorageHelper } from '../../utils';
 import template from './Restaurants.hbs';
 import RestaurantCard from './components/RestaurantCard';
 import './Restaurants.scss';
+import Coupon from '../Cart/components/Coupon/Coupon.js';
 
 /**
  * Страница со списком ресторанов
  */
 class Restaurants {
 	#parent;
-
 	/**
 	 * Конструктор класса
 	 * @param {Element} parent - родительский элемент
@@ -47,6 +47,10 @@ class Restaurants {
 		}
 
 		restaurants.innerHTML = '';
+
+		const div = document.createElement('div');
+		div.innerText = 'Все рестораны';
+		div.className = 'restaurants__title';
 
 		items.forEach((item) => {
 			const restaurantCard = new RestaurantCard(restaurants, item);
@@ -166,7 +170,7 @@ class Restaurants {
 	async initCategories() {
 		api.getCategories((categories) => {
 			const categoryBar = document.querySelector('.category-bar');
-			categories.forEach((category) => {
+			categories?.forEach((category) => {
 				const categoryDiv = document.createElement('div');
 				categoryDiv.className = `category category${category.id}`;
 				categoryBar.appendChild(categoryDiv);
@@ -240,6 +244,52 @@ class Restaurants {
 			header.render();
 		}
 
+		const codes = await api.getPromocodes();
+
+		if (codes) {
+			const couponsTitle = document.createElement('div');
+			couponsTitle.innerText = 'Промокоды';
+			couponsTitle.className = 'restaurants__title';
+
+			const coupons = this.#parent.querySelector('.coupons-slider');
+
+			coupons.insertAdjacentElement('beforebegin', couponsTitle);
+
+			const slickSlider = new SlickSlider(coupons);
+			slickSlider.render();
+
+			const slickTrack = coupons.querySelector('.slick-track');
+
+			codes.forEach((code, i) => {
+				console.log(code);
+				const coupon = new Coupon(slickTrack, { id: `coupon-${i}`, data: code });
+				coupon.render();
+			});
+		}
+
+		const recs = await api.getRecomendations();
+
+		const div = document.createElement('div');
+		div.innerText = 'Рекомендации';
+		div.className = 'restaurants__title';
+
+		const recomendations = document.querySelector('.restaurants__recomendations');
+
+		if (recs?.length > 0) {
+			recomendations.insertAdjacentElement('beforebegin', div);
+
+			// Добавляем SlickSlider для рекомендаций
+			const slickSliderRecomendations = new SlickSlider(recomendations);
+			slickSliderRecomendations.render();
+
+			const slickTrackRecomendations = recomendations.querySelector('.slick-track');
+
+			recs?.forEach((item) => {
+				const restaurantCard = new RestaurantCard(slickTrackRecomendations, item);
+				restaurantCard.render();
+			});
+		}
+
 		const content = document.querySelector('.content');
 
 		await this.getOrdersData(content);
@@ -303,6 +353,31 @@ class Restaurants {
 
 			api.getOrdersData(this.renderOrders.bind(this));
 		}, 5000);
+
+		if (window.innerWidth < 768) {
+			await this.checkCartDataAndRenderButton();
+		}
+	}
+
+	/**
+	 *
+	 */
+	checkCartDataAndRenderButton() {
+		api.getCartInfo((cartData) => {
+			if (cartData) {
+				const cartBlockMobile = document.querySelector('.cart__mobile');
+
+				const cartButtonMobile = new Button(cartBlockMobile, {
+					id: 'cart-button__restaurants',
+					content: '',
+					icon: 'cart',
+					style: 'primary',
+					onClick: () => router.navigate(urls.cart),
+				});
+
+				cartButtonMobile.render();
+			}
+		});
 	}
 }
 

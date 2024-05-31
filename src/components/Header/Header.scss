@@ -38,6 +38,11 @@
 			margin-right: 0;
 			margin-left: auto;
 		}
+
+		@media (max-width: $xs) {
+			padding: 14px 10px;
+			gap: 3px;
+		}
 	}
 
 	&__search-input {
@@ -71,6 +76,14 @@
 
 	&__address {
 		max-width: 350px;
+
+		@media (max-width: $xsm) {
+			max-width: 230px;
+		}
+
+		@media (max-width: 360px) {
+			max-width: 160px;
+		}
 
 		& .btn {
 			width: 100%;
@@ -115,6 +128,10 @@
 				width: 100%;
 			}
 		}
+
+		@media (max-width: $xs) {
+			margin-left: 0;
+		}
 	}
 
 	& + .content {
@@ -128,6 +145,11 @@
 	@media (max-width: $xsm) {
 		margin-top: 0;
 		gap: 10px;
+	}
+
+	@media (max-width: $xs) {
+		gap: 0;
+		justify-content: center;
 	}
 }
 

@@ -1,0 +1,119 @@
+@import "../../constants.scss";
+@import "../../variables";
+
+.orders-title {
+	font-size: 30px;
+	font-weight: 600;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.orders-page {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 20px;
+}
+
+.orders-list {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 30%;
+
+	@media (max-width: $md) {
+		width: 100%;
+	}
+}
+
+.order-wrapper {
+	flex: 1;
+
+	@media (max-width: $md) {
+		display: none;
+	}
+}
+
+.order-card {
+	box-sizing: border-box;
+	width: 100%;
+	border: 1px solid var(--order-card-border);
+	border-radius: 15px;
+	padding: 15px;
+	margin: 10px 0;
+	background: var(--auth-background);
+	box-shadow: var(--dropdown-box-shadow);
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 20px;
+	}
+
+	&__body {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+
+	&__number {
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	&__restaurant {
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	&__price {
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	&__date {
+		font-size: 14px;
+		color: var(--order-date);
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__status {
+		font-size: 16px;
+		font-weight: bold;
+
+		&--created {
+			color: var(--order-created);
+		}
+
+		&--delivered {
+			color: var(--order-delivered);
+		}
+
+		&--cooking {
+			color: var(--order-is-cooking);
+		}
+
+		&--on-the-way {
+			color: var(--order-on-the-way);
+		}
+	}
+
+	&--active {
+		border-color: var(--active-border-color);
+		background-color: var(--active-background-color);
+	}
+}
+
+.no-orders-message {
+	font-size: 20px;
+	color: var(--text-color);
+	text-align: center;
+	margin-top: 50px;
+}

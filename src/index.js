@@ -1,10 +1,17 @@
 import '@fontsource/montserrat';
+import * as VKID from '@vkid/sdk';
 import { Notification } from 'resto-ui';
 import Layout from './components/Layout';
 import { router } from './modules/router';
 import routes from './routes';
 import urls from './routes/urls';
 import './global.scss';
+
+VKID.Config.set({
+	app: '51915631',
+	redirectUrl: 'https://resto-go.online/signin',
+	state: '',
+});
 
 const root = document.createElement('div');
 root.id = 'root';
@@ -16,7 +23,12 @@ layout.render();
 const urlSearchParams = new URLSearchParams(window.location.search);
 
 router.addRoutes(routes);
-router.navigate(window.location.pathname, { searchParams: urlSearchParams });
+
+if (window.location.pathname.includes('api/v1/vk')) {
+	router.navigate(urls.restaurants);
+} else {
+	router.navigate(window.location.pathname, { searchParams: urlSearchParams });
+}
 
 if (process.env.CACHE_ENABLE) {
 	const registerServiceWorker = async () => {

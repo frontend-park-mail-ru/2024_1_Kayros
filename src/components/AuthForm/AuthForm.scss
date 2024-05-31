@@ -122,6 +122,35 @@
 			display: block;
 		}
 	}
+
+	&__vk-auth {
+		margin: 0 auto;
+		margin-top: 14px;
+		border-radius: 20px;
+	}
+
+	&__other-methods {
+		position: relative;
+		font-size: 14px;
+		margin-top: 20px;
+
+		span {
+			position: relative;
+			padding: 0 10px;
+			background: var(--text-in-signin);
+			color: var(--link-color-hover);
+			z-index: 2;
+		}
+
+		&-line {
+			position: absolute;
+			top: 10px;
+			width: 100%;
+			z-index: 1;
+			border-bottom: 1px solid var(--link-color-hover);
+			margin-bottom: 10px;
+		}
+	}
 }
 
 .input-container {

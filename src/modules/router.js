@@ -92,7 +92,7 @@ class Router {
 				this.previousState = window.history?.state;
 			}
 
-			window.history.replaceState({ path }, '', path);
+			window.history.replaceState({ path: `${path}${urlSearchParams}` }, '', `${path}${urlSearchParams}`);
 		} else {
 			this.previousState = window.history?.state;
 			window.history.pushState({ path: `${path}${urlSearchParams}` }, '', `${path}${urlSearchParams}`);
