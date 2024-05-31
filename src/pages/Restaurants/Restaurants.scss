@@ -1,7 +1,11 @@
 @import "../../variables";
 
-.coupons-slider, .restaurants__recomendations {
+.coupons-slider,
+.restaurants__recomendations {
 	overflow-x: auto;
+	&::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 .restaurants {
@@ -20,8 +24,8 @@
 		color: var(--brand);
 		font-size: 18px;
 		transition: all 0.5s;
-    min-height: 700px;
-    margin-top: 20px;
+		min-height: 700px;
+		margin-top: 20px;
 
 		@media (max-width: $xl) {
 			grid-template-columns: repeat(3, 1fr);
@@ -116,7 +120,7 @@
 		width: 90%;
 		overflow-x: scroll;
 		z-index: 100;
-    margin-left: 20px;
+		margin-left: 20px;
 
 		&::-webkit-scrollbar {
 			width: 4px;
