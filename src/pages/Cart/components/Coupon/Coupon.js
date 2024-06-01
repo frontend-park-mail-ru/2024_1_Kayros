@@ -31,7 +31,7 @@ class Coupon {
 	render() {
 		let text = '';
 
-		switch(this.data.type) {
+		switch (this.data.type) {
 			case 'first':
 				text = 'Скидка действует на первый заказ в нашем сервисе';
 				break;
@@ -46,15 +46,16 @@ class Coupon {
 				text = 'Единоразовая скидка специально для Вас';
 		}
 
-
-		this.#parent.insertAdjacentHTML('beforeend', template(
-			{
+		this.#parent.insertAdjacentHTML(
+			'beforeend',
+			template({
 				id: this.#id,
 				sale: this.data.sale,
 				date: this.formatDate(this.data.date),
 				code: this.data.code,
 				text,
-			}));
+			}),
+		);
 
 		const c = document.getElementById(`${this.#id}`);
 
@@ -64,6 +65,10 @@ class Coupon {
 		};
 
 		c.onmouseleave = () => {
+			c.classList.remove('copied');
+		};
+
+		c.ontouchend = () => {
 			c.classList.remove('copied');
 		};
 	}

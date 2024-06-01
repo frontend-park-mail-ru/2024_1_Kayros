@@ -11,7 +11,7 @@
 	box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
 	background-color: #fff;
 	padding: 10px;
-	gap: 20px;
+	gap: 10px;
 	border: 1px solid #ededed;
 	position: relative;
 	box-sizing: content-box;
@@ -38,7 +38,6 @@
 	}
 
 	&__logo {
-
 	}
 
 	&:hover {
@@ -71,6 +70,8 @@
 		flex-direction: column;
 		gap: 4px;
 		flex: 1;
+		border-left: 1px dashed #b7b7b7;
+    padding-left: 14px;
 	}
 }
 
