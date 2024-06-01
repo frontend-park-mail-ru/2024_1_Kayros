@@ -1,5 +1,7 @@
 import Button from '../../components/Button/Button';
 import api from '../../modules/api';
+import { router } from '../../modules/router';
+import urls from '../../routes/urls';
 import mobileTemplate from './MobileRestaurant.hbs';
 import template from './Restaurant.hbs';
 import Banner from './components/Banner/Banner';
@@ -135,7 +137,7 @@ class Restaurant {
 	 * @param {*} data - data
 	 * @returns {*} return
 	 */
-	renderMobile(data) {
+	async renderMobile(data) {
 		const restaurant = document.querySelector('.restaurant-mobile');
 
 		if (!data) {
@@ -203,8 +205,22 @@ class Restaurant {
 		});
 
 		categories.forEach((category) => categoriesObserver.observe(category));
+
+		await this.checkCartDataAndRenderButton();
 	}
 
+	/**
+	 *
+	 */
+	checkCartDataAndRenderButton() {
+		api.getCartInfo((cartData) => {
+			if (cartData) {
+				this.renderCartIcon();
+			} else {
+				this.removeCartIcon();
+			}
+		});
+	}
 	/**
 	 * Получение информации о ресторане
 	 */
@@ -214,6 +230,37 @@ class Restaurant {
 		});
 
 		api.getRestaurantInfo(this.id, this.isMobile ? this.renderMobile.bind(this) : this.renderData.bind(this));
+	}
+
+	/**
+	 *
+	 */
+	renderCartIcon() {
+		const cartBlockMobile = document.querySelector('.cart__mobile');
+		let existingButton = document.getElementById('cart-button__restaurant');
+
+		if (!existingButton) {
+			const cartButtonMobile = new Button(cartBlockMobile, {
+				id: 'cart-button2',
+				content: '',
+				icon: 'cart',
+				style: 'primary',
+				onClick: () => router.navigate(urls.cart),
+			});
+
+			cartButtonMobile.render();
+		}
+	}
+
+	/**
+	 *
+	 */
+	removeCartIcon() {
+		const existingButton = document.getElementById('cart-button2');
+
+		if (existingButton) {
+			existingButton.remove();
+		}
 	}
 
 	/**

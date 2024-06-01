@@ -6,6 +6,8 @@ import Header from '../Header/Header';
 import template from './AddressSagests.hbs';
 import Dropdown from './Dropdown/Dropdown';
 import './AddressSagests.scss';
+import Profile from "../../pages/Profile";
+import urls from "../../routes/urls.js";
 
 /**
  * Саджесты для адреса
@@ -19,13 +21,27 @@ class AddressSagests {
 	 * @param {object} params - параметры компонента
 	 * @param {void} params.closeModal - метод для закрытия модалки
 	 * @param {void} params.goToPoint - переход по точке
+	 * @param {boolean} params.isUserAddress - чей адрес: юзера или заказов
+	 * @param {string} params.userAddress - адрес юзера
 	 */
-	constructor(parent, { closeModal, goToPoint }) {
+	constructor(parent, { closeModal, goToPoint, isUserAddress = false, userAddress = '' }) {
 		this.#parent = parent;
 		this.closeModal = closeModal;
 		this.address = '';
 		this.goToPoint = goToPoint;
 		this.user = '';
+		this.isUserAddress = isUserAddress;
+		this.userAddress = userAddress;
+	}
+
+	/**
+	 * Перерисовать хедер
+	 */
+	rerenderHeader() {
+		const header = document.querySelector('.header');
+		header.remove();
+		const newHeader = new Header({ navigate: router.navigate.bind(router) });
+		newHeader.render();
 	}
 
 	/**
@@ -34,10 +50,17 @@ class AddressSagests {
 	handleAddressChange() {
 		localStorage.setItem('user-address', JSON.stringify({ value: this.address }));
 
-		const header = document.querySelector('.header');
-		header.remove();
-		const newHeader = new Header({ navigate: router.navigate.bind(router) });
-		newHeader.render();
+		this.rerenderHeader();
+	}
+
+	handleUserAddressChange() {
+		if (window.location.pathname === urls.profile) {
+			const content = document.querySelector('.content');
+			const profile = new Profile(content);
+			profile.getUserAddress();
+		}
+
+		this.rerenderHeader();
 	}
 
 	/**
@@ -46,18 +69,23 @@ class AddressSagests {
 	async setAddress() {
 		const searchInput = this.#parent.querySelector('#address-search-input');
 
+		if (!this.isUserAddress) {
+			setCookieIfNotExist('unauth_id', crypto.randomUUID());
+		}
+
 		this.address = searchInput.value.split(' · ')[1] || searchInput.value;
 
-		setCookieIfNotExist('unauth_id', crypto.randomUUID());
+		await api.updateAddressSagests({ address: this.address }, this.isUserAddress ? this.handleUserAddressChange.bind(this) : this.handleAddressChange.bind(this), {user_address: this.isUserAddress});
 
-		await api.updateAddressSagests({ address: this.address }, this.handleAddressChange.bind(this));
-		const cartAddress = document.querySelector('#main-address');
-		const cartContainer = document.querySelector('#main-address-container');
+		if (!this.isUserAddress) {
+			const cartAddress = document.querySelector('#main-address');
+			const cartContainer = document.querySelector('#main-address-container');
 
-		if (cartAddress) {
-			cartAddress.value = this.address;
-			const holder = cartContainer.querySelector('.input__label-holder');
-			holder.style.width = 20 * 8 + 'px';
+			if (cartAddress) {
+				cartAddress.value = this.address;
+				const holder = cartContainer.querySelector('.input__label-holder');
+				holder.style.width = 20 * 8 + 'px';
+			}
 		}
 
 		this.closeModal();
@@ -154,10 +182,13 @@ class AddressSagests {
 		const dropdown = sagestsContainer.querySelector('.address-sagests__dropdown-container');
 
 		const user = localStorageHelper.getItem('user-info');
+		const address = localStorageHelper.getItem('user-address')?.value;
 		this.user = user;
 
-		if (user?.address) {
-			input.value = user.address || '';
+		if (this.isUserAddress) {
+			input.value = this.userAddress || '';
+		} else {
+			input.value = address || '';
 		}
 
 		let stopTyping;
@@ -197,6 +228,8 @@ class AddressSagests {
 
 		dropdown.onclick = (event) => {
 			event.stopPropagation();
+			dropdown.classList.remove('dropdown-open');
+			this.open = false;
 		};
 
 		window.onclick = () => {

@@ -46,7 +46,7 @@ class Header {
 		const cartBlock = document.querySelector('.header__cart');
 		const cartButton = new Button(cartBlock, {
 			id: 'cart-button',
-			content: data?.sum ? `${data.sum} ₽` : ' ',
+			content: data?.sum ? `${data.new_sum || data.sum} ₽` : ' ',
 			icon: 'cart',
 			style: !data?.sum ? 'secondary' : 'primary',
 			onClick: () => this.navigate(urls.cart),
@@ -146,7 +146,7 @@ class Header {
 		await this.userData();
 
 		const user = localStorageHelper.getItem('user-info');
-		const address = localStorageHelper.getItem('user-address').value;
+		const address = localStorageHelper.getItem('user-address')?.value;
 
 		const addressBlock = document.querySelector('.header__address');
 		const addressButton = new Button(addressBlock, {
@@ -154,9 +154,9 @@ class Header {
 			onClick: () => {
 				this.navigate(urls.address);
 			},
-			content: address || 'Укажите адрес доставки',
-			icon: address ? '' : 'address',
-			style: address ? 'secondary' : 'primary',
+			content: address || user?.address || 'Укажите адрес доставки',
+			icon: address || user?.address ? '' : 'address',
+			style: address || user?.address ? 'secondary' : 'primary',
 		});
 
 		addressButton.render();

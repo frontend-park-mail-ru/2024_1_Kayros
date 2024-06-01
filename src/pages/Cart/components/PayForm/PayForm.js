@@ -1,11 +1,13 @@
 import Button from '../../../../components/Button';
 import Input from '../../../../components/Input/Input';
+import SlickSlider from '../../../../components/SlickSlider/SlickSlider';
 import { FIELDS_ADRESS_FORM } from '../../../../constants';
 import { validateApartNumber, validateEntranceNumber, validateFloorNumber } from '../../../../helpers/validation';
 import api from '../../../../modules/api';
 import { router } from '../../../../modules/router';
 import urls from '../../../../routes/urls';
 import { localStorageHelper } from '../../../../utils';
+import Coupon from '../Coupon/Coupon';
 import template from './PayForm.hbs';
 import './PayForm.scss';
 
@@ -71,13 +73,22 @@ class PayForm {
 	}
 
 	/**
+	 * Получение информации о корзине
+	 */
+	async getData() {
+		await api.getCartInfo((data) => {
+			this.data = data;
+		});
+	}
+
+	/**
 	 * Рендер страницы
 	 */
 	async render() {
 		const user = localStorageHelper.getItem('user-info');
 		this.user = user;
 		const address = localStorageHelper.getItem('user-address').value;
-		this.main = address;
+		this.main = address || user?.address;
 
 		this.#parent.insertAdjacentHTML('beforeend', template(this.data));
 		const form = this.#parent.querySelector('.pay-form');
@@ -96,7 +107,17 @@ class PayForm {
 				onChange: (event) => {
 					this[field.name] = event.target.value;
 				},
-				disabled: field.name === 'main',
+				buttonOnClick: async () => {
+					const data = await api.sendPromcode({ code: this[field.name] });
+
+					if (data.code_id) {
+						await this.getData();
+						const form = this.#parent.querySelector('.pay-form');
+						form.remove();
+						this.render();
+					}
+				},
+				button: field.name === 'promocode' ? 'Применить' : '',
 			}).render();
 
 			if (field.id !== 'main-address') {
@@ -113,11 +134,37 @@ class PayForm {
 			router.navigate(urls.address);
 		};
 
+		const promo = this.#parent.querySelector('.pay-form__promo');
+
+		new Input(promo, {
+			id: 'payform-promocode',
+			placeholder: 'Введите промокод',
+			value: this['promocode'],
+			onChange: (event) => {
+				this['promocode'] = event.target.value;
+			},
+			buttonOnClick: async () => {
+				const data = await api.sendPromcode({ code: this['promocode'] });
+
+				if (data?.code_id) {
+					await this.getData();
+					const form = this.#parent.querySelector('.pay-form');
+					form.remove();
+					this.render();
+
+					const cart = document.getElementById('cart-button');
+					const sumBlock = cart.querySelector('span');
+					sumBlock.innerText = `${this.data.new_sum} ₽`;
+				}
+			},
+			button: 'Применить',
+		}).render();
+
 		const checkoutButtonBlock = this.#parent.querySelector('.pay-form__button');
 
 		const checkoutButton = new Button(checkoutButtonBlock, {
 			id: 'pay-form-button',
-			content: 'Оплатить',
+			content: 'Заказать',
 			disabled: !this.data?.sum || !this.entrance || !this.floor || !this.apart,
 			withLoader: true,
 			onClick: () => {
