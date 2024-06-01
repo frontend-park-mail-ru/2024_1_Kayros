@@ -27,6 +27,8 @@ class Sidebar {
 	 * Рендеринг компонента
 	 */
 	async render() {
+		if (!this.parent) return;
+
 		this.parent.insertAdjacentHTML('beforeend', template({ categories: this.categories }));
 
 		const buttonContainer = this.parent.querySelector('.restaurant-categories__button-container');

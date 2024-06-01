@@ -65,6 +65,8 @@ class Header {
 
 		this.searchValue = searchValue;
 
+    if (!searchBlock) return
+
 		if (window.location.pathname === urls.search) {
 			searchBlock.value = searchValue;
 		} else {
@@ -102,7 +104,7 @@ class Header {
 	 * Рендеринг компонента
 	 */
 	async render() {
-		this.#parent.insertAdjacentHTML('afterbegin', template());
+		this.#parent?.insertAdjacentHTML('afterbegin', template());
 		const logoBlock = document.querySelector('.header__logo-container');
 
 		if (window.innerWidth > 480) {

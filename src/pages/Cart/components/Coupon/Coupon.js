@@ -60,6 +60,8 @@ class Coupon {
 
 		const c = document.getElementById(`${this.#id}`);
 
+		if (!c) return;
+
 		c.onclick = async () => {
 			//await navigator.clipboard.writeText(this.data.code);
 			c.classList.add('copied');

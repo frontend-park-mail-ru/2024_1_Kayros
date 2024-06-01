@@ -51,6 +51,8 @@ class Banner {
 	 * Рендеринг компонента
 	 */
 	render() {
+		if (!this.#parent) return;
+
 		this.#data.rating = Math.round(this.#data.rating * 10) / 10;
 
 		this.#parent.insertAdjacentHTML('beforeend', template(this.#data));

@@ -36,6 +36,8 @@ class Restaurants {
 	renderData(items) {
 		const restaurants = document.querySelector('.restaurants__cards');
 
+		if (!restaurants) return;
+
 		if (!items) {
 			restaurants.innerText = 'Нет доступных ресторанов';
 			return;
@@ -173,7 +175,7 @@ class Restaurants {
 			categories?.forEach((category) => {
 				const categoryDiv = document.createElement('div');
 				categoryDiv.className = `category category${category.id}`;
-				categoryBar.appendChild(categoryDiv);
+				categoryBar?.appendChild(categoryDiv);
 				this.createButton(categoryDiv, `category${category.id}-button`, category.name, category.id);
 			});
 		});
@@ -275,7 +277,7 @@ class Restaurants {
 
 		const recomendations = document.querySelector('.restaurants__recomendations');
 
-		if (recs?.length > 0) {
+		if (recs?.length > 0 && recomendations) {
 			recomendations.insertAdjacentElement('beforebegin', div);
 
 			// Добавляем SlickSlider для рекомендаций

@@ -27,6 +27,8 @@ class CategoryFood {
 	 * Рендеринг компонента
 	 */
 	render() {
+		if (!this.parent) return;
+
 		this.parent.insertAdjacentHTML('beforeend', template({ name: this.data.name, id: this.data.id }));
 
 		const category = document.getElementById(`category-${this.data.id}`);

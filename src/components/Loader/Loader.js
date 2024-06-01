@@ -29,6 +29,8 @@ class Loader {
 	 * Рендеринг компонента
 	 */
 	render() {
+		if (!this.#parent) return;
+
 		this.#parent.insertAdjacentHTML('beforeend', template({ id: this.#id, size: this.#size, style: this.#style }));
 	}
 }
