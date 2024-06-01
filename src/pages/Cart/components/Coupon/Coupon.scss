@@ -28,6 +28,16 @@
 		.copy {
 			opacity: 0 !important;
 		}
+
+		.coupon__content {
+			transition: 0.2s;
+			opacity: 0;
+		}
+
+		.coupon__logo {
+			transition: 0.2s;
+			opacity: 0;
+		}
 	}
 
 	.copied {
@@ -40,21 +50,23 @@
 	&__logo {
 	}
 
-	&:hover {
-		cursor: pointer;
-		.copy {
-			opacity: 1;
-			transform: scale(1.1);
-		}
+	@media (min-width: 500px) {
+		&:hover {
+			cursor: pointer;
+			.copy {
+				opacity: 1;
+				transform: scale(1.1);
+			}
 
-		.coupon__logo {
-			transition: 0.2s;
-			opacity: 0;
-		}
+			.coupon__logo {
+				transition: 0.2s;
+				opacity: 0;
+			}
 
-		.coupon__content {
-			transition: 0.2s;
-			opacity: 0;
+			.coupon__content {
+				transition: 0.2s;
+				opacity: 0;
+			}
 		}
 	}
 
@@ -71,7 +83,7 @@
 		gap: 4px;
 		flex: 1;
 		border-left: 1px dashed #b7b7b7;
-    padding-left: 14px;
+		padding-left: 14px;
 	}
 }
 

@@ -18,6 +18,7 @@ class Coupon {
 		this.#parent = parent;
 		this.#id = id;
 		this.data = data;
+		this.timeout = null;
 	}
 
 	formatDate(dateString) {
@@ -60,15 +61,15 @@ class Coupon {
 		const c = document.getElementById(`${this.#id}`);
 
 		c.onclick = async () => {
-			await navigator.clipboard.writeText(this.data.code);
+			//await navigator.clipboard.writeText(this.data.code);
 			c.classList.add('copied');
+			this.timeout = null;
+			this.timeout = setTimeout(() => {
+				c.classList.remove('copied');
+			}, 1000);
 		};
 
 		c.onmouseleave = () => {
-			c.classList.remove('copied');
-		};
-
-		c.ontouchend = () => {
 			c.classList.remove('copied');
 		};
 	}
