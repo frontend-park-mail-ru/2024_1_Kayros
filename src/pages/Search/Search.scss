@@ -22,7 +22,10 @@
 	.restaurant-card {
 		flex-direction: row;
 		gap: 20px;
+		min-width: initial;
 		max-width: initial;
+
+    min-height: auto !important;
 
 		&__image-container {
 			width: 110px;
