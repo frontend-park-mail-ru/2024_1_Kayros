@@ -88,6 +88,8 @@ class Button {
 	 * Рендеринг компонента
 	 */
 	render() {
+		if (!this.#parent) return;
+
 		if (this.replace) {
 			this.#parent.innerHTML = this.getHTML();
 		} else {

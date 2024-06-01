@@ -97,6 +97,8 @@ class Input {
 
 		const inputContainer = document.getElementById(`${this.#id}-container`);
 
+		if (!inputContainer) return;
+
 		let input = inputContainer.querySelector('input');
 
 		if (this.textarea) {

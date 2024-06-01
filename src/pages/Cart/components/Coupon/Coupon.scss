@@ -11,7 +11,7 @@
 	box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
 	background-color: #fff;
 	padding: 10px;
-	gap: 20px;
+	gap: 10px;
 	border: 1px solid #ededed;
 	position: relative;
 	box-sizing: content-box;
@@ -28,6 +28,16 @@
 		.copy {
 			opacity: 0 !important;
 		}
+
+		.coupon__content {
+			transition: 0.2s;
+			opacity: 0;
+		}
+
+		.coupon__logo {
+			transition: 0.2s;
+			opacity: 0;
+		}
 	}
 
 	.copied {
@@ -38,24 +48,25 @@
 	}
 
 	&__logo {
-
 	}
 
-	&:hover {
-		cursor: pointer;
-		.copy {
-			opacity: 1;
-			transform: scale(1.1);
-		}
+	@media (min-width: 500px) {
+		&:hover {
+			cursor: pointer;
+			.copy {
+				opacity: 1;
+				transform: scale(1.1);
+			}
 
-		.coupon__logo {
-			transition: 0.2s;
-			opacity: 0;
-		}
+			.coupon__logo {
+				transition: 0.2s;
+				opacity: 0;
+			}
 
-		.coupon__content {
-			transition: 0.2s;
-			opacity: 0;
+			.coupon__content {
+				transition: 0.2s;
+				opacity: 0;
+			}
 		}
 	}
 
@@ -71,6 +82,8 @@
 		flex-direction: column;
 		gap: 4px;
 		flex: 1;
+		border-left: 1px dashed #b7b7b7;
+		padding-left: 14px;
 	}
 }
 
@@ -87,7 +100,7 @@
 
 .coupon__text {
 	transition: 0.2s;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: 600;
 	color: #797979;
 }

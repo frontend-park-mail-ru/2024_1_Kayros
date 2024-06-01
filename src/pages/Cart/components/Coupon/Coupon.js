@@ -18,6 +18,7 @@ class Coupon {
 		this.#parent = parent;
 		this.#id = id;
 		this.data = data;
+		this.timeout = null;
 	}
 
 	formatDate(dateString) {
@@ -31,7 +32,7 @@ class Coupon {
 	render() {
 		let text = '';
 
-		switch(this.data.type) {
+		switch (this.data.type) {
 			case 'first':
 				text = 'Скидка действует на первый заказ в нашем сервисе';
 				break;
@@ -46,21 +47,28 @@ class Coupon {
 				text = 'Единоразовая скидка специально для Вас';
 		}
 
-
-		this.#parent.insertAdjacentHTML('beforeend', template(
-			{
+		this.#parent.insertAdjacentHTML(
+			'beforeend',
+			template({
 				id: this.#id,
 				sale: this.data.sale,
 				date: this.formatDate(this.data.date),
 				code: this.data.code,
 				text,
-			}));
+			}),
+		);
 
 		const c = document.getElementById(`${this.#id}`);
 
+		if (!c) return;
+
 		c.onclick = async () => {
-			await navigator.clipboard.writeText(this.data.code);
+			//await navigator.clipboard.writeText(this.data.code);
 			c.classList.add('copied');
+			this.timeout = null;
+			this.timeout = setTimeout(() => {
+				c.classList.remove('copied');
+			}, 1000);
 		};
 
 		c.onmouseleave = () => {
