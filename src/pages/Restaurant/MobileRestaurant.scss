@@ -3,6 +3,7 @@
 .restaurant-mobile {
 	position: absolute;
 	top: -6px;
+  width: calc(100% - 0.05em);
 
 	&__slider {
 		position: sticky;
