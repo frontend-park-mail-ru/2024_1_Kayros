@@ -25,7 +25,7 @@ class RestaurantCard {
 		this.name = name;
 		this.description = short_description;
 		this.rating = rating;
-		this.categories = categories.map(({ name }) => name).join(', ');
+		this.categories = categories?.map(({ name }) => name).join(', ');
 	}
 
 	/**
