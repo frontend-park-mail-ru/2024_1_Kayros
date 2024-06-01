@@ -246,7 +246,7 @@ class Restaurants {
 
 		const codes = await api.getPromocodes();
 
-		if (codes) {
+		if (codes?.length > 0) {
 			const couponsTitle = document.createElement('div');
 			couponsTitle.innerText = 'Промокоды';
 			couponsTitle.className = 'restaurants__title';
